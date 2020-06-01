@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Api')->group(function () {
+  Route::apiResource('user', 'UserController');
   Route::middleware('auth:api')->group(function () {
-    Route::apiResource('user', 'UserContainer');
   });
 });

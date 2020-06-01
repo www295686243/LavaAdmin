@@ -8,6 +8,7 @@
 
 namespace App\Tools;
 
+use App\Models\Version;
 use Illuminate\Http\JsonResponse;
 
 class Resource
@@ -141,7 +142,8 @@ class Resource
       'message' => $this->message,
       'status' => $this->status,
       'data' => $this->params,
-      'code' => $this->statusCode
+      'code' => $this->statusCode,
+      'version' => (new Version())->getList()
     ];
     $this->init();
     return new JsonResponse($res, $this->statusCode);

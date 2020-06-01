@@ -9,13 +9,16 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
   /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
+   * @return \Illuminate\Http\JsonResponse
    */
   public function index()
   {
-
+    $data = User::create([
+      'nickname' => '昵称',
+      'username' => 'username',
+      'password' => 1
+    ]);
+    return $this->setParams($data)->success();
   }
 
   /**

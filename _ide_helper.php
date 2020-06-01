@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 7.13.0 on 2020-05-29 09:31:12.
+ * Generated for Laravel 7.13.0 on 2020-06-01 15:31:31.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1847,7 +1847,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the currently authenticated user.
          *
-         * @return \App\User|null 
+         * @return \App\Models\User|null 
          * @static 
          */ 
         public static function user()
@@ -1885,7 +1885,7 @@ namespace Illuminate\Support\Facades {
          * Log the given user ID into the application without sessions or cookies.
          *
          * @param mixed $id
-         * @return \App\User|false 
+         * @return \App\Models\User|false 
          * @static 
          */ 
         public static function onceUsingId($id)
@@ -1954,7 +1954,7 @@ namespace Illuminate\Support\Facades {
          *
          * @param mixed $id
          * @param bool $remember
-         * @return \App\User|false 
+         * @return \App\Models\User|false 
          * @static 
          */ 
         public static function loginUsingId($id, $remember = false)
@@ -2033,7 +2033,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Get the last user we attempted to authenticate.
          *
-         * @return \App\User 
+         * @return \App\Models\User 
          * @static 
          */ 
         public static function getLastAttempted()
@@ -2144,7 +2144,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Return the currently cached user.
          *
-         * @return \App\User|null 
+         * @return \App\Models\User|null 
          * @static 
          */ 
         public static function getUser()
@@ -2194,7 +2194,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Determine if current user is authenticated. If not, throw an exception.
          *
-         * @return \App\User 
+         * @return \App\Models\User 
          * @throws \Illuminate\Auth\AuthenticationException
          * @static 
          */ 
@@ -8774,6 +8774,104 @@ namespace Illuminate\Support\Facades {
     /**
      * 
      *
+     */ 
+    class Redis {
+        
+        /**
+         * Get a Redis connection by name.
+         *
+         * @param string|null $name
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @static 
+         */ 
+        public static function connection($name = null)
+        {
+                        /** @var \Illuminate\Redis\RedisManager $instance */
+                        return $instance->connection($name);
+        }
+        
+        /**
+         * Resolve the given connection by name.
+         *
+         * @param string|null $name
+         * @return \Illuminate\Redis\Connections\Connection 
+         * @throws \InvalidArgumentException
+         * @static 
+         */ 
+        public static function resolve($name = null)
+        {
+                        /** @var \Illuminate\Redis\RedisManager $instance */
+                        return $instance->resolve($name);
+        }
+        
+        /**
+         * Return all of the created connections.
+         *
+         * @return array 
+         * @static 
+         */ 
+        public static function connections()
+        {
+                        /** @var \Illuminate\Redis\RedisManager $instance */
+                        return $instance->connections();
+        }
+        
+        /**
+         * Enable the firing of Redis command events.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function enableEvents()
+        {
+                        /** @var \Illuminate\Redis\RedisManager $instance */
+                        $instance->enableEvents();
+        }
+        
+        /**
+         * Disable the firing of Redis command events.
+         *
+         * @return void 
+         * @static 
+         */ 
+        public static function disableEvents()
+        {
+                        /** @var \Illuminate\Redis\RedisManager $instance */
+                        $instance->disableEvents();
+        }
+        
+        /**
+         * Set the default driver.
+         *
+         * @param string $driver
+         * @return void 
+         * @static 
+         */ 
+        public static function setDriver($driver)
+        {
+                        /** @var \Illuminate\Redis\RedisManager $instance */
+                        $instance->setDriver($driver);
+        }
+        
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return \Illuminate\Redis\RedisManager 
+         * @static 
+         */ 
+        public static function extend($driver, $callback)
+        {
+                        /** @var \Illuminate\Redis\RedisManager $instance */
+                        return $instance->extend($driver, $callback);
+        }
+         
+    }
+
+    /**
+     * 
+     *
      * @method static mixed filterFiles(mixed $files)
      * @see \Illuminate\Http\Request
      */ 
@@ -10243,8 +10341,8 @@ namespace Illuminate\Support\Facades {
         
         /**
          * Gets the preferred format for the response by inspecting, in the following order:
-         *   * the request format set using setRequestFormat
-         *   * the values of the Accept HTTP header
+         *   * the request format set using setRequestFormat;
+         *   * the values of the Accept HTTP header.
          * 
          * Note that if you use this method, you should send the "Vary: Accept" header
          * in the response to prevent any issues with intermediary HTTP caches.
@@ -10339,6 +10437,19 @@ namespace Illuminate\Support\Facades {
             //Method inherited from \Symfony\Component\HttpFoundation\Request            
                         /** @var \Illuminate\Http\Request $instance */
                         return $instance->isXmlHttpRequest();
+        }
+        
+        /**
+         * Checks whether the client browser prefers safe content or not according to RFC8674.
+         *
+         * @see https://tools.ietf.org/html/rfc8674
+         * @static 
+         */ 
+        public static function preferSafeContent()
+        {
+            //Method inherited from \Symfony\Component\HttpFoundation\Request            
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->preferSafeContent();
         }
         
         /**
@@ -18458,6 +18569,8 @@ namespace  {
     class Queue extends \Illuminate\Support\Facades\Queue {}
 
     class Redirect extends \Illuminate\Support\Facades\Redirect {}
+
+    class Redis extends \Illuminate\Support\Facades\Redis {}
 
     class Request extends \Illuminate\Support\Facades\Request {}
 
