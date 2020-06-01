@@ -3,15 +3,17 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
   /**
+   * @param UserRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function index()
+  public function index(UserRequest $request)
   {
     $data = User::create([
       'nickname' => '昵称',

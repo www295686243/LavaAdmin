@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ResourceService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -21,7 +22,7 @@ class Controller extends BaseController
    */
   public function __construct()
   {
-    $this->res = app('res');
+    $this->res = new ResourceService();
   }
 
   /**
@@ -44,7 +45,7 @@ class Controller extends BaseController
 
   /**
    * @param int $code
-   * @return \App\Tools\Resource
+   * @return ResourceService
    */
   protected function setStatusCode($code = 200)
   {
@@ -53,7 +54,7 @@ class Controller extends BaseController
 
   /**
    * @param $data
-   * @return \App\Tools\Resource
+   * @return ResourceService
    */
   protected function setParams($data)
   {

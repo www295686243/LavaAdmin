@@ -1,17 +1,17 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: 万鑫
- * Date: 2018/12/28
- * Time: 14:52
+ * User: wanx
+ * Date: 2020/6/1
+ * Time: 16:13
  */
 
-namespace App\Tools;
+namespace App\Services;
 
 use App\Models\Version;
 use Illuminate\Http\JsonResponse;
 
-class Resource
+class ResourceService
 {
   /**
    * 200 成功, 422 表单验证错误, 423 权限错误, 424 业务逻辑错误
@@ -116,13 +116,13 @@ class Resource
    */
   public function setParams($data)
   {
-  	if (is_string($data)) {
-  		$this->params = [
-  			'message' => $data
-			];
-		} else {
-			$this->params = $data;
-		}
+    if (is_string($data)) {
+      $this->params = [
+        'message' => $data
+      ];
+    } else {
+      $this->params = $data;
+    }
     return $this;
   }
 
