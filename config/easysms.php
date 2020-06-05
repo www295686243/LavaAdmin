@@ -31,9 +31,9 @@ return [
     ],
 
     'aliyun' => [
-      'access_key_id' => 'LTAI4FevfsPTdTpp4TJa5Pzn',
-      'access_key_secret' => 'C0NmHE4RaIJOi7CacwtdMVVJLwjFfV',
-      'sign_name' => '原草互助',
+      'access_key_id' => '',
+      'access_key_secret' => '',
+      'sign_name' => '',
     ],
   ],
 ];
