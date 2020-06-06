@@ -15,7 +15,7 @@ class Controller extends BaseController
   /**
    * @var \Illuminate\Foundation\Application|mixed|null|res
    */
-  protected $res = null;
+  private $res = null;
 
   /**
    * Controller constructor.
@@ -50,6 +50,15 @@ class Controller extends BaseController
   protected function setStatusCode($code = 200)
   {
     return $this->res->setStatusCode($code);
+  }
+
+  /**
+   * @param string $status
+   * @return ResourceService
+   */
+  protected function setStatus($status = '')
+  {
+    return $this->res->setStatus($status);
   }
 
   /**

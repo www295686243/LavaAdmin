@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Api')->group(function () {
-  Route::apiResource('user', 'UserController');
-  Route::middleware('auth:api')->group(function () {
+  Route::post('user/login', 'UserController@login');
+  Route::middleware('auth:sanctum')->group(function () {
+    Route::get('user/getUserInfo', 'UserController@getUserInfo');
+    Route::post('user/sendSmsCaptcha', 'UserController@sendSmsCaptcha');
+    Route::post('user/bindPhone', 'UserController@bindPhone');
+    Route::post('user/verifyPhone', 'UserController@verifyPhone');
   });
 });

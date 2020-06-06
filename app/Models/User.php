@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Traits\ResourceTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Kra8\Snowflake\HasSnowflakePrimary;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -42,24 +46,64 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read int|null $tokens_count
  */
 class User extends Authenticatable
 {
-  use Notifiable, HasSnowflakePrimary, HasRoles;
+  use Notifiable, HasSnowflakePrimary, HasRoles, HasApiTokens, ResourceTrait;
 
+  /**
+   * @var string
+   */
   protected $guard_name = 'api';
 
+  /**
+   * @var array
+   */
   protected $fillable = [
     'username',
     'nickname',
     'email',
     'phone',
+    'password',
+    'money',
+    'is_admin'
+  ];
+
+  /**
+   * @var array
+   */
+  protected $hidden = [
+    'updated_at',
+    'remember_token',
     'password'
   ];
 
-  protected $hidden = [
-    'created_at',
-    'updated_at',
-    'remember_token'
-  ];
+  /**
+   * @param $value
+   */
+  public function setPasswordAttribute($value)
+  {
+    if ($value) {
+      $this->attributes['password'] = Hash::make($value);
+    }
+  }
+
+  /**
+   * @param $username
+   * @param $password
+   * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
+   */
+  public function getToken($username, $password)
+  {
+    $userData = self::where('username', $username)->first();
+    if (!$userData || !Hash::check($password, $userData->password)) {
+      $this->error('用户名或密码错误!');
+    }
+    $plainTextToken = $userData->createToken('token')->plainTextToken;
+    [$id, $token] = explode('|', $plainTextToken, 2);
+    $userData->token = $token;
+    return $userData;
+  }
 }
