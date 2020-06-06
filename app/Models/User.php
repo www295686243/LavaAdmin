@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\ResourceTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Notifications\Notifiable;
@@ -51,7 +52,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-  use Notifiable, HasSnowflakePrimary, HasRoles, HasApiTokens, ResourceTrait;
+  use Notifiable, HasSnowflakePrimary, HasRoles, HasApiTokens, ResourceTrait, SoftDeletes;
 
   /**
    * @var string
@@ -77,7 +78,8 @@ class User extends Authenticatable
   protected $hidden = [
     'updated_at',
     'remember_token',
-    'password'
+    'password',
+    'deleted_at'
   ];
 
   /**

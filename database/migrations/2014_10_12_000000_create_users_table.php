@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
       $table->unsignedTinyInteger('is_admin')->comment('是否管理员')->default(0);
 
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 
