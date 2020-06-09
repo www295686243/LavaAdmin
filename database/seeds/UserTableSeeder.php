@@ -11,10 +11,11 @@ class UserTableSeeder extends Seeder
    */
   public function run()
   {
-    \App\Models\User::create([
+    $admin = \App\Models\Admin\User::create([
       'username' => 'root',
       'nickname' => 'root',
       'password' => '111111'
     ]);
+    $admin->assignRole('root');
   }
 }

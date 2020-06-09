@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
       $table->timestamp('email_verified_at')->nullable();
       $table->string('password');
       $table->decimal('money', 9, 2)->comment('金额')->default(0);
+      $table->string('api_token')->nullable()->unique();
       $table->rememberToken();
       $table->unsignedTinyInteger('is_admin')->comment('是否管理员')->default(0);
 

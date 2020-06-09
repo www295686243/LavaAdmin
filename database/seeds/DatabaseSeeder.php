@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
   {
     $this->call([
       AdminMenuTableSeeder::class,
+      PermissionTableSeeder::class,
+      RoleTableSeeder::class,
       VersionTableSeeder::class,
       UserTableSeeder::class
     ]);

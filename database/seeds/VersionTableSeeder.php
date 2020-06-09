@@ -13,7 +13,7 @@ class VersionTableSeeder extends Seeder
   {
     \App\Models\Version::create([
       'name' => 'app',
-      'value' => '00.00.01'
+      'value' => 1
     ]);
   }
 }

@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Models\Traits\ResourceTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 use Kra8\Snowflake\HasSnowflakePrimary;
@@ -49,15 +48,19 @@ use Spatie\Permission\Traits\HasRoles;
  * @mixin \Eloquent
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
+ * @property float $money 金额
+ * @property int $is_admin 是否管理员
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereMoney($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User withoutTrashed()
  */
 class User extends Authenticatable
 {
   use Notifiable, HasSnowflakePrimary, HasRoles, HasApiTokens, ResourceTrait, SoftDeletes;
-
-  /**
-   * @var string
-   */
-  protected $guard_name = 'api';
 
   /**
    * @var array
@@ -69,7 +72,8 @@ class User extends Authenticatable
     'phone',
     'password',
     'money',
-    'is_admin'
+    'is_admin',
+    'api_token'
   ];
 
   /**
@@ -79,8 +83,18 @@ class User extends Authenticatable
     'updated_at',
     'remember_token',
     'password',
-    'deleted_at'
+    'deleted_at',
+    'email_verified_at'
   ];
+
+  /**
+   * @param \DateTimeInterface $date
+   * @return string
+   */
+  protected function serializeDate(\DateTimeInterface $date)
+  {
+    return $date->format($this->dateFormat ?: 'Y-m-d H:i:s');
+  }
 
   /**
    * @param $value
@@ -105,7 +119,8 @@ class User extends Authenticatable
     }
     $plainTextToken = $userData->createToken('token')->plainTextToken;
     [$id, $token] = explode('|', $plainTextToken, 2);
-    $userData->token = $token;
+    $userData->api_token = $token;
+    $userData->save();
     return $userData;
   }
 }
