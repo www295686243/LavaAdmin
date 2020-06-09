@@ -30,7 +30,7 @@ class RoleTableSeeder extends Seeder
     ];
 
     foreach ($data as $datum) {
-      \App\Models\Role::create($datum);
+      $role = \App\Models\Role::create($datum);
     }
   }
 }

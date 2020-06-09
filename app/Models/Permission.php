@@ -65,4 +65,13 @@ class Permission extends \Spatie\Permission\Models\Permission
     'created_at',
     'updated_at'
   ];
+
+  /**
+   * @param $guard
+   * @return \Illuminate\Support\Collection
+   */
+  public static function getAllPermissionNames($guard)
+  {
+    return Permission::where('guard_name', $guard)->pluck('name');
+  }
 }

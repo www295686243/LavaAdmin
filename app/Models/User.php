@@ -123,4 +123,12 @@ class User extends Authenticatable
     $userData->save();
     return $userData;
   }
+
+  /**
+   * @return \Illuminate\Contracts\Auth\Authenticatable|static|null
+   */
+  public static function getUserData()
+  {
+    return auth((new self())->guard_name)->user();
+  }
 }

@@ -13,7 +13,7 @@ class PermissionTableSeeder extends Seeder
   {
     $data = [
       [
-        'name' => 'UserController@getUserInfo',
+        'name' => 'UserController@getUserConfig',
         'display_name' => '获取',
         'guard_name' => 'admin'
       ]

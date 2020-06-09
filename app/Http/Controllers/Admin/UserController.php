@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
-use App\Models\User;
+use App\Models\Admin\User;
 
 class UserController extends Controller
 {
@@ -23,9 +23,12 @@ class UserController extends Controller
   /**
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getUserInfo()
+  public function getUserConfig()
   {
-    $data = auth()->user();
-    return $this->setParams($data)->success();
+    $userData = User::getUserData();
+    return $this->setParams([
+      'user' => $userData,
+      'menus' => $userData->getMenuPermissions()
+    ])->error();
   }
 }

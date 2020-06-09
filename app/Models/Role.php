@@ -40,4 +40,20 @@ class Role extends \Spatie\Permission\Models\Role
   protected $casts = [
     'menu_permissions' => 'array'
   ];
+
+  public function setMenuPermissions($roleName)
+  {
+    $roleList = $this->getRoles($roleName);
+    $menu_ids = AdminMenu::all()->pluck('id');
+    $roleList->update(['menu_permissions' => $menu_ids]);
+  }
+
+  /**
+   * @param $roleName
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private function getRoles($roleName)
+  {
+    return self::where('name', $roleName);
+  }
 }

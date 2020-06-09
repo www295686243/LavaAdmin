@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Admin')->group(function () {
   Route::post('user/login', 'UserController@login');
   Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
-    Route::get('user/getUserInfo', 'UserController@getUserInfo');
+    Route::get('user/getUserConfig', 'UserController@getUserConfig');
   });
 });
