@@ -11,9 +11,16 @@ class VersionTableSeeder extends Seeder
    */
   public function run()
   {
-    \App\Models\Version::create([
-      'name' => 'app',
-      'value' => 1
-    ]);
+    $data = [
+      [
+        'name' => 'app'
+      ],
+      [
+        'name' => 'config'
+      ]
+    ];
+    foreach ($data as $datum) {
+      \App\Models\Version::create($datum);
+    }
   }
 }

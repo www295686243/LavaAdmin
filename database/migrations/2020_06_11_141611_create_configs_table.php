@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVersionsTable extends Migration
+class CreateConfigsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,10 +13,12 @@ class CreateVersionsTable extends Migration
    */
   public function up()
   {
-    Schema::create('versions', function (Blueprint $table) {
+    Schema::create('configs', function (Blueprint $table) {
       $table->increments('id');
-      $table->string('name');
-      $table->unsignedInteger('value')->default(1);
+      $table->string('name', 60);
+      $table->string('display_name', 60);
+      $table->string('value');
+      $table->string('guard_name')->comment('守卫(system)');
       $table->timestamps();
     });
   }
@@ -28,6 +30,6 @@ class CreateVersionsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('versions');
+    Schema::dropIfExists('configs');
   }
 }

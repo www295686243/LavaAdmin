@@ -17,5 +17,6 @@ Route::namespace('Admin')->group(function () {
   Route::post('user/login', 'UserController@login');
   Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
     Route::get('user/getUserConfig', 'UserController@getUserConfig');
+    Route::apiResource('config', 'ConfigController');
   });
 });
