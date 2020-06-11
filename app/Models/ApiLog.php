@@ -9,6 +9,31 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property int $user_id
+ * @property string $nickname
+ * @property string $method
+ * @property string $path
+ * @property string $ip
+ * @property array|null $input
+ * @property string $status 结果状态
+ * @property int $code 状态码
+ * @property string|null $desc 描述
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereInput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUserId($value)
  */
 class ApiLog extends Base
 {

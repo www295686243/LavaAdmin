@@ -21,6 +21,30 @@ use Kalnoy\Nestedset\NodeTrait;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\AdminMenu withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\AdminMenu withoutTrashed()
  * @mixin \Eloquent
+ * @property int $id
+ * @property string $display_name 菜单名称
+ * @property string|null $desc 菜单描述
+ * @property string|null $route 路由
+ * @property string|null $icon icon图标
+ * @property array|null $params 所需参数(一般二级以上的菜单会用到)
+ * @property int|null $sort 排序
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property int $_lft
+ * @property int $_rgt
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereIcon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereLft($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereParams($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereParentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereRgt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereRoute($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereUpdatedAt($value)
  */
 class AdminMenu extends Base
 {

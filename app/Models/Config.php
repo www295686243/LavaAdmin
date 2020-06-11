@@ -11,6 +11,21 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property string $name
+ * @property string $display_name
+ * @property string $value
+ * @property string $guard_name 守卫(system)
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereGuardName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereValue($value)
  */
 class Config extends Base
 {

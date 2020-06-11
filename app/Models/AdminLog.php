@@ -9,6 +9,31 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog query()
  * @mixin \Eloquent
+ * @property int $id
+ * @property int $user_id
+ * @property string $nickname
+ * @property string $method
+ * @property string $path
+ * @property string $ip
+ * @property array|null $input
+ * @property string $status 结果状态
+ * @property int $code 状态码
+ * @property string|null $desc 描述
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereInput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUserId($value)
  */
 class AdminLog extends Base
 {
