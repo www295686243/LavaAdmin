@@ -29,6 +29,6 @@ class UserController extends Controller
     return $this->setParams([
       'user' => $userData,
       'menus' => $userData->getMenuPermissions()
-    ])->error();
+    ])->success();
   }
 }

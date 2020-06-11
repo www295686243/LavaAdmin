@@ -7,6 +7,7 @@ class AdminMenuTableSeeder extends Seeder
   private $menuConfig = [
     [
       'display_name' => '系统管理',
+      'route' => '/system',
       'children' => [
         [
           'display_name' => '系统配置',
@@ -22,32 +23,35 @@ class AdminMenuTableSeeder extends Seeder
     ],
     [
       'display_name' => '用户管理',
+      'route' => '/user',
       'children' => [
         [
           'display_name' => '后台管理',
           'icon' => 'el-icon-s-custom',
+          'route' => '/user/admin',
           'children' => [
             [
               'display_name' => '员工列表',
-              'route' => '/member/admin-user'
+              'route' => '/user/admin/list'
             ],
             [
               'display_name' => '职位列表',
-              'route' => '/member/admin-role'
+              'route' => '/user/admin/role'
             ]
           ]
         ],
         [
           'display_name' => '会员管理',
           'icon' => 'el-icon-user-solid',
+          'route' => '/user/member',
           'children' => [
             [
               'display_name' => '会员列表',
-              'route' => '/member/user'
+              'route' => '/user/member/list'
             ],
             [
               'display_name' => '会员角色',
-              'route' => '/member/user-role'
+              'route' => '/user/member/role'
             ]
           ]
         ]
