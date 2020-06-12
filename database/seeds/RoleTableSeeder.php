@@ -18,19 +18,26 @@ class RoleTableSeeder extends Seeder
         'guard_name' => 'admin'
       ],
       [
-        'name' => 'super_admin',
-        'display_name' => '超级管理员',
+        'name' => 'Operations Manager',
+        'display_name' => '运营经理',
+        'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
         'guard_name' => 'admin'
       ],
       [
-        'name' => 'general_admin',
-        'display_name' => '管理员',
+        'name' => 'Customer service Specialist',
+        'display_name' => '客服专员',
+        'guard_name' => 'admin'
+      ],
+      [
+        'name' => 'Operation Specialist',
+        'display_name' => '运营专员',
         'guard_name' => 'admin'
       ]
     ];
 
     foreach ($data as $datum) {
       $role = \App\Models\Role::create($datum);
+      $role->givePermissionTo(\App\Models\Permission::pluck('name'));
     }
   }
 }

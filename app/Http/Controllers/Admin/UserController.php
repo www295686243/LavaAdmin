@@ -28,7 +28,8 @@ class UserController extends Controller
     $userData = User::getUserData();
     return $this->setParams([
       'user' => $userData,
-      'menus' => $userData->getMenuPermissions()
+      'menus' => $userData->getMenuPermissions(),
+      'interface' => $userData->getInterfacePermissions()
     ])->success();
   }
 }

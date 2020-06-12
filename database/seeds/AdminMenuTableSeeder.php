@@ -32,11 +32,11 @@ class AdminMenuTableSeeder extends Seeder
           'children' => [
             [
               'display_name' => '员工列表',
-              'route' => '/user/admin/list'
+              'route' => '/user/admin/employee'
             ],
             [
               'display_name' => '职位列表',
-              'route' => '/user/admin/role'
+              'route' => '/user/admin/position'
             ]
           ]
         ],
@@ -47,7 +47,7 @@ class AdminMenuTableSeeder extends Seeder
           'children' => [
             [
               'display_name' => '会员列表',
-              'route' => '/user/member/list'
+              'route' => '/user/member/user'
             ],
             [
               'display_name' => '会员角色',

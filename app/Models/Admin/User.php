@@ -26,4 +26,12 @@ class User extends \App\Models\User
       ->orderBy('id', 'asc')
       ->get();
   }
+
+  /**
+   * @return \Illuminate\Support\Collection
+   */
+  public function getInterfacePermissions()
+  {
+    return $this->getAllPermissions()->pluck('name');
+  }
 }

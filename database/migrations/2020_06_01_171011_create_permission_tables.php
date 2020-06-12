@@ -31,8 +31,8 @@ class CreatePermissionTables extends Migration
 
     Schema::create($tableNames['roles'], function (Blueprint $table) {
       $table->bigIncrements('id');
-      $table->string('name', 30)->comment('标识');
-      $table->string('display_name', 20)->comment('名称');
+      $table->string('name')->comment('标识');
+      $table->string('display_name', 30)->comment('名称');
       $table->json('menu_permissions')->comment('栏目权限')->nullable();
       $table->string('guard_name');
       $table->string('type_name', 20)->nullable();

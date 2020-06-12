@@ -18,5 +18,7 @@ Route::namespace('Admin')->group(function () {
   Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
     Route::get('user/getUserConfig', 'UserController@getUserConfig');
     Route::apiResource('config', 'ConfigController');
+    // 职位
+    Route::apiResource('position', 'PositionController');
   });
 });

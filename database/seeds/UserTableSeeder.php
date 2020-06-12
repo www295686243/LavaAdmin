@@ -16,6 +16,6 @@ class UserTableSeeder extends Seeder
       'nickname' => 'root',
       'password' => '111111'
     ]);
-    $admin->assignRole('root');
+    $admin->assignRole('Operations Manager');
   }
 }
