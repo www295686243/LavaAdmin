@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PositionRequest;
+use App\Models\AdminMenu;
+use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -74,8 +76,30 @@ class PositionController extends Controller
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
+  public function getPermissions(PositionRequest $request, $id)
+  {
+    $positionData = Role::findOrFail($id);
+    return $this->setParams([
+      'menus' => AdminMenu::all()->toTree(),
+      'menu_permissions' => $positionData->menu_permissions,
+      'interface' => Permission::all()->toTree(),
+      'interface_permissions' => $positionData->getAllPermissions()->pluck('name')
+    ])->success();
+  }
+
+  /**
+   * @param PositionRequest $request
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function updatePermissions(PositionRequest $request, $id)
   {
+    $menus = $request->input('menus', []);
+    $permissions = $request->input('permissions', []);
+    $positionData = Role::findOrFail($id);
+    $positionData->menu_permissions = $menus;
+    $positionData->save();
+    $positionData->syncPermissions($permissions);
     return $this->success();
   }
 

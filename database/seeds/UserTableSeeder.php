@@ -17,5 +17,11 @@ class UserTableSeeder extends Seeder
       'password' => '111111'
     ]);
     $admin->assignRole('Operations Manager');
+    $admin2 = \App\Models\Admin\User::create([
+      'username' => 'root2',
+      'nickname' => 'root2',
+      'password' => '111111'
+    ]);
+    $admin2->assignRole('Operations Manager');
   }
 }

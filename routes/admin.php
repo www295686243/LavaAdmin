@@ -19,6 +19,8 @@ Route::namespace('Admin')->group(function () {
     Route::get('user/getUserConfig', 'UserController@getUserConfig');
     Route::apiResource('config', 'ConfigController');
     // 职位
+    Route::get('position/getPermissions/{id}', 'PositionController@getPermissions');
+    Route::post('position/updatePermissions/{id}', 'PositionController@updatePermissions');
     Route::apiResource('position', 'PositionController');
   });
 });

@@ -15,6 +15,7 @@ class CreateConfigsTable extends Migration
   {
     Schema::create('configs', function (Blueprint $table) {
       $table->increments('id');
+      $table->unsignedBigInteger('user_id');
       $table->string('name', 60);
       $table->string('display_name', 60);
       $table->string('value');
