@@ -15,7 +15,7 @@ use App\Models\Traits\ResourceTrait;
  * @property string|null $type_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
+ * @property-read \Kalnoy\Nestedset\Collection|\App\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Api\User[] $users
  * @property-read int|null $users_count

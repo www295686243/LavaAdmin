@@ -21,10 +21,10 @@ class ConfigController extends Controller
   }
 
   /**
-   * @param Request $request
+   * @param ConfigRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function store(Request $request)
+  public function store(ConfigRequest $request)
   {
     $input = $request->only(Config::getFillFields());
     Config::create($input);
@@ -42,11 +42,11 @@ class ConfigController extends Controller
   }
 
   /**
-   * @param Request $request
+   * @param ConfigRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
-  public function update(Request $request, $id)
+  public function update(ConfigRequest $request, $id)
   {
     $input = $request->only(Config::getFillFieldAndExcept(['name']));
     Config::findOrFail($id)->update($input);

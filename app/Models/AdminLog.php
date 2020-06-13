@@ -5,10 +5,6 @@ namespace App\Models;
 /**
  * \App\Models\AdminLog
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog query()
- * @mixin \Eloquent
  * @property int $id
  * @property int $user_id
  * @property string $nickname
@@ -21,6 +17,10 @@ namespace App\Models;
  * @property string|null $desc 描述
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereCreatedAt($value)
@@ -34,6 +34,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUserId($value)
+ * @mixin \Eloquent
  */
 class AdminLog extends Base
 {

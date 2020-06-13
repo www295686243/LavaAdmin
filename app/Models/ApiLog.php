@@ -5,10 +5,6 @@ namespace App\Models;
 /**
  * \App\Models\ApiLog
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog query()
- * @mixin \Eloquent
  * @property int $id
  * @property int $user_id
  * @property string $nickname
@@ -21,6 +17,10 @@ namespace App\Models;
  * @property string|null $desc 描述
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereCreatedAt($value)
@@ -34,6 +34,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUserId($value)
+ * @mixin \Eloquent
  */
 class ApiLog extends Base
 {

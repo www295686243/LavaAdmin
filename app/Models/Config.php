@@ -5,12 +5,6 @@ namespace App\Models;
 /**
  * \App\Models\Config
  *
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ConfigOption[] $options
- * @property-read int|null $options_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config query()
- * @mixin \Eloquent
  * @property int $id
  * @property string $name
  * @property string $display_name
@@ -18,6 +12,12 @@ namespace App\Models;
  * @property string $guard_name 守卫(system)
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ConfigOption[] $options
+ * @property-read int|null $options_count
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereDisplayName($value)
@@ -25,7 +25,9 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereValue($value)
+ * @mixin \Eloquent
  */
 class Config extends Base
 {

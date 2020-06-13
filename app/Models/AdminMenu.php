@@ -7,20 +7,6 @@ use Kalnoy\Nestedset\NodeTrait;
 /**
  * \App\Models\AdminMenu
  *
- * @property-read \Kalnoy\Nestedset\Collection|\App\Models\AdminMenu[] $children
- * @property-read int|null $children_count
- * @property-read \App\Models\AdminMenu $parent
- * @property-write mixed $parent_id
- * @method static \Kalnoy\Nestedset\Collection|static[] all($columns = ['*'])
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu d()
- * @method static \Kalnoy\Nestedset\Collection|static[] get($columns = ['*'])
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Models\AdminMenu newModelQuery()
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Models\AdminMenu newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\AdminMenu onlyTrashed()
- * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Models\AdminMenu query()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\AdminMenu withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\AdminMenu withoutTrashed()
- * @mixin \Eloquent
  * @property int $id
  * @property string $display_name 菜单名称
  * @property string|null $desc 菜单描述
@@ -32,6 +18,17 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property int $_lft
  * @property int $_rgt
+ * @property int|null $parent_id
+ * @property-read \Kalnoy\Nestedset\Collection|\App\Models\AdminMenu[] $children
+ * @property-read int|null $children_count
+ * @property-read \App\Models\AdminMenu|null $parent
+ * @method static \Kalnoy\Nestedset\Collection|static[] all($columns = ['*'])
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu d()
+ * @method static \Kalnoy\Nestedset\Collection|static[] get($columns = ['*'])
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Models\AdminMenu newModelQuery()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Models\AdminMenu newQuery()
+ * @method static \Kalnoy\Nestedset\QueryBuilder|\App\Models\AdminMenu query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereDesc($value)
@@ -45,6 +42,7 @@ use Kalnoy\Nestedset\NodeTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereRoute($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereSort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
 class AdminMenu extends Base
 {

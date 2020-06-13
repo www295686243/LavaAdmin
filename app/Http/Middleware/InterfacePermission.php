@@ -17,11 +17,11 @@ class InterfacePermission
    */
   public function handle($request, Closure $next)
   {
-    $guard = request()->route()->getPrefix();
+    $guard = $request->route()->getPrefix();
     $permission = class_basename($request->route()->getActionName());
-    $user = auth($guard)->user();
+    $userData = auth($guard)->user();
     $permissionNames = Permission::getAllPermissionNames($guard);
-    if ($user->hasRole('root') || $user->can($permission) || !$permissionNames->contains($permission)) {
+    if ($userData->hasRole('root') || $userData->can($permission) || !$permissionNames->contains($permission)) {
       return $next($request);
     }
     return (new ResourceService())->setStatusCode(423)->error('您没有该权限');

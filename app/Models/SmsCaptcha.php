@@ -8,10 +8,6 @@ use Overtrue\EasySms\EasySms;
 /**
  * \App\Models\SmsCaptcha
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha query()
- * @mixin \Eloquent
  * @property int $id
  * @property int $user_id
  * @property string $phone
@@ -21,6 +17,10 @@ use Overtrue\EasySms\EasySms;
  * @property int $result 发送结果(0未发送，1已发送, 2发送失败)
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereCreatedAt($value)
@@ -31,6 +31,7 @@ use Overtrue\EasySms\EasySms;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereTypeName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereUserId($value)
+ * @mixin \Eloquent
  */
 class SmsCaptcha extends Base
 {

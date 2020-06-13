@@ -9,19 +9,20 @@ use Illuminate\Support\Facades\Cache;
  *
  * @property int $id
  * @property string $name
- * @property string $value
+ * @property int $value
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereValue($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  */
 class Version extends Base
 {
