@@ -133,4 +133,21 @@ class User extends Authenticatable
   {
     return auth((new self())->guard_name)->user();
   }
+
+  /**
+   * @return int|null|string
+   */
+  public static function getUserId()
+  {
+    return auth((new self())->guard_name)->id();
+  }
+
+  /**
+   * @return bool
+   */
+  public static function hasRoot()
+  {
+    $userData = static::getUserData();
+    return $userData->hasRole('root');
+  }
 }

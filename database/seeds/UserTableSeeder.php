@@ -14,13 +14,15 @@ class UserTableSeeder extends Seeder
     $admin = \App\Models\Admin\User::create([
       'username' => 'root',
       'nickname' => 'root',
-      'password' => '111111'
+      'password' => '111111',
+      'is_admin' => 1
     ]);
-    $admin->assignRole('Operations Manager');
+    $admin->assignRole('root');
     $admin2 = \App\Models\Admin\User::create([
       'username' => 'root2',
       'nickname' => 'root2',
-      'password' => '111111'
+      'password' => '111111',
+      'is_admin' => 1
     ]);
     $admin2->assignRole('Operations Manager');
   }

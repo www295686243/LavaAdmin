@@ -14,13 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::namespace('Admin')->group(function () {
-  Route::post('user/login', 'UserController@login');
+  Route::post('auth/login', 'AuthController@login');
   Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
-    Route::get('user/getUserConfig', 'UserController@getUserConfig');
+    Route::get('auth/getUserConfig', 'AuthController@getUserConfig');
     Route::apiResource('config', 'ConfigController');
     // 职位
     Route::get('position/getPermissions/{id}', 'PositionController@getPermissions');
     Route::post('position/updatePermissions/{id}', 'PositionController@updatePermissions');
     Route::apiResource('position', 'PositionController');
+    // 员工
+    Route::apiResource('employee', 'EmployeeController');
   });
 });
