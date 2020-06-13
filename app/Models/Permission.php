@@ -12,7 +12,6 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property string $display_name 名称
  * @property int|null $sort 排序
  * @property string $guard_name
- * @property string|null $type_name
  * @property int $_lft
  * @property int $_rgt
  * @property int|null $parent_id
@@ -57,7 +56,6 @@ class Permission extends \Spatie\Permission\Models\Permission
     'display_name',
     'sort',
     'guard_name',
-    'type_name',
     'parent_id'
   ];
 

@@ -24,7 +24,6 @@ class CreatePermissionTables extends Migration
       $table->string('display_name', 30)->comment('名称');
       $table->unsignedTinyInteger('sort')->comment('排序')->nullable();
       $table->string('guard_name');
-      $table->string('type_name', 20)->nullable();
       $table->nestedSet();
       $table->timestamps();
     });
@@ -35,7 +34,6 @@ class CreatePermissionTables extends Migration
       $table->string('display_name', 30)->comment('名称');
       $table->json('menu_permissions')->comment('栏目权限')->nullable();
       $table->string('guard_name');
-      $table->string('type_name', 20)->nullable();
       $table->timestamps();
     });
 

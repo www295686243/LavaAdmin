@@ -17,7 +17,10 @@ Route::namespace('Admin')->group(function () {
   Route::post('auth/login', 'AuthController@login');
   Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
     Route::get('auth/getUserConfig', 'AuthController@getUserConfig');
+    // 系统配置
     Route::apiResource('config', 'ConfigController');
+    // 后台日志
+    Route::apiResource('admin_log', 'AdminLogController')->only(['index']);
     // 职位
     Route::get('position/getPermissions/{id}', 'PositionController@getPermissions');
     Route::post('position/updatePermissions/{id}', 'PositionController@updatePermissions');

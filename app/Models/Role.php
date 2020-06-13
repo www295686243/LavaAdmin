@@ -12,7 +12,6 @@ use App\Models\Traits\ResourceTrait;
  * @property string $display_name 名称
  * @property array|null $menu_permissions 栏目权限
  * @property string $guard_name
- * @property string|null $type_name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Kalnoy\Nestedset\Collection|\App\Models\Permission[] $permissions
@@ -36,6 +35,18 @@ use App\Models\Traits\ResourceTrait;
 class Role extends \Spatie\Permission\Models\Role
 {
   use ResourceTrait;
+
+  protected $fillable = [
+    'name',
+    'display_name',
+    'menu_permissions',
+    'guard_name'
+  ];
+
+  protected $hidden = [
+    'created_at',
+    'updated_at'
+  ];
 
   protected $casts = [
     'menu_permissions' => 'array'

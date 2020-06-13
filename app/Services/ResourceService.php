@@ -8,6 +8,7 @@
 
 namespace App\Services;
 
+use App\Models\AdminLog;
 use App\Models\Version;
 use Illuminate\Http\JsonResponse;
 
@@ -138,6 +139,14 @@ class ResourceService
    */
   public function response()
   {
+    if (request()->route()->getPrefix() === 'admin') {
+      (new AdminLog())->createLog([
+        'desc' => $this->message,
+        'status' => $this->status,
+        'code' => $this->statusCode
+      ]);
+    }
+
     $res = [
       'message' => $this->message,
       'status' => $this->status,

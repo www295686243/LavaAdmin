@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Admin\User;
+
 /**
  * \App\Models\AdminLog
  *
@@ -56,7 +58,7 @@ class AdminLog extends Base
 
   public function createLog($params)
   {
-    $user = auth('admin')->user();
+    $user = User::getUserData();
     $method = \Request::getMethod();
     if ($user && $method !== 'GET') {
       self::create([
