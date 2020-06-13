@@ -25,5 +25,11 @@ class UserTableSeeder extends Seeder
       'is_admin' => 1
     ]);
     $admin2->assignRole('Operations Manager');
+    $user = \App\Models\Api\User::create([
+      'username' => 'wanxin',
+      'nickname' => 'wanxin',
+      'password' => '111111'
+    ]);
+    $user->assignRole('General Member');
   }
 }

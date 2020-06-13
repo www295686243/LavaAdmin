@@ -27,5 +27,11 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('position', 'PositionController');
     // 员工
     Route::apiResource('employee', 'EmployeeController');
+    // 会员
+    Route::apiResource('user', 'UserController');
+    // 角色
+    Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
+    Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');
+    Route::apiResource('role', 'RoleController');
   });
 });

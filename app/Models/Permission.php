@@ -72,4 +72,13 @@ class Permission extends \Spatie\Permission\Models\Permission
   {
     return Permission::where('guard_name', $guard)->pluck('name');
   }
+
+  /**
+   * @param $guard
+   * @return mixed
+   */
+  public static function getAllPermissionTree($guard)
+  {
+    return self::where('guard_name', $guard)->get()->toTree();
+  }
 }

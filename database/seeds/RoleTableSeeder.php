@@ -32,12 +32,16 @@ class RoleTableSeeder extends Seeder
         'name' => 'Operation Specialist',
         'display_name' => '运营专员',
         'guard_name' => 'admin'
+      ],
+      [
+        'name' => 'General Member',
+        'display_name' => '普通会员',
+        'guard_name' => 'api'
       ]
     ];
 
     foreach ($data as $datum) {
       $role = \App\Models\Role::create($datum);
-      $role->givePermissionTo(\App\Models\Permission::pluck('name'));
     }
   }
 }

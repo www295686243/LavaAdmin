@@ -32,6 +32,7 @@ class PositionController extends Controller
     $Position = new Role();
     $input = $request->only($Position->getFillable());
     $input['name'] = Str::random(10);
+    $input['guard_name'] = 'admin';
     $Position->create($input);
     return $this->success();
   }
@@ -82,7 +83,7 @@ class PositionController extends Controller
     return $this->setParams([
       'menus' => AdminMenu::all()->toTree(),
       'menu_permissions' => $positionData->menu_permissions,
-      'interface' => Permission::all()->toTree(),
+      'interface' => Permission::getAllPermissionTree('admin'),
       'interface_permissions' => $positionData->getAllPermissions()->pluck('name')
     ])->success();
   }
