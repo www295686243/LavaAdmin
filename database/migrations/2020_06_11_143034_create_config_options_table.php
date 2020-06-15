@@ -16,7 +16,8 @@ class CreateConfigOptionsTable extends Migration
     Schema::create('config_options', function (Blueprint $table) {
       $table->increments('id');
       $table->unsignedInteger('config_id');
-      $table->string('display_name');
+      $table->string('display_name', 60);
+      $table->unsignedSmallInteger('sort')->nullable();
       $table->timestamps();
     });
   }

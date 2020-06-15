@@ -60,18 +60,6 @@ class RoleController extends Controller
   /**
    * @param $id
    * @return \Illuminate\Http\JsonResponse
-   * @throws \Exception
-   */
-  public function destroy($id)
-  {
-    $roleData = Role::findOrFail($id);
-    $roleData->delete();
-    return $this->success();
-  }
-
-  /**
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
    */
   public function getPermissions($id)
   {

@@ -26,7 +26,8 @@ class ConfigOption extends Base
 {
   protected $fillable = [
     'config_id',
-    'display_name'
+    'display_name',
+    'sort'
   ];
 
   protected $hidden = [

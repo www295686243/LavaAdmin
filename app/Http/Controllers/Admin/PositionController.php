@@ -61,18 +61,6 @@ class PositionController extends Controller
   }
 
   /**
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   * @throws \Exception
-   */
-  public function destroy($id)
-  {
-    $positionData = $this->getPosition($id);
-    $positionData->delete();
-    return $this->success();
-  }
-
-  /**
    * @param PositionRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
@@ -82,7 +70,7 @@ class PositionController extends Controller
     $positionData = Role::findOrFail($id);
     return $this->setParams([
       'menus' => AdminMenu::all()->toTree(),
-      'menu_permissions' => $positionData->menu_permissions,
+      'menu_permissions' => $positionData->menu_permissions ?? [],
       'interface' => Permission::getAllPermissionTree('admin'),
       'interface_permissions' => $positionData->getAllPermissions()->pluck('name')
     ])->success();

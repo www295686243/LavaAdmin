@@ -12,7 +12,17 @@ class AdminMenuTableSeeder extends Seeder
         [
           'display_name' => '系统配置',
           'icon' => 'el-icon-s-custom',
-          'route' => '/system/config'
+          'route' => '/system/config',
+          'children' => [
+            [
+              'display_name' => '配置列表',
+              'route' => '/system/config/config'
+            ],
+            [
+              'display_name' => '配置选项',
+              'route' => '/system/config/config-option'
+            ]
+          ]
         ],
         [
           'display_name' => '后台操作日志',
