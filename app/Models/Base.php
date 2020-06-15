@@ -7,6 +7,16 @@ use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
+/**
+ * \App\Models\Base
+ *
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
+ * @mixin \Eloquent
+ */
 class Base extends Model
 {
   use ResourceTrait;

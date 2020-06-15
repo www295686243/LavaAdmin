@@ -32,6 +32,17 @@ class AdminMenuTableSeeder extends Seeder
       ]
     ],
     [
+      'display_name' => '新闻管理',
+      'route' => '/info',
+      'children' => [
+        [
+          'display_name' => '新闻列表',
+          'icon' => 'el-icon-news',
+          'route' => '/info/news'
+        ]
+      ]
+    ],
+    [
       'display_name' => '用户管理',
       'route' => '/user',
       'children' => [

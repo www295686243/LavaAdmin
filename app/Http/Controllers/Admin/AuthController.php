@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\Admin\User;
+use App\Models\Config;
 
 class AuthController extends Controller
 {
@@ -34,5 +35,14 @@ class AuthController extends Controller
       'menus' => $userData->getMenuPermissions(),
       'interface' => $userData->getInterfacePermissions()
     ])->success();
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getAppConfig()
+  {
+    $data = Config::with('options')->get();
+    return $this->setParams($data)->success();
   }
 }

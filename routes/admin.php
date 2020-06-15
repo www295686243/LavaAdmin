@@ -17,6 +17,7 @@ Route::namespace('Admin')->group(function () {
   Route::post('auth/login', 'AuthController@login');
   Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
     Route::get('auth/getUserConfig', 'AuthController@getUserConfig');
+    Route::get('auth/getAppConfig', 'AuthController@getAppConfig');
     // 系统配置
     Route::apiResource('config', 'ConfigController');
     Route::apiResource('config_option', 'ConfigOptionController');
@@ -34,5 +35,7 @@ Route::namespace('Admin')->group(function () {
     Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
     Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');
     Route::apiResource('role', 'RoleController')->except(['destroy']);
+    // 新闻
+    Route::apiResource('news', 'NewsController');
   });
 });
