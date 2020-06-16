@@ -8,6 +8,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
 class News extends Base
 {
   use HasSnowflakePrimary, SoftDeletes;
+
   protected $fillable = [
     'user_id',
     'text',
@@ -31,4 +32,12 @@ class News extends Base
     'files' => 'array',
     'images' => 'array',
   ];
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function images()
+  {
+    return $this->morphMany('App\Models\Image', 'imageable');
+  }
 }

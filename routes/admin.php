@@ -35,6 +35,9 @@ Route::namespace('Admin')->group(function () {
     Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
     Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');
     Route::apiResource('role', 'RoleController')->except(['destroy']);
+    // 图片
+    Route::post('image/destroyMore', 'ImageController@destroyMore');
+    Route::apiResource('image', 'ImageController')->only(['index', 'store', 'destroy']);
     // 新闻
     Route::apiResource('news', 'NewsController');
   });

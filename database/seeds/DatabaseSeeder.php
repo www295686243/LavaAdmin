@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
       VersionTableSeeder::class,
       UserTableSeeder::class,
       ConfigTableSeeder::class,
+      NewsTableSeeder::class,
     ]);
   }
 }
