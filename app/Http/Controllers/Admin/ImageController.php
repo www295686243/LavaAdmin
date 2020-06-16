@@ -18,16 +18,15 @@ class ImageController extends Controller
   public function index(ImageRequest $request)
   {
     $type = $request->input('type');
-    $modelName = '\App\Models\\'.$type;
+    $modelName = 'App\Models\\'.$type;
     $info_id = $request->input('info_id');
     $limit = $request->input('limit');
+    $marking = $request->input('marking');
     $data = Image::where('imageable_type', $modelName)
       ->when($info_id, function ($query, $info_id) {
         return $query->where('imageable_id', $info_id);
-      }, function ($query) {
-        return $query->where(function ($query) {
-          $query->whereNull('imageable_id')->orWhere('imageable_id', 0);
-        });
+      }, function ($query) use ($marking) {
+        return $query->where('marking', $marking);
       })
       ->orderByDesc('id')
       ->paginate($limit);
@@ -47,7 +46,7 @@ class ImageController extends Controller
     $file = $request->file('file');
     $file->isValid();
     $fileInfo = getimagesize($file);
-    $input['imageable_type'] = '\App\Models\\'.$type;
+    $input['imageable_type'] = 'App\Models\\'.$type;
     $input['imageable_id'] = $info_id;
     $input['width'] = $fileInfo[0];
     $input['height'] = $fileInfo[1];

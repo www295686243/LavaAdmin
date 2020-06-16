@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewsRequest;
+use App\Models\Image;
 use App\Models\News;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class NewsController extends Controller
    */
   public function index()
   {
-    $data = News::paginate();
+    $data = News::orderByDesc('id')->paginate();
     return $this->setParams($data)->success();
   }
 
@@ -27,7 +28,8 @@ class NewsController extends Controller
   {
     $input = $request->only(News::getFillFields());
     $input['user_id'] = User::getUserId();
-    News::create($input);
+    $data = News::create($input);
+    (new Image())->updateImageableId($data->id);
     return $this->success();
   }
 
@@ -62,6 +64,7 @@ class NewsController extends Controller
   public function destroy($id)
   {
     $data = News::findOrFail($id);
+    (new Image())->delImages($data->images()->getQuery());
     $data->delete();
     return $this->success();
   }

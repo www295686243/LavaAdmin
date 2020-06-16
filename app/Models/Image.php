@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
@@ -18,7 +19,8 @@ class Image extends Base
     'mime',
     'size',
     'width',
-    'height'
+    'height',
+    'marking'
   ];
 
   protected $hidden = [
@@ -47,5 +49,34 @@ class Image extends Base
   public function imageable()
   {
     return $this->morphTo();
+  }
+
+  public function updateImageableId($info_id)
+  {
+    $marking = request()->input('marking');
+    self::where('marking', $marking)->update(['imageable_id' => $info_id]);
+    $this->destroySurplus();
+  }
+
+  /**
+   * @return mixed
+   */
+  private function destroySurplus()
+  {
+    $query = self::where('imageable_id', 0)->orWhereNull('imageable_id');
+    return $this->delImages($query);
+  }
+
+  /**
+   * @param Builder $query
+   * @return mixed
+   */
+  public function delImages(Builder $query)
+  {
+    $list = $query->get();
+    foreach ($list as $item) {
+      Storage::delete($item->url);
+    }
+    return $query->delete();
   }
 }

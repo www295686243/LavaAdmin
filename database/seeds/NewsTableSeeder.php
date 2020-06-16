@@ -16,5 +16,14 @@ class NewsTableSeeder extends Seeder
       'text' => 'text',
       'user_id' => $userData->id
     ]);
+//    $newsData->images()->create([
+//      'user_id' => $userData->id,
+//      'name' => 'name',
+//      'url' => 'url',
+//      'mime' => 'mime',
+//      'size' => 1,
+//      'width' => 1,
+//      'height' => 1
+//    ]);
   }
 }
