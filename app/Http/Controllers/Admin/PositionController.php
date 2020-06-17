@@ -61,11 +61,10 @@ class PositionController extends Controller
   }
 
   /**
-   * @param PositionRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getPermissions(PositionRequest $request, $id)
+  public function getPermissions($id)
   {
     $positionData = Role::findOrFail($id);
     return $this->setParams([

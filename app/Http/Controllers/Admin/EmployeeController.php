@@ -32,7 +32,7 @@ class EmployeeController extends Controller
     $input['is_admin'] = 1;
     $role_names = $request->input('role_names', []);
     $role_names = Arr::except($role_names, ['root']);
-    $user = User::query()->create($input);
+    $user = User::create($input);
     $user->syncRoles($role_names);
     return $this->success();
   }
@@ -56,7 +56,7 @@ class EmployeeController extends Controller
   {
     $User = new User();
     $input = $request->only($User->getFillable());
-    $userData = $User->query()->findOrFail($id);
+    $userData = $User->findOrFail($id);
     $role_names = $request->input('role_names', []);
     $role_names = Arr::except($role_names, ['root']);
     if ($userData->hasRole('root') && !User::hasRoot()) {

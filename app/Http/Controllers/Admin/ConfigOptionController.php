@@ -31,9 +31,7 @@ class ConfigOptionController extends Controller
    */
   public function store(ConfigOptionRequest $request)
   {
-    $config_id = $request->input('config_id');
     $input = $request->only(ConfigOption::getFillFields());
-    $input['config_id'] = $config_id;
     ConfigOption::create($input);
     return $this->success();
   }
@@ -55,7 +53,7 @@ class ConfigOptionController extends Controller
    */
   public function update(ConfigOptionRequest $request, $id)
   {
-    $input = $request->only(ConfigOption::getFillFields());
+    $input = $request->only(ConfigOption::getFillFieldAndExcept('config_id'));
     $data = ConfigOption::findOrFail($id);
     $data->update($input);
     return $this->success();

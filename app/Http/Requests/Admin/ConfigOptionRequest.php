@@ -13,8 +13,22 @@ class ConfigOptionRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'index':
+        return [
+          'config_id' => 'sometimes|numeric'
+        ];
+      case 'store':
+        return [
+          'config_id' => 'required|numeric',
+          'display_name' => 'required|string|max:60'
+        ];
+      case 'update':
+        return [
+          'display_name' => 'required|string|max:60'
+        ];
+      default:
+        return [];
+    }
   }
 }

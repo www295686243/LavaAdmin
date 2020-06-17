@@ -13,8 +13,21 @@ class RoleRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'store':
+        return [
+          'display_name' => 'required|string|between:1,30'
+        ];
+      case 'update':
+        return [
+          'display_name' => 'required|string|between:1,30'
+        ];
+      case 'updatePermissions':
+        return [
+          'permissions' => 'sometimes|array'
+        ];
+      default:
+        return [];
+    }
   }
 }

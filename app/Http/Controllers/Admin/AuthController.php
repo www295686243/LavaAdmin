@@ -3,24 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\UserRequest;
+use App\Http\Requests\Admin\AuthRequest;
 use App\Models\Admin\User;
 use App\Models\Config;
 
 class AuthController extends Controller
 {
   /**
-   * @param UserRequest $request
+   * @param AuthRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function login(UserRequest $request)
+  public function login(AuthRequest $request)
   {
     $username = $request->input('username');
     $password = $request->input('password');
-    $userData = (new User())->getToken($username, $password);
-    if ($userData->is_admin === 0) {
-      return $this->error('您不是后台管理员');
-    }
+    $userData = (new User())->getToken($username, $password, true);
     return $this->setParams($userData)->success();
   }
 

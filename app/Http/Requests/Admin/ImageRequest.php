@@ -13,8 +13,27 @@ class ImageRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'index':
+        return [
+          'type' => 'required|string',
+          'info_id' => 'sometimes|numeric',
+          'limit' => 'sometimes|numeric',
+          'marking' => 'sometimes|numeric'
+        ];
+      case 'store':
+        return [
+          'type' => 'required|string',
+          'info_id' => 'sometimes|numeric',
+          'marking' => 'sometimes|numeric',
+          'file' => 'image'
+        ];
+      case 'destroyMore':
+        return [
+          'ids' => 'required|array'
+        ];
+      default:
+        return [];
+    }
   }
 }

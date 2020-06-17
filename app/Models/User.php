@@ -122,11 +122,15 @@ class User extends Authenticatable
   /**
    * @param $username
    * @param $password
+   * @param bool $isAdmin
    * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null|object
    */
-  public function getToken($username, $password)
+  public function getToken($username, $password, $isAdmin = false)
   {
     $userData = self::where('username', $username)->first();
+    if ($isAdmin && !$userData->is_admin) {
+      $this->error('用户名或密码错误!');
+    }
     if (!$userData || !Hash::check($password, $userData->password)) {
       $this->error('用户名或密码错误!');
     }

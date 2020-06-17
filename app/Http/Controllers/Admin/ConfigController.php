@@ -48,7 +48,7 @@ class ConfigController extends Controller
    */
   public function update(ConfigRequest $request, $id)
   {
-    $input = $request->only(Config::getFillFieldAndExcept(['name']));
+    $input = $request->only(Config::getFillFieldAndExcept(['name', 'guard_name']));
     Config::findOrFail($id)->update($input);
     return $this->success();
   }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\BaseRequest;
+use Illuminate\Validation\Rule;
 
 class ConfigRequest extends BaseRequest
 {
@@ -13,8 +14,31 @@ class ConfigRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'index':
+        return [
+          'guard_name' => [
+            'required',
+            Rule::in(['system'])
+          ]
+        ];
+      case 'store':
+        return [
+          'name' => 'required|string|max:60',
+          'display_name' => 'required|string|max:60',
+          'value' => 'required|string|max:120',
+          'guard_name' => [
+            'required',
+            Rule::in(['system'])
+          ]
+        ];
+      case 'update':
+        return [
+          'display_name' => 'required|string|max:60',
+          'value' => 'required|string|max:120'
+        ];
+      default:
+        return [];
+    }
   }
 }
