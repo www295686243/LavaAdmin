@@ -6,6 +6,44 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
+/**
+ * \App\Models\Image
+ *
+ * @property int $id
+ * @property int $user_id 上传的会员id
+ * @property string $imageable_type
+ * @property int $imageable_id
+ * @property string $name 文件名称
+ * @property string $url 文件路径
+ * @property string $mime Mime类型
+ * @property int $size 文件大小
+ * @property float $width 图片宽度
+ * @property float $height 图片高度
+ * @property int|null $marking 标记(信息发布时用到)
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $full_url
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $imageable
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereImageableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereImageableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereMarking($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereMime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereSize($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereWidth($value)
+ * @mixin \Eloquent
+ */
 class Image extends Base
 {
   use HasSnowflakePrimary;

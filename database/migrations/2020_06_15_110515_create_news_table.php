@@ -18,8 +18,8 @@ class CreateNewsTable extends Migration
       $table->unsignedBigInteger('user_id');
       $table->string('text')->nullable();
       $table->string('textarea')->nullable();
-      $table->string('select')->nullable();
-      $table->string('radio')->nullable();
+      $table->unsignedInteger('select')->nullable();
+      $table->unsignedInteger('radio')->nullable();
       $table->unsignedTinyInteger('switch')->nullable();
       $table->timestamp('datetime')->nullable();
       $table->json('checkbox')->nullable();
