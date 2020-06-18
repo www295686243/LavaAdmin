@@ -21,9 +21,7 @@ class PermissionTableSeeder extends Seeder
             'name' => '/system/config',
             'display_name' => '系统配置',
             'guard_name' => 'admin',
-            'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\ConfigController::class, [
-              '_myself' => '仅自己'
-            ])
+            'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\ConfigController::class)
           ]
         ]
       ],
@@ -41,15 +39,34 @@ class PermissionTableSeeder extends Seeder
                 'name' => '/user/admin/employee',
                 'display_name' => '员工列表',
                 'guard_name' => 'admin',
-                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\UserController::class, [
-                  'getUserConfig' => '用户配置'
-                ])
+                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\EmployeeController::class)
               ],
               [
                 'name' => '/user/admin/position',
                 'display_name' => '职位列表',
                 'guard_name' => 'admin',
                 'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\PositionController::class, [
+                  'updatePermissions' => '权限管理'
+                ])
+              ]
+            ]
+          ],
+          [
+            'name' => '/user/member',
+            'display_name' => '会员管理',
+            'guard_name' => 'admin',
+            'children' => [
+              [
+                'name' => '/user/member/user',
+                'display_name' => '会员列表',
+                'guard_name' => 'admin',
+                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\UserController::class)
+              ],
+              [
+                'name' => '/user/member/role',
+                'display_name' => '会员角色',
+                'guard_name' => 'admin',
+                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\RoleController::class, [
                   'updatePermissions' => '权限管理'
                 ])
               ]
