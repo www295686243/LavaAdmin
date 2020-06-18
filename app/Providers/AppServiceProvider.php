@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Config;
+use App\Models\Version;
+use App\Observers\ConfigObserver;
+use App\Observers\VersionObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
    */
   public function boot()
   {
-    //
+    Config::observe(ConfigObserver::class);
+    Version::observe(VersionObserver::class);
   }
 }

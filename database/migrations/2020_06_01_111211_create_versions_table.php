@@ -16,6 +16,7 @@ class CreateVersionsTable extends Migration
     Schema::create('versions', function (Blueprint $table) {
       $table->increments('id');
       $table->string('name');
+      $table->string('display_name', 60);
       $table->unsignedInteger('value')->default(1);
       $table->timestamps();
     });

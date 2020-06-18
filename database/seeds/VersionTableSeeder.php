@@ -13,10 +13,12 @@ class VersionTableSeeder extends Seeder
   {
     $data = [
       [
-        'name' => 'app'
+        'name' => 'app',
+        'display_name' => '应用版本'
       ],
       [
-        'name' => 'config'
+        'name' => 'config',
+        'display_name' => '全局配置'
       ]
     ];
     foreach ($data as $datum) {

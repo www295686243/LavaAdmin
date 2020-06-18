@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('Admin')->group(function () {
   Route::post('auth/login', 'AuthController@login');
+  Route::get('auth/getAppConfig', 'AuthController@getAppConfig');
   Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
     Route::get('auth/getUserConfig', 'AuthController@getUserConfig');
-    Route::get('auth/getAppConfig', 'AuthController@getAppConfig');
     // 系统配置
     Route::apiResource('config', 'ConfigController');
     Route::apiResource('config_option', 'ConfigOptionController');
@@ -40,5 +40,7 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('image', 'ImageController')->only(['index', 'store', 'destroy']);
     // 新闻
     Route::apiResource('news', 'NewsController');
+    // 版本
+    Route::apiResource('version', 'VersionController')->only(['index', 'update', 'show']);
   });
 });

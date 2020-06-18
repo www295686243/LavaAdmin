@@ -28,6 +28,11 @@ class AdminMenuTableSeeder extends Seeder
           'display_name' => '后台操作日志',
           'icon' => 'el-icon-edit-outline',
           'route' => '/system/admin-log'
+        ],
+        [
+          'display_name' => '版本控制',
+          'icon' => 'el-icon-set-up',
+          'route' => '/system/version'
         ]
       ]
     ],

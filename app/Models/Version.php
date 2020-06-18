@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
  *
  * @property int $id
  * @property string $name
+ * @property string $display_name
  * @property int $value
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Cache;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereDisplayName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereUpdatedAt($value)
@@ -28,6 +30,7 @@ class Version extends Base
 {
   protected $fillable = [
     'name',
+    'display_name',
     'value'
   ];
 
@@ -43,5 +46,16 @@ class Version extends Base
         return [$item->name => $item->value];
       });
     });
+  }
+
+  public function updateVersion($name)
+  {
+    self::where('name', $name)->increment('value');
+    $this->clearCache();
+  }
+
+  public function clearCache()
+  {
+    Cache::tags('app')->forget($this->getTable());
   }
 }
