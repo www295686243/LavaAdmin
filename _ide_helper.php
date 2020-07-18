@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 7.20.0 on 2020-07-17 11:14:18.
+ * Generated for Laravel 7.20.0 on 2020-07-17 14:43:40.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -18600,6 +18600,36 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->macroCall($method, $parameters);
+            }
+         
+            /**
+             * Register the `toRawSql` macro.
+             *
+             * @static 
+             */ 
+            public static function toRawSql()
+            {
+                                return \Illuminate\Database\Query\Builder::toRawSql();
+            }
+         
+            /**
+             * Register the `dumpSql` macro.
+             *
+             * @static 
+             */ 
+            public static function dumpSql()
+            {
+                                return \Illuminate\Database\Query\Builder::dumpSql();
+            }
+         
+            /**
+             * Register the `ddSql` macro.
+             *
+             * @static 
+             */ 
+            public static function ddSql()
+            {
+                                return \Illuminate\Database\Query\Builder::ddSql();
             }
         }
 

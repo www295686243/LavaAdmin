@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1911d70ecd052f22967de1606a641f58",
+    "content-hash": "871abbef5b9bd3f12fe77e46959a7ad3",
     "packages": [
         {
             "name": "aliyuncs/oss-sdk-php",
@@ -710,6 +710,90 @@
                 "laravel"
             ],
             "time": "2020-05-31T07:30:16+00:00"
+        },
+        {
+            "name": "guanguans/laravel-dump-sql",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guanguans/laravel-dump-sql.git",
+                "reference": "fa3f96ddc7d4f3aa7a1710b34ad35c96d4c070a9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guanguans/laravel-dump-sql/zipball/fa3f96ddc7d4f3aa7a1710b34ad35c96d4c070a9",
+                "reference": "fa3f96ddc7d4f3aa7a1710b34ad35c96d4c070a9",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "laravel/framework": "~5.1 || ~6.0 || ~7.0"
+            },
+            "require-dev": {
+                "brainmaestro/composer-git-hooks": "^2.7",
+                "friendsofphp/php-cs-fixer": "^2.16",
+                "mockery/mockery": "^1.2",
+                "orchestra/testbench": "^3.7",
+                "phpunit/phpunit": "~8.0"
+            },
+            "type": "laravel",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Guanguans\\LaravelDumpSql\\ServiceProvider"
+                    ]
+                },
+                "hooks": {
+                    "pre-commit": [
+                        "composer test",
+                        "composer check-style"
+                    ],
+                    "pre-push": [
+                        "composer test",
+                        "composer check-style"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Guanguans\\LaravelDumpSql\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "guanguans",
+                    "email": "ityaozm@gmail.com"
+                }
+            ],
+            "description": "laravel 中轻松容易的输出完整的 SQL 语句。 - Easy output of complete SQL statements for laravel framework.",
+            "keywords": [
+                "dd",
+                "debug",
+                "dump",
+                "laravel",
+                "mysql",
+                "sql"
+            ],
+            "funding": [
+                {
+                    "url": "https://www.guanguans.cn/images/wechat.jpeg",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://www.patreon.com/guanguans",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2020-07-17T03:34:46+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

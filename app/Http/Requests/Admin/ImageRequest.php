@@ -18,14 +18,13 @@ class ImageRequest extends BaseRequest
         return [
           'type' => 'required|string',
           'info_id' => 'sometimes|numeric',
-          'limit' => 'sometimes|numeric',
-          'marking' => 'sometimes|numeric'
+          'limit' => 'sometimes|numeric'
         ];
       case 'store':
         return [
           'type' => 'required|string',
           'info_id' => 'sometimes|numeric',
-          'marking' => 'sometimes|numeric',
+          'marking' => 'sometimes|nullable|numeric',
           'file' => 'image'
         ];
       case 'destroyMore':

@@ -13,6 +13,7 @@
     "caouecs/laravel-lang": "~6.0",
     "fideloper/proxy": "^4.2",
     "fruitcake/laravel-cors": "^2.0",
+    "guanguans/laravel-dump-sql": "^1.0",
     "guzzlehttp/guzzle": "^6.3",
     "iidestiny/laravel-filesystem-oss": "^2.0",
     "kalnoy/nestedset": "^5.0",
