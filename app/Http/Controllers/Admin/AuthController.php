@@ -35,11 +35,18 @@ class AuthController extends Controller
   }
 
   /**
+   * @param AuthRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getAppConfig()
+  public function getAppConfig(AuthRequest $request)
   {
-    $data = Config::with('options')->get();
+    $guard_name = $request->input('guard_name');
+    $data = Config::with('options')
+      ->when($guard_name, function ($query, $guard_name) {
+        return $query->where('guard_name', $guard_name);
+      })
+      ->get()
+      ->groupBy('guard_name');
     return $this->setParams($data)->success();
   }
 }

@@ -11,34 +11,35 @@ class ConfigTableSeeder extends Seeder
    */
   public function run()
   {
-    $data = [
-      [
-        'name' => 'adminImageHost',
-        'display_name' => '后台图片上传地址',
-        'value' => 'image',
-        'guard_name' => 'system'
-      ],
-      [
-        'name' => 'adminFileHost',
-        'display_name' => '后台文件上传地址',
-        'value' => 'file',
-        'guard_name' => 'system'
-      ],
-      [
-        'name' => 'apiImageHost',
-        'display_name' => '前台图片上传地址',
-        'value' => 'image',
-        'guard_name' => 'system'
-      ],
-      [
-        'name' => 'apiFileHost',
-        'display_name' => '前台文件上传地址',
-        'value' => 'file',
-        'guard_name' => 'system'
-      ]
-    ];
-    foreach ($data as $datum) {
-      $model = \App\Models\Config::create($datum);
+    $dispatcher = \App\Models\Config::getEventDispatcher();
+    \App\Models\Config::unsetEventDispatcher();
+
+    $systemOptions = config('options.system');
+    foreach ($systemOptions as $data) {
+      \App\Models\Config::updateOrCreate(
+        ['name' => $data['name']],
+        $data
+      );
     }
+    (new \App\Models\Version())->updateOrCreateVersion('system', '系统配置');
+
+    $tableOptions = config('options.table-options');
+    foreach ($tableOptions as $table) {
+      foreach ($table['fields'] as $field) {
+        $tableData = \App\Models\Config::updateOrCreate(
+          ['name' => $field['name'], 'guard_name' => 'options.'.$table['name']],
+          ['display_name' => $table['display_name'].'-'.$field['display_name']]
+        );
+        foreach ($field['options'] as $option) {
+          $tableData->options()->updateOrCreate(
+            ['display_name' => $option]
+          );
+        }
+        $tableData->options()->whereNotIn('display_name', $field['options'])->delete();
+        (new \App\Models\Version())->updateOrCreateVersion($tableData->guard_name, $tableData->display_name);
+      }
+    }
+
+    \App\Models\Config::setEventDispatcher($dispatcher);
   }
 }

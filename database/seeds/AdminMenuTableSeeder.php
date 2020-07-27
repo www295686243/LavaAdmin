@@ -15,12 +15,8 @@ class AdminMenuTableSeeder extends Seeder
           'route' => '/system/config',
           'children' => [
             [
-              'display_name' => '配置列表',
+              'display_name' => '参数配置',
               'route' => '/system/config/config'
-            ],
-            [
-              'display_name' => '配置选项',
-              'route' => '/system/config/config-option'
             ]
           ]
         ],

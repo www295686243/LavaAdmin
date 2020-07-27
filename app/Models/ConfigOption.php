@@ -3,13 +3,15 @@
 namespace App\Models;
 
 /**
- * \App\Models\ConfigOption
+ * App\Models\ConfigOption
  *
  * @property int $id
  * @property int $config_id
  * @property string $display_name
+ * @property int|null $sort
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Config $config
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption newQuery()
@@ -19,6 +21,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption whereDisplayName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption whereSort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -34,4 +37,12 @@ class ConfigOption extends Base
     'created_at',
     'updated_at'
   ];
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function config()
+  {
+    return $this->belongsTo('App\Models\Config');
+  }
 }

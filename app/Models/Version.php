@@ -48,9 +48,13 @@ class Version extends Base
     });
   }
 
-  public function updateVersion($name)
+  public function updateOrCreateVersion($name, $displayName = '')
   {
-    self::where('name', $name)->increment('value');
+    $data = self::where('name', $name)->first();
+    if (!$data) {
+      $data = self::create(['name' => $name, 'display_name' => $displayName]);
+    }
+    $data->increment('value');
     $this->clearCache();
   }
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ConfigRequest;
 use App\Models\Config;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConfigController extends Controller
 {
@@ -56,11 +57,15 @@ class ConfigController extends Controller
   /**
    * @param $id
    * @return \Illuminate\Http\JsonResponse
-   * @throws \Exception
+   * @throws \Throwable
    */
   public function destroy($id)
   {
-    Config::findOrFail($id)->delete();
+    $configData = Config::findOrFail($id);
+    DB::transaction(function () use ($configData) {
+      $configData->options()->delete();
+      $configData->delete();
+    });
     return $this->success();
   }
 }
