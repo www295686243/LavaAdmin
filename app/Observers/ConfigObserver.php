@@ -19,4 +19,9 @@ class ConfigObserver
   {
     (new Version())->updateOrCreateVersion($config->guard_name);
   }
+
+  public function deleted(Config $config)
+  {
+    (new Version())->updateOrCreateVersion($config->guard_name);
+  }
 }

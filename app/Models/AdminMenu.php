@@ -54,6 +54,7 @@ class AdminMenu extends Base
     'route',
     'icon',
     'params',
+    'default_params',
     'sort'
   ];
 
@@ -65,6 +66,7 @@ class AdminMenu extends Base
   ];
 
   protected $casts = [
-    'params' => 'array'
+    'params' => 'array',
+    'default_params' => 'array'
   ];
 }

@@ -17,25 +17,19 @@ class ConfigRequest extends BaseRequest
     switch (request()->route()->getActionMethod()) {
       case 'index':
         return [
-          'guard_name' => [
-            'required',
-            Rule::in(['system'])
-          ]
+          'guard_name' => 'required'
         ];
       case 'store':
         return [
           'name' => 'required|string|max:60',
           'display_name' => 'required|string|max:60',
-          'value' => 'required|string|max:120',
-          'guard_name' => [
-            'required',
-            Rule::in(['system'])
-          ]
+          'value' => 'sometimes|nullable|string|max:120',
+          'guard_name' => 'required'
         ];
       case 'update':
         return [
           'display_name' => 'required|string|max:60',
-          'value' => 'required|string|max:120'
+          'value' => 'sometimes|nullable|string|max:120'
         ];
       default:
         return [];

@@ -20,6 +20,7 @@ class CreateAdminMenusTable extends Migration
       $table->string('route', 120)->comment('路由')->nullable();
       $table->string('icon', 30)->comment('icon图标')->nullable();
       $table->json('params')->comment('所需参数(一般二级以上的菜单会用到)')->nullable();
+      $table->json('default_params')->comment('默认参数')->nullable();
       $table->unsignedSmallInteger('sort')->comment('排序')->nullable();
       $table->timestamps();
       $table->nestedSet();

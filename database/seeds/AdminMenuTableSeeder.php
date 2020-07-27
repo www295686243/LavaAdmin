@@ -10,15 +10,10 @@ class AdminMenuTableSeeder extends Seeder
       'route' => '/system',
       'children' => [
         [
-          'display_name' => '系统配置',
-          'icon' => 'el-icon-s-custom',
+          'display_name' => '参数配置',
+          'icon' => 'el-icon-setting',
           'route' => '/system/config',
-          'children' => [
-            [
-              'display_name' => '参数配置',
-              'route' => '/system/config/config'
-            ]
-          ]
+          'default_params' => ['guard_name' => 'system']
         ],
         [
           'display_name' => '后台操作日志',
@@ -36,6 +31,18 @@ class AdminMenuTableSeeder extends Seeder
       'display_name' => '新闻管理',
       'route' => '/info',
       'children' => [
+        [
+          'display_name' => '参数配置',
+          'icon' => 'el-icon-setting',
+          'route' => '/info/news/config',
+          'default_params' => ['guard_name' => 'News']
+        ],
+        [
+          'display_name' => '选项配置',
+          'icon' => 'el-icon-s-operation',
+          'route' => '/info/news/options/config',
+          'default_params' => ['guard_name' => 'options.News']
+        ],
         [
           'display_name' => '新闻列表',
           'icon' => 'el-icon-news',
