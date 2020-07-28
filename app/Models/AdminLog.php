@@ -37,6 +37,7 @@ use App\Models\Admin\User;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class AdminLog extends Base
 {

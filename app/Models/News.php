@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
- * \App\Models\News
+ * App\Models\News
  *
  * @property int $id
  * @property int $user_id
@@ -32,6 +32,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\News newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\News newQuery()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\News onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\News query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\News whereCascader($value)

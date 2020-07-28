@@ -24,6 +24,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption whereSort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ConfigOption whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class ConfigOption extends Base
 {

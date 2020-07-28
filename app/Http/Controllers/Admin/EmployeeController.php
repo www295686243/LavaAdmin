@@ -17,7 +17,7 @@ class EmployeeController extends Controller
     $data = User::exceptRoot()
       ->with('roles')
       ->where('is_admin', 1)
-      ->paginate();
+      ->pagination();
     return $this->setParams($data)->success();
   }
 

@@ -61,6 +61,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User withoutTrashed()
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User pagination()
  */
 class User extends Authenticatable
 {
@@ -117,6 +118,16 @@ class User extends Authenticatable
   public function scopeSearchQuery($query)
   {
     return (new SearchQueryService())->searchQuery($query);
+  }
+
+  /**
+   * @param \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+   */
+  public function scopePagination($query)
+  {
+    $limit = request()->input('limit', 10);
+    return $query->paginate($limit);
   }
 
   /**

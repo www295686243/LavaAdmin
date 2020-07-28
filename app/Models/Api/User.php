@@ -48,6 +48,7 @@ namespace App\Models\Api;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User whereUsername($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User pagination()
  */
 class User extends \App\Models\User
 {

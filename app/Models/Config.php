@@ -28,6 +28,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Config whereValue($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class Config extends Base
 {

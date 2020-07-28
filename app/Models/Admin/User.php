@@ -51,6 +51,7 @@ use App\Models\AdminMenu;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User whereUsername($value)
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User pagination()
  */
 class User extends \App\Models\User
 {

@@ -13,7 +13,7 @@ class AdminLogController extends Controller
    */
   public function index()
   {
-    $data = AdminLog::searchQuery()->orderByDesc('id')->paginate();
+    $data = AdminLog::searchQuery()->orderByDesc('id')->pagination();
     return $this->setParams($data)->success();
   }
 }

@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 
 /**
- * \App\Models\Base
+ * App\Models\Base
  *
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
  * @mixin \Eloquent
@@ -66,6 +67,16 @@ class Base extends Model
   public function scopeSearchQuery($query)
   {
     return (new SearchQueryService())->searchQuery($query);
+  }
+
+  /**
+   * @param \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+   */
+  public function scopePagination($query)
+  {
+    $limit = request()->input('limit', 10);
+    return $query->paginate($limit);
   }
 
   /**

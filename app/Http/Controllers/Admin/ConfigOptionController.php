@@ -21,7 +21,7 @@ class ConfigOptionController extends Controller
     })
       ->orderBy('sort', 'asc')
       ->orderBy('id', 'asc')
-      ->paginate();
+      ->pagination();
     return $this->setParams($data)->success();
   }
 

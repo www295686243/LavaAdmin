@@ -43,6 +43,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Image whereWidth($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class Image extends Base
 {

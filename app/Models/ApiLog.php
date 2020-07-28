@@ -35,6 +35,7 @@ namespace App\Models;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class ApiLog extends Base
 {

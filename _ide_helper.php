@@ -16499,7 +16499,7 @@ namespace  {
              * @param mixed $value
              * @param callable $callback
              * @param callable|null $default
-             * @return mixed|$this 
+             * @return mixed|$this|\Illuminate\Database\Query\Builder
              * @static 
              */ 
             public static function when($value, $callback, $default = null)
@@ -17936,7 +17936,7 @@ namespace  {
              * Add a descending "order by" clause to the query.
              *
              * @param string $column
-             * @return \Illuminate\Database\Query\Builder 
+             * @return \Illuminate\Database\Query\Builder
              * @static 
              */ 
             public static function orderByDesc($column)

@@ -16,7 +16,7 @@ class NewsController extends Controller
    */
   public function index()
   {
-    $data = News::orderByDesc('id')->paginate();
+    $data = News::orderByDesc('id')->pagination();
     return $this->setParams($data)->success();
   }
 

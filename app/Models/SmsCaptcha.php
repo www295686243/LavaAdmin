@@ -32,6 +32,7 @@ use Overtrue\EasySms\EasySms;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class SmsCaptcha extends Base
 {

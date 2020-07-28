@@ -20,16 +20,15 @@ class ImageController extends Controller
     $type = $request->input('type');
     $modelName = 'App\Models\\'.$type;
     $info_id = $request->input('info_id');
-    $limit = $request->input('limit');
     $marking = $request->input('marking');
-    $data = Image::where('imageable_type', $modelName)
-      ->when($info_id, function ($query, $info_id) {
+    $data = Image::when($info_id, function ($query, $info_id) {
         return $query->where('imageable_id', $info_id);
       }, function ($query) use ($marking) {
         return $query->where('marking', $marking);
       })
+      ->where('imageable_type', $modelName)
       ->orderByDesc('id')
-      ->paginate($limit);
+      ->pagination();
     return $this->setParams($data)->success();
   }
 

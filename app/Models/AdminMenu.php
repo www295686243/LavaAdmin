@@ -43,6 +43,9 @@ use Kalnoy\Nestedset\NodeTrait;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereSort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property array|null $default_params 默认参数
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminMenu whereDefaultParams($value)
  */
 class AdminMenu extends Base
 {
