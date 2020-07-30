@@ -81,6 +81,7 @@ class News extends Base
   ];
 
   protected $casts = [
+    'id' => 'string',
     'checkbox' => 'array',
     'files' => 'array',
     'images' => 'array',

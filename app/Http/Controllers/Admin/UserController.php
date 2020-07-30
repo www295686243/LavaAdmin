@@ -13,7 +13,11 @@ class UserController extends Controller
    */
   public function index()
   {
-    $data = User::searchQuery()->with('roles')->where('is_admin', 0)->orderByDesc('id')->pagination();
+    $data = User::searchQuery()
+      ->with('roles')
+      ->where('is_admin', 0)
+      ->orderByDesc('id')
+      ->pagination();
     return $this->setParams($data)->success();
   }
 

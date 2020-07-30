@@ -12,10 +12,12 @@ class NewsTableSeeder extends Seeder
   public function run()
   {
     $userData = \App\Models\User::where('username', 'root')->first();
-    $newsData = \App\Models\News::create([
-      'text' => 'text',
-      'user_id' => $userData->id
-    ]);
+    for ($i = 0; $i < 20; $i++) {
+      $newsData = \App\Models\News::create([
+        'text' => 'text',
+        'user_id' => $userData->id
+      ]);
+    }
 //    $newsData->images()->create([
 //      'user_id' => $userData->id,
 //      'name' => 'name',

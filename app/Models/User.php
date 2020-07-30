@@ -92,6 +92,10 @@ class User extends Authenticatable
     'email_verified_at'
   ];
 
+  protected $casts = [
+    'id' => 'string',
+  ];
+
   /**
    * @param \DateTimeInterface $date
    * @return string
