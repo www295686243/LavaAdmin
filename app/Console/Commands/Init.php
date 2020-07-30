@@ -38,7 +38,11 @@ class Init extends Command
    */
   public function handle()
   {
-    Cache::flush();
-    $this->call('migrate:refresh', ['--seed' => true]);
+    if (env('APP_ENV') === 'dev') {
+      Cache::flush();
+      $this->call('migrate:refresh', ['--seed' => true]);
+    } else {
+      $this->call('db:seed', ['--class' => 'ConfigTableSeeder']);
+    }
   }
 }

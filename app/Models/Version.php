@@ -55,7 +55,9 @@ class Version extends Base
     if (!$data) {
       $data = self::create(['name' => $name, 'display_name' => $displayName]);
     }
-    $data->increment('value');
+    $data->display_name = $displayName;
+    $data->value += 1;
+    $data->save();
     $this->clearCache();
   }
 

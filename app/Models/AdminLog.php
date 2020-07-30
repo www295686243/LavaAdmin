@@ -60,15 +60,15 @@ class AdminLog extends Base
   public function createLog($params)
   {
     $user = User::getUserData();
-    $method = \Request::getMethod();
+    $method = request()->getMethod();
     if ($user && $method !== 'GET') {
       self::create([
         'user_id' => $user->id,
         'nickname' => $user->nickname,
         'method' => $method,
-        'path' => \Request::route()->uri(),
-        'ip' => \Request::getClientIp(),
-        'input' => \Request::all(),
+        'path' => request()->getPathInfo(),
+        'ip' => request()->getClientIp(),
+        'input' => request()->all(),
         'status' => $params['status'],
         'code' => $params['code'],
         'desc' => $params['desc']

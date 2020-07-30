@@ -15,7 +15,7 @@ class ConfigOptionObserver
    */
   public function created(ConfigOption $configOption)
   {
-    (new Version())->updateOrCreateVersion($configOption->config->guard_name);
+    (new Version())->updateOrCreateVersion($configOption->config->guard_name, $configOption->config->display_name);
   }
 
   /**
@@ -26,7 +26,7 @@ class ConfigOptionObserver
    */
   public function updated(ConfigOption $configOption)
   {
-    (new Version())->updateOrCreateVersion($configOption->config->guard_name);
+    (new Version())->updateOrCreateVersion($configOption->config->guard_name, $configOption->config->display_name);
   }
 
   /**
@@ -37,6 +37,6 @@ class ConfigOptionObserver
    */
   public function deleted(ConfigOption $configOption)
   {
-    (new Version())->updateOrCreateVersion($configOption->config->guard_name);
+    (new Version())->updateOrCreateVersion($configOption->config->guard_name, $configOption->config->display_name);
   }
 }
