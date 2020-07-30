@@ -35,6 +35,105 @@ class SearchQueryService
   }
 
   /**
+   * @param $field
+   * @param $where
+   * @param $value
+   * @param  \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private function intQuery ($field, $where, $value, $query) {
+    $value = is_array($value) ?: trim($value);
+    if ($where === '包含' || $where === '不包含') {
+      $values = is_array($value) ? $value : explode(',', $value);
+      if (count($values) === 0) {
+        return $query;
+      }
+      if ($where === '包含') {
+        $query->whereIn($field, $values);
+      } else if ($where === '不包含') {
+        $query->whereNotIn($field, $values);
+      }
+    } else {
+      $value = intval($value);
+      if ($value === -1) {
+        return $query;
+      }
+      $query->where($field, $this->INT_WHERE[$where], $value);
+    }
+    return $query;
+  }
+
+  /**
+   * @param $field
+   * @param $where
+   * @param $value
+   * @param  \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private function dateQuery ($field, $where, $value, $query) {
+    if ($where === '日期范围') {
+      $query->where($field, '>=', $value[0])->where($field, '<=', $value[1]);
+    } else {
+      $query->where($field, $this->INT_WHERE[$where], $value);
+    }
+    return $query;
+  }
+
+  /**
+   * @param $field
+   * @param $value
+   * @param  \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private function jsonQuery($field, $value, $query)
+  {
+    $query->whereJsonContains($field, $value);
+    return $query;
+  }
+
+  /**
+   * @param $field
+   * @param $value
+   * @param  \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private function classifyQuery($field, $value, $query)
+  {
+    $values = collect($value)->map(function ($item) {
+      return collect($item)->last();
+    });
+    $query->whereIn($field, $values);
+    return $query;
+  }
+
+  /**
+   * @param $field
+   * @param $where
+   * @param $value
+   * @param  \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private function stringQuery($field, $where, $value, $query)
+  {
+    $value = is_string($value) ? trim($value) : $value;
+    if (is_string($value)) {
+      $value = trim($value);
+      if ($where === '等于') {
+        $query->where($field, $this->STR_WHERE[$where], $value);
+      } else {
+        $query->where($field, $this->STR_WHERE[$where], '%'.$value.'%');
+      }
+    } else if (is_array($value)) {
+      if ($where === '包含') {
+        $query->whereIn($field, $value);
+      } else if ($where === '不包含') {
+        $query->whereNotIn($field, $value);
+      }
+    }
+    return $query;
+  }
+
+  /**
    * @param  \Illuminate\Database\Eloquent\Builder  $query
    * @return \Illuminate\Database\Eloquent\Builder
    */
@@ -44,33 +143,15 @@ class SearchQueryService
     foreach ($_search as $item) {
       $item = json_decode($item, true);
       if ($this->isInt($item['type'])) { // 数字型
-        if ($item['where'] === '包含') {
-          $values = is_array($item['value']) ? $item['value'] : explode(',', $item['value']);
-          $query = $query->whereIn($item['field'], $values);
-        } else if ($item['where'] === '不包含') {
-          $query = $query->whereNotIn($item['field'], explode(',', $item['value']));
-        } else {
-          $query = $query->where($item['field'], $this->INT_WHERE[$item['where']], $item['value']);
-        }
+        $query = $this->intQuery($item['field'], $item['where'], $item['value'], $query);
       } else if ($this->isDate($item['type'])) { // 日期型
-        if ($item['where'] === '日期范围') {
-          $query = $query->where($item['field'], '>=', $item['value'][0])->where($item['field'], '<=', $item['value'][1]);
-        } else {
-          $query = $query->where($item['field'], $this->INT_WHERE[$item['where']], $item['value']);
-        }
+        $query = $this->dateQuery($item['field'], $item['where'], $item['value'], $query);
       } else if ($item['type'] === 'json') {
-        $query = $query->whereJsonContains($item['field'], $item['value']);
+        $query = $this->jsonQuery($item['field'], $item['value'], $query);
       } else if ($item['type'] === 'classify') {
-        $values = collect($item['value'])->map(function ($item) {
-          return collect($item)->last();
-        });
-        $query = $query->whereIn($item['field'], $values);
+        $query = $this->classifyQuery($item['field'], $item['value'], $query);
       } else { // 字符串
-        if ($item['where'] === '等于') {
-          $query = $query->where($item['field'], $this->STR_WHERE[$item['where']], $item['value']);
-        } else {
-          $query = $query->where($item['field'], $this->STR_WHERE[$item['where']], '%'.$item['value'].'%');
-        }
+        $query = $this->stringQuery($item['field'], $item['where'], $item['value'], $query);
       }
     }
     return $query;
