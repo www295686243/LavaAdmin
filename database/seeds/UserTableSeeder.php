@@ -27,7 +27,7 @@ class UserTableSeeder extends Seeder
     $admin2->assignRole('Operations Manager');
     $user = \App\Models\Api\User::create([
       'username' => 'wanxin',
-      'nickname' => 'wanxin',
+      'nickname' => '万鑫',
       'password' => '111111'
     ]);
     $user->assignRole('General Member');

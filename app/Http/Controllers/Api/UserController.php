@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserRequest;
+use App\Models\Api\User;
 use App\Models\SmsCaptcha;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -20,18 +19,22 @@ class UserController extends Controller
     $username = $request->input('username');
     $password = $request->input('password');
     $data = (new User())->getToken($username, $password);
-    return $this->setParams($data)->success();
+    return $this->setParams($data)->success('登陆成功');
   }
 
   /**
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getUserConfig()
+  public function getUserInfo()
   {
     $userData = User::getUserData();
+    $permissions = $userData->getInterfacePermissions();
+    $roles = $userData->roles()->get(['name', 'display_name'])->makeHidden('pivot');
+    $userData->makeHidden('roles', 'permissions');
     return $this->setParams([
       'user' => $userData,
-      'interface' => $userData->getInterfacePermissions()
+      'roles' => $roles,
+      'permissions' =>$permissions
     ])->success();
   }
 

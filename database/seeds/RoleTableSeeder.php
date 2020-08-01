@@ -42,6 +42,9 @@ class RoleTableSeeder extends Seeder
 
     foreach ($data as $datum) {
       $role = \App\Models\Role::create($datum);
+      if ($role->display_name === '普通会员') {
+        $role->syncPermissions(\App\Models\Permission::where('guard_name', 'api')->pluck('name'));
+      }
     }
   }
 }

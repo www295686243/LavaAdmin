@@ -18,7 +18,7 @@ Route::namespace('Api')->group(function () {
   Route::post('user/login', 'UserController@login');
   Route::post('auth/login', 'AuthController@login');
   Route::middleware('auth:sanctum')->group(function () {
-    Route::get('user/getUserConfig', 'UserController@getUserConfig');
+    Route::get('user/getUserInfo', 'UserController@getUserInfo');
     Route::post('user/sendSmsCaptcha', 'UserController@sendSmsCaptcha');
     Route::post('user/bindPhone', 'UserController@bindPhone');
     Route::post('user/verifyPhone', 'UserController@verifyPhone');

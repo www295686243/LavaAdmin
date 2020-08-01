@@ -73,6 +73,14 @@ class PermissionTableSeeder extends Seeder
             ]
           ]
         ]
+      ],
+      [
+        'name' => '/user',
+        'display_name' => '基本权限',
+        'guard_name' => 'api',
+        'children' => $this->getApiPermissions(\App\Http\Controllers\Api\UserController::class, [
+          'login' => '登录'
+        ])
       ]
     ];
     \App\Models\Permission::rebuildTree($data);
@@ -86,6 +94,16 @@ class PermissionTableSeeder extends Seeder
   private function getAdminPermissions($class, $options = [])
   {
     return $this->getPermissions($class, 'admin', $options);
+  }
+
+  /**
+   * @param $class
+   * @param array $options
+   * @return array
+   */
+  private function getApiPermissions($class, $options = [])
+  {
+    return $this->getPermissions($class, 'api', $options);
   }
 
   /**
