@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
   /**
+   * 账户密码登陆
    * @param UserRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
@@ -25,10 +26,13 @@ class UserController extends Controller
   /**
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getUserInfo()
+  public function getUserConfig()
   {
-    $data = auth()->user();
-    return $this->setParams($data)->success();
+    $userData = User::getUserData();
+    return $this->setParams([
+      'user' => $userData,
+      'interface' => $userData->getInterfacePermissions()
+    ])->success();
   }
 
   /**

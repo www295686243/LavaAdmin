@@ -180,4 +180,12 @@ class User extends Authenticatable
     $userData = static::getUserData();
     return $userData->hasRole('root');
   }
+
+  /**
+   * @return \Illuminate\Support\Collection
+   */
+  public function getInterfacePermissions()
+  {
+    return $this->getAllPermissions()->pluck('name');
+  }
 }

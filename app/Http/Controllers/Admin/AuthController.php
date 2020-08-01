@@ -10,6 +10,7 @@ use App\Models\Config;
 class AuthController extends Controller
 {
   /**
+   * 第三方登陆
    * @param AuthRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
@@ -32,21 +33,5 @@ class AuthController extends Controller
       'menus' => $userData->getMenuPermissions(),
       'interface' => $userData->getInterfacePermissions()
     ])->success();
-  }
-
-  /**
-   * @param AuthRequest $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function getAppConfig(AuthRequest $request)
-  {
-    $guard_name = $request->input('guard_name');
-    $data = Config::with('options')
-      ->when($guard_name, function ($query, $guard_name) {
-        return $query->where('guard_name', $guard_name);
-      })
-      ->get()
-      ->groupBy('guard_name');
-    return $this->setParams($data)->success();
   }
 }
