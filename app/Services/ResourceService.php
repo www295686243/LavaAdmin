@@ -150,7 +150,8 @@ class ResourceService
       (new ApiLog())->createLog([
         'desc' => $this->message,
         'status' => $this->status,
-        'code' => $this->statusCode
+        'code' => $this->statusCode,
+        'params' => $this->params
       ]);
     }
 
