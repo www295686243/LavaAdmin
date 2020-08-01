@@ -20,6 +20,7 @@ Route::namespace('Api')->group(function () {
   Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('api_log', 'ApiLogController')->only(['store']);
 
+    Route::post('user/todayFirstLogin', 'UserController@todayFirstLogin');
     Route::get('user/getUserInfo', 'UserController@getUserInfo');
     Route::post('user/sendSmsCaptcha', 'UserController@sendSmsCaptcha');
     Route::post('user/bindPhone', 'UserController@bindPhone');

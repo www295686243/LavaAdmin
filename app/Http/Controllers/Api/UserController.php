@@ -25,7 +25,16 @@ class UserController extends Controller
   /**
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getUserInfo()
+  public function todayFirstLogin()
+  {
+    return $this->getUserInfo('每日登陆');
+  }
+
+  /**
+   * @param string $message
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getUserInfo($message = '')
   {
     $userData = User::getUserData();
     $permissions = $userData->getInterfacePermissions();
@@ -35,7 +44,7 @@ class UserController extends Controller
       'user' => $userData,
       'roles' => $roles,
       'permissions' =>$permissions
-    ])->success();
+    ])->success($message);
   }
 
   /**

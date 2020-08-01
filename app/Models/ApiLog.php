@@ -61,9 +61,6 @@ class ApiLog extends Base
     $user = User::getUserData();
     $method = request()->getMethod();
     $path = request()->getPathInfo();
-    if (!$user && $path === '/api/user/login') {
-      $user = $params['params'];
-    }
     if ($user && $method !== 'GET' && $path !== '/api/api_log') {
       self::create([
         'user_id' => $user->id,
