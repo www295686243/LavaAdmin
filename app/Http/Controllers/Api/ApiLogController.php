@@ -7,6 +7,7 @@ use App\Http\Requests\Api\ApiLogRequest;
 use App\Models\Api\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ApiLogController extends Controller
 {
@@ -18,20 +19,21 @@ class ApiLogController extends Controller
   {
     $input = $request->input('stack', []);
     $userData = User::getUserData();
-    $stacks = collect($input)->map(function ($item) use ($userData, $request) {
+    $ip = $request->getClientIp();
+    $stacks = collect($input)->map(function ($item) use ($userData, $request, $ip) {
       $input = Arr::get($item, 'input');
       return [
         'user_id' => $userData->id,
         'nickname' => $userData->nickname,
         'method' => $item['method'],
         'path' => $item['path'],
-        'ip' => $request->getClientIp(),
+        'ip' => $ip,
         'input' => $input ? json_encode($input) : null,
         'status' => 'success',
         'code' => 200,
         'desc' => $item['desc'],
-        'created_at' => $item['time'],
-        'updated_at' => $item['time']
+        'created_at' => Str::of($item['time'])->contains('NaN') ? '' : $item['time'],
+        'updated_at' => Str::of($item['time'])->contains('NaN') ? '' : $item['time']
       ];
     })->toArray();
     DB::table('api_logs')->insert($stacks);

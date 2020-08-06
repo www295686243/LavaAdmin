@@ -41,7 +41,7 @@ class ImageController extends Controller
   {
     $info_id = $request->input('info_id');
     $type = $request->input('type');
-    $urlPath = $type;
+    $urlPath = $type.'/'.($info_id ?? 'temp');
     $file = $request->file('file');
     $file->isValid();
     $fileInfo = getimagesize($file);

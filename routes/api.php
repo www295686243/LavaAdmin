@@ -25,5 +25,7 @@ Route::namespace('Api')->group(function () {
     Route::post('user/sendSmsCaptcha', 'UserController@sendSmsCaptcha');
     Route::post('user/bindPhone', 'UserController@bindPhone');
     Route::post('user/verifyPhone', 'UserController@verifyPhone');
+
+    Route::apiResource('image', 'ImageController')->only(['store']);
   });
 });
