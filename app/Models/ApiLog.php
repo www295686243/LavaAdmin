@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use App\Models\Api\User;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
+
 /**
  * \App\Models\ApiLog
  *
@@ -74,5 +77,11 @@ class ApiLog extends Base
         'desc' => $params['desc']
       ]);
     }
+  }
+
+  public static function storeLog()
+  {
+    $api_logs = Cache::tags('app')->get('api_logs', []);
+    DB::table('api_logs')->insert($api_logs);
   }
 }

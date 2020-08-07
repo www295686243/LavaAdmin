@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\ApiLogRequest;
+use App\Jobs\ApiLogQueue;
 use App\Models\Api\User;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class ApiLogController extends Controller
     $input = $request->input('stack', []);
     $userData = User::getUserData();
     $ip = $request->getClientIp();
-    $stacks = collect($input)->map(function ($item) use ($userData, $request, $ip) {
+    $logs = collect($input)->map(function ($item) use ($userData, $request, $ip) {
       $input = Arr::get($item, 'input');
       return [
         'user_id' => $userData->id,
@@ -36,7 +37,7 @@ class ApiLogController extends Controller
         'updated_at' => Str::of($item['time'])->contains('NaN') ? '' : $item['time']
       ];
     })->toArray();
-    DB::table('api_logs')->insert($stacks);
+    ApiLogQueue::dispatch($logs);
     return $this->success();
   }
 }
