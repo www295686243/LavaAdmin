@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\User;
 
 use App\Models\Traits\ResourceTrait;
 use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Kra8\Snowflake\HasSnowflakePrimary;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * \App\Models\User
+ * App\Models\User\User
  *
- * @property int $id
+ * @property string $id
  * @property string|null $nickname 昵称
  * @property string|null $username 用户名
  * @property string|null $email
@@ -37,31 +39,32 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles, $guard = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User searchQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereApiToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereIsAdmin($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereMoney($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereNickname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User withoutTrashed()
+ * @property-read \App\Models\User\UserWallet|null $wallet
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newQuery()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereApiToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereMoney($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User withoutTrashed()
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User pagination()
  */
 class User extends Authenticatable
 {
@@ -71,14 +74,19 @@ class User extends Authenticatable
    * @var array
    */
   protected $fillable = [
+    'invite_user_id',
     'username',
     'nickname',
     'email',
     'phone',
+    'head_url',
+    'city',
+    'is_follow_official_account',
+    'follow_official_account_scene',
     'password',
-    'money',
     'is_admin',
-    'api_token'
+    'api_token',
+    'last_login_at'
   ];
 
   /**
@@ -95,6 +103,14 @@ class User extends Authenticatable
   protected $casts = [
     'id' => 'string',
   ];
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function wallet()
+  {
+    return $this->hasOne(UserWallet::class);
+  }
 
   /**
    * @param \DateTimeInterface $date
@@ -143,7 +159,7 @@ class User extends Authenticatable
   public function getToken($username, $password, $isAdmin = false)
   {
     $userData = self::where('username', $username)->first();
-    if ($isAdmin && !$userData->is_admin) {
+    if ($isAdmin && (!$userData || !$userData->is_admin)) {
       $this->error('用户名或密码错误!');
     }
     if (!$userData || !Hash::check($password, $userData->password)) {
@@ -187,5 +203,34 @@ class User extends Authenticatable
   public function getInterfacePermissions()
   {
     return $this->getAllPermissions()->pluck('name');
+  }
+
+  /**
+   * @param $attributes
+   * @return mixed
+   * @throws \Throwable
+   */
+  public static function createUser($attributes)
+  {
+    return DB::transaction(function () use ($attributes) {
+      $userData = self::create(Arr::only($attributes, (new self())->getFillable()));
+      $userData->wallet()->create();
+      return $userData;
+    });
+  }
+
+  /**
+   * @param $attributes
+   * @param $userId
+   * @return mixed
+   * @throws \Throwable
+   */
+  public static function updateUser($attributes, $userId)
+  {
+    return DB::transaction(function () use ($attributes, $userId) {
+      $userData = self::findOrFail($userId);
+      $userData->update(Arr::only($attributes, (new self())->getFillable()));
+      return $userData;
+    });
   }
 }

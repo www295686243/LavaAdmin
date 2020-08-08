@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\EmployeeRequest;
 use App\Models\Admin\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class EmployeeController extends Controller
 {
@@ -24,17 +25,19 @@ class EmployeeController extends Controller
   /**
    * @param EmployeeRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function store(EmployeeRequest $request)
   {
-    $User = new User();
-    $input = $request->only($User->getFillable());
-    $input['is_admin'] = 1;
-    $role_names = $request->input('role_names', []);
-    $role_names = Arr::except($role_names, ['root']);
-    $user = User::create($input);
-    $user->syncRoles($role_names);
-    return $this->success();
+    return DB::transaction(function () use ($request) {
+      $input = $request->all();
+      $input['is_admin'] = 1;
+      $userData = User::createUser($input);
+      $role_names = $request->input('role_names', []);
+      $role_names = Arr::except($role_names, ['root']);
+      $userData->syncRoles($role_names);
+      return $this->success();
+    });
   }
 
   /**
@@ -51,22 +54,24 @@ class EmployeeController extends Controller
    * @param EmployeeRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function update(EmployeeRequest $request, $id)
   {
-    $User = new User();
-    $input = $request->only($User->getFillable());
-    $userData = $User->findOrFail($id);
-    $role_names = $request->input('role_names', []);
-    $role_names = Arr::except($role_names, ['root']);
-    if ($userData->hasRole('root') && !User::hasRoot()) {
-      return $this->setStatusCode(423)->error('权限错误');
-    }
-    $userData->update($input);
-    if (!$userData->hasRole('root')) {
-      $userData->syncRoles($role_names);
-    }
-    return $this->success();
+    return DB::transaction(function () use ($request, $id) {
+      $input = $request->all();
+      $userData = User::updateUser($input, $id);
+
+      $role_names = $request->input('role_names', []);
+      $role_names = Arr::except($role_names, ['root']);
+      if ($userData->hasRole('root') && !User::hasRoot()) {
+        return $this->setStatusCode(423)->error('权限错误');
+      }
+      if (!$userData->hasRole('root')) {
+        $userData->syncRoles($role_names);
+      }
+      return $this->success();
+    });
   }
 
   /**

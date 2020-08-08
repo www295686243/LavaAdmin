@@ -38,6 +38,8 @@ use App\Models\Admin\User;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUserId($value)
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
+ * @property string $name
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereName($value)
  */
 class AdminLog extends Base
 {

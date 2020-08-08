@@ -11,7 +11,7 @@ class NewsTableSeeder extends Seeder
    */
   public function run()
   {
-    $userData = \App\Models\User::where('username', 'root')->first();
+    $userData = \App\Models\User\User::where('username', 'root')->first();
     for ($i = 0; $i < 20; $i++) {
       $newsData = \App\Models\News::create([
         'text' => 'text',

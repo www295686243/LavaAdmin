@@ -5,7 +5,7 @@ namespace App\Models\Api;
 /**
  * App\Models\Api\User
  *
- * @property int $id
+ * @property string $id
  * @property string|null $nickname 昵称
  * @property string|null $username 用户名
  * @property string|null $email
@@ -27,12 +27,14 @@ namespace App\Models\Api;
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
+ * @property-read \App\Models\User\UserWallet|null $wallet
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles, $guard = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User whereApiToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User whereDeletedAt($value)
@@ -48,9 +50,8 @@ namespace App\Models\Api;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Api\User whereUsername($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User pagination()
  */
-class User extends \App\Models\User
+class User extends \App\Models\User\User
 {
   /**
    * @var string

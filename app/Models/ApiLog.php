@@ -40,6 +40,8 @@ use Illuminate\Support\Facades\DB;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUserId($value)
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
+ * @property string|null $name
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereName($value)
  */
 class ApiLog extends Base
 {

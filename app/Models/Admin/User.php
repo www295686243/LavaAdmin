@@ -5,9 +5,9 @@ namespace App\Models\Admin;
 use App\Models\AdminMenu;
 
 /**
- * \App\Models\Admin\User
+ * App\Models\Admin\User
  *
- * @property int $id
+ * @property string $id
  * @property string|null $nickname 昵称
  * @property string|null $username 用户名
  * @property string|null $email
@@ -29,12 +29,15 @@ use App\Models\AdminMenu;
  * @property-read int|null $roles_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
  * @property-read int|null $tokens_count
+ * @property-read \App\Models\User\UserWallet|null $wallet
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User exceptRoot()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User permission($permissions)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User searchQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User whereApiToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User whereDeletedAt($value)
@@ -50,10 +53,8 @@ use App\Models\AdminMenu;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Admin\User whereUsername($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User searchQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User pagination()
  */
-class User extends \App\Models\User
+class User extends \App\Models\User\User
 {
   /**
    * @var string
