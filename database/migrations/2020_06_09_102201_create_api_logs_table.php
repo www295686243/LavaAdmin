@@ -17,6 +17,7 @@ class CreateApiLogsTable extends Migration
       $table->id();
       $table->unsignedBigInteger('user_id');
       $table->string('nickname', 30);
+      $table->string('name', 120)->nullable();
       $table->string('method', 10);
       $table->string('path', 60);
       $table->string('ip', 20);

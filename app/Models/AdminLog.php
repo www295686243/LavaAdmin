@@ -44,6 +44,7 @@ class AdminLog extends Base
   protected $fillable = [
     'user_id',
     'nickname',
+    'name',
     'method',
     'path',
     'ip',
@@ -65,6 +66,7 @@ class AdminLog extends Base
       self::create([
         'user_id' => $user->id,
         'nickname' => $user->nickname,
+        'name' => class_basename(request()->route()->getActionName()),
         'method' => $method,
         'path' => request()->getPathInfo(),
         'ip' => request()->getClientIp(),
