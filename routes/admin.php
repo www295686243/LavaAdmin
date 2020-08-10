@@ -33,6 +33,8 @@ Route::namespace('Admin')->group(function () {
     // 会员
     Route::apiResource('user', 'User\UserController');
     Route::apiResource('user_personal', 'User\UserPersonalController');
+    Route::apiResource('user_enterprise', 'User\UserEnterpriseController');
+    Route::apiResource('user_control', 'User\UserControlController');
     // 角色
     Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
     Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');
