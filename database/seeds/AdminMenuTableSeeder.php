@@ -55,6 +55,18 @@ class AdminMenuTableSeeder extends Seeder
       'route' => '/user',
       'children' => [
         [
+          'display_name' => '参数配置',
+          'icon' => 'el-icon-setting',
+          'route' => '/user/config',
+          'default_params' => ['guard_name' => 'User']
+        ],
+        [
+          'display_name' => '选项配置',
+          'icon' => 'el-icon-s-operation',
+          'route' => '/user/options/config',
+          'default_params' => ['guard_name' => 'options.User']
+        ],
+        [
           'display_name' => '后台管理',
           'icon' => 'el-icon-s-custom',
           'route' => '/user/admin',

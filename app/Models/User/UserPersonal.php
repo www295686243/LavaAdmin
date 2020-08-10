@@ -31,6 +31,13 @@ class UserPersonal extends Base
     'deleted_at'
   ];
 
+  protected $casts = [
+    'tags' => 'array',
+    'education_experience' => 'array',
+    'work_experience' => 'array',
+    'honorary_certificate' => 'array'
+  ];
+
   /**
    * @return array
    */

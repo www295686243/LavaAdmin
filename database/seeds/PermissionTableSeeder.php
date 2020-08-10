@@ -60,7 +60,7 @@ class PermissionTableSeeder extends Seeder
                 'name' => '/user/member/user',
                 'display_name' => '会员列表',
                 'guard_name' => 'admin',
-                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\UserController::class)
+                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\User\UserController::class)
               ],
               [
                 'name' => '/user/member/role',

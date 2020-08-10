@@ -31,7 +31,8 @@ Route::namespace('Admin')->group(function () {
     // 员工
     Route::apiResource('employee', 'EmployeeController');
     // 会员
-    Route::apiResource('user', 'UserController');
+    Route::apiResource('user', 'User\UserController');
+    Route::apiResource('user_personal', 'User\UserPersonalController');
     // 角色
     Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
     Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');

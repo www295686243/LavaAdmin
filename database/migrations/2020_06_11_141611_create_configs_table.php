@@ -13,14 +13,16 @@ class CreateConfigsTable extends Migration
    */
   public function up()
   {
-    Schema::create('configs', function (Blueprint $table) {
-      $table->increments('id');
-      $table->string('name', 60);
-      $table->string('display_name', 60);
-      $table->string('value', 120)->nullable();
-      $table->string('guard_name')->comment('守卫(system)');
-      $table->timestamps();
-    });
+    if (!Schema::hasTable('configs')) {
+      Schema::create('configs', function (Blueprint $table) {
+        $table->increments('id');
+        $table->string('name', 60);
+        $table->string('display_name', 60);
+        $table->string('value', 120)->nullable();
+        $table->string('guard_name')->comment('守卫(system)');
+        $table->timestamps();
+      });
+    }
   }
 
   /**
@@ -30,6 +32,6 @@ class CreateConfigsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('configs');
+//    Schema::dropIfExists('configs');
   }
 }

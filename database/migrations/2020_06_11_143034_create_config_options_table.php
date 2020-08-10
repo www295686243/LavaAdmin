@@ -13,13 +13,15 @@ class CreateConfigOptionsTable extends Migration
    */
   public function up()
   {
-    Schema::create('config_options', function (Blueprint $table) {
-      $table->increments('id');
-      $table->unsignedInteger('config_id');
-      $table->string('display_name', 60);
-      $table->unsignedSmallInteger('sort')->nullable();
-      $table->timestamps();
-    });
+    if (!Schema::hasTable('config_options')) {
+      Schema::create('config_options', function (Blueprint $table) {
+        $table->increments('id');
+        $table->unsignedInteger('config_id');
+        $table->string('display_name', 60);
+        $table->unsignedSmallInteger('sort')->nullable();
+        $table->timestamps();
+      });
+    }
   }
 
   /**
@@ -29,6 +31,6 @@ class CreateConfigOptionsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('config_options');
+//    Schema::dropIfExists('config_options');
   }
 }
