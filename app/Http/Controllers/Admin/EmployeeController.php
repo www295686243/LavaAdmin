@@ -76,19 +76,20 @@ class EmployeeController extends Controller
 
   /**
    * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   * @throws \Exception
+   * @return mixed
+   * @throws \Throwable
    */
   public function destroy($id)
   {
-    $userData = User::findOrFail($id);
-    if ($userData->hasRole('root')) {
-      return $this->setStatusCode(423)->error('权限错误');
-    }
-    if (User::getUserId() === $userData->id) {
-      return $this->setStatusCode(423)->error('权限错误');
-    }
-    $userData->delete();
-    return $this->success();
+    return DB::transaction(function () use ($id) {
+      $userData = User::destroyUser($id);
+      if ($userData->hasRole('root')) {
+        return $this->setStatusCode(423)->error('权限错误');
+      }
+      if (User::getUserId() === $userData->id) {
+        return $this->setStatusCode(423)->error('权限错误');
+      }
+      return $this->success();
+    });
   }
 }

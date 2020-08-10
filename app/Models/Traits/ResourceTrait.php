@@ -14,15 +14,17 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 trait ResourceTrait
 {
   private $res = null;
+
   /**
    * @param string $message
+   * @return \Illuminate\Http\JsonResponse
    */
   public function error($message = '')
   {
     if (!$this->res) {
       $this->res = new ResourceService();
     }
-    throw new HttpResponseException($this->res->error($message));
+    return $this->res->error($message);
   }
 
   /**

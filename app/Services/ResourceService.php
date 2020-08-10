@@ -11,6 +11,7 @@ namespace App\Services;
 use App\Models\AdminLog;
 use App\Models\ApiLog;
 use App\Models\Version;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 
 class ResourceService
@@ -162,6 +163,10 @@ class ResourceService
       'version' => (new Version())->getList()
     ];
     $this->init();
-    return new JsonResponse($res, $this->statusCode);
+    if ($res['status'] === 'success') {
+      return new JsonResponse($res, $this->statusCode);
+    } else {
+      throw new HttpResponseException(new JsonResponse($res, $this->statusCode));
+    }
   }
 }

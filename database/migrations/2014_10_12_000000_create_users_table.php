@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
       $table->string('email')->nullable();
       $table->string('phone')->nullable();
       $table->string('head_url', 255)->nullable();
-      $table->unsignedInteger('city')->nullable();
+      $table->unsignedInteger('city')->comment('当前所在地')->nullable();
       $table->unsignedTinyInteger('is_follow_official_account')->comment('是否关注公众号')->default(0);
       $table->string('follow_official_account_scene', 50)->comment('关注来源')->nullable();
 

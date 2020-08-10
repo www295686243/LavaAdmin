@@ -97,7 +97,8 @@ class User extends Authenticatable
     'remember_token',
     'password',
     'deleted_at',
-    'email_verified_at'
+    'email_verified_at',
+    'api_token'
   ];
 
   protected $casts = [
@@ -110,6 +111,30 @@ class User extends Authenticatable
   public function wallet()
   {
     return $this->hasOne(UserWallet::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function control()
+  {
+    return $this->hasOne(UserControl::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function personal()
+  {
+    return $this->hasOne(UserPersonal::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function enterprise()
+  {
+    return $this->hasOne(UserEnterprise::class);
   }
 
   /**
@@ -158,7 +183,7 @@ class User extends Authenticatable
    */
   public function getToken($username, $password, $isAdmin = false)
   {
-    $userData = self::where('username', $username)->first();
+    $userData = self::where('username', $username)->first()->makeVisible('api_token');
     if ($isAdmin && (!$userData || !$userData->is_admin)) {
       $this->error('用户名或密码错误!');
     }
@@ -213,8 +238,11 @@ class User extends Authenticatable
   public static function createUser($attributes)
   {
     return DB::transaction(function () use ($attributes) {
-      $userData = self::create(Arr::only($attributes, (new self())->getFillable()));
+      $userData = static::create(Arr::only($attributes, (new static())->getFillable()));
       $userData->wallet()->create();
+      $userData->control()->create();
+      $userData->personal()->create();
+      $userData->enterprise()->create();
       return $userData;
     });
   }
@@ -228,8 +256,29 @@ class User extends Authenticatable
   public static function updateUser($attributes, $userId)
   {
     return DB::transaction(function () use ($attributes, $userId) {
-      $userData = self::findOrFail($userId);
-      $userData->update(Arr::only($attributes, (new self())->getFillable()));
+      $userData = static::findOrFail($userId);
+      $userData->update(Arr::only($attributes, (new static())->getFillable()));
+      $userData->control()->update(Arr::only($attributes, UserControl::getUpdateFillable()));
+      $userData->personal()->update(Arr::only($attributes, UserPersonal::getUpdateFillable()));
+      $userData->enterprise()->update(Arr::only($attributes, UserEnterprise::getUpdateFillable()));
+      return $userData;
+    });
+  }
+
+  /**
+   * @param $userId
+   * @return mixed
+   * @throws \Throwable
+   */
+  public static function destroyUser($userId)
+  {
+    return DB::transaction(function () use ($userId) {
+      $userData = static::findOrFail($userId);
+      $userData->wallet()->delete();
+      $userData->control()->delete();
+      $userData->personal()->delete();
+      $userData->enterprise()->delete();
+      $userData->delete();
       return $userData;
     });
   }
