@@ -31,9 +31,9 @@ return [
     ],
 
     'aliyun' => [
-      'access_key_id' => '',
-      'access_key_secret' => '',
-      'sign_name' => '',
+      'access_key_id' => env('SMS_ACCESS_KEY'),
+      'access_key_secret' => env('SMS_SECRET_KEY'),
+      'sign_name' => env('SMS_SIGN_NAME'),
     ],
   ],
 ];

@@ -13,3 +13,4 @@ yarn-error.log
 sh.exe.stackdump
 composer.lock
 .phpstorm.meta.php
+.env
