@@ -60,7 +60,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  */
 class News extends Base
 {
-  use HasSnowflakePrimary, SoftDeletes;
+  use SoftDeletes, HasSnowflakePrimary;
 
   protected $fillable = [
     'user_id',
@@ -81,7 +81,6 @@ class News extends Base
   ];
 
   protected $casts = [
-    'id' => 'string',
     'checkbox' => 'array',
     'files' => 'array',
     'images' => 'array',

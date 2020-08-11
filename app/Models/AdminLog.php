@@ -57,7 +57,7 @@ class AdminLog extends Base
   ];
 
   protected $casts = [
-    'input' => 'array'
+    'input' => 'array',
   ];
 
   public function createLog($params)

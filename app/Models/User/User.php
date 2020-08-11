@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
 use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -68,7 +69,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-  use Notifiable, HasSnowflakePrimary, HasRoles, HasApiTokens, ResourceTrait, SoftDeletes;
+  use Notifiable, HasRoles, HasApiTokens, ResourceTrait, SoftDeletes, HasSnowflakePrimary, IdToStrTrait;
 
   /**
    * @var array
@@ -99,10 +100,6 @@ class User extends Authenticatable
     'deleted_at',
     'email_verified_at',
     'api_token'
-  ];
-
-  protected $casts = [
-    'id' => 'string',
   ];
 
   /**

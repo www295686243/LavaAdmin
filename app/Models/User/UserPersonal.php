@@ -4,10 +4,11 @@ namespace App\Models\User;
 
 use App\Models\Base;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserPersonal extends Base
 {
-  use SoftDeletes;
+  use SoftDeletes, HasSnowflakePrimary;
 
   protected $fillable = [
     'user_id',
@@ -32,6 +33,8 @@ class UserPersonal extends Base
   ];
 
   protected $casts = [
+    'id' => 'string',
+    'user_id' => 'string',
     'tags' => 'array',
     'education_experience' => 'array',
     'work_experience' => 'array',

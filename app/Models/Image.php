@@ -74,10 +74,6 @@ class Image extends Base
     'full_url'
   ];
 
-  protected $casts = [
-    'id' => 'string',
-  ];
-
   /**
    * @return string
    */

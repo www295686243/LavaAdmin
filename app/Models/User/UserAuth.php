@@ -6,13 +6,14 @@ use App\Models\Base;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
-class UserControl extends Base
+class UserAuth extends Base
 {
   use SoftDeletes, HasSnowflakePrimary;
 
   protected $fillable = [
     'user_id',
-    'is_disable_all_push'
+    'wx_openid',
+    'wx_unionid'
   ];
 
   protected $hidden = [
@@ -20,17 +21,4 @@ class UserControl extends Base
     'updated_at',
     'deleted_at'
   ];
-
-  protected $casts = [
-    'id' => 'string',
-    'user_id' => 'string',
-  ];
-
-  /**
-   * @return array
-   */
-  public static function getUpdateFillable()
-  {
-    return collect(static::getFillFields())->diff(['user_id'])->values()->toArray();
-  }
 }

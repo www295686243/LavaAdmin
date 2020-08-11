@@ -21,4 +21,8 @@ class AuthController extends Controller
     $userData = (new User())->getToken($username, $password);
     return $this->setParams($userData)->success();
   }
+
+  public function getWeChatConfig(AuthRequest $request)
+  {
+  }
 }

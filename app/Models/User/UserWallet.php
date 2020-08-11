@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use App\Models\Base;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
  * App\Models\User\UserWallet
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class UserWallet extends Base
 {
-  use SoftDeletes;
+  use SoftDeletes, HasSnowflakePrimary;
 
   protected $fillable = [
     'user_id',
@@ -31,5 +32,10 @@ class UserWallet extends Base
     'created_at',
     'updated_at',
     'deleted_at'
+  ];
+
+  protected $casts = [
+    'id' => 'string',
+    'user_id' => 'string',
   ];
 }
