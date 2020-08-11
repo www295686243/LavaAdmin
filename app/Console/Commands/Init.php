@@ -42,7 +42,7 @@ class Init extends Command
       Cache::flush();
       $this->call('migrate:refresh', ['--seed' => true]);
     } else {
-      $this->call('db:seed', ['--class' => 'ConfigTableSeeder']);
+      $this->call('migrate:refresh', ['--seed' => true]);
     }
   }
 }
