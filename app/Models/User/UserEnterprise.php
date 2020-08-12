@@ -32,8 +32,6 @@ class UserEnterprise extends Base
   ];
 
   protected $casts = [
-    'id' => 'string',
-    'user_id' => 'string',
     'tags' => 'array',
     'company_images' => 'array'
   ];

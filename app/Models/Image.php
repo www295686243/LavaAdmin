@@ -75,6 +75,13 @@ class Image extends Base
   ];
 
   /**
+   * @var array
+   */
+  protected $casts = [
+    'imageable_id' => 'string'
+  ];
+
+  /**
    * @return string
    */
   public function getFullUrlAttribute()

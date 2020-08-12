@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NewsRequest;
+use App\Models\Admin\User;
 use App\Models\Image;
 use App\Models\News;
-use App\Models\User;
-use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {

@@ -33,8 +33,6 @@ class UserPersonal extends Base
   ];
 
   protected $casts = [
-    'id' => 'string',
-    'user_id' => 'string',
     'tags' => 'array',
     'education_experience' => 'array',
     'work_experience' => 'array',

@@ -69,7 +69,7 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-  use Notifiable, HasRoles, HasApiTokens, ResourceTrait, SoftDeletes, HasSnowflakePrimary, IdToStrTrait;
+  use Notifiable, HasRoles, HasApiTokens, ResourceTrait, SoftDeletes, IdToStrTrait, HasSnowflakePrimary;
 
   /**
    * @var array

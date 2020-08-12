@@ -33,9 +33,4 @@ class UserWallet extends Base
     'updated_at',
     'deleted_at'
   ];
-
-  protected $casts = [
-    'id' => 'string',
-    'user_id' => 'string',
-  ];
 }

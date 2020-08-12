@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::namespace('Api')->group(function () {
   Route::get('app/getAppConfig', 'AppController@getAppConfig');
   Route::post('user/login', 'UserController@login');
-  Route::post('auth/login', 'AuthController@login');
+  Route::get('wechat/getConfig', 'WeChatController@getConfig');
   Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('api_log', 'ApiLogController')->only(['store']);
 

@@ -11,12 +11,21 @@ namespace App\Models\Traits;
 trait IdToStrTrait
 {
   /**
-   * @param $value
-   * @return string
+   * @param int $value
+   * @return int|null|string
    */
   public function getIdAttribute($value)
   {
-    return strval($value);
+    if ($value) {
+      $strValue = strval($value);
+      if (strlen($strValue) >= 16) {
+        return $strValue;
+      } else {
+        return $value;
+      }
+    } else {
+      return null;
+    }
   }
 
   /**
@@ -25,6 +34,6 @@ trait IdToStrTrait
    */
   public function getUserIdAttribute($value)
   {
-    return strval($value);
+    return $value ? strval($value) : null;
   }
 }
