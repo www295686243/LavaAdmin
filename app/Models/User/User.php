@@ -135,6 +135,14 @@ class User extends Authenticatable
   }
 
   /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasOne
+   */
+  public function auth()
+  {
+    return $this->hasOne(UserAuth::class);
+  }
+
+  /**
    * @param \DateTimeInterface $date
    * @return string
    */

@@ -41,6 +41,19 @@ trait ResourceTrait
   }
 
   /**
+   * @param string $status
+   * @return $this
+   */
+  public function setStatus($status = '')
+  {
+    if (!$this->res) {
+      $this->res = new ResourceService();
+    }
+    $this->res->setStatus($status);
+    return $this;
+  }
+
+  /**
    * @param $data
    * @return $this
    */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\WeChatRequest;
+use App\Models\User\UserAuth;
 use Illuminate\Http\Request;
 
 class WeChatController extends Controller
@@ -37,5 +38,17 @@ class WeChatController extends Controller
     preg_match('/href="(.*)"/', (string)$response, $str);
     $url = str_replace('amp;', '', $str[1]);
     return $this->setParams(['url' => $url])->success('授权成功');
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
+   */
+  public function login()
+  {
+    $UserAuth = new UserAuth();
+    $authInfo = $UserAuth->getWeChatAuthInfo();
+    $userData = $UserAuth->getUserData($authInfo);
+    return $this->setParams($userData)->success('微信登陆成功');
   }
 }
