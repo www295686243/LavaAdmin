@@ -17,6 +17,7 @@ Route::namespace('Api')->group(function () {
   Route::get('app/getAppConfig', 'AppController@getAppConfig');
   Route::post('user/login', 'UserController@login');
   Route::get('wechat/getConfig', 'WeChatController@getConfig');
+  Route::post('wechat/auth', 'WeChatController@auth');
   Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('api_log', 'ApiLogController')->only(['store']);
 
