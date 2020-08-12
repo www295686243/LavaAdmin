@@ -33,7 +33,7 @@ class WeChatController extends Controller
   public function auth(WeChatRequest $request)
   {
     $app = app('wechat.official_account');
-    $response = $app->oauth->redirect(urlencode(env('APP_M_URL').'/login?redirect_url='.$request->input('redirect_url')));
+    $response = $app->oauth->redirect(env('APP_M_URL').'/#/login?redirect_url='.urlencode($request->input('redirect_url')));
     preg_match('/href="(.*)"/', (string)$response, $str);
     $url = str_replace('amp;', '', $str[1]);
     return $this->setParams(['url' => $url])->success('授权成功');
