@@ -86,8 +86,10 @@ class UserAuth extends Base
 
     $plainTextToken = $userData->createToken('token')->plainTextToken;
     [$id, $token] = explode('|', $plainTextToken, 2);
+    \Log::info($token);
     $userData->api_token = $token;
     $userData->save();
+    \Log::info($userData);
     return $userData;
   }
 
