@@ -66,6 +66,23 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User withTrashed()
  * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User withoutTrashed()
  * @mixin \Eloquent
+ * @property int|null $invite_user_id 邀请人
+ * @property string|null $head_url
+ * @property int|null $city 当前所在地
+ * @property int $is_follow_official_account 是否关注公众号
+ * @property string|null $follow_official_account_scene 关注来源
+ * @property string|null $last_login_at 最后登录时间
+ * @property-read \App\Models\User\UserAuth|null $auth
+ * @property-read \App\Models\User\UserControl|null $control
+ * @property-read \App\Models\User\UserEnterprise|null $enterprise
+ * @property-read string $user_id
+ * @property-read \App\Models\User\UserPersonal|null $personal
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereFollowOfficialAccountScene($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereHeadUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereInviteUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereIsFollowOfficialAccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereLastLoginAt($value)
  */
 class User extends Authenticatable
 {

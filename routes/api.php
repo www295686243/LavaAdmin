@@ -29,5 +29,7 @@ Route::namespace('Api')->group(function () {
     Route::post('user/verifyPhone', 'UserController@verifyPhone');
 
     Route::apiResource('image', 'ImageController')->only(['store']);
+
+    Route::post('wechat/pay', 'WeChatController@pay');
   });
 });
