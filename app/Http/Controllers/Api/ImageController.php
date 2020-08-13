@@ -44,6 +44,7 @@ class ImageController extends Controller
       return $this->setParams($data)->success('上传成功');
     } catch (\Exception $e) {
       DB::rollBack();
+      \Log::error($e->getMessage());
       return $this->error('上传失败');
     }
   }
