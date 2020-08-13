@@ -13,7 +13,7 @@ return [
   |
   */
 
-  'default' => env('FILESYSTEM_DRIVER', 'images'),
+  'default' => env('FILESYSTEM_DRIVER', 'oss'),
 
   /*
   |--------------------------------------------------------------------------
