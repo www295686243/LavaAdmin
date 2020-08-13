@@ -50,6 +50,7 @@ class WeChatController extends Controller
     $UserAuth = new UserAuth();
     $authInfo = $UserAuth->getWeChatAuthInfo();
     $userData = $UserAuth->getUserData($authInfo);
+    \Log::info($userData);
     return $this->setParams($userData)->success('微信登陆成功');
   }
 
