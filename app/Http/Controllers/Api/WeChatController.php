@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\WeChatRequest;
 use App\Models\Api\User;
+use App\Models\Notify\Notify;
 use App\Models\User\UserAuth;
 use Illuminate\Http\Request;
 
@@ -55,10 +56,10 @@ class WeChatController extends Controller
   }
 
   /**
-   * @param Request $request
+   * @param WeChatRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function pay(Request $request)
+  public function pay(WeChatRequest $request)
   {
     $amount = $request->input('amount');
     $app = app('wechat.payment');
@@ -74,5 +75,14 @@ class WeChatController extends Controller
     ]);
     $config = $app->jssdk->sdkConfig($order['prepay_id']);
     return $this->setParams($config)->success('获取支付配置成功');
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function notify()
+  {
+    (new Notify())->send('personalAuthSuccess', User::getUserData(), ['name' => '万鑫']);
+    return $this->success('发送成功');
   }
 }
