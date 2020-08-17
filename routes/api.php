@@ -32,5 +32,8 @@ Route::namespace('Api')->group(function () {
 
     Route::post('wechat/pay', 'WeChatController@pay');
     Route::post('wechat/notify', 'WeChatController@notify');
+
+    // 通知
+    Route::apiResource('notify', 'NotifyController')->only(['index', 'destroy']);
   });
 });

@@ -50,7 +50,8 @@ trait NotifyTemplateTrait
       'template_id' => $this->TEMPLATE['member_auth_success'],
       'content' => '亲爱的'.$userData->nickname.'，您好，您的个人认证已通过！',
       'tips' => '您的个人认证申请已通过，进入【我的-设置-清除缓存】可更新状态！',
-      'url' => env('APP_M_URL').'/user',
+      'url' => '/user',
+      'full_url' => env('APP_M_URL').'/user',
       'keywords' => [
         'keyword1' => $params['name'],
         'keyword2' => date('Y-m-d H:i:s')

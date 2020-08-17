@@ -81,6 +81,16 @@ class Base extends Model
   }
 
   /**
+   * @param \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Contracts\Pagination\Paginator
+   */
+  public function scopeSimplePagination($query)
+  {
+    $limit = request()->input('limit', 10);
+    return $query->simplePaginate($limit);
+  }
+
+  /**
    * @param $id
    * @return mixed
    */

@@ -6,10 +6,11 @@ use App\Jobs\NotifyQueue;
 use App\Models\Base;
 use App\Models\User\User;
 use Illuminate\Support\Arr;
+use Kra8\Snowflake\HasSnowflakePrimary;
 
 class Notify extends Base
 {
-  use NotifyTemplateTrait;
+  use NotifyTemplateTrait, HasSnowflakePrimary;
 
   protected $fillable = [
     'title',
@@ -17,6 +18,7 @@ class Notify extends Base
     'openid',
     'template_id',
     'url',
+    'full_url',
     'content',
     'tips',
     'keywords',
