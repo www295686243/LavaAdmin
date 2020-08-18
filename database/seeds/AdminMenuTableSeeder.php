@@ -97,6 +97,23 @@ class AdminMenuTableSeeder extends Seeder
           ]
         ]
       ]
+    ],
+    [
+      'display_name' => '其它管理',
+      'route' => '/other',
+      'children' => [
+        [
+          'display_name' => '微信配置',
+          'icon' => 'el-icon-s-tools',
+          'route' => '/other/wechat',
+          'children' => [
+            [
+              'display_name' => '通知模板',
+              'route' => '/other/wechat/notify-template'
+            ]
+          ]
+        ]
+      ]
     ]
   ];
   /**

@@ -20,7 +20,7 @@ class Notify extends Base
     'url',
     'url_params',
     'content',
-    'tips',
+    'remark',
     'keywords',
     'keyword_names',
     'is_read',
@@ -107,7 +107,7 @@ class Notify extends Base
       'url' => $this->resolveFullUrl(),
       'data' => array_merge([
         'first' => $this->content,
-        'remark' => [$this->tips, '#1775CC']
+        'remark' => [$this->remark, '#1775CC']
       ], $this->keywords),
     ]);
   }

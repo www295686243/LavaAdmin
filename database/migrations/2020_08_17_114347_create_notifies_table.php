@@ -22,7 +22,7 @@ class CreateNotifiesTable extends Migration
       $table->string('url', 255)->comment('url');
       $table->json('url_params')->comment('url参数')->nullable();
       $table->string('content', 100)->comment('信息内容');
-      $table->string('tips', 100)->comment('提示');
+      $table->string('remark', 100)->comment('备注');
       $table->json('keywords')->comment('参数')->nullable();
       $table->json('keyword_names')->comment('参数名')->nullable();
       $table->unsignedTinyInteger('is_read')->comment('是否已阅读')->default(0);
