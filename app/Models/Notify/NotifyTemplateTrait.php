@@ -51,6 +51,7 @@ trait NotifyTemplateTrait
       'content' => '亲爱的'.$userData->nickname.'，您好，您的个人认证已通过！',
       'tips' => '您的个人认证申请已通过，进入【我的-设置-清除缓存】可更新状态！',
       'url' => '/user',
+      'url_params' => [],
       'full_url' => env('APP_M_URL').'/user',
       'keywords' => [
         'keyword1' => $params['name'],

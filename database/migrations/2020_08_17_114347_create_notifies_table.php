@@ -20,7 +20,7 @@ class CreateNotifiesTable extends Migration
       $table->string('openid', 60)->comment('微信用户唯一id')->nullable();
       $table->string('template_id', 100)->comment('模板id');
       $table->string('url', 255)->comment('url');
-      $table->string('full_url', 255)->comment('url');
+      $table->json('url_params')->comment('url参数')->nullable();
       $table->string('content', 100)->comment('信息内容');
       $table->string('tips', 100)->comment('提示');
       $table->json('keywords')->comment('参数')->nullable();

@@ -18,7 +18,7 @@ class Notify extends Base
     'openid',
     'template_id',
     'url',
-    'full_url',
+    'url_params',
     'content',
     'tips',
     'keywords',
@@ -29,7 +29,8 @@ class Notify extends Base
 
   protected $casts = [
     'keywords' => 'array',
-    'keyword_names' => 'array'
+    'keyword_names' => 'array',
+    'url_params' => 'array'
   ];
 
   /**
@@ -103,11 +104,21 @@ class Notify extends Base
     $app->template_message->send([
       'touser' => $this->openid,
       'template_id' => $this->template_id,
-      'url' => $this->url,
+      'url' => $this->resolveFullUrl(),
       'data' => array_merge([
         'first' => $this->content,
         'remark' => [$this->tips, '#1775CC']
       ], $this->keywords),
     ]);
+  }
+
+  /**
+   * @return string
+   */
+  private function resolveFullUrl () {
+    $urlParams = collect($this->url_params ?? [])->map(function ($value, $key) {
+      return $key.'='.$value;
+    })->implode('&');
+    return env('APP_M_URL').$this->url.($urlParams ? '?'.$urlParams : '');
   }
 }
