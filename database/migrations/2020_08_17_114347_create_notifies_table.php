@@ -26,7 +26,7 @@ class CreateNotifiesTable extends Migration
       $table->json('keywords')->comment('参数')->nullable();
       $table->json('keyword_names')->comment('参数名')->nullable();
       $table->unsignedTinyInteger('is_read')->comment('是否已阅读')->default(0);
-      $table->string('type_name', 30)->comment('发送类型all/wechat/message');
+      $table->string('channel', 30)->comment('发送渠道all/wechat/message');
       $table->timestamps();
 
       $table->index('user_id');

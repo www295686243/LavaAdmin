@@ -24,7 +24,7 @@ class Notify extends Base
     'keywords',
     'keyword_names',
     'is_read',
-    'type_name'
+    'channel'
   ];
 
   protected $casts = [
@@ -49,7 +49,7 @@ class Notify extends Base
   public function send($method, $user, $params = [])
   {
     $data = $this->getData($method, $user, $params);
-    $data['type_name'] = 'all';
+    $data['channel'] = 'all';
     $this->pushNotify($data);
   }
 
@@ -61,7 +61,7 @@ class Notify extends Base
   public function sendWeChat($method, $user, $params = [])
   {
     $data = $this->getData($method, $user, $params);
-    $data['type_name'] = 'wechat';
+    $data['channel'] = 'wechat';
     $this->pushNotify($data);
   }
 
@@ -73,7 +73,7 @@ class Notify extends Base
   public function sendMessage($method, $user, $params = [])
   {
     $data = $this->getData($method, $user, $params);
-    $data['type_name'] = 'message';
+    $data['channel'] = 'message';
     $this->pushNotify($data);
   }
 
@@ -101,7 +101,7 @@ class Notify extends Base
   private function pushNotify($data)
   {
     $notify = self::create(Arr::only($data, Notify::getFillFields()));
-    if ($notify->type_name !== 'message' && $notify->openid && $data['is_follow_official_account']) {
+    if ($notify->channel !== 'message' && $notify->openid && $data['is_follow_official_account']) {
       NotifyQueue::dispatch($notify);
     }
   }
