@@ -67,7 +67,7 @@ class AdminMenuTableSeeder extends Seeder
           'default_params' => ['guard_name' => 'options.User']
         ],
         [
-          'display_name' => '后台管理',
+          'display_name' => '企业管理',
           'icon' => 'el-icon-s-custom',
           'route' => '/user/admin',
           'children' => [
@@ -93,6 +93,11 @@ class AdminMenuTableSeeder extends Seeder
             [
               'display_name' => '会员角色',
               'route' => '/user/member/role'
+            ],
+            [
+              'display_name' => '通知记录',
+              'icon' => 'el-icon-message-solid',
+              'route' => '/user/member/notify'
             ]
           ]
         ]

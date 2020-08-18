@@ -115,7 +115,6 @@ class SearchQueryService
    */
   private function stringQuery($field, $where, $value, $query)
   {
-    $value = is_string($value) ? trim($value) : $value;
     if (is_string($value)) {
       $value = trim($value);
       if ($where === '等于') {

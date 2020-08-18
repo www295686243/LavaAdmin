@@ -52,7 +52,6 @@ trait NotifyTemplateTrait
       'remark' => '您的个人认证申请已通过，进入【我的-设置-清除缓存】可更新状态！',
       'url' => '/user',
       'url_params' => [],
-      'full_url' => env('APP_M_URL').'/user',
       'keywords' => [
         'keyword1' => $params['name'],
         'keyword2' => date('Y-m-d H:i:s')

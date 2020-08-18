@@ -46,6 +46,8 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('news', 'NewsController');
     // 版本
     Route::apiResource('version', 'VersionController')->only(['index', 'update', 'show']);
+    // 通知记录
+    Route::apiResource('notify', 'NotifyController')->only(['index', 'show']);
     // 通知模板
     Route::apiResource('notify_template', 'NotifyTemplateController')->only(['index', 'show', 'store', 'update']);
   });
