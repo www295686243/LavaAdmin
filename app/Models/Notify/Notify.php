@@ -2,15 +2,13 @@
 
 namespace App\Models\Notify;
 
-use App\Jobs\NotifyQueue;
 use App\Models\Base;
 use App\Models\User\User;
-use Illuminate\Support\Arr;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 class Notify extends Base
 {
-  use NotifyTemplateTrait, HasSnowflakePrimary;
+  use HasSnowflakePrimary;
 
   protected $fillable = [
     'title',
@@ -24,6 +22,7 @@ class Notify extends Base
     'keywords',
     'keyword_names',
     'is_read',
+    'is_follow_official_account',
     'channel'
   ];
 
@@ -42,70 +41,8 @@ class Notify extends Base
   }
 
   /**
-   * @param $method
-   * @param $user
-   * @param array $params
+   * 通知的队列中会走这个方法
    */
-  public function send($method, $user, $params = [])
-  {
-    $data = $this->getData($method, $user, $params);
-    $data['channel'] = 'all';
-    $this->pushNotify($data);
-  }
-
-  /**
-   * @param $method
-   * @param $user
-   * @param array $params
-   */
-  public function sendWeChat($method, $user, $params = [])
-  {
-    $data = $this->getData($method, $user, $params);
-    $data['channel'] = 'wechat';
-    $this->pushNotify($data);
-  }
-
-  /**
-   * @param $method
-   * @param $user
-   * @param array $params
-   */
-  public function sendMessage($method, $user, $params = [])
-  {
-    $data = $this->getData($method, $user, $params);
-    $data['channel'] = 'message';
-    $this->pushNotify($data);
-  }
-
-  /**
-   * @param $method
-   * @param $user
-   * @param array $params
-   * @return mixed
-   */
-  private function getData($method, $user, $params = []) {
-    if (is_numeric($user)) {
-      $userData = User::findOrFail($user);
-    } else {
-      $userData = $user;
-    }
-    $data = $this->$method($userData, $params);
-    $data['openid'] = optional($userData->auth)->wx_openid;
-    $data['is_follow_official_account'] = $userData->is_follow_official_account;
-    return $data;
-  }
-
-  /**
-   * @param $data
-   */
-  private function pushNotify($data)
-  {
-    $notify = self::create(Arr::only($data, Notify::getFillFields()));
-    if ($notify->channel !== 'message' && $notify->openid && $data['is_follow_official_account']) {
-      NotifyQueue::dispatch($notify);
-    }
-  }
-
   public function pushWeChatNotify()
   {
     $app = app('wechat.official_account');

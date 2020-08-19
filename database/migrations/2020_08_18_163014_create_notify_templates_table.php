@@ -20,7 +20,10 @@ class CreateNotifyTemplatesTable extends Migration
       $table->string('content', 120)->comment('通知内容');
       $table->string('remark', 120)->comment('通知备注');
       $table->string('url', 120)->comment('跳转地址');
-      $table->json('keyword_names')->comment('字段名称');
+      // 格式 xxx,xxx,xxx
+      $table->string('url_params', 120)->comment('地址参数')->nullable();
+      // 格式 name,姓名|date,日期|xxx,xxx
+      $table->string('keyword_names', 120)->comment('字段名称')->nullable();
       $table->timestamps();
     });
   }
