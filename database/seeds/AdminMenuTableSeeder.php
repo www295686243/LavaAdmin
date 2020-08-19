@@ -55,6 +55,11 @@ class AdminMenuTableSeeder extends Seeder
       'route' => '/user',
       'children' => [
         [
+          'display_name' => '用户报表',
+          'icon' => 'el-icon-s-marketing',
+          'route' => '/user/report',
+        ],
+        [
           'display_name' => '参数配置',
           'icon' => 'el-icon-setting',
           'route' => '/user/config',
