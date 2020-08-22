@@ -15,10 +15,7 @@ class UserRequest extends BaseRequest
   {
     switch (request()->route()->getActionMethod()) {
       case 'index':
-        return [
-          'username' => 'min:6|numeric',
-          'password' => 'required'
-        ];
+        return [];
       default:
         return [];
     }

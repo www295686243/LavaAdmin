@@ -24,8 +24,10 @@ Route::namespace('Api')->group(function () {
 
     Route::post('user/todayFirstLogin', 'UserController@todayFirstLogin');
     Route::get('user/getUserInfo', 'UserController@getUserInfo');
+    Route::get('user/getBaseUserInfo', 'UserController@getBaseUserInfo');
     Route::post('user/sendSmsCaptcha', 'UserController@sendSmsCaptcha');
     Route::post('user/bindPhone', 'UserController@bindPhone');
+    Route::post('user/updatePhone', 'UserController@updatePhone');
     Route::post('user/verifyPhone', 'UserController@verifyPhone');
 
     Route::apiResource('image', 'ImageController')->only(['store']);

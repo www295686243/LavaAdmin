@@ -40,11 +40,23 @@ class UserController extends Controller
     $permissions = $userData->getInterfacePermissions();
     $roles = $userData->roles()->get(['name', 'display_name'])->makeHidden('pivot');
     $userData->makeHidden('roles', 'permissions');
+    if ($message === '每日登陆') {
+      $userData->last_login_at = date('Y-m-d H:i:s');
+      $userData->save();
+    }
     return $this->setParams([
       'user' => $userData,
       'roles' => $roles,
       'permissions' =>$permissions
     ])->success($message);
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getBaseUserInfo()
+  {
+    return $this->setParams(User::getUserData())->success();
   }
 
   /**
@@ -66,7 +78,7 @@ class UserController extends Controller
     } else {
       $smsData->sendSmsCaptcha();
     }
-    return $this->setParams($smsData)->success('发送成功');
+    return $this->success('发送成功');
   }
 
   /**
@@ -77,30 +89,43 @@ class UserController extends Controller
   {
     $phone = $request->input('phone');
     $code = $request->input('code');
-    $type_name = $request->input('type_name');
 
-    $user = auth()->user();
+    $userData = User::getUserData();
     $SmsCaptcha = new SmsCaptcha();
-
-    if ($type_name === array_search('更新手机号', $SmsCaptcha->TYPE)) {
-      $SmsCaptcha->isCheckedCurrentPhone($user->phone);
-    } else {
-      if ($user->phone) {
-        return $this->error('您已经绑定过手机号了');
-      }
+    if ($userData->phone) {
+      return $this->error('您已经绑定过手机号了');
     }
-
-    $phoneUser = User::where('phone', $phone)->first();
-    // 如果该手机号已绑定别的账户
-    if ($phoneUser && $phoneUser->id !== auth()->id()) {
-      return $this->error('该手机号已被其它账户绑定');
-    }
-
+    // 验证这个手机号是否绑定过
+    (new User())->checkIsBindPhone($phone);
     // 验证短信验证码
-    $SmsCaptcha->checkSmsCaptcha($phone, $code, $type_name);
-    $user->phone = $phone;
-    $user->save();
+    $SmsCaptcha->checkSmsCaptcha($phone, $code, array_search('绑定手机号', $SmsCaptcha->TYPE));
+    $userData->phone = $phone;
+    if (!$userData->register_at) {
+      $userData->register_at = date('Y-m-d H:i:s');
+    }
+    $userData->save();
     return $this->success('绑定成功');
+  }
+
+  /**
+   * @param UserRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function updatePhone(UserRequest $request)
+  {
+    $phone = $request->input('phone');
+    $code = $request->input('code');
+    $userData = User::getUserData();
+    $SmsCaptcha = new SmsCaptcha();
+    // 判断是否验证过修改前的手机号
+    $SmsCaptcha->isCheckedCurrentPhone($userData->phone);
+    // 验证这个手机号是否绑定过
+    (new User())->checkIsBindPhone($phone);
+    // 验证短信验证码
+    $SmsCaptcha->checkSmsCaptcha($phone, $code, array_search('更新手机号', $SmsCaptcha->TYPE));
+    $userData->phone = $phone;
+    $userData->save();
+    return $this->success('修改成功');
   }
 
   /**

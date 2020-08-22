@@ -31,6 +31,7 @@ class CreateUsersTable extends Migration
       $table->rememberToken();
       $table->unsignedTinyInteger('is_admin')->comment('是否管理员')->default(0);
       $table->timestamp('last_login_at')->comment('最后登录时间')->nullable();
+      $table->timestamp('register_at')->comment('注册时间')->nullable();
 
       $table->timestamps();
       $table->softDeletes();

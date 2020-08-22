@@ -104,7 +104,8 @@ class User extends Authenticatable
     'password',
     'is_admin',
     'api_token',
-    'last_login_at'
+    'last_login_at',
+    'register_at'
   ];
 
   /**
@@ -303,5 +304,18 @@ class User extends Authenticatable
       $userData->delete();
       return $userData;
     });
+  }
+
+  /**
+   * 验证这个手机号是否绑定过
+   * @param $phone
+   */
+  public function checkIsBindPhone($phone)
+  {
+    $phoneUser = self::where('phone', $phone)->first();
+    // 如果该手机号已绑定别的账户
+    if ($phoneUser && $phoneUser->id !== auth()->id()) {
+      $this->error('该手机号已被其它账户绑定');
+    }
   }
 }
