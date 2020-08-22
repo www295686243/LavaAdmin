@@ -76,8 +76,10 @@ class UserAuth extends Base
         'wx_openid' => $openid,
         'wx_unionid' => $unionid
       ]);
+      $userData->is_register = true;
     } else {
       $userData = \App\Models\Api\User::findOrFail($authData->user_id);
+      $userData->is_register = false;
     }
     $headimgurl = isset($authInfo['headimgurl']) ? $authInfo['headimgurl'] : '';
     $userData->head_url = str_replace('http:', 'https:', $headimgurl);
