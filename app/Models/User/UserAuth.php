@@ -76,10 +76,10 @@ class UserAuth extends Base
         'wx_openid' => $openid,
         'wx_unionid' => $unionid
       ]);
-      $userData->is_register = true;
+      $is_register = true;
     } else {
       $userData = \App\Models\Api\User::findOrFail($authData->user_id);
-      $userData->is_register = false;
+      $is_register = false;
     }
     $headimgurl = isset($authInfo['headimgurl']) ? $authInfo['headimgurl'] : '';
     $userData->head_url = str_replace('http:', 'https:', $headimgurl);
@@ -88,10 +88,12 @@ class UserAuth extends Base
 
     $plainTextToken = $userData->createToken('token')->plainTextToken;
     [$id, $token] = explode('|', $plainTextToken, 2);
-    $userData->makeVisible('api_token');
     $userData->api_token = $token;
     $userData->save();
-    return $userData;
+    return [
+      'is_register' => $is_register,
+      'api_token' => $token
+    ];
   }
 
   /**
