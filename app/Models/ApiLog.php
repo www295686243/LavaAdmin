@@ -67,6 +67,9 @@ class ApiLog extends Base
     $user = User::getUserData();
     $method = request()->getMethod();
     $path = request()->getPathInfo();
+    if ($path === '/api/wechat/login') {
+      $user = User::firstOrFail($params['data']['user_id']);
+    }
     if ($user && $method !== 'GET' && $path !== '/api/api_log') {
       self::create([
         'user_id' => $user->id,

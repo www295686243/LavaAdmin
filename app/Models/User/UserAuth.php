@@ -92,7 +92,8 @@ class UserAuth extends Base
     $userData->save();
     return [
       'is_register' => $is_register,
-      'api_token' => $token
+      'api_token' => $token,
+      'user_id' => $userData->id
     ];
   }
 

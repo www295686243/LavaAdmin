@@ -145,13 +145,15 @@ class ResourceService
       (new AdminLog())->createLog([
         'desc' => $this->message,
         'status' => $this->status,
-        'code' => $this->statusCode
+        'code' => $this->statusCode,
+        'data' => $this->params
       ]);
     } else if (request()->route()->getPrefix() === 'api') {
       (new ApiLog())->createLog([
         'desc' => $this->message,
         'status' => $this->status,
-        'code' => $this->statusCode
+        'code' => $this->statusCode,
+        'data' => $this->params
       ]);
     }
 
