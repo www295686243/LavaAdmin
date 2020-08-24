@@ -62,7 +62,7 @@ class Chart extends Base
     $startDate = $date.' 00:00:00';
     $endDate = $date.' 23:59:59';
     return ApiLog::where('created_at', '>=', $startDate)
-      ->where('created_at', '>=', $endDate)
+      ->where('created_at', '<=', $endDate)
       ->where('code', 200)
       ->get();
   }
