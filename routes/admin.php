@@ -49,7 +49,7 @@ Route::namespace('Admin')->group(function () {
     // 通知记录
     Route::apiResource('notify', 'NotifyController')->only(['index', 'show']);
     // 通知模板
-    Route::apiResource('notify_template', 'NotifyTemplateController')->only(['index', 'show', 'store', 'update']);
+    Route::apiResource('notify_template', 'NotifyTemplateController');
     // 图表
     Route::get('chart/createTodayData', 'ChartController@createTodayData');
     Route::get('chart/getCurrentMonthData', 'ChartController@getCurrentMonthData');

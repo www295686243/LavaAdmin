@@ -13,8 +13,13 @@ class UserControlRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'update':
+        return [
+          'is_disable_all_push' => 'sometimes|numeric'
+        ];
+      default:
+        return [];
+    }
   }
 }

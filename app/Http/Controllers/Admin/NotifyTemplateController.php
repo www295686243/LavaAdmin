@@ -51,4 +51,16 @@ class NotifyTemplateController extends Controller
     $data->update($input);
     return $this->success();
   }
+
+  /**
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   * @throws \Exception
+   */
+  public function destroy($id)
+  {
+    $data = NotifyTemplate::findOrFail($id);
+    $data->delete();
+    return $this->success();
+  }
 }

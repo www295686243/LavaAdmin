@@ -13,8 +13,19 @@ class ChartRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'getCurrentMonthData':
+        return [
+          'date' => 'required|date_format:Y-m',
+          'code' => 'required|string'
+        ];
+      case 'getCurrentYearData':
+        return [
+          'date' => 'required|date_format:Y',
+          'code' => 'required|string'
+        ];
+      default:
+        return [];
+    }
   }
 }

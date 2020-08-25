@@ -25,6 +25,7 @@ class CreateNotifyTemplatesTable extends Migration
       // 格式 name,姓名|date,日期|xxx,xxx
       $table->string('keyword_names', 120)->comment('字段名称')->nullable();
       $table->timestamps();
+      $table->softDeletes();
     });
   }
 
