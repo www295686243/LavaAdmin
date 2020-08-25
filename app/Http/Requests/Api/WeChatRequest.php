@@ -13,8 +13,17 @@ class WeChatRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'getConfig':
+        return [
+          'url' => 'required|string'
+        ];
+      case 'auth':
+        return [
+          'redirect_url' => 'required|string'
+        ];
+      default:
+        return [];
+    }
   }
 }

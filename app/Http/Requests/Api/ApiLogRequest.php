@@ -13,8 +13,13 @@ class ApiLogRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'store':
+        return [
+          'stack' => 'sometimes|nullable|array'
+        ];
+      default:
+        return [];
+    }
   }
 }

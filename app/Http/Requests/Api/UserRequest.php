@@ -14,8 +14,31 @@ class UserRequest extends BaseRequest
   public function rules()
   {
     switch (request()->route()->getActionMethod()) {
-      case 'index':
-        return [];
+      case 'login':
+        return [
+          'username' => 'required|max:20|string',
+          'password' => 'required|between:6,20|string'
+        ];
+      case 'sendSmsCaptcha':
+        return [
+          'type_name' => 'required|string',
+          'phone' => 'required|numeric|digits:11'
+        ];
+      case 'bindPhone':
+        return [
+          'code' => 'required|digits:4',
+          'phone' => 'required|numeric|digits:11'
+        ];
+      case 'updatePhone':
+        return [
+          'code' => 'required|digits:4',
+          'phone' => 'required|numeric|digits:11'
+        ];
+      case 'verifyPhone':
+        return [
+          'code' => 'required|digits:4',
+          'phone' => 'required|numeric|digits:11'
+        ];
       default:
         return [];
     }

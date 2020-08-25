@@ -27,7 +27,7 @@ class UserRequest extends BaseRequest
         'sometimes',
         'nullable',
         'numeric',
-        'digits_between:11,11',
+        'digits:11',
         Rule::unique('users')->ignore($this->route('user'))
       ]
     ];

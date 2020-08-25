@@ -16,7 +16,7 @@ class UserControlRequest extends BaseRequest
     switch (request()->route()->getActionMethod()) {
       case 'update':
         return [
-          'is_disable_all_push' => 'sometimes|numeric'
+          'is_disable_all_push' => 'sometimes|boolean'
         ];
       default:
         return [];

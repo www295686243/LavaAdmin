@@ -13,8 +13,13 @@ class AppRequest extends BaseRequest
    */
   public function rules()
   {
-    return [
-      //
-    ];
+    switch (request()->route()->getActionMethod()) {
+      case 'getAppConfig':
+        return [
+          'guard_name' => 'sometimes|nullable|string'
+        ];
+      default:
+        return [];
+    }
   }
 }
