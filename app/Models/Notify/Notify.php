@@ -62,7 +62,7 @@ class Notify extends Base
    * @return string
    */
   private function resolveFullUrl () {
-    $urlParams = collect($this->url_params ?? [])->map(function ($value, $key) {
+    $urlParams = collect($this->url_params ?? [])->put('notify_id', $this->id)->map(function ($value, $key) {
       return $key.'='.$value;
     })->implode('&');
     return env('APP_M_URL').$this->url.($urlParams ? '?'.$urlParams : '');

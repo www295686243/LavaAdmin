@@ -36,6 +36,8 @@ Route::namespace('Api')->group(function () {
     Route::post('wechat/notify', 'WeChatController@notify');
 
     // 通知
-    Route::apiResource('notify', 'NotifyController')->only(['index', 'destroy']);
+    Route::get('notify/getUnreadCount', 'NotifyController@getUnreadCount');
+    Route::get('notify/markHaveRead', 'NotifyController@markHaveRead');
+    Route::apiResource('notify', 'NotifyController')->only(['index', 'show']);
   });
 });

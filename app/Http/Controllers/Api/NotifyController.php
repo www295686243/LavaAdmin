@@ -22,6 +22,42 @@ class NotifyController extends Controller
   }
 
   /**
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function show($id)
+  {
+    $data = Notify::findOrFail($id);
+    $data->is_read = 1;
+    $data->save();
+    return $this->success();
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getUnreadCount()
+  {
+    $count = Notify::where('user_id', User::getUserId())
+      ->where('is_push_message', 1)
+      ->where('is_read', 0)
+      ->count();
+    return $this->setParams(['count' => $count])->success();
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function markHaveRead()
+  {
+    Notify::where('user_id', User::getUserId())
+    ->where('is_push_message', 1)
+    ->where('is_read', 0)
+    ->update(['is_read' => 1]);
+    return $this->success();
+  }
+
+  /**
    * Remove the specified resource from storage.
    *
    * @param  int $id
