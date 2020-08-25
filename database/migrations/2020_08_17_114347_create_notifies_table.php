@@ -27,7 +27,8 @@ class CreateNotifiesTable extends Migration
       $table->json('keyword_names')->comment('参数名')->nullable();
       $table->unsignedTinyInteger('is_read')->comment('是否已阅读')->default(0);
       $table->unsignedTinyInteger('is_follow_official_account')->comment('是否关注公众号')->default(0);
-      $table->string('channel', 30)->comment('发送渠道all/wechat/message');
+      $table->unsignedTinyInteger('is_push_official_account')->comment('是否推送微信公众号')->default(0);
+      $table->unsignedTinyInteger('is_push_message')->comment('是否推送站内信')->default(0);
       $table->timestamps();
 
       $table->index('user_id');

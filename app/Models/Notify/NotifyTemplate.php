@@ -19,7 +19,9 @@ class NotifyTemplate extends Base
     'remark',
     'url',
     'url_params',
-    'keyword_names'
+    'keyword_names',
+    'is_push_official_account',
+    'is_push_message'
   ];
 
   protected $hidden = [
@@ -50,9 +52,8 @@ class NotifyTemplate extends Base
   /**
    * @param $user
    * @param $params
-   * @param string $channel
    */
-  public function createNotify($user, $params, $channel = 'all')
+  public function createNotify($user, $params)
   {
     $data = [];
     if (is_numeric($user)) {
@@ -72,7 +73,8 @@ class NotifyTemplate extends Base
     $data['keywords'] = $keywordParams['keywords'];
     $data['keyword_names'] = $keywordParams['keyword_names'];
     $data['is_follow_official_account'] = $userData->is_follow_official_account;
-    $data['channel'] = $channel;
+    $data['is_push_official_account'] = $this->is_push_official_account;
+    $data['is_push_message'] = $this->is_push_message;
     $this->pushNotify($data);
   }
 
@@ -82,7 +84,7 @@ class NotifyTemplate extends Base
   private function pushNotify($data)
   {
     $notify = Notify::create(Arr::only($data, Notify::getFillFields()));
-    if ($notify->channel !== 'message' && $notify->openid && $notify->is_follow_official_account) {
+    if ($notify->is_push_official_account && $notify->openid && $notify->is_follow_official_account) {
       NotifyQueue::dispatch($notify);
     }
   }

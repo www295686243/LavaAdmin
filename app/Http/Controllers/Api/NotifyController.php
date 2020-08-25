@@ -15,7 +15,7 @@ class NotifyController extends Controller
   public function index()
   {
     $data = Notify::where('user_id', User::getUserId())
-      ->where('channel', '<>', 'wechat')
+      ->where('is_push_message', 1)
       ->orderByDesc('id')
       ->simplePagination();
     return $this->setParams($data)->success();

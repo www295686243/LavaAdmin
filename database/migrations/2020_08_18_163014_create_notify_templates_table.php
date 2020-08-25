@@ -19,11 +19,13 @@ class CreateNotifyTemplatesTable extends Migration
       $table->string('title', 60)->comment('通知标题');
       $table->string('content', 120)->comment('通知内容');
       $table->string('remark', 120)->comment('通知备注');
-      $table->string('url', 120)->comment('跳转地址');
+      $table->string('url', 120)->comment('跳转地址，格式：/xxx');
       // 格式 xxx,xxx,xxx
       $table->string('url_params', 120)->comment('地址参数')->nullable();
       // 格式 name,姓名|date,日期|xxx,xxx
       $table->string('keyword_names', 120)->comment('字段名称')->nullable();
+      $table->unsignedTinyInteger('is_push_official_account')->comment('是否推送微信公众号')->default(0);
+      $table->unsignedTinyInteger('is_push_message')->comment('是否推送站内信')->default(0);
       $table->timestamps();
       $table->softDeletes();
     });

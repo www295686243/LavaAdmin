@@ -23,7 +23,8 @@ class Notify extends Base
     'keyword_names',
     'is_read',
     'is_follow_official_account',
-    'channel'
+    'is_push_official_account',
+    'is_push_message'
   ];
 
   protected $casts = [
