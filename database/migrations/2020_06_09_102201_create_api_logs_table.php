@@ -26,6 +26,8 @@ class CreateApiLogsTable extends Migration
       $table->unsignedSmallInteger('code')->comment('状态码');
       $table->string('desc', 120)->comment('描述')->nullable();
       $table->timestamps();
+
+      $table->index('user_id');
     });
   }
 

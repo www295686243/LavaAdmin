@@ -24,6 +24,8 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('config_option', 'ConfigOptionController');
     // 后台日志
     Route::apiResource('admin_log', 'AdminLogController')->only(['index']);
+    // 前台日志
+    Route::apiResource('api_log', 'ApiLogController')->only(['index']);
     // 职位
     Route::get('position/getPermissions/{id}', 'PositionController@getPermissions');
     Route::post('position/updatePermissions/{id}', 'PositionController@updatePermissions');
