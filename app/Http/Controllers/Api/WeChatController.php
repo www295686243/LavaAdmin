@@ -76,6 +76,27 @@ class WeChatController extends Controller
   }
 
   /**
+   * @return mixed
+   */
+  public function payCallback()
+  {
+    $app = app('wechat.payment');
+    return $app->handlePaidNotify(function ($res, $fail) {
+      $orderId = $res['out_trade_no'];
+
+      if ($res['return_code'] === 'SUCCESS') {
+        // 表示通信状态，不代表支付状态
+        if ($res['result_code'] === 'SUCCESS') {
+          // 支付成功
+        } else {
+          // 支付失败
+        }
+      }
+      return true;
+    });
+  }
+
+  /**
    * @return \Illuminate\Http\JsonResponse
    */
   public function notify()

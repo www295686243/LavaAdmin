@@ -56,5 +56,7 @@ Route::namespace('Admin')->group(function () {
     Route::get('chart/createTodayData', 'ChartController@createTodayData');
     Route::get('chart/getCurrentMonthData', 'ChartController@getCurrentMonthData');
     Route::get('chart/getCurrentYearData', 'ChartController@getCurrentYearData');
+    // 优惠券模板
+    Route::apiResource('coupon_template', 'CouponTemplateController')->only(['index', 'store', 'show', 'update']);
   });
 });

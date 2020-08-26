@@ -51,6 +51,27 @@ class AdminMenuTableSeeder extends Seeder
       ]
     ],
     [
+      'display_name' => '运营管理',
+      'route' => '/operation',
+      'children' => [
+        [
+          'display_name' => '优惠券管理',
+          'icon' => 'el-icon-s-ticket',
+          'route' => '/operation/coupon',
+          'children' => [
+            [
+              'display_name' => '优惠券模板',
+              'route' => '/operation/coupon/coupon-template'
+            ],
+            [
+              'display_name' => '优惠券列表',
+              'route' => '/operation/coupon/coupon'
+            ]
+          ]
+        ]
+      ]
+    ],
+    [
       'display_name' => '用户管理',
       'route' => '/user',
       'children' => [

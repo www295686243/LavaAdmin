@@ -97,6 +97,9 @@ class Image extends Base
     return $this->morphTo();
   }
 
+  /**
+   * @param $info_id
+   */
   public function updateImageableId($info_id)
   {
     $marking = request()->input('marking');
@@ -105,6 +108,7 @@ class Image extends Base
   }
 
   /**
+   * 删除多余图片
    * @return mixed
    */
   private function destroySurplus()

@@ -112,7 +112,7 @@ return [
       'key' => env('WECHAT_PAYMENT_KEY', 'key-for-signature'),
       'cert_path' => env('WECHAT_PAYMENT_CERT_PATH', storage_path('yuancaowang_cert.pem')),    // XXX: 绝对路径！！！！
       'key_path' => env('WECHAT_PAYMENT_KEY_PATH', storage_path('yuancaowang_key.pem')),      // XXX: 绝对路径！！！！
-      'notify_url' => env('APP_URL').'/api/pay_callback',                           // 默认支付结果通知地址
+      'notify_url' => env('APP_URL').'/api/wechat/pay_callback',                           // 默认支付结果通知地址
     ],
     // ...
   ],

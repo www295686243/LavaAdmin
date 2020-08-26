@@ -36,4 +36,22 @@ trait IdToStrTrait
   {
     return $value ? strval($value) : null;
   }
+
+  /**
+   * @param $value
+   * @return string
+   */
+  public function getUserOrderIdAttribute($value)
+  {
+    return $value ? strval($value) : null;
+  }
+
+  /**
+   * @param $value
+   * @return string
+   */
+  public function getUserCouponIdAttribute($value)
+  {
+    return $value ? strval($value) : null;
+  }
 }
