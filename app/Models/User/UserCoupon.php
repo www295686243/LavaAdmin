@@ -12,7 +12,7 @@ class UserCoupon extends Base
     'display_name',
     'desc',
     'amount',
-    'status',
+    'coupon_status',
     'start_at',
     'end_at',
     'source',

@@ -51,4 +51,13 @@ class CouponTemplateController extends Controller
     $couponTemplateData->update($input);
     return $this->success();
   }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getAll()
+  {
+    $data = CouponTemplate::all();
+    return $this->setParams($data)->success();
+  }
 }

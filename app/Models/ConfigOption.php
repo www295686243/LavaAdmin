@@ -46,4 +46,27 @@ class ConfigOption extends Base
   {
     return $this->belongsTo('App\Models\Config');
   }
+
+  /**
+   * @param $name
+   * @param $display_name
+   * @return int
+   */
+  public function getOperationValue($name, $display_name)
+  {
+    $options = $this->getOptions('options.Operation', $name);
+    $item = $options->firstWhere('display_name', $display_name);
+    return $item->id;
+  }
+
+  /**
+   * @param $guard_name
+   * @param $name
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private function getOptions($guard_name, $name)
+  {
+    $configData = Config::with('options')->where('name', $name)->where('guard_name', $guard_name)->firstOrFail();
+    return $configData->options()->get();
+  }
 }

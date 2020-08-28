@@ -55,6 +55,12 @@ class AdminMenuTableSeeder extends Seeder
       'route' => '/operation',
       'children' => [
         [
+          'display_name' => '选项配置',
+          'icon' => 'el-icon-s-operation',
+          'route' => '/operation/options/config',
+          'default_params' => ['guard_name' => 'options.Operation']
+        ],
+        [
           'display_name' => '优惠券管理',
           'icon' => 'el-icon-s-ticket',
           'route' => '/operation/coupon',

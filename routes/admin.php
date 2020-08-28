@@ -37,6 +37,7 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('user_personal', 'User\UserPersonalController');
     Route::apiResource('user_enterprise', 'User\UserEnterpriseController');
     Route::apiResource('user_control', 'User\UserControlController');
+    Route::apiResource('user_coupon', 'User\UserCouponController')->only(['index', 'store']);
     // 角色
     Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
     Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');
@@ -57,6 +58,7 @@ Route::namespace('Admin')->group(function () {
     Route::get('chart/getCurrentMonthData', 'ChartController@getCurrentMonthData');
     Route::get('chart/getCurrentYearData', 'ChartController@getCurrentYearData');
     // 优惠券模板
+    Route::get('coupon_template/getAll', 'CouponTemplateController@getAll');
     Route::apiResource('coupon_template', 'CouponTemplateController')->only(['index', 'store', 'show', 'update']);
   });
 });

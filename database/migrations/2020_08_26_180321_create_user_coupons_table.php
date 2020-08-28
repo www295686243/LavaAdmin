@@ -20,7 +20,7 @@ class CreateUserCouponsTable extends Migration
       $table->string('display_name', 60)->comment('券名');
       $table->string('desc', 255)->comment('描述');
       $table->decimal('amount', 8, 2)->comment('金额');
-      $table->unsignedTinyInteger('status')->comment('状态(0未使用,1已使用,2已过期,3挂售中,4已出售)')->default(0);
+      $table->unsignedTinyInteger('coupon_status')->comment('状态(0未使用,1已使用,2已过期,3挂售中,4已出售)')->default(0);
       $table->timestamp('start_at')->comment('开始时间')->nullable();
       $table->timestamp('end_at')->comment('过期时间')->nullable();
       $table->string('source', 60)->comment('来源');
