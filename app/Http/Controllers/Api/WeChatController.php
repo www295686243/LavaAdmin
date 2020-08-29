@@ -73,6 +73,7 @@ class WeChatController extends Controller
       'pay_type' => 1
     ]);
 
+    \Log::info($userOrderData->id);
     $order = $app->order->unify([
       'body' => '查看联系方式',
       'out_trade_no' => $userOrderData->id,
