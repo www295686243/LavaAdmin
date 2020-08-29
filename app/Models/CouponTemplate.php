@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\DB;
+use Kra8\Snowflake\Snowflake;
 
 class CouponTemplate extends Base
 {
@@ -37,6 +38,7 @@ class CouponTemplate extends Base
    * @param $amount
    * @param $expiry_day
    * @param $source
+   * @throws \Exception
    */
   public function giveCoupons($user_id, $give_number, $amount, $expiry_day, $source)
   {
@@ -47,6 +49,7 @@ class CouponTemplate extends Base
     $data = [];
     for ($i = 0; $i < $give_number; $i++) {
       $data[] = [
+        'id' => app(Snowflake::class)->next(),
         'user_id' => $user_id,
         'coupon_template_id' => $this->id,
         'display_name' => $this->display_name,

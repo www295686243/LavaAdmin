@@ -17,10 +17,10 @@ class CreateUserBillsTable extends Migration
       $table->id();
       $table->unsignedBigInteger('user_id');
       $table->unsignedBigInteger('user_order_id')->nullable();
-      $table->decimal('total_amount', 7,2 )->comment('总支付金额')->default(0);
-      $table->decimal('cash_amount', 7, 2)->comment('现金金额')->default(0.00);
-      $table->decimal('balance_amount', 7, 2)->comment('余额金额')->default(0.00);
-      $table->decimal('coupon_amount', 7, 2)->comment('优惠券金额')->default(0.00);
+      $table->decimal('total_amount', 7,2 )->comment('总支付金额')->nullable();
+      $table->decimal('cash_amount', 7, 2)->comment('现金金额')->nullable();
+      $table->decimal('balance_amount', 7, 2)->comment('余额金额')->nullable();
+      $table->decimal('coupon_amount', 7, 2)->comment('优惠券金额')->nullable();
       $table->string('desc')->comment('账单说明');
       $table->timestamps();
 

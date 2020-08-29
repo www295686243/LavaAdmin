@@ -43,5 +43,7 @@ Route::namespace('Api')->group(function () {
 
     // 信息
     Route::apiResource('news', 'NewsController')->only(['index']);
+    // 优惠券
+    Route::apiResource('user_coupon', 'User\UserCouponController')->only(['index']);
   });
 });

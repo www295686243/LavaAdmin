@@ -21,6 +21,7 @@ class UserCouponController extends Controller
   /**
    * @param UserCouponRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Exception
    */
   public function store(UserCouponRequest $request)
   {

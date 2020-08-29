@@ -18,10 +18,10 @@ class CreateUserOrdersTable extends Migration
       $table->unsignedBigInteger('user_id')->comment('支付者user_id');
       $table->string('user_orderable_type', 60);
       $table->unsignedBigInteger('user_orderable_id');
-      $table->decimal('total_amount', 8, 2)->comment('总支付金额')->default(0);
-      $table->decimal('cash_amount', 8, 2)->comment('现金金额')->default(0);
-      $table->decimal('balance_amount', 8, 2)->comment('余额金额')->default(0);
-      $table->decimal('coupon_amount', 8, 2)->comment('优惠券金额')->default(0);
+      $table->decimal('total_amount', 8, 2)->comment('总支付金额')->nullable();
+      $table->decimal('cash_amount', 8, 2)->comment('现金金额')->nullable();
+      $table->decimal('balance_amount', 8, 2)->comment('余额金额')->nullable();
+      $table->decimal('coupon_amount', 8, 2)->comment('优惠券金额')->nullable();
       $table->unsignedBigInteger('coupon_id')->comment('优惠券id')->nullable();
       $table->unsignedTinyInteger('pay_status')->comment('状态(0未支付,1已支付,2支付失败)')->default(0);
       $table->timestamp('paid_at')->comment('支付时间')->nullable();

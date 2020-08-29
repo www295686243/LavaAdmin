@@ -8,6 +8,7 @@ use App\Models\Api\User;
 use App\Models\News;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserAuth;
+use App\Models\User\UserCoupon;
 use App\Models\User\UserOrder;
 use Illuminate\Support\Facades\DB;
 
@@ -59,30 +60,56 @@ class WeChatController extends Controller
   /**
    * @param WeChatRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function pay(WeChatRequest $request)
   {
     $id = $request->input('id');
-    $app = app('wechat.payment');
-    $userData = User::getUserData();
-    $userAuthData = $userData->auth;
+    $coupon_id = $request->input('coupon_id');
+    DB::beginTransaction();
+    try {
+      $app = app('wechat.payment');
+      $userData = User::getUserData();
+      $userAuthData = $userData->auth;
+      $total_amount = 0.01;
 
-    $newsData = News::findOrFail($id);
-    $userOrderData = $newsData->user_order()->create([
-      'user_id' => $userData->id,
-      'total_amount' => 0.01,
-      'cash_amount' => 0.01
-    ]);
+      $userCouponData = (new UserCoupon())->getUsableCoupon($coupon_id);
+      $coupon_amount = $userCouponData->amount;
+      $cash_amount = $total_amount - $coupon_amount;
+      $cash_amount = $cash_amount > 0 ? $cash_amount : 0;
 
-    $order = $app->order->unify([
-      'body' => '查看联系方式',
-      'out_trade_no' => $userOrderData->id,
-      'total_fee' => $userOrderData->total_amount * 100,
-      'trade_type' => 'JSAPI',
-      'openid' => $userAuthData->wx_openid
-    ]);
-    $config = $app->jssdk->sdkConfig($order['prepay_id']);
-    return $this->setParams($config)->success('获取支付配置成功');
+      $newsData = News::findOrFail($id);
+      $userOrderData = $newsData->user_order()->create([
+        'user_id' => $userData->id,
+        'total_amount' => $total_amount,
+        'cash_amount' => $cash_amount,
+        'coupon_amount' => $coupon_amount
+      ]);
+
+      if ($cash_amount > 0) {
+        $order = $app->order->unify([
+          'body' => '查看联系方式',
+          'out_trade_no' => $userOrderData->id,
+          'total_fee' => $userOrderData->total_amount * 100,
+          'trade_type' => 'JSAPI',
+          'openid' => $userAuthData->wx_openid
+        ]);
+        $config = $app->jssdk->sdkConfig($order['prepay_id']);
+        DB::commit();
+        return $this->setParams($config)->success('获取支付配置成功');
+      } else {
+        $userOrderData->pay_status = 1;
+        $userOrderData->paid_at = date('Y-m-d H:i:s');
+        $userOrderData->save();
+        $userOrderData->user_orderable->payCallback($userOrderData);
+        DB::commit();
+        return $this->success('支付成功');
+      }
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage());
+      return $this->error('支付失败');
+    }
   }
 
   /**
