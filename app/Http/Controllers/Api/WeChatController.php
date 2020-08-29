@@ -80,6 +80,7 @@ class WeChatController extends Controller
       'trade_type' => 'JSAPI',
       'openid' => $userAuthData->wx_openid
     ]);
+    \Log::info($order);
     $config = $app->jssdk->sdkConfig($order['prepay_id']);
     return $this->setParams($config)->success('获取支付配置成功');
   }
