@@ -28,6 +28,7 @@ class CreateUserOrdersTable extends Migration
       $table->timestamps();
 
       $table->index('user_id');
+      $table->index('user_orderable_id');
     });
   }
 

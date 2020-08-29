@@ -26,6 +26,8 @@ class CreateImagesTable extends Migration
       $table->float('height', 8, 2)->comment('图片高度')->default(0.00);
       $table->unsignedBigInteger('marking')->comment('标记(信息发布时用到)')->nullable();
       $table->timestamps();
+
+      $table->index('imageable_id');
     });
   }
 
