@@ -40,5 +40,8 @@ Route::namespace('Api')->group(function () {
     Route::get('notify/getUnreadCount', 'NotifyController@getUnreadCount');
     Route::get('notify/markHaveRead', 'NotifyController@markHaveRead');
     Route::apiResource('notify', 'NotifyController')->only(['index', 'show']);
+
+    // 信息
+    Route::apiResource('news', 'NewsController')->only(['index']);
   });
 });

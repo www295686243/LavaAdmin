@@ -13,6 +13,7 @@ class CreateApiLogsTable extends Migration
    */
   public function up()
   {
+    // 差 操作系统 平台 屏幕宽度、高度 浏览器 浏览器版本
     Schema::create('api_logs', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id');

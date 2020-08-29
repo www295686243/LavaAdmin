@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User\UserOrder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
@@ -92,5 +93,13 @@ class News extends Base
   public function images()
   {
     return $this->morphMany('App\Models\Image', 'imageable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function user_order()
+  {
+    return $this->morphMany(UserOrder::class, 'user_orderable');
   }
 }

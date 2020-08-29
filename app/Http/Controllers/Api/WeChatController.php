@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\WeChatRequest;
 use App\Models\Api\User;
+use App\Models\News;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserAuth;
+use App\Models\User\UserOrder;
 
 class WeChatController extends Controller
 {
@@ -59,15 +61,22 @@ class WeChatController extends Controller
    */
   public function pay(WeChatRequest $request)
   {
-    $amount = $request->input('amount');
+    $id = $request->input('id');
     $app = app('wechat.payment');
     $userData = User::getUserData();
     $userAuthData = $userData->auth;
 
+    $newsData = News::findOrFail($id);
+    $userOrderData = $newsData->user_order()->create([
+      'user_id' => $userData->id,
+      'amount' => 0.01,
+      'pay_type' => 1
+    ]);
+
     $order = $app->order->unify([
       'body' => '查看联系方式',
-      'out_trade_no' => time(),
-      'total_fee' => $amount * 100,
+      'out_trade_no' => $userOrderData->id,
+      'total_fee' => $userOrderData->amount * 100,
       'trade_type' => 'JSAPI',
       'openid' => $userAuthData->wx_openid
     ]);
@@ -86,11 +95,18 @@ class WeChatController extends Controller
 
       if ($res['return_code'] === 'SUCCESS') {
         // 表示通信状态，不代表支付状态
+        $userOrderData = UserOrder::findOrFail($orderId);
         if ($res['result_code'] === 'SUCCESS') {
           // 支付成功
+          $userOrderData->pay_status = 1;
+          $userOrderData->paid_at = date('Y-m-d H:i:s');
         } else {
           // 支付失败
+          $userOrderData->pay_status = 2;
         }
+        $userOrderData->save();
+      } else {
+        return $fail('通信失败');
       }
       return true;
     });
