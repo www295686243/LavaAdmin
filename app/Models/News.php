@@ -102,4 +102,12 @@ class News extends Base
   {
     return $this->morphMany(UserOrder::class, 'user_orderable');
   }
+
+  /**
+   * @param UserOrder $userOrderData
+   */
+  public function payCallback(UserOrder $userOrderData)
+  {
+    $userOrderData->createUserBill('信息查看');
+  }
 }

@@ -10,13 +10,19 @@ class UserBill extends Base
   use HasSnowflakePrimary;
   protected $fillable = [
     'user_id',
-    'amount',
-    'amount_type',
+    'user_order_id',
+    'total_amount',
+    'cash_amount',
+    'balance_amount',
+    'coupon_amount',
     'desc'
   ];
 
   protected $casts = [
-    'amount' => 'float',
+    'total_amount' => 'float',
+    'cash_amount' => 'float',
+    'balance_amount' => 'float',
+    'coupon_amount' => 'float',
   ];
 
   /**

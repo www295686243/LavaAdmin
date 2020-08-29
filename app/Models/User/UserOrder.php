@@ -12,17 +12,21 @@ class UserOrder extends Base
     'user_id',
     'user_orderable_type',
     'user_orderable_id',
-    'amount',
-    'pay_status',
-    'coupon_id',
+    'total_amount',
+    'cash_amount',
+    'balance_amount',
     'coupon_amount',
-    'pay_type',
+    'coupon_id',
+    'pay_status',
     'paid_at',
     'source'
   ];
 
   protected $casts = [
-    'amount' => 'float',
+    'total_amount' => 'float',
+    'cash_amount' => 'float',
+    'balance_amount' => 'float',
+    'coupon_amount' => 'float',
     'user_orderable_id' => 'string'
   ];
 
@@ -32,5 +36,30 @@ class UserOrder extends Base
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+   */
+  public function user_orderable()
+  {
+    return $this->morphTo();
+  }
+
+  /**
+   * @param $desc
+   * @return UserBill|\Illuminate\Database\Eloquent\Model
+   */
+  public function createUserBill($desc)
+  {
+    return UserBill::create([
+      'user_id' => $this->user_id,
+      'user_order_id' => $this->id,
+      'total_amount' => $this->total_amount,
+      'cash_amount' => $this->cash_amount,
+      'balance_amount' => $this->balance_amount,
+      'coupon_amount' => $this->coupon_amount,
+      'desc' => $desc
+    ]);
   }
 }

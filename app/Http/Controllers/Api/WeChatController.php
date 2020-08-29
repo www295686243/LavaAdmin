@@ -9,6 +9,7 @@ use App\Models\News;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserAuth;
 use App\Models\User\UserOrder;
+use Illuminate\Support\Facades\DB;
 
 class WeChatController extends Controller
 {
@@ -69,19 +70,17 @@ class WeChatController extends Controller
     $newsData = News::findOrFail($id);
     $userOrderData = $newsData->user_order()->create([
       'user_id' => $userData->id,
-      'amount' => 0.01,
-      'pay_type' => 1
+      'total_amount' => 0.01,
+      'cash_amount' => 0.01
     ]);
 
-    \Log::info($userOrderData->id);
     $order = $app->order->unify([
       'body' => '查看联系方式',
       'out_trade_no' => $userOrderData->id,
-      'total_fee' => $userOrderData->amount * 100,
+      'total_fee' => $userOrderData->total_amount * 100,
       'trade_type' => 'JSAPI',
       'openid' => $userAuthData->wx_openid
     ]);
-    \Log::info($order);
     $config = $app->jssdk->sdkConfig($order['prepay_id']);
     return $this->setParams($config)->success('获取支付配置成功');
   }
@@ -94,23 +93,33 @@ class WeChatController extends Controller
     $app = app('wechat.payment');
     return $app->handlePaidNotify(function ($res, $fail) {
       $orderId = $res['out_trade_no'];
-
       if ($res['return_code'] === 'SUCCESS') {
         // 表示通信状态，不代表支付状态
-        $userOrderData = UserOrder::findOrFail($orderId);
         if ($res['result_code'] === 'SUCCESS') {
           // 支付成功
-          $userOrderData->pay_status = 1;
-          $userOrderData->paid_at = date('Y-m-d H:i:s');
+          DB::beginTransaction();
+          try {
+            $userOrderData = UserOrder::findOrFail($orderId);
+            $userOrderData->pay_status = 1;
+            $userOrderData->paid_at = date('Y-m-d H:i:s');
+            $userOrderData->save();
+            $userOrderData->user_orderable->payCallback($userOrderData);
+            DB::commit();
+            return true;
+          } catch (\Exception $e) {
+            DB::rollBack();
+            return $fail($e->getMessage());
+          }
         } else {
           // 支付失败
+          $userOrderData = UserOrder::findOrFail($orderId);
           $userOrderData->pay_status = 2;
+          $userOrderData->save();
+          return $fail('支付失败');
         }
-        $userOrderData->save();
       } else {
         return $fail('通信失败');
       }
-      return true;
     });
   }
 

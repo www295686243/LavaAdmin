@@ -16,12 +16,16 @@ class CreateUserBillsTable extends Migration
     Schema::create('user_bills', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id');
-      $table->decimal('amount', 7,2 );
-      $table->unsignedTinyInteger('amount_type')->comment('金额类型0占位1现金2余额')->default(0);
+      $table->unsignedBigInteger('user_order_id')->nullable();
+      $table->decimal('total_amount', 7,2 )->comment('总支付金额')->default(0);
+      $table->decimal('cash_amount', 7, 2)->comment('现金金额')->default(0.00);
+      $table->decimal('balance_amount', 7, 2)->comment('余额金额')->default(0.00);
+      $table->decimal('coupon_amount', 7, 2)->comment('优惠券金额')->default(0.00);
       $table->string('desc')->comment('账单说明');
       $table->timestamps();
 
       $table->index('user_id');
+      $table->index('user_order_id');
     });
   }
 
