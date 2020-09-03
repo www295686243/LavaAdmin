@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\User\UserCoupon;
 use Illuminate\Support\Facades\DB;
 use Kra8\Snowflake\Snowflake;
 
@@ -55,7 +56,7 @@ class CouponTemplate extends Base
         'display_name' => $this->display_name,
         'desc' => $this->desc,
         'amount' => $amount,
-        'coupon_status' => (new ConfigOption())->getOperationValue('coupon_status', '未使用'),
+        'coupon_status' => UserCoupon::getOptionsValue('coupon_status', '未使用'),
         'start_at' => $start_at,
         'end_at' => $end_at,
         'source' => $source,

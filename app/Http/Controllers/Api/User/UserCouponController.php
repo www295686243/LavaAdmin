@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\User;
 use App\Http\Controllers\Controller;
 use App\Models\ConfigOption;
 use App\Models\User\UserCoupon;
-use Illuminate\Http\Request;
 
 class UserCouponController extends Controller
 {
@@ -14,7 +13,7 @@ class UserCouponController extends Controller
    */
   public function index()
   {
-    $data = UserCoupon::where('coupon_status', (new ConfigOption())->getOperationValue('coupon_status', '未使用'))->pagination();
+    $data = UserCoupon::where('coupon_status', UserCoupon::getOptionsValue('coupon_status', '未使用'))->pagination();
     return $this->setParams($data)->success();
   }
 }

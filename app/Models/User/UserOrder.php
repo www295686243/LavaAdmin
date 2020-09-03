@@ -16,7 +16,7 @@ class UserOrder extends Base
     'cash_amount',
     'balance_amount',
     'coupon_amount',
-    'coupon_id',
+    'user_coupon_id',
     'pay_status',
     'paid_at',
     'source'
@@ -36,6 +36,14 @@ class UserOrder extends Base
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function user_coupon()
+  {
+    return $this->belongsTo(UserCoupon::class);
   }
 
   /**

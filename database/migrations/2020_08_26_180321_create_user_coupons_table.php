@@ -18,7 +18,7 @@ class CreateUserCouponsTable extends Migration
       $table->unsignedInteger('coupon_template_id')->comment('互助券模板id');
       $table->unsignedBigInteger('user_id')->comment('所属user_id');
       $table->string('display_name', 60)->comment('券名');
-      $table->string('desc', 255)->comment('描述');
+      $table->string('desc', 255)->comment('描述')->nullable();
       $table->decimal('amount', 8, 2)->comment('金额');
       $table->unsignedTinyInteger('coupon_status')->comment('状态(0未使用,1已使用,2已过期,3挂售中,4已出售)')->default(0);
       $table->timestamp('start_at')->comment('开始时间')->nullable();

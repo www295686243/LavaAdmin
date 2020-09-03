@@ -18,6 +18,7 @@ class CreateConfigOptionsTable extends Migration
         $table->increments('id');
         $table->unsignedInteger('config_id');
         $table->string('display_name', 60);
+        $table->string('color', 20)->nullable();
         $table->unsignedSmallInteger('sort')->nullable();
         $table->timestamps();
       });

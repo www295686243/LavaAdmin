@@ -121,4 +121,28 @@ class Base extends Model
     }
     return false;
   }
+
+  /**
+   * @param $guard_name
+   * @param $name
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  private static function getOptions($guard_name, $name)
+  {
+    $configData = Config::with('options')->where('name', $name)->where('guard_name', $guard_name)->firstOrFail();
+    return $configData->options()->get();
+  }
+
+  /**
+   * @param $name
+   * @param $display_name
+   * @return int
+   */
+  public static function getOptionsValue($name, $display_name)
+  {
+    $className = class_basename(static::class);
+    $options = static::getOptions('options', $className.':'.$name);
+    $item = $options->firstWhere('display_name', $display_name);
+    return $item->id;
+  }
 }

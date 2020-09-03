@@ -36,16 +36,19 @@ class UserCoupon extends Base
   }
 
   /**
-   * @param $coupon_id
-   * @return UserCoupon|UserCoupon[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+   * @param $user_coupon_id
+   * @return float
    */
-  public function getUsableCoupon($coupon_id)
+  public function getUsableCouponAmount($user_coupon_id)
   {
-    $userCouponData = self::findOrFail($coupon_id);
-    $userCouponData->checkExpired();
-    $userCouponData->coupon_status = (new ConfigOption())->getOperationValue('coupon_status', '已使用');
-    $userCouponData->save();
-    return $userCouponData;
+    $userCouponData = null;
+    if ($user_coupon_id) {
+      $userCouponData = self::findOrFail($user_coupon_id);
+      $userCouponData->checkExpired();
+      $userCouponData->coupon_status = UserCoupon::getOptionsValue('coupon_status', '已使用');
+      $userCouponData->save();
+    }
+    return optional($userCouponData)->amount ?? 0;
   }
 
   /**

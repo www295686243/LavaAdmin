@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
 use App\Services\ResourceService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -68,5 +69,23 @@ class Controller extends BaseController
   protected function setParams($data)
   {
     return $this->res->setParams($data);
+  }
+
+  /**
+   * @return News
+   */
+  protected function getModelData () {
+    $id = request()->input('id');
+    $type = request()->input('type');
+    $modelPath = 'App\Models\\'.$type;
+    /**
+     * @var \Illuminate\Database\Eloquent\Builder $Model
+     */
+    $Model = new $modelPath();
+    /**
+     * @var News $infoData
+     */
+    $infoData = $Model->findOrFail($id);
+    return $infoData;
   }
 }

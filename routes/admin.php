@@ -60,5 +60,7 @@ Route::namespace('Admin')->group(function () {
     // 优惠券模板
     Route::get('coupon_template/getAll', 'CouponTemplateController@getAll');
     Route::apiResource('coupon_template', 'CouponTemplateController')->only(['index', 'store', 'show', 'update']);
+    // 订单记录
+    Route::apiResource('user_order', 'User\UserOrderController')->only(['index', 'show']);
   });
 });
