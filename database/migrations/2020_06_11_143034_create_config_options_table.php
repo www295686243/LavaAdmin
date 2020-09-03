@@ -32,6 +32,6 @@ class CreateConfigOptionsTable extends Migration
    */
   public function down()
   {
-//    Schema::dropIfExists('config_options');
+    Schema::dropIfExists('config_options');
   }
 }
