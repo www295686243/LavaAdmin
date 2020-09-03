@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\User\UserOrder;
-use Illuminate\Http\Request;
 
 class UserOrderController extends Controller
 {
@@ -13,7 +12,10 @@ class UserOrderController extends Controller
    */
   public function index()
   {
-    $data = UserOrder::searchQuery()->with(['user', 'user_coupon', 'user_orderable'])->orderByDesc('id')->pagination();
+    $data = UserOrder::searchQuery()
+      ->with(['user:id,nickname', 'user_coupon:id,display_name', 'user_orderable'])
+      ->orderByDesc('id')
+      ->pagination();
     return $this->setParams($data)->success();
   }
 

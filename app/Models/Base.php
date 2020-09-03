@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
+use App\Models\User\User;
 use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;

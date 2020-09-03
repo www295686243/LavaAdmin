@@ -88,6 +88,21 @@ class News extends Base
   ];
 
   /**
+   * @var array
+   */
+  protected $appends = [
+    'title'
+  ];
+
+  /**
+   * @return string
+   */
+  public function getTitleAttribute()
+  {
+    return optional($this)->text ?? '';
+  }
+
+  /**
    * @return \Illuminate\Database\Eloquent\Relations\MorphMany
    */
   public function images()
