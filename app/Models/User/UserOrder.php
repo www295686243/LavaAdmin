@@ -77,7 +77,6 @@ class UserOrder extends Base
     $this->pay_status = self::getOptionsValue('pay_status', '已支付');
     $this->paid_at = date('Y-m-d H:i:s');
     $this->save();
-    (new ApiLog())->createLog([]);
   }
 
   public function payFail()
