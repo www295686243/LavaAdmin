@@ -70,11 +70,6 @@ class AdminMenuTableSeeder extends Seeder
       'route' => '/user',
       'children' => [
         [
-          'display_name' => '用户报表',
-          'icon' => 'el-icon-s-marketing',
-          'route' => '/user/report',
-        ],
-        [
           'display_name' => '企业管理',
           'icon' => 'el-icon-s-custom',
           'route' => '/user/admin',
@@ -111,6 +106,22 @@ class AdminMenuTableSeeder extends Seeder
               'route' => '/user/member/order'
             ]
           ]
+        ]
+      ]
+    ],
+    [
+      'display_name' => '统计报表',
+      'route' => '/report',
+      'children' => [
+        [
+          'display_name' => '用户相关',
+          'icon' => 'el-icon-s-marketing',
+          'route' => '/report/user'
+        ],
+        [
+          'display_name' => '订单相关',
+          'icon' => 'el-icon-s-marketing',
+          'route' => '/report/order'
         ]
       ]
     ],

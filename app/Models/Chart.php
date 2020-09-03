@@ -66,4 +66,22 @@ class Chart extends Base
       ->where('code', 200)
       ->get();
   }
+
+  /**
+   * @param $date
+   */
+  public function createData($date)
+  {
+    $list = $this->getCurrentDateSuccessList($date);
+    $this->updateOrCreate(
+      ['stat_date' => $date],
+      [
+        'stat_data' => [
+          'auth' => $this->getAuthCount($list),
+          'register' => $this->getRegisterCount($list),
+          'login' => $this->getLoginCount($list)
+        ]
+      ]
+    );
+  }
 }

@@ -36,8 +36,8 @@ class ApiLogQueue implements ShouldQueue
    */
   public function handle()
   {
-    $api_logs = Cache::tags('app')->get('api_logs', []);
+    $api_logs = Cache::tags('app')->get('api_logs:'.date('Y-m-d'), []);
     $api_logs = array_merge($api_logs, $this->logs);
-    Cache::tags('app')->put('api_logs', $api_logs);
+    Cache::tags('app')->put('api_logs:'.date('Y-m-d'), $api_logs);
   }
 }

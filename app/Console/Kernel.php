@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Models\ApiLog;
+use App\Models\Chart;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,9 @@ class Kernel extends ConsoleKernel
     $schedule->call(function () {
       ApiLog::storeLog();
     })->dailyAt('5:00');
+    $schedule->call(function () {
+      (new Chart())->createData(date('Y-m-d', strtotime('-1 day')));
+    })->dailyAt('6:00');
   }
 
   /**

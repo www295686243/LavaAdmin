@@ -2,6 +2,7 @@
 
 namespace App\Models\User;
 
+use App\Models\ApiLog;
 use App\Models\Base;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
@@ -69,5 +70,19 @@ class UserOrder extends Base
       'coupon_amount' => -$this->coupon_amount,
       'desc' => $desc
     ]);
+  }
+
+  public function paySuccess()
+  {
+    $this->pay_status = self::getOptionsValue('pay_status', '已支付');
+    $this->paid_at = date('Y-m-d H:i:s');
+    $this->save();
+    (new ApiLog())->createLog([]);
+  }
+
+  public function payFail()
+  {
+    $this->pay_status = self::getOptionsValue('pay_status', '支付失败');
+    $this->save();
   }
 }

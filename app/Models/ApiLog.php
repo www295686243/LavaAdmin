@@ -67,6 +67,8 @@ class ApiLog extends Base
     $user = User::getUserData();
     $method = request()->getMethod();
     $path = request()->getPathInfo();
+    \Log::info($method);
+    \Log::info($path);
     if ($path === '/api/wechat/login') {
       $user = User::findOrFail($params['data']['user_id']);
     }
@@ -88,7 +90,11 @@ class ApiLog extends Base
 
   public static function storeLog()
   {
-    $api_logs = Cache::tags('app')->get('api_logs', []);
-    DB::table('api_logs')->insert($api_logs);
+    $yesterday = date('Y-m-d', strtotime('-1 day'));
+    $api_logs = Cache::tags('app')->get('api_logs:'.$yesterday, []);
+    if (count($api_logs) > 0) {
+      DB::table('api_logs')->insert($api_logs);
+    }
+    Cache::tags('app')->forget('api_logs:'.$yesterday);
   }
 }

@@ -13,19 +13,7 @@ class ChartController extends Controller
    */
   public function createTodayData()
   {
-    $date = date('Y-m-d');
-    $Chart = new Chart();
-    $list = $Chart->getCurrentDateSuccessList($date);
-    $Chart->updateOrCreate(
-      ['stat_date' => $date],
-      [
-        'stat_data' => [
-          'auth' => $Chart->getAuthCount($list),
-          'register' => $Chart->getRegisterCount($list),
-          'login' => $Chart->getLoginCount($list)
-        ]
-      ]
-    );
+    (new Chart())->createData(date('Y-m-d'));
     return $this->success();
   }
 

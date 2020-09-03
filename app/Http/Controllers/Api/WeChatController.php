@@ -75,6 +75,9 @@ class WeChatController extends Controller
       $cash_amount = $cash_amount > 0 ? $cash_amount : 0;
 
       $infoData = $this->getModelData();
+      /**
+       * @var UserOrder $userOrderData
+       */
       $userOrderData = $infoData->user_order()->create([
         'user_id' => $userData->id,
         'total_amount' => $total_amount,
@@ -96,9 +99,7 @@ class WeChatController extends Controller
         DB::commit();
         return $this->setParams($config)->success('获取支付配置成功');
       } else {
-        $userOrderData->pay_status = UserOrder::getOptionsValue('pay_status', '已支付');
-        $userOrderData->paid_at = date('Y-m-d H:i:s');
-        $userOrderData->save();
+        $userOrderData->paySuccess();
         $userOrderData->user_orderable->payCallback($userOrderData);
         DB::commit();
         return $this->success('支付成功');
@@ -125,9 +126,7 @@ class WeChatController extends Controller
           DB::beginTransaction();
           try {
             $userOrderData = UserOrder::findOrFail($orderId);
-            $userOrderData->pay_status = UserOrder::getOptionsValue('pay_status', '已支付');
-            $userOrderData->paid_at = date('Y-m-d H:i:s');
-            $userOrderData->save();
+            $userOrderData->paySuccess();
             $userOrderData->user_orderable->payCallback($userOrderData);
             DB::commit();
             return true;
@@ -138,8 +137,7 @@ class WeChatController extends Controller
         } else {
           // 支付失败
           $userOrderData = UserOrder::findOrFail($orderId);
-          $userOrderData->pay_status = UserOrder::getOptionsValue('pay_status', '支付失败');
-          $userOrderData->save();
+          $userOrderData->payFail();
           return $fail('支付失败');
         }
       } else {
