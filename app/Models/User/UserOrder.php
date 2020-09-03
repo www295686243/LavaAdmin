@@ -63,10 +63,10 @@ class UserOrder extends Base
     return UserBill::create([
       'user_id' => $this->user_id,
       'user_order_id' => $this->id,
-      'total_amount' => $this->total_amount,
-      'cash_amount' => $this->cash_amount,
-      'balance_amount' => $this->balance_amount,
-      'coupon_amount' => $this->coupon_amount,
+      'total_amount' => -$this->total_amount,
+      'cash_amount' => -$this->cash_amount,
+      'balance_amount' => -$this->balance_amount,
+      'coupon_amount' => -$this->coupon_amount,
       'desc' => $desc
     ]);
   }

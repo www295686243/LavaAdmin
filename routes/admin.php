@@ -62,5 +62,7 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('coupon_template', 'CouponTemplateController')->only(['index', 'store', 'show', 'update']);
     // 订单记录
     Route::apiResource('user_order', 'User\UserOrderController')->only(['index', 'show']);
+    // 账单记录
+    Route::apiResource('user_bill', 'User\UserBillController')->only(['index']);
   });
 });
