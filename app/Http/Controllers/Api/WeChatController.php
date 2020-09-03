@@ -121,9 +121,9 @@ class WeChatController extends Controller
       $orderId = $res['out_trade_no'];
       if ($res['return_code'] === 'SUCCESS') {
         // 表示通信状态，不代表支付状态
+        DB::beginTransaction();
         if ($res['result_code'] === 'SUCCESS') {
           // 支付成功
-          DB::beginTransaction();
           try {
             $userOrderData = UserOrder::findOrFail($orderId);
             $userOrderData->paySuccess();
@@ -132,13 +132,21 @@ class WeChatController extends Controller
             return true;
           } catch (\Exception $e) {
             DB::rollBack();
+            \Log::error($e->getMessage().':'.__LINE__);
             return $fail($e->getMessage());
           }
         } else {
           // 支付失败
-          $userOrderData = UserOrder::findOrFail($orderId);
-          $userOrderData->payFail();
-          return $fail('支付失败');
+          try {
+            $userOrderData = UserOrder::findOrFail($orderId);
+            $userOrderData->payFail();
+            DB::commit();
+            return $fail('支付失败');
+          } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error($e->getMessage().':'.__LINE__);
+            return $fail($e->getMessage());
+          }
         }
       } else {
         return $fail('通信失败');

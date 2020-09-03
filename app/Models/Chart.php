@@ -53,6 +53,21 @@ class Chart extends Base
   }
 
   /**
+   * @param \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection $list
+   * @return int
+   */
+  public function getOrderTotalCount($list)
+  {
+    return $list
+      ->orWhere('name', 'WeChatController@payCallback')
+      ->orWhere([
+        ['name', 'WeChatController@pay'],
+        ['desc', '支付成功']
+      ])
+      ->count();
+  }
+
+  /**
    * 获取当前日期所有成功的数据
    * @param $date
    * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
@@ -79,7 +94,8 @@ class Chart extends Base
         'stat_data' => [
           'auth' => $this->getAuthCount($list),
           'register' => $this->getRegisterCount($list),
-          'login' => $this->getLoginCount($list)
+          'login' => $this->getLoginCount($list),
+          'order_total' => $this->getOrderTotalCount($list)
         ]
       ]
     );
