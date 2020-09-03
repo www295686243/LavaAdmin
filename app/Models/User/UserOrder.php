@@ -77,11 +77,31 @@ class UserOrder extends Base
     $this->pay_status = self::getOptionsValue('pay_status', '已支付');
     $this->paid_at = date('Y-m-d H:i:s');
     $this->save();
+    if (request()->getPathInfo() === '/api/wechat/pay_callback') {
+      (new ApiLog())->createLog([
+        'status' => 'success',
+        'code' => 200,
+        'desc' => '支付成功',
+        'data' => [
+          'user_id' => $this->user_id
+        ]
+      ]);
+    }
   }
 
   public function payFail()
   {
     $this->pay_status = self::getOptionsValue('pay_status', '支付失败');
     $this->save();
+    if (request()->getPathInfo() === '/api/wechat/pay_callback') {
+      (new ApiLog())->createLog([
+        'status' => 'error',
+        'code' => 200,
+        'desc' => '支付失败',
+        'data' => [
+          'user_id' => $this->user_id
+        ]
+      ]);
+    }
   }
 }
