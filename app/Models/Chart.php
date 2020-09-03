@@ -58,13 +58,14 @@ class Chart extends Base
    */
   public function getOrderTotalCount($list)
   {
-    return $list
-      ->orWhere('name', 'WeChatController@payCallback')
-      ->orWhere([
-        ['name', 'WeChatController@pay'],
-        ['desc', '支付成功']
-      ])
+    $num1 = $list
+      ->where('name', 'WeChatController@payCallback')
       ->count();
+    $num2 = $list
+      ->where('name', 'WeChatController@pay')
+      ->where('desc', '支付成功')
+      ->count();
+    return $num1 + $num2;
   }
 
   /**
