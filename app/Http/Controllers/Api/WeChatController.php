@@ -106,7 +106,7 @@ class WeChatController extends Controller
       }
     } catch (\Exception $e) {
       DB::rollBack();
-      \Log::error($e->getMessage());
+      \Log::error($e->getMessage().':'.__LINE__);
       return $this->error('支付失败');
     }
   }
