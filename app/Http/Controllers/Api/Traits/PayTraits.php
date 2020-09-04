@@ -64,7 +64,13 @@ trait PayTraits
         $userOrderData->paySuccess();
         $userOrderData->user_orderable->payCallback($userOrderData);
         DB::commit();
-        return $this->setParams(['pay_status' => 'success'])->success('支付成功');
+        return $this
+          ->setParams(['pay_status' => 'success'])
+          ->setExtra([
+            'isFirstPay' => $userOrderData->isFirstPay(),
+            'isModelFirstPay' => $userOrderData->isModelFirstPay()
+          ])
+          ->success('支付成功');
       }
     } catch (\Exception $e) {
       DB::rollBack();

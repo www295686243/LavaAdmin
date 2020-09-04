@@ -23,6 +23,7 @@ class CreateApiLogsTable extends Migration
       $table->string('path', 60);
       $table->string('ip', 20);
       $table->json('input')->nullable();
+      $table->json('extra')->nullable();
       $table->string('status', 10)->comment('结果状态');
       $table->unsignedSmallInteger('code')->comment('状态码');
       $table->string('desc', 120)->comment('描述')->nullable();

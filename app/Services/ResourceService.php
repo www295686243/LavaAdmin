@@ -24,6 +24,7 @@ class ResourceService
   private $status = '';
   private $message = '操作成功';
   private $params = [];
+  private $extra = [];
 
   /**
    * @param string $message
@@ -129,11 +130,22 @@ class ResourceService
     return $this;
   }
 
+  /**
+   * @param $data
+   * @return $this
+   */
+  public function setExtra($data)
+  {
+    $this->extra = $data;
+    return $this;
+  }
+
   private function init () {
     $this->status = '';
     $this->params = [];
     $this->statusCode = 200;
     $this->message = '';
+    $this->extra = [];
   }
 
   /**
@@ -153,7 +165,8 @@ class ResourceService
         'desc' => $this->message,
         'status' => $this->status,
         'code' => $this->statusCode,
-        'data' => $this->params
+        'data' => $this->params,
+        'extra' => $this->extra
       ]);
     }
 

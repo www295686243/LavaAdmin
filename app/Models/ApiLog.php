@@ -54,6 +54,7 @@ class ApiLog extends Base
     'path',
     'ip',
     'input',
+    'extra',
     'status',
     'code',
     'desc'
@@ -80,6 +81,7 @@ class ApiLog extends Base
         'path' => $path,
         'ip' => request()->getClientIp(),
         'input' => request()->all(),
+        'extra' => $params['extra'],
         'status' => $params['status'],
         'code' => $params['code'],
         'desc' => $params['desc']

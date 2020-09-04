@@ -72,6 +72,14 @@ class Controller extends BaseController
   }
 
   /**
+   * @param $data
+   * @return ResourceService
+   */
+  protected function setExtra($data) {
+    return $this->res->setExtra($data);
+  }
+
+  /**
    * @return News
    */
   protected function getModelData () {

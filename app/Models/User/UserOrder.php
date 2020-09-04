@@ -85,6 +85,10 @@ class UserOrder extends Base
         'desc' => '支付成功',
         'data' => [
           'user_id' => $this->user_id
+        ],
+        'extra' => [
+          'isFirstPay' => $this->isFirstPay(),
+          'isModelFirstPay' => $this->isModelFirstPay()
         ]
       ]);
     }
@@ -94,7 +98,7 @@ class UserOrder extends Base
   {
     $this->pay_status = self::getOptionsValue('pay_status', '支付失败');
     $this->save();
-    if (request()->getPathInfo() === '/api/wechat/pay_callback') {
+    if (Str::contains(request()->getPathInfo(), 'pay_callback')) {
       (new ApiLog())->createLog([
         'status' => 'error',
         'code' => 200,
@@ -105,4 +109,26 @@ class UserOrder extends Base
       ]);
     }
   }
+
+  /**
+   * @return bool
+   */
+  public function isFirstPay()
+  {
+    $count = self::where('user_id', $this->user_id)->where('pay_status', self::getOptionsValue('pay_status', '已支付'))->count();
+    return $count === 1;
+  }
+
+  /**
+   * @return bool
+   */
+  public function isModelFirstPay()
+  {
+    $count = self::where('user_id', $this->user_id)
+      ->where('user_orderable_type', $this->user_orderable_type)
+      ->where('pay_status', self::getOptionsValue('pay_status', '已支付'))
+      ->count();
+    return $count === 1;
+  }
+
 }

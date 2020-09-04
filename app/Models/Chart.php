@@ -58,11 +58,20 @@ class Chart extends Base
    */
   public function getOrderTotalCount($list)
   {
+    return $this->getNewsOrderCount($list);
+  }
+
+  /**
+   * @param \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection $list
+   * @return int
+   */
+  public function getNewsOrderCount($list)
+  {
     $num1 = $list
-      ->where('name', 'WeChatController@payCallback')
+      ->where('name', 'NewsController@payCallback')
       ->count();
     $num2 = $list
-      ->where('name', 'WeChatController@pay')
+      ->where('name', 'NewsController@pay')
       ->where('desc', '支付成功')
       ->count();
     return $num1 + $num2;
@@ -96,7 +105,8 @@ class Chart extends Base
           'auth' => $this->getAuthCount($list),
           'register' => $this->getRegisterCount($list),
           'login' => $this->getLoginCount($list),
-          'order_total' => $this->getOrderTotalCount($list)
+          'order_total' => $this->getOrderTotalCount($list),
+          'news_order' => $this->getNewsOrderCount($list)
         ]
       ]
     );
