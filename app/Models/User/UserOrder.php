@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use App\Models\ApiLog;
 use App\Models\Base;
+use Illuminate\Support\Str;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserOrder extends Base
@@ -77,7 +78,7 @@ class UserOrder extends Base
     $this->pay_status = self::getOptionsValue('pay_status', '已支付');
     $this->paid_at = date('Y-m-d H:i:s');
     $this->save();
-    if (request()->getPathInfo() === '/api/wechat/pay_callback') {
+    if (Str::contains(request()->getPathInfo(), 'pay_callback')) {
       (new ApiLog())->createLog([
         'status' => 'success',
         'code' => 200,

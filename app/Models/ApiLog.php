@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Api\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 /**
  * \App\Models\ApiLog
@@ -67,7 +68,7 @@ class ApiLog extends Base
     $user = User::getUserData();
     $method = request()->getMethod();
     $path = request()->getPathInfo();
-    if ($path === '/api/wechat/login' || $path === '/api/wechat/pay_callback') {
+    if ($path === '/api/wechat/login' || Str::contains($path, 'pay_callback')) {
       $user = User::findOrFail($params['data']['user_id']);
     }
     if ($user && $method !== 'GET' && $path !== '/api/api_log') {
