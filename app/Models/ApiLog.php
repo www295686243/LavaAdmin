@@ -62,6 +62,7 @@ class ApiLog extends Base
 
   protected $casts = [
     'input' => 'array',
+    'extra' => 'array',
   ];
 
   public function createLog($params)
