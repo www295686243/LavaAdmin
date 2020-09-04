@@ -78,6 +78,35 @@ class Chart extends Base
   }
 
   /**
+   * @param \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection $list
+   * @return int
+   */
+  public function getNewsFirstOrderPayCount($list)
+  {
+    $num1 = $list
+      ->where('name', 'NewsController@payCallback')
+      ->where('extra.isModelFirstPay', true)
+      ->count();
+    $num2 = $list
+      ->where('name', 'NewsController@pay')
+      ->where('desc', '支付成功')
+      ->where('extra.isModelFirstPay', true)
+      ->count();
+    return $num1 + $num2;
+  }
+
+  /**
+   * @param \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection $list
+   * @return int
+   */
+  public function getOrderFirstPayCount($list)
+  {
+    return $list
+      ->where('extra.isFirstPay', true)
+      ->count();
+  }
+
+  /**
    * 获取当前日期所有成功的数据
    * @param $date
    * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
@@ -106,6 +135,8 @@ class Chart extends Base
           'register' => $this->getRegisterCount($list),
           'login' => $this->getLoginCount($list),
           'order_total' => $this->getOrderTotalCount($list),
+          'order_first_pay' => $this->getOrderFirstPayCount($list),
+          'news_first_order_pay' => $this->getNewsFirstOrderPayCount($list),
           'news_order' => $this->getNewsOrderCount($list)
         ]
       ]
