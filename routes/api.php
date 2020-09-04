@@ -19,7 +19,6 @@ Route::namespace('Api')->group(function () {
   Route::get('wechat/getConfig', 'WeChatController@getConfig');
   Route::post('wechat/auth', 'WeChatController@auth');
   Route::post('wechat/login', 'WeChatController@login');
-  Route::any('wechat/pay_callback', 'WeChatController@payCallback');
   Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('api_log', 'ApiLogController')->only(['store']);
 
@@ -32,8 +31,6 @@ Route::namespace('Api')->group(function () {
     Route::post('user/verifyPhone', 'UserController@verifyPhone');
 
     Route::apiResource('image', 'ImageController')->only(['store']);
-
-    Route::post('wechat/pay', 'WeChatController@pay');
     Route::post('wechat/notify', 'WeChatController@notify');
 
     // 通知
@@ -45,5 +42,11 @@ Route::namespace('Api')->group(function () {
     Route::apiResource('news', 'NewsController')->only(['index']);
     // 优惠券
     Route::apiResource('user_coupon', 'User\UserCouponController')->only(['index']);
+
+    // 支付
+    Route::post('news/pay', 'NewsController@pay');
   });
+
+  // 支付回调 为了在chart表中区别是支付哪些信息类型的
+  Route::any('news/pay_callback', 'NewsController@payCallback');
 });

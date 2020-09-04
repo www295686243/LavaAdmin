@@ -130,8 +130,21 @@ class Base extends Model
    */
   private static function getOptions($guard_name, $name)
   {
-    $configData = Config::with('options')->where('name', $name)->where('guard_name', $guard_name)->firstOrFail();
+    $configData = self::getConfig($guard_name, $name);
     return $configData->options()->get();
+  }
+
+  /**
+   * @param $guard_name
+   * @param $name
+   * @return \Illuminate\Database\Eloquent\Builder|Model
+   */
+  private static function getConfig($guard_name, $name)
+  {
+    return Config::with('options')
+      ->where('name', $name)
+      ->where('guard_name', $guard_name)
+      ->firstOrFail();
   }
 
   /**
@@ -145,5 +158,16 @@ class Base extends Model
     $options = static::getOptions('options', $className.':'.$name);
     $item = $options->firstWhere('display_name', $display_name);
     return $item->id;
+  }
+
+  /**
+   * @param $name
+   * @return mixed
+   */
+  public static function getConfigValue($name)
+  {
+    $className = class_basename(static::class);
+    $configData = self::getConfig('system', $className.'@'.$name);
+    return $configData->value;
   }
 }

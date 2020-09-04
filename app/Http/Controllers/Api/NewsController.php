@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\Traits\PayTraits;
 use App\Http\Controllers\Controller;
 use App\Models\News;
-use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
+  use PayTraits;
   /**
    * @return \Illuminate\Http\JsonResponse
    */
