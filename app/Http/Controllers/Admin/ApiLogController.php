@@ -19,4 +19,14 @@ class ApiLogController extends Controller
     $data = ApiLog::where('user_id', $user_id)->orderByDesc('created_at')->pagination();
     return $this->setParams($data)->success();
   }
+
+  /**
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function show($id)
+  {
+    $data = ApiLog::findOrFail($id);
+    return $this->setParams($data)->success();
+  }
 }
