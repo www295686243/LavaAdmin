@@ -40,6 +40,9 @@ class Role extends \Spatie\Permission\Models\Role
     'name',
     'display_name',
     'menu_permissions',
+    'assign_menu',
+    'assign_admin_interface',
+    'assign_api_interface',
     'guard_name'
   ];
 
@@ -49,22 +52,9 @@ class Role extends \Spatie\Permission\Models\Role
   ];
 
   protected $casts = [
-    'menu_permissions' => 'array'
+    'menu_permissions' => 'array',
+    'assign_menu' => 'array',
+    'assign_admin_interface' => 'array',
+    'assign_api_interface' => 'array'
   ];
-
-  public function setMenuPermissions($roleName)
-  {
-    $roleList = $this->getRoles($roleName);
-    $menu_ids = AdminMenu::all()->pluck('id');
-    $roleList->update(['menu_permissions' => $menu_ids]);
-  }
-
-  /**
-   * @param $roleName
-   * @return \Illuminate\Database\Eloquent\Builder
-   */
-  private function getRoles($roleName)
-  {
-    return self::where('name', $roleName);
-  }
 }

@@ -83,7 +83,7 @@ class User extends \App\Models\User\User
    */
   public function scopeExceptRoot($query)
   {
-    return $query->when(!self::hasRoot(), function ($query) {
+    return $query->when(!User::getUserData()->hasRoot(), function ($query) {
       $root_ids = self::role('root')->pluck('id');
       return $query->whereNotIn('id', $root_ids);
     });

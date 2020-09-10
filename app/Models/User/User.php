@@ -2,6 +2,8 @@
 
 namespace App\Models\User;
 
+use App\Models\AdminMenu;
+use App\Models\Permission;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
 use App\Services\SearchQueryService;
@@ -239,10 +241,9 @@ class User extends Authenticatable
   /**
    * @return bool
    */
-  public static function hasRoot()
+  public function hasRoot()
   {
-    $userData = static::getUserData();
-    return $userData->hasRole('root');
+    return $this->hasRole('root');
   }
 
   /**
@@ -317,5 +318,82 @@ class User extends Authenticatable
     if ($phoneUser && $phoneUser->id !== auth()->id()) {
       $this->error('该手机号已被其它账户绑定');
     }
+  }
+
+  /**
+   * @return array
+   */
+  private function getAssignMenu () {
+    return $this->roles()->get()->pluck('assign_menu')->flatten()->unique()->toArray();
+  }
+
+  /**
+   * @param $guard_name
+   * @return array
+   */
+  private function getAssignInterface($guard_name)
+  {
+    return $this->roles()->get()->pluck('assign_'.$guard_name.'_interface')->flatten()->unique()->toArray();
+  }
+
+  /**
+   * @return \Kalnoy\Nestedset\Collection
+   */
+  public function getAssignMenuTree()
+  {
+    if ($this->hasRoot()) {
+      return AdminMenu::all()->toTree();
+    } else {
+      return AdminMenu::whereIn('id', $this->getAssignMenu())->get()->toTree();
+    }
+  }
+
+  /**
+   * @param $guard_name
+   * @return mixed
+   */
+  public function getAssignInterfaceTree($guard_name)
+  {
+    if ($this->hasRoot()) {
+      return Permission::getAllPermissionTree($guard_name);
+    } else {
+      return Permission::whereIn('name', $this->getAssignInterface($guard_name))
+        ->where('guard_name', $guard_name)
+        ->get()
+        ->toTree();
+    }
+  }
+
+  /**
+   * @param $menus
+   * @return bool
+   */
+  public function checkAssignMenu($menus)
+  {
+    if (!$this->hasRoot()) {
+      $assignMenu = $this->getAssignMenu();
+      $result = collect($menus)->every(function ($value) use ($assignMenu) {
+        return in_array($value, $assignMenu);
+      });
+      return $result;
+    }
+    return true;
+  }
+
+  /**
+   * @param $permissions
+   * @param $guard_name
+   * @return bool
+   */
+  public function checkAssignInterface($permissions, $guard_name)
+  {
+    if (!$this->hasRoot()) {
+      $assignInterface = $this->getAssignInterface($guard_name);
+      $result = collect($permissions)->every(function ($value) use ($assignInterface) {
+        return in_array($value, $assignInterface);
+      });
+      return $result;
+    }
+    return true;
   }
 }

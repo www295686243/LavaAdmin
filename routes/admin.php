@@ -28,7 +28,9 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('api_log', 'ApiLogController')->only(['index', 'show']);
     // 职位
     Route::get('position/getPermissions/{id}', 'PositionController@getPermissions');
+    Route::get('position/getAssignPermissions/{id}', 'PositionController@getAssignPermissions');
     Route::post('position/updatePermissions/{id}', 'PositionController@updatePermissions');
+    Route::post('position/updateAssignPermissions/{id}', 'PositionController@updateAssignPermissions');
     Route::apiResource('position', 'PositionController')->except(['destroy']);
     // 员工
     Route::apiResource('employee', 'EmployeeController');
@@ -40,7 +42,9 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('user_coupon', 'User\UserCouponController')->only(['index', 'store']);
     // 角色
     Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
+    Route::get('role/getAssignPermissions/{id}', 'RoleController@getAssignPermissions');
     Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');
+    Route::post('role/updateAssignPermissions/{id}', 'RoleController@updateAssignPermissions');
     Route::apiResource('role', 'RoleController')->except(['destroy']);
     // 图片
     Route::post('image/destroyMore', 'ImageController@destroyMore');

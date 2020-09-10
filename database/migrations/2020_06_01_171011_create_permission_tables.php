@@ -33,6 +33,9 @@ class CreatePermissionTables extends Migration
       $table->string('name')->comment('标识');
       $table->string('display_name', 30)->comment('名称');
       $table->json('menu_permissions')->comment('栏目权限')->nullable();
+      $table->json('assign_menu')->comment('可分配的栏目权限')->nullable();
+      $table->json('assign_admin_interface')->comment('可分配的后端接口权限')->nullable();
+      $table->json('assign_api_interface')->comment('可分配的前端接口权限')->nullable();
       $table->string('guard_name');
       $table->timestamps();
     });

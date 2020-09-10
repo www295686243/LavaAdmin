@@ -64,7 +64,7 @@ class EmployeeController extends Controller
 
       $role_names = $request->input('role_names', []);
       $role_names = Arr::except($role_names, ['root']);
-      if ($userData->hasRole('root') && !User::hasRoot()) {
+      if ($userData->hasRole('root') && !$userData->hasRoot()) {
         return $this->setStatusCode(423)->error('权限错误');
       }
       if (!$userData->hasRole('root')) {

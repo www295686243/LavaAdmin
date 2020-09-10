@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PositionRequest;
+use App\Models\Admin\User;
 use App\Models\AdminMenu;
 use App\Models\Permission;
 use App\Models\Role;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class PositionController extends Controller
@@ -64,13 +64,45 @@ class PositionController extends Controller
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getPermissions($id)
+  public function getAssignPermissions($id)
   {
     $positionData = Role::findOrFail($id);
     return $this->setParams([
       'menus' => AdminMenu::all()->toTree(),
-      'menu_permissions' => $positionData->menu_permissions ?? [],
+      'menu_permissions' => $positionData->assign_menu ?? [],
       'interface' => Permission::getAllPermissionTree('admin'),
+      'interface_permissions' => $positionData->assign_admin_interface ?? []
+    ])->success();
+  }
+
+  /**
+   * @param PositionRequest $request
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function updateAssignPermissions(PositionRequest $request, $id)
+  {
+    $menus = $request->input('menus', []);
+    $permissions = $request->input('permissions', []);
+    $positionData = Role::findOrFail($id);
+    $positionData->assign_menu = $menus;
+    $positionData->assign_admin_interface = $permissions;
+    $positionData->save();
+    return $this->success();
+  }
+
+  /**
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getPermissions($id)
+  {
+    $positionData = Role::findOrFail($id);
+    $userData = User::getUserData();
+    return $this->setParams([
+      'menus' => $userData->getAssignMenuTree(),
+      'menu_permissions' => $positionData->menu_permissions ?? [],
+      'interface' => $userData->getAssignInterfaceTree('admin'),
       'interface_permissions' => $positionData->getAllPermissions()->pluck('name')
     ])->success();
   }
@@ -84,6 +116,11 @@ class PositionController extends Controller
   {
     $menus = $request->input('menus', []);
     $permissions = $request->input('permissions', []);
+    $userData = User::getUserData();
+    if (!$userData->checkAssignMenu($menus) || !$userData->checkAssignInterface($permissions, 'admin')) {
+      return $this->setStatusCode(423)->error('权限错误');
+    }
+
     $positionData = Role::findOrFail($id);
     $positionData->menu_permissions = $menus;
     $positionData->save();

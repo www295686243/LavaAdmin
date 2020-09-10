@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\RoleRequest;
+use App\Models\Api\User;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -64,8 +65,9 @@ class RoleController extends Controller
   public function getPermissions($id)
   {
     $roleData = Role::findOrFail($id);
+    $userData = User::getUserData();
     return $this->setParams([
-      'interface' => Permission::getAllPermissionTree('api'),
+      'interface' => $userData->getAssignInterfaceTree('api'),
       'interface_permissions' => $roleData->getAllPermissions()->pluck('name')
     ])->success();
   }
@@ -78,8 +80,39 @@ class RoleController extends Controller
   public function updatePermissions(RoleRequest $request, $id)
   {
     $permissions = $request->input('permissions', []);
+    $userData = User::getUserData();
+    if (!$userData->checkAssignInterface($permissions, 'api')) {
+      return $this->setStatusCode(423)->error('权限错误');
+    }
     $roleData = Role::findOrFail($id);
     $roleData->syncPermissions($permissions);
+    return $this->success();
+  }
+
+  /**
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getAssignPermissions($id)
+  {
+    $roleData = Role::findOrFail($id);
+    return $this->setParams([
+      'interface' => Permission::getAllPermissionTree('api'),
+      'interface_permissions' => $roleData->assign_api_interface ?? []
+    ])->success();
+  }
+
+  /**
+   * @param RoleRequest $request
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function updateAssignPermissions(RoleRequest $request, $id)
+  {
+    $permissions = $request->input('permissions', []);
+    $roleData = Role::findOrFail($id);
+    $roleData->assign_api_interface = $permissions;
+    $roleData->save();
     return $this->success();
   }
 }
