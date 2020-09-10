@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 7.27.0.
+ * Generated for Laravel 7.28.1.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -9946,6 +9946,8 @@
                     /**
          * 
          *
+         * @param array $rules
+         * @param mixed $params
          * @static 
          */ 
         public static function validate($rules, ...$params)
@@ -9955,6 +9957,9 @@
                     /**
          * 
          *
+         * @param string $errorBag
+         * @param array $rules
+         * @param mixed $params
          * @static 
          */ 
         public static function validateWithBag($errorBag, $rules, ...$params)
@@ -9964,6 +9969,7 @@
                     /**
          * 
          *
+         * @param mixed $absolute
          * @static 
          */ 
         public static function hasValidSignature($absolute = true)
@@ -14491,6 +14497,110 @@
      
 }
 
+    namespace Illuminate\Http { 
+            /**
+     * 
+     *
+     */ 
+        class Request {
+                    /**
+         * 
+         *
+         * @param array $rules
+         * @param mixed $params
+         * @static 
+         */ 
+        public static function validate($rules, ...$params)
+        {
+                        return \Illuminate\Http\Request::validate($rules, ...$params);
+        }
+                    /**
+         * 
+         *
+         * @param string $errorBag
+         * @param array $rules
+         * @param mixed $params
+         * @static 
+         */ 
+        public static function validateWithBag($errorBag, $rules, ...$params)
+        {
+                        return \Illuminate\Http\Request::validateWithBag($errorBag, $rules, ...$params);
+        }
+                    /**
+         * 
+         *
+         * @param mixed $absolute
+         * @static 
+         */ 
+        public static function hasValidSignature($absolute = true)
+        {
+                        return \Illuminate\Http\Request::hasValidSignature($absolute);
+        }
+         
+    }
+     
+}
+
+    namespace Illuminate\Database\Schema { 
+            /**
+     * 
+     *
+     */ 
+        class Blueprint {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function nestedSet()
+        {
+                        return \Illuminate\Database\Schema\Blueprint::nestedSet();
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function dropNestedSet()
+        {
+                        return \Illuminate\Database\Schema\Blueprint::dropNestedSet();
+        }
+         
+    }
+     
+}
+
+    namespace Illuminate\Routing { 
+            /**
+     * 
+     *
+     */ 
+        class Route {
+                    /**
+         * 
+         *
+         * @param mixed $roles
+         * @static 
+         */ 
+        public static function role($roles = [])
+        {
+                        return \Illuminate\Routing\Route::role($roles);
+        }
+                    /**
+         * 
+         *
+         * @param mixed $permissions
+         * @static 
+         */ 
+        public static function permission($permissions = [])
+        {
+                        return \Illuminate\Routing\Route::permission($permissions);
+        }
+         
+    }
+     
+}
+
 
 namespace  { 
             class App extends \Illuminate\Support\Facades\App {}
@@ -17441,36 +17551,6 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Query\Builder $instance */
                                 return $instance->macroCall($method, $parameters);
-            }
-             
-                /**
-             * Register the `toRawSql` macro.
-             *
-             * @static 
-             */ 
-            public static function toRawSql()
-            {
-                                return \Illuminate\Database\Query\Builder::toRawSql();
-            }
-             
-                /**
-             * Register the `dumpSql` macro.
-             *
-             * @static 
-             */ 
-            public static function dumpSql()
-            {
-                                return \Illuminate\Database\Query\Builder::dumpSql();
-            }
-             
-                /**
-             * Register the `ddSql` macro.
-             *
-             * @static 
-             */ 
-            public static function ddSql()
-            {
-                                return \Illuminate\Database\Query\Builder::ddSql();
             }
                     }
             class Event extends \Illuminate\Support\Facades\Event {}
