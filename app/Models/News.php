@@ -107,7 +107,7 @@ class News extends Base
    */
   public function images()
   {
-    return $this->morphMany('App\Models\Image', 'imageable');
+    return $this->morphMany(Image::class, 'imageable');
   }
 
   /**

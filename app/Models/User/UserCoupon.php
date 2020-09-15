@@ -45,7 +45,7 @@ class UserCoupon extends Base
     if ($user_coupon_id) {
       $userCouponData = self::findOrFail($user_coupon_id);
       $userCouponData->checkExpired();
-      $userCouponData->coupon_status = UserCoupon::getOptionsValue('coupon_status', '已使用');
+      $userCouponData->coupon_status = UserCoupon::getOptionsValue(34, '已使用');
       $userCouponData->save();
     }
     return optional($userCouponData)->amount ?? 0;

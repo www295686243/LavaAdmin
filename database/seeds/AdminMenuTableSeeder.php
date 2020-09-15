@@ -98,6 +98,14 @@ class AdminMenuTableSeeder extends Seeder
               'route' => '/user/member/role'
             ],
             [
+              'display_name' => '个人认证',
+              'route' => '/user/member/personal-auth'
+            ],
+            [
+              'display_name' => '企业认证',
+              'route' => '/user/member/enterprise-auth'
+            ],
+            [
               'display_name' => '通知记录',
               'route' => '/user/member/notify'
             ],

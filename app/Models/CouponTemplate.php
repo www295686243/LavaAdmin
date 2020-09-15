@@ -56,7 +56,7 @@ class CouponTemplate extends Base
         'display_name' => $this->display_name,
         'desc' => $this->desc,
         'amount' => $amount,
-        'coupon_status' => UserCoupon::getOptionsValue('coupon_status', '未使用'),
+        'coupon_status' => UserCoupon::getOptionsValue(33, '未使用'),
         'start_at' => $start_at,
         'end_at' => $end_at,
         'source' => $source,

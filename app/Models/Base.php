@@ -124,14 +124,11 @@ class Base extends Model
   }
 
   /**
-   * @param $guard_name
-   * @param $name
-   * @return \Illuminate\Database\Eloquent\Builder
+   * @return ConfigOption[]|\Illuminate\Database\Eloquent\Collection
    */
-  private static function getOptions($guard_name, $name)
+  private static function getOptionsList()
   {
-    $configData = self::getConfig($guard_name, $name);
-    return $configData->options()->get();
+    return ConfigOption::all();
   }
 
   /**
@@ -148,15 +145,13 @@ class Base extends Model
   }
 
   /**
-   * @param $name
+   * @param $id
    * @param $display_name
    * @return int
    */
-  public static function getOptionsValue($name, $display_name)
+  public static function getOptionsValue($id, $display_name)
   {
-    $className = class_basename(static::class);
-    $options = static::getOptions('options', $className.':'.$name);
-    $item = $options->firstWhere('display_name', $display_name);
+    $item = self::getOptionsList()->firstWhere('id', $id);
     return $item->id;
   }
 

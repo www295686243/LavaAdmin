@@ -40,6 +40,7 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('user_enterprise', 'User\UserEnterpriseController');
     Route::apiResource('user_control', 'User\UserControlController');
     Route::apiResource('user_coupon', 'User\UserCouponController')->only(['index', 'store']);
+    Route::apiResource('user_personal_auth', 'User\UserPersonalAuthController')->only(['index', 'show', 'update']);
     // 角色
     Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
     Route::get('role/getAssignPermissions/{id}', 'RoleController@getAssignPermissions');

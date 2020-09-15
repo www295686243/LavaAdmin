@@ -16,7 +16,7 @@ use App\Models\User\UserOrder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-trait PayTraits
+trait PayTrait
 {
   /**
    * @param WeChatRequest $request
