@@ -30,6 +30,7 @@ Route::namespace('Api')->group(function () {
     Route::post('user/updatePhone', 'UserController@updatePhone');
     Route::post('user/verifyPhone', 'UserController@verifyPhone');
     Route::apiResource('user_personal_auth', 'User\UserPersonalAuthController')->only(['show', 'store']);
+    Route::apiResource('user_enterprise_auth', 'User\UserEnterpriseAuthController')->only(['show', 'store']);
 
     Route::apiResource('image', 'ImageController')->only(['store']);
     Route::post('wechat/notify', 'WeChatController@notify');
