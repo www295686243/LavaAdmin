@@ -39,13 +39,13 @@ class PermissionTableSeeder extends Seeder
                 'name' => '/user/admin/employee',
                 'display_name' => '员工列表',
                 'guard_name' => 'admin',
-                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\EmployeeController::class)
+                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\User\EmployeeController::class)
               ],
               [
                 'name' => '/user/admin/position',
                 'display_name' => '职位列表',
                 'guard_name' => 'admin',
-                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\PositionController::class, [
+                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\User\PositionController::class, [
                   'updatePermissions' => '权限管理'
                 ])
               ]
@@ -66,7 +66,7 @@ class PermissionTableSeeder extends Seeder
                 'name' => '/user/member/role',
                 'display_name' => '会员角色',
                 'guard_name' => 'admin',
-                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\RoleController::class, [
+                'children' => $this->getAdminPermissions(\App\Http\Controllers\Admin\User\RoleController::class, [
                   'updatePermissions' => '权限管理'
                 ])
               ]
@@ -78,7 +78,7 @@ class PermissionTableSeeder extends Seeder
         'name' => '/user',
         'display_name' => '基本权限',
         'guard_name' => 'api',
-        'children' => $this->getApiPermissions(\App\Http\Controllers\Api\UserController::class, [
+        'children' => $this->getApiPermissions(\App\Http\Controllers\Api\User\UserController::class, [
           'login' => '登录'
         ])
       ]

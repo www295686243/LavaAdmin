@@ -36,6 +36,9 @@ class NotifyTemplate extends Base
    */
   public static function send($title, $user, $params)
   {
+    /**
+     * @var self $notifyTemplateData
+     */
     $notifyTemplateData = (new self())->getData($title);
     $notifyTemplateData->createNotify($user, $params);
   }
@@ -50,6 +53,7 @@ class NotifyTemplate extends Base
   }
 
   /**
+   * 这个方法实例化对象后会用到，不会直接调用
    * @param $user
    * @param $params
    */

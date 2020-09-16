@@ -27,13 +27,13 @@ Route::namespace('Admin')->group(function () {
     // 前台日志
     Route::apiResource('api_log', 'ApiLogController')->only(['index', 'show']);
     // 职位
-    Route::get('position/getPermissions/{id}', 'PositionController@getPermissions');
-    Route::get('position/getAssignPermissions/{id}', 'PositionController@getAssignPermissions');
-    Route::post('position/updatePermissions/{id}', 'PositionController@updatePermissions');
-    Route::post('position/updateAssignPermissions/{id}', 'PositionController@updateAssignPermissions');
-    Route::apiResource('position', 'PositionController')->except(['destroy']);
+    Route::get('position/getPermissions/{id}', 'User\PositionController@getPermissions');
+    Route::get('position/getAssignPermissions/{id}', 'User\PositionController@getAssignPermissions');
+    Route::post('position/updatePermissions/{id}', 'User\PositionController@updatePermissions');
+    Route::post('position/updateAssignPermissions/{id}', 'User\PositionController@updateAssignPermissions');
+    Route::apiResource('position', 'User\PositionController')->except(['destroy']);
     // 员工
-    Route::apiResource('employee', 'EmployeeController');
+    Route::apiResource('employee', 'User\EmployeeController');
     // 会员
     Route::apiResource('user', 'User\UserController');
     Route::apiResource('user_personal', 'User\UserPersonalController');
@@ -43,11 +43,11 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('user_personal_auth', 'User\UserPersonalAuthController')->only(['index', 'show', 'update']);
     Route::apiResource('user_enterprise_auth', 'User\UserEnterpriseAuthController')->only(['index', 'show', 'update']);
     // 角色
-    Route::get('role/getPermissions/{id}', 'RoleController@getPermissions');
-    Route::get('role/getAssignPermissions/{id}', 'RoleController@getAssignPermissions');
-    Route::post('role/updatePermissions/{id}', 'RoleController@updatePermissions');
-    Route::post('role/updateAssignPermissions/{id}', 'RoleController@updateAssignPermissions');
-    Route::apiResource('role', 'RoleController')->except(['destroy']);
+    Route::get('role/getPermissions/{id}', 'User\RoleController@getPermissions');
+    Route::get('role/getAssignPermissions/{id}', 'User\RoleController@getAssignPermissions');
+    Route::post('role/updatePermissions/{id}', 'User\RoleController@updatePermissions');
+    Route::post('role/updateAssignPermissions/{id}', 'User\RoleController@updateAssignPermissions');
+    Route::apiResource('role', 'User\RoleController')->except(['destroy']);
     // 图片
     Route::post('image/destroyMore', 'ImageController@destroyMore');
     Route::apiResource('image', 'ImageController')->only(['index', 'store', 'destroy']);
@@ -56,9 +56,11 @@ Route::namespace('Admin')->group(function () {
     // 版本
     Route::apiResource('version', 'VersionController')->only(['index', 'update', 'show']);
     // 通知记录
-    Route::apiResource('notify', 'NotifyController')->only(['index', 'show']);
+    Route::apiResource('notify', 'Notify\NotifyController')->only(['index', 'show']);
     // 通知模板
-    Route::apiResource('notify_template', 'NotifyTemplateController');
+    Route::apiResource('notify_template', 'Notify\NotifyTemplateController')->only(['index', 'show', 'store', 'update']);
+    // 通知用户
+    Route::apiResource('notify_user', 'Notify\NotifyUserController')->only(['index', 'store', 'destroy']);
     // 图表
     Route::get('chart/createTodayData', 'ChartController@createTodayData');
     Route::get('chart/getCurrentMonthData', 'ChartController@getCurrentMonthData');

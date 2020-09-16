@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Api\User;
@@ -55,16 +55,5 @@ class NotifyController extends Controller
     ->where('is_read', 0)
     ->update(['is_read' => 1]);
     return $this->success();
-  }
-
-  /**
-   * Remove the specified resource from storage.
-   *
-   * @param  int $id
-   * @return \Illuminate\Http\Response
-   */
-  public function destroy($id)
-  {
-    //
   }
 }

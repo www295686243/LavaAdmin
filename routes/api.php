@@ -15,20 +15,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('Api')->group(function () {
   Route::get('app/getAppConfig', 'AppController@getAppConfig');
-  Route::post('user/login', 'UserController@login');
+  Route::post('user/login', 'User\UserController@login');
   Route::get('wechat/getConfig', 'WeChatController@getConfig');
   Route::post('wechat/auth', 'WeChatController@auth');
   Route::post('wechat/login', 'WeChatController@login');
   Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('api_log', 'ApiLogController')->only(['store']);
 
-    Route::post('user/todayFirstLogin', 'UserController@todayFirstLogin');
-    Route::get('user/getUserInfo', 'UserController@getUserInfo');
-    Route::get('user/getBaseUserInfo', 'UserController@getBaseUserInfo');
-    Route::post('user/sendSmsCaptcha', 'UserController@sendSmsCaptcha');
-    Route::post('user/bindPhone', 'UserController@bindPhone');
-    Route::post('user/updatePhone', 'UserController@updatePhone');
-    Route::post('user/verifyPhone', 'UserController@verifyPhone');
+    Route::post('user/todayFirstLogin', 'User\UserController@todayFirstLogin');
+    Route::get('user/getUserInfo', 'User\UserController@getUserInfo');
+    Route::get('user/getBaseUserInfo', 'User\UserController@getBaseUserInfo');
+    Route::post('user/sendSmsCaptcha', 'User\UserController@sendSmsCaptcha');
+    Route::post('user/bindPhone', 'User\UserController@bindPhone');
+    Route::post('user/updatePhone', 'User\UserController@updatePhone');
+    Route::post('user/verifyPhone', 'User\UserController@verifyPhone');
     Route::apiResource('user_personal_auth', 'User\UserPersonalAuthController')->only(['show', 'store']);
     Route::apiResource('user_enterprise_auth', 'User\UserEnterpriseAuthController')->only(['show', 'store']);
 
@@ -36,9 +36,9 @@ Route::namespace('Api')->group(function () {
     Route::post('wechat/notify', 'WeChatController@notify');
 
     // 通知
-    Route::get('notify/getUnreadCount', 'NotifyController@getUnreadCount');
-    Route::get('notify/markHaveRead', 'NotifyController@markHaveRead');
-    Route::apiResource('notify', 'NotifyController')->only(['index', 'show']);
+    Route::get('notify/getUnreadCount', 'User\NotifyController@getUnreadCount');
+    Route::get('notify/markHaveRead', 'User\NotifyController@markHaveRead');
+    Route::apiResource('notify', 'User\NotifyController')->only(['index', 'show']);
 
     // 信息
     Route::apiResource('news', 'NewsController')->only(['index']);

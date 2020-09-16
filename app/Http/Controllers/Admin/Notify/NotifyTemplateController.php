@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\NotifyTemplateRequest;
@@ -49,18 +49,6 @@ class NotifyTemplateController extends Controller
     $input = $request->only(NotifyTemplate::getFillFields());
     $data = NotifyTemplate::findOrFail($id);
     $data->update($input);
-    return $this->success();
-  }
-
-  /**
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   * @throws \Exception
-   */
-  public function destroy($id)
-  {
-    $data = NotifyTemplate::findOrFail($id);
-    $data->delete();
     return $this->success();
   }
 }
