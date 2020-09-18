@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Notify\NotifyUserRequest;
+use App\Models\Admin\User;
 use App\Models\Notify\NotifyUser;
 use Illuminate\Http\Request;
 
@@ -28,12 +29,18 @@ class NotifyUserController extends Controller
   public function store(NotifyUserRequest $request)
   {
     $input = $request->only(NotifyUser::getFillFields());
-    $isExist = NotifyUser::where('user_id', $input['user_id'])
+    $isExistRecord = NotifyUser::where('user_id', $input['user_id'])
       ->where('notify_template_id', $input['notify_template_id'])
       ->exists();
-    if ($isExist) {
+    if ($isExistRecord) {
       return $this->error('已存在该用户');
     }
+
+    $isExistUser = User::find($input['user_id']);
+    if (!$isExistUser) {
+      return $this->error('不存在该用户');
+    }
+
     NotifyUser::create($input);
     return $this->success();
   }

@@ -30,6 +30,14 @@ class NotifyTemplate extends Base
   ];
 
   /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function notify_user()
+  {
+    return $this->hasMany(NotifyUser::class);
+  }
+
+  /**
    * @param $title
    * @param $user
    * @param $params
@@ -41,6 +49,20 @@ class NotifyTemplate extends Base
      */
     $notifyTemplateData = (new self())->getData($title);
     $notifyTemplateData->createNotify($user, $params);
+    $notifyTemplateData->pushAdminNotify($params);
+  }
+
+  /**
+   * @param $title
+   * @param $params
+   */
+  public static function sendAdmin($title, $params)
+  {
+    /**
+     * @var self $notifyTemplateData
+     */
+    $notifyTemplateData = (new self())->getData($title);
+    $notifyTemplateData->pushAdminNotify($params);
   }
 
   /**
@@ -91,6 +113,16 @@ class NotifyTemplate extends Base
     if ($notify->is_push_official_account && $notify->openid && $notify->is_follow_official_account) {
       NotifyQueue::dispatch($notify);
     }
+  }
+
+  /**
+   * @param $params
+   */
+  private function pushAdminNotify($params)
+  {
+    $this->notify_user()->get()->each(function ($user) use ($params) {
+      $this->createNotify($user->user_id, $params);
+    });
   }
 
   /**
