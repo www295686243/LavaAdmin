@@ -101,7 +101,7 @@ class Base extends Model
     $data = static::findOrFail($id);
     $_this = new self();
     if ($_this->checkMyself() && $userData->id !== $data->user_id) {
-      $_this->error('您没有该权限');
+      $_this->setStatusCode(423)->error('您没有该权限');
     }
     return $data;
   }

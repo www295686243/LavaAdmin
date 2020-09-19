@@ -19,8 +19,7 @@ class ImageController extends Controller
    */
   public function index(ImageRequest $request)
   {
-    $type = $request->input('type');
-    $modelName = 'App\Models\\'.str_replace('/', '\\', $type);
+    $modelName = $this->getModelPath();
     $info_id = $request->input('info_id');
     $marking = $request->input('marking');
     $data = Image::when($info_id, function ($query, $info_id) {

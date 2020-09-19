@@ -72,5 +72,7 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('user_order', 'User\UserOrderController')->only(['index', 'show']);
     // 账单记录
     Route::apiResource('user_bill', 'User\UserBillController')->only(['index']);
+    // 信息审核
+    Route::apiResource('info_check', 'Info\InfoCheckController')->only(['index', 'show', 'update']);
   });
 });

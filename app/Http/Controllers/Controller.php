@@ -84,8 +84,7 @@ class Controller extends BaseController
    */
   protected function getModelData () {
     $id = request()->input('id');
-    $type = request()->input('type');
-    $modelPath = 'App\Models\\'.$type;
+    $modelPath = $this->getModelPath();
     /**
      * @var \Illuminate\Database\Eloquent\Builder $Model
      */
@@ -95,5 +94,14 @@ class Controller extends BaseController
      */
     $infoData = $Model->findOrFail($id);
     return $infoData;
+  }
+
+  /**
+   * @param $type
+   * @return string
+   */
+  protected function getModelPath ($type = '') {
+    $innerType = $type ? $type : request()->input('_type');
+    return 'App\Models\\'.str_replace('/', '\\', $innerType);
   }
 }

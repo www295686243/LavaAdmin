@@ -47,6 +47,9 @@ Route::namespace('Api')->group(function () {
 
     // 支付
     Route::post('news/pay', 'NewsController@pay');
+
+    // 信息审核
+    Route::apiResource('info_check', 'Info\InfoCheckController');
   });
 
   // 支付回调 为了在chart表中区别是支付哪些信息类型的

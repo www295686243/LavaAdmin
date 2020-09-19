@@ -29,7 +29,7 @@ trait ImageTrait
     $file = $request->file('file');
     $file->isValid();
     $fileInfo = getimagesize($file);
-    $input['imageable_type'] = 'App\Models\\'.str_replace('/', '\\', $type);
+    $input['imageable_type'] = $this->getModelPath();
     $input['imageable_id'] = $info_id;
     $input['width'] = $fileInfo[0];
     $input['height'] = $fileInfo[1];

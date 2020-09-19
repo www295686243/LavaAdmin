@@ -34,13 +34,24 @@ class AdminMenuTableSeeder extends Seeder
       ]
     ],
     [
-      'display_name' => '新闻管理',
-      'route' => '/info',
+      'display_name' => '求职招聘',
+      'route' => '/hr',
       'children' => [
         [
-          'display_name' => '信息列表',
-          'icon' => 'el-icon-news',
-          'route' => '/info/news'
+          'display_name' => '信息审核',
+          'icon' => 'el-icon-s-check',
+          'route' => '/hr/info-check',
+          'default_params' => ['_type' => 'Info/Hr']
+        ],
+        [
+          'display_name' => '求职列表',
+          'icon' => 'el-icon-user-solid',
+          'route' => '/hr/resume'
+        ],
+        [
+          'display_name' => '招聘列表',
+          'icon' => 'el-icon-s-custom',
+          'route' => '/hr/job'
         ]
       ]
     ],
