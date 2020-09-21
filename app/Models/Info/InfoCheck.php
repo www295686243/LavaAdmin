@@ -38,4 +38,21 @@ class InfoCheck extends Base
   {
     return $this->morphTo();
   }
+
+  /**
+   * @param $input
+   * @return InfoCheck|\Illuminate\Database\Eloquent\Model
+   */
+  public static function createInfo($input)
+  {
+    $input['user_id'] = \App\Models\Api\User::getUserId();
+    return InfoCheck::create([
+      'info_checkable_type' => $input['_type'],
+      'info_checkable_id' => $input['id'],
+      'info_title' => $input['title'],
+      'user_id' => $input['user_id'],
+      'contents' => $input,
+      'status' => InfoCheck::getOptionsValue(47, '待审核')
+    ]);
+  }
 }

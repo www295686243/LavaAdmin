@@ -74,5 +74,7 @@ Route::namespace('Admin')->group(function () {
     Route::apiResource('user_bill', 'User\UserBillController')->only(['index']);
     // 信息审核
     Route::apiResource('info_check', 'Info\InfoCheckController')->only(['index', 'show', 'update']);
+    // hr
+    Route::apiResource('hr', 'Info\HrController');
   });
 });

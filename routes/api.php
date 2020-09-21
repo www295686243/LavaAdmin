@@ -42,6 +42,7 @@ Route::namespace('Api')->group(function () {
 
     // 信息
     Route::apiResource('news', 'NewsController')->only(['index']);
+    Route::apiResource('user/hr', 'User\Info\HrController')->only(['index', 'store', 'show', 'destroy']);
     // 优惠券
     Route::apiResource('user_coupon', 'User\UserCouponController')->only(['index']);
 
@@ -49,7 +50,7 @@ Route::namespace('Api')->group(function () {
     Route::post('news/pay', 'NewsController@pay');
 
     // 信息审核
-    Route::apiResource('info_check', 'Info\InfoCheckController');
+    Route::apiResource('info_check', 'Info\InfoCheckController')->only(['index', 'destroy']);
   });
 
   // 支付回调 为了在chart表中区别是支付哪些信息类型的

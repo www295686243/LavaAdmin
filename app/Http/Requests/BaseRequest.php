@@ -32,4 +32,12 @@ class BaseRequest extends FormRequest
       parent::failedValidation($validator);
     }
   }
+
+  /**
+   * @return array
+   */
+  public function getAll()
+  {
+    return $this->except('_env');
+  }
 }
