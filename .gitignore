@@ -2,6 +2,8 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage/*.p12
+/storage/*.pem
 /vendor
 .env.backup
 .phpunit.result.cache
@@ -14,3 +16,4 @@ sh.exe.stackdump
 composer.lock
 .phpstorm.meta.php
 .env
+.ini
