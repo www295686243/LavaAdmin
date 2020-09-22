@@ -9,14 +9,14 @@ use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoSub;
 use Illuminate\Http\Request;
 
-class HrController extends Controller
+class HrJobController extends Controller
 {
   /**
    * @return \Illuminate\Http\JsonResponse
    */
   public function index()
   {
-    $data = HrJob::searchQuery()->with(['user:id,nickname'])
+    $data = HrJob::searchQuery()->with(['user:id,nickname', 'admin_user:id,nickname'])
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();
@@ -45,20 +45,27 @@ class HrController extends Controller
    */
   public function show($id)
   {
-    $data = Hr::findOrAuth($id);
+    $data = HrJob::findOrAuth($id);
+    $subData = $data->info_sub()->firstOrFail();
+    $data = array_merge($data->toArray(), $subData->toArray());
     return $this->setParams($data)->success();
   }
 
   /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request $request
-   * @param  int $id
-   * @return \Illuminate\Http\Response
+   * @param HrJobRequest $request
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
    */
-  public function update(Request $request, $id)
+  public function update(HrJobRequest $request, $id)
   {
-    //
+    $input = $request->only(HrJob::getFillFields());
+    $input['status'] = optional($input)['status'] ?? HrJob::getOptionsValue(50, '已发布');
+    $input['intro'] = $request->input('description') ? mb_substr($request->input('description'), 0, 60) : '';
+    $input['refresh_at'] = date('Y-m-d H:i:s');
+    $data = HrJob::findOrAuth($id);
+    $data->update($input);
+    $data->info_sub()->update($request->only(InfoSub::getFillFields()));
+    return $this->success();
   }
 
   /**
@@ -67,7 +74,9 @@ class HrController extends Controller
    */
   public function destroy($id)
   {
-    $data = Hr::findOrAuth($id);
-    return $data->delete() ? $this->success() : $this->error();
+    $data = HrJob::findOrAuth($id);
+    $data->info_sub()->delete();
+    $data->delete();
+    return $this->success();
   }
 }

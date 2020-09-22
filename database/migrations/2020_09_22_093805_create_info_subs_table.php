@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHrsTable extends Migration
+class CreateInfoSubsTable extends Migration
 {
   /**
    * Run the migrations.
@@ -13,17 +13,13 @@ class CreateHrsTable extends Migration
    */
   public function up()
   {
-    Schema::create('hrs', function (Blueprint $table) {
+    Schema::create('info_subs', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('user_id');
-      $table->string('title', 120);
-      $table->string('intro', 120)->comment('简介')->nullable();
-      $table->string('company_name', 60)->comment('企业名称')->nullable();
-
+      $table->string('info_subable_type', 60);
+      $table->unsignedBigInteger('info_subable_id');
+      $table->text('description')->nullable();
       $table->timestamps();
       $table->softDeletes();
-
-      $table->index('user_id');
     });
   }
 
@@ -34,6 +30,6 @@ class CreateHrsTable extends Migration
    */
   public function down()
   {
-    Schema::dropIfExists('hrs');
+    Schema::dropIfExists('info_subs');
   }
 }
