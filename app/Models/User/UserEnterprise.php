@@ -12,11 +12,13 @@ class UserEnterprise extends Base
 
   protected $fillable = [
     'user_id',
+    'avatar',
     'company',
     'business_license',
     'city',
     'address',
     'intro',
+    'email',
     'tags',
     'company_images',
     'company_scale',

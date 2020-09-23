@@ -2,12 +2,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Info\InfoCheckController;
-use App\Http\Controllers\Api\User\Info\HrController;
+use App\Http\Controllers\Api\User\Info\HrJobController;
 use App\Http\Controllers\Api\User\NotifyController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\UserCouponController;
 use App\Http\Controllers\Api\User\UserEnterpriseAuthController;
 use App\Http\Controllers\Api\User\UserPersonalAuthController;
+use App\Http\Controllers\Api\User\UserPersonalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('user/verifyPhone', [UserController::class, 'verifyPhone']);
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['show', 'store']);
   Route::apiResource('user_enterprise_auth', UserEnterpriseAuthController::class)->only(['show', 'store']);
+  Route::apiResource('user_personal', UserPersonalController::class)->only(['show', 'update']);
 
   Route::apiResource('image', ImageController::class)->only(['store']);
   Route::post('wechat/notify', [WeChatController::class, 'notify']);
@@ -49,7 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
   // 信息
   Route::apiResource('news', NewsController::class)->only(['index']);
-  Route::apiResource('user/hr', HrController::class)->only(['index', 'store', 'show', 'destroy']);
+  Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'destroy']);
   // 优惠券
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
 

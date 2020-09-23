@@ -12,10 +12,12 @@ class UserPersonal extends Base
 
   protected $fillable = [
     'user_id',
+    'avatar',
     'name',
     'id_card',
     'seniority',
     'intro',
+    'email',
     'company',
     'position',
     'city',

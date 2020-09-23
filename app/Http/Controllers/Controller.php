@@ -97,11 +97,11 @@ class Controller extends BaseController
   }
 
   /**
-   * @param $type
+   * @param string $modelPath
    * @return string
    */
-  protected function getModelPath ($type = '') {
-    $innerType = $type ? $type : request()->input('_type');
-    return 'App\Models\\'.str_replace('/', '\\', $innerType);
+  protected function getModelPath ($modelPath = '') {
+    $innerModelPath = $modelPath ? $modelPath : request()->input('_type');
+    return 'App\Models\\'.str_replace('/', '\\', $innerModelPath);
   }
 }

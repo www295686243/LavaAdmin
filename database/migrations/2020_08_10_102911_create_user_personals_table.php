@@ -16,6 +16,7 @@ class CreateUserPersonalsTable extends Migration
     Schema::create('user_personals', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id');
+      $table->string('avatar', 255)->comment('头像')->nullable();
       $table->string('name', 20)->comment('姓名')->nullable();
       $table->string('id_card', 18)->comment('身份证号(实名后不可修改)')->nullable();
       $table->unsignedTinyInteger('seniority')->comment('工作年限')->nullable();
@@ -24,8 +25,9 @@ class CreateUserPersonalsTable extends Migration
       $table->string('position', 60)->comment('职位')->nullable();
       $table->unsignedMediumInteger('city')->comment('省市区')->nullable();
       $table->string('address', 60)->comment('详细地址')->nullable();
-      // ['能力强'，'有经验']
-      $table->json('tags')->comment('自我评价标签')->nullable();
+      $table->string('email')->nullable();
+      // xxx,xxx
+      $table->string('tags')->comment('自我评价标签')->nullable();
       // [{minDate: '2011-01', maxDate: '2012-01', school: '学校名', profession: '专业名'}]
       $table->json('education_experience')->comment('教育经历')->nullable();
       // [{minDate: '2011-01', maxDate: '2012-01', company: '公司名', position: '职位名', city: '城市', address: '街道地址'}]

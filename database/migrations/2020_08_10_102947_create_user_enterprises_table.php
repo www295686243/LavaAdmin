@@ -16,13 +16,15 @@ class CreateUserEnterprisesTable extends Migration
     Schema::create('user_enterprises', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id');
+      $table->string('avatar', 255)->comment('企业LOGO')->nullable();
       $table->string('company', 60)->comment('公司名(企业认证后不可修改)')->nullable();
       $table->string('business_license', 18)->comment('营业执照(企业认证后不可修改)')->nullable();
       $table->unsignedInteger('city')->comment('省市区')->nullable();
       $table->string('address', 60)->comment('详细地址')->nullable();
       $table->string('intro', 255)->comment('公司简介')->nullable();
-      // ['能力强'，'有经验']
-      $table->json('tags')->comment('公司标签')->nullable();
+      $table->string('email')->nullable();
+      // xxx,xxx
+      $table->string('tags')->comment('公司标签')->nullable();
       // ['', '']
       $table->json('company_images')->comment('公司图片')->nullable();
       $table->unsignedTinyInteger('company_scale')->comment('企业规模')->nullable();

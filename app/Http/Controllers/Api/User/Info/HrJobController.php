@@ -3,32 +3,33 @@
 namespace App\Http\Controllers\Api\User\Info;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Info\HrRequest;
+use App\Http\Requests\Api\User\Info\HrJobRequest;
 use App\Models\Api\User;
-use App\Models\Info\Hr;
+use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
+use Illuminate\Http\Request;
 
-class HrController extends Controller
+class HrJobController extends Controller
 {
   /**
    * @return \Illuminate\Http\JsonResponse
    */
   public function index()
   {
-    $data = Hr::where('user_id', User::getUserId())
+    $data = HrJob::where('user_id', User::getUserId())
       ->orderByDesc('id')
-      ->pagination();
+      ->simplePagination();
     return $this->setParams($data)->success();
   }
 
   /**
-   * @param HrRequest $request
+   * @param HrJobRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function store(HrRequest $request)
+  public function store(HrJobRequest $request)
   {
     $input = $request->getAll();
-    $input['_type'] = $this->getModelPath('Info/Hr');
+    $input['_type'] = HrJob::class;
     InfoCheck::createInfo($input);
     return $this->success();
   }
@@ -39,7 +40,7 @@ class HrController extends Controller
    */
   public function show($id)
   {
-    $data = Hr::findOrAuth($id);
+    $data = HrJob::findOrAuth($id);
     return $this->setParams($data)->success();
   }
 
@@ -49,7 +50,7 @@ class HrController extends Controller
    */
   public function destroy($id)
   {
-    $data = Hr::findOrAuth($id);
+    $data = HrJob::findOrAuth($id);
     return $data->delete() ? $this->success() : $this->error();
   }
 }

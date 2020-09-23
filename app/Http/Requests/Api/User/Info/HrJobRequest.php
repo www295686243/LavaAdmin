@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Info;
+namespace App\Http\Requests\Api\User\Info;
 
 use App\Http\Requests\BaseRequest;
 
-class HrRequest extends BaseRequest
+class HrJobRequest extends BaseRequest
 {
   /**
    * Get the validation rules that apply to the request.
