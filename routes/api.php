@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Info\InfoCheckController;
 use App\Http\Controllers\Api\User\Info\HrJobController;
+use App\Http\Controllers\Api\User\Info\HrResumeController;
 use App\Http\Controllers\Api\User\NotifyController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\UserCouponController;
@@ -54,6 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
   // 信息
   Route::apiResource('news', NewsController::class)->only(['index']);
   Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'destroy']);
+  Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'destroy']);
   // 优惠券
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
 
