@@ -25,6 +25,7 @@ class CreateUserPersonalsTable extends Migration
       $table->string('position', 60)->comment('职位')->nullable();
       $table->unsignedMediumInteger('city')->comment('省市区')->nullable();
       $table->string('address', 60)->comment('详细地址')->nullable();
+      $table->string('phone', 20)->comment('联系电话')->nullable();
       $table->string('email')->nullable();
       // xxx,xxx
       $table->string('tags')->comment('自我评价标签')->nullable();

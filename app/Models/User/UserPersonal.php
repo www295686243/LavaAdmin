@@ -18,6 +18,7 @@ class UserPersonal extends Base
     'seniority',
     'intro',
     'email',
+    'phone',
     'company',
     'position',
     'city',
@@ -35,7 +36,6 @@ class UserPersonal extends Base
   ];
 
   protected $casts = [
-    'tags' => 'array',
     'education_experience' => 'array',
     'work_experience' => 'array',
     'honorary_certificate' => 'array'

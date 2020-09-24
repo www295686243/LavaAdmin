@@ -22,7 +22,6 @@ class CreateUserEnterprisesTable extends Migration
       $table->unsignedInteger('city')->comment('省市区')->nullable();
       $table->string('address', 60)->comment('详细地址')->nullable();
       $table->string('intro', 255)->comment('公司简介')->nullable();
-      $table->string('email')->nullable();
       // xxx,xxx
       $table->string('tags')->comment('公司标签')->nullable();
       // ['', '']
@@ -32,6 +31,8 @@ class CreateUserEnterprisesTable extends Migration
       $table->string('name', 20)->comment('运营人姓名')->nullable();
       $table->string('id_card', 18)->comment('运营人身份证')->nullable();
       $table->string('position', 60)->comment('运营人职位')->nullable();
+      $table->string('phone', 20)->comment('运营人电话')->nullable();
+      $table->string('email')->comment('运营人邮箱')->nullable();
 
       $table->timestamps();
       $table->softDeletes();

@@ -24,7 +24,8 @@ class UserEnterprise extends Base
     'company_scale',
     'name',
     'id_card',
-    'position'
+    'position',
+    'phone'
   ];
 
   protected $hidden = [
@@ -34,7 +35,6 @@ class UserEnterprise extends Base
   ];
 
   protected $casts = [
-    'tags' => 'array',
     'company_images' => 'array'
   ];
 
