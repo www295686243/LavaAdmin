@@ -15,7 +15,7 @@ class CreateInfoSubsTable extends Migration
   {
     Schema::create('info_subs', function (Blueprint $table) {
       $table->id();
-      $table->string('info_subable_type', 60);
+      $table->string('info_subable_type', 120);
       $table->unsignedBigInteger('info_subable_id');
       $table->text('description')->nullable();
       $table->timestamps();

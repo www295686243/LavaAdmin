@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\Info\HrJobController;
+use App\Http\Controllers\Admin\Info\IndustryController;
 use App\Http\Controllers\Admin\Info\InfoCheckController;
 use App\Http\Controllers\Admin\Notify\NotifyController;
 use App\Http\Controllers\Admin\Notify\NotifyTemplateController;
@@ -94,5 +95,8 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'show', 'update']);
   // hr
   Route::apiResource('hr_job', HrJobController::class);
+  // 行业
+  Route::get('industry/getParentTree', [IndustryController::class, 'getParentTree']);
+  Route::apiResource('industry', IndustryController::class);
 
 });

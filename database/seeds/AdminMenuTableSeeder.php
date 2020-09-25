@@ -22,6 +22,11 @@ class AdminMenuTableSeeder extends Seeder
           'default_params' => ['guard_name' => 'options']
         ],
         [
+          'display_name' => '行业配置',
+          'icon' => 'el-icon-s-flag',
+          'route' => '/system/industry'
+        ],
+        [
           'display_name' => '后台操作日志',
           'icon' => 'el-icon-edit-outline',
           'route' => '/system/admin-log'

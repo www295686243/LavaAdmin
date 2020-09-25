@@ -15,7 +15,7 @@ class CreateInfoChecksTable extends Migration
   {
     Schema::create('info_checks', function (Blueprint $table) {
       $table->id();
-      $table->string('info_checkable_type', 60);
+      $table->string('info_checkable_type', 120);
       $table->unsignedBigInteger('info_checkable_id')->nullable();
       $table->string('info_title', 120)->comment('信息标题');
       $table->unsignedBigInteger('user_id')->comment('发布者');

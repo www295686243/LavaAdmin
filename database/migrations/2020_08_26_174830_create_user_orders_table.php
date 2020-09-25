@@ -16,7 +16,7 @@ class CreateUserOrdersTable extends Migration
     Schema::create('user_orders', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id')->comment('支付者user_id');
-      $table->string('user_orderable_type', 60);
+      $table->string('user_orderable_type', 120);
       $table->unsignedBigInteger('user_orderable_id');
       $table->decimal('total_amount', 8, 2)->comment('总支付金额')->nullable();
       $table->decimal('cash_amount', 8, 2)->comment('现金金额')->nullable();
