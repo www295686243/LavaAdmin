@@ -23,7 +23,7 @@ class CreateUserOrdersTable extends Migration
       $table->decimal('balance_amount', 8, 2)->comment('余额金额')->nullable();
       $table->decimal('coupon_amount', 8, 2)->comment('优惠券金额')->nullable();
       $table->unsignedBigInteger('user_coupon_id')->comment('用户的优惠券id')->nullable();
-      $table->unsignedTinyInteger('pay_status')->comment('状态(0未支付,1已支付,2支付失败)')->default(0);
+      $table->unsignedMediumInteger('pay_status')->comment('状态(0未支付,1已支付,2支付失败)')->default(0);
       $table->timestamp('paid_at')->comment('支付时间')->nullable();
       $table->string('source', 20)->comment('支付来源')->nullable();
       $table->timestamps();

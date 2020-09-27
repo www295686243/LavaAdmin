@@ -19,10 +19,11 @@ class CreateUserPersonalsTable extends Migration
       $table->string('avatar', 255)->comment('头像')->nullable();
       $table->string('name', 20)->comment('姓名')->nullable();
       $table->string('id_card', 18)->comment('身份证号(实名后不可修改)')->nullable();
-      $table->unsignedTinyInteger('seniority')->comment('工作年限')->nullable();
+      $table->unsignedMediumInteger('seniority')->comment('工作年限')->nullable();
       $table->string('intro', 255)->comment('个人简介')->nullable();
       $table->string('company', 60)->comment('公司名')->nullable();
       $table->string('position', 60)->comment('职位')->nullable();
+      $table->unsignedMediumInteger('position_attr')->comment('职位属性')->nullable();
       $table->unsignedMediumInteger('city')->comment('省市区')->nullable();
       $table->string('address', 60)->comment('详细地址')->nullable();
       $table->string('phone', 20)->comment('联系电话')->nullable();

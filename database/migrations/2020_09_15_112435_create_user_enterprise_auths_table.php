@@ -23,7 +23,7 @@ class CreateUserEnterpriseAuthsTable extends Migration
       $table->string('intro', 255)->comment('简介');
       // 格式['', '']
       $table->json('certificates')->comment('证件');
-      $table->unsignedTinyInteger('auth_status')->comment('状态(0初始状态 1已提交 2已通过 3未通过)')->default(0);
+      $table->unsignedMediumInteger('auth_status')->comment('状态(0初始状态 1已提交 2已通过 3未通过)')->default(0);
       $table->string('refuse_reason', 255)->comment('拒绝原因')->nullable();
 
       $table->timestamps();

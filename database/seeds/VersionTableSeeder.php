@@ -16,6 +16,11 @@ class VersionTableSeeder extends Seeder
         'name' => 'app',
         'display_name' => '应用版本',
         'value' => 1
+      ],
+      [
+        'name' => 'industry',
+        'display_name' => '行业版本',
+        'value' => 1
       ]
     ];
     foreach ($data as $datum) {

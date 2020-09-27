@@ -18,6 +18,7 @@ class UserEnterprise extends Base
     'city',
     'address',
     'intro',
+    'industry_attr',
     'email',
     'tags',
     'company_images',

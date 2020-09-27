@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 8.5.0.
+ * Generated for Laravel 8.6.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2269,7 +2269,7 @@
          * Begin broadcasting an event.
          *
          * @param mixed|null $event
-         * @return \Illuminate\Broadcasting\PendingBroadcast|void 
+         * @return \Illuminate\Broadcasting\PendingBroadcast 
          * @static 
          */ 
         public static function event($event = null)

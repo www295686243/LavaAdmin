@@ -22,11 +22,12 @@ class CreateUserEnterprisesTable extends Migration
       $table->unsignedInteger('city')->comment('省市区')->nullable();
       $table->string('address', 60)->comment('详细地址')->nullable();
       $table->string('intro', 255)->comment('公司简介')->nullable();
+      $table->unsignedMediumInteger('industry_attr')->comment('行业属性')->nullable();
       // xxx,xxx
       $table->string('tags')->comment('公司标签')->nullable();
       // ['', '']
       $table->json('company_images')->comment('公司图片')->nullable();
-      $table->unsignedTinyInteger('company_scale')->comment('企业规模')->nullable();
+      $table->unsignedMediumInteger('company_scale')->comment('企业规模')->nullable();
 
       $table->string('name', 20)->comment('运营人姓名')->nullable();
       $table->string('id_card', 18)->comment('运营人身份证')->nullable();

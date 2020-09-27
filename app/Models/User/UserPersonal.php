@@ -21,6 +21,7 @@ class UserPersonal extends Base
     'phone',
     'company',
     'position',
+    'position_attr',
     'city',
     'address',
     'tags',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\AppRequest;
 use App\Models\Config;
+use App\Models\Info\Industry;
 
 class AppController extends Controller
 {
@@ -21,6 +22,9 @@ class AppController extends Controller
       })
       ->get()
       ->groupBy('guard_name');
+    if (!$guard_name || $guard_name === 'industry') {
+      $data['industry'] = Industry::all()->toTree();
+    }
     return $this->setParams($data)->success();
   }
 }
