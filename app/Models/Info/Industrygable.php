@@ -2,10 +2,10 @@
 
 namespace App\Models\Info;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Base;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Industrygable extends Model
+class Industrygable extends Base
 {
-    use HasFactory;
+  use SoftDeletes;
 }

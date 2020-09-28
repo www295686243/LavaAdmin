@@ -3,14 +3,16 @@
 namespace App\Models\Info\Hr;
 
 use App\Models\Base;
+use App\Models\Info\Industry;
 use App\Models\Info\InfoSub;
+use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 class HrResume extends Base
 {
-  use HasSnowflakePrimary, SoftDeletes;
+  use HasSnowflakePrimary, SoftDeletes, IndustryTrait;
 
   protected $fillable = [
     'user_id',
@@ -68,6 +70,14 @@ class HrResume extends Base
   public function info_sub()
   {
     return $this->morphMany(InfoSub::class, 'info_subable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+   */
+  public function industry()
+  {
+    return $this->morphToMany(Industry::class, 'industrygable');
   }
 
 }

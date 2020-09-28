@@ -3,42 +3,40 @@
 namespace App\Http\Controllers\Admin\Info;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\Info\HrJobRequest;
+use App\Http\Requests\Admin\Info\HrResumeRequest;
 use App\Models\Admin\User;
-use App\Models\Info\Hr\HrJob;
+use App\Models\Info\Hr\HrResume;
 use App\Models\Info\InfoSub;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class HrJobController extends Controller
+class HrResumeController extends Controller
 {
   /**
    * @return \Illuminate\Http\JsonResponse
    */
   public function index()
   {
-    $data = HrJob::searchQuery()->with(['user:id,nickname', 'admin_user:id,nickname'])
+    $data = HrResume::searchQuery()->with(['user:id,nickname', 'admin_user:id,nickname'])
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();
   }
 
   /**
-   * @param HrJobRequest $request
+   * @param HrResumeRequest $request
    * @return \Illuminate\Http\JsonResponse
    * @throws \Throwable
    */
-  public function store(HrJobRequest $request)
+  public function store(HrResumeRequest $request)
   {
-    $input = $request->only(HrJob::getFillFields());
+    $input = $request->only(HrResume::getFillFields());
     $input['user_id'] = User::getUserId();
     $input['admin_user_id'] = User::getUserId();
-    $input['status'] = optional($input)['status'] ?? HrJob::getOptionsValue(50, '已发布');
     $input['intro'] = $request->input('description') ? mb_substr($request->input('description'), 0, 60) : '';
     $input['refresh_at'] = date('Y-m-d H:i:s');
     DB::beginTransaction();
     try {
-      $data = HrJob::create($input);
+      $data = HrResume::create($input);
       $data->info_sub()->create($request->only(InfoSub::getFillFields()));
       $data->attachIndustry();
       DB::commit();
@@ -56,7 +54,7 @@ class HrJobController extends Controller
    */
   public function show($id)
   {
-    $data = HrJob::findOrAuth($id);
+    $data = HrResume::findOrAuth($id);
     $data->industry;
     $subData = $data->info_sub()->firstOrFail();
     $data = array_merge($data->toArray(), $subData->toArray());
@@ -64,18 +62,17 @@ class HrJobController extends Controller
   }
 
   /**
-   * @param HrJobRequest $request
+   * @param HrResumeRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    * @throws \Throwable
    */
-  public function update(HrJobRequest $request, $id)
+  public function update(HrResumeRequest $request, $id)
   {
-    $input = $request->only(HrJob::getFillFields());
-    $input['status'] = optional($input)['status'] ?? HrJob::getOptionsValue(50, '已发布');
+    $input = $request->only(HrResume::getFillFields());
     $input['intro'] = $request->input('description') ? mb_substr($request->input('description'), 0, 60) : '';
     $input['refresh_at'] = date('Y-m-d H:i:s');
-    $data = HrJob::findOrAuth($id);
+    $data = HrResume::findOrAuth($id);
     DB::beginTransaction();
     try {
       $data->update($input);
@@ -97,7 +94,7 @@ class HrJobController extends Controller
    */
   public function destroy($id)
   {
-    $data = HrJob::findOrAuth($id);
+    $data = HrResume::findOrAuth($id);
     DB::beginTransaction();
     try {
       $data->info_sub()->delete();

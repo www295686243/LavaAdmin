@@ -36,7 +36,7 @@ class CreateHrResumesTable extends Migration
       $table->unsignedSmallInteger('pay_count')->comment('支付数')->default(0);
       $table->unsignedTinyInteger('is_other_user')->comment('是否帮其它人发')->default(0);
       $table->timestamp('refresh_at')->comment('刷新时间')->nullable();
-      $table->unsignedInteger('admin_user_id')->comment('信息归属人，用于员工后台发布能知道谁发的')->nullable();
+      $table->unsignedBigInteger('admin_user_id')->comment('信息归属人，用于员工后台发布能知道谁发的')->nullable();
 
       $table->timestamps();
       $table->softDeletes();

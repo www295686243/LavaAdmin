@@ -3,6 +3,8 @@
 namespace App\Models\Info;
 
 use App\Models\Base;
+use App\Models\Info\Hr\HrJob;
+use App\Models\Info\Hr\HrResume;
 use App\Models\User\UserEnterprise;
 use App\Models\User\UserPersonal;
 use Kalnoy\Nestedset\NodeTrait;
@@ -43,5 +45,21 @@ class Industry extends Base
   public function user_enterprise()
   {
     return $this->morphedByMany(UserEnterprise::class, 'industrygable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+   */
+  public function hr_job()
+  {
+    return $this->morphedByMany(HrJob::class, 'industrygable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+   */
+  public function hr_resume()
+  {
+    return $this->morphedByMany(HrResume::class, 'industrygable');
   }
 }

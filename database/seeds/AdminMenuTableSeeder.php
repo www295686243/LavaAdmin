@@ -49,14 +49,14 @@ class AdminMenuTableSeeder extends Seeder
           'default_params' => ['_type' => 'Info/Hr']
         ],
         [
-          'display_name' => '求职列表',
-          'icon' => 'el-icon-user-solid',
-          'route' => '/hr/resume'
-        ],
-        [
           'display_name' => '招聘列表',
           'icon' => 'el-icon-s-custom',
           'route' => '/hr/job'
+        ],
+        [
+          'display_name' => '求职列表',
+          'icon' => 'el-icon-user-solid',
+          'route' => '/hr/resume'
         ]
       ]
     ],
