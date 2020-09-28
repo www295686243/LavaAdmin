@@ -9,6 +9,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
 class InfoCheck extends Base
 {
   use HasSnowflakePrimary;
+
   protected $fillable = [
     'info_checkable_type',
     'info_checkable_id',
@@ -54,5 +55,18 @@ class InfoCheck extends Base
       'contents' => $input,
       'status' => InfoCheck::getOptionsValue(47, '待审核')
     ]);
+  }
+
+  /**
+   * @param \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeSearchType($query)
+  {
+    $_type = request()->input('_type');
+    $_types = collect(array_filter(explode(',', $_type)))->map(function ($type) {
+      return 'App\Models\\'.str_replace('/', '\\', $type);
+    });
+    return $query->whereIn('info_checkable_type', $_types);
   }
 }

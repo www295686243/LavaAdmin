@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Info;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\InfoCheckRequest;
+use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
 
 class InfoCheckController extends Controller
@@ -14,7 +15,7 @@ class InfoCheckController extends Controller
   public function index()
   {
     $data = InfoCheck::with('user:id,nickname')
-      ->where('info_checkable_type', $this->getModelPath())
+      ->searchType()
       ->where('status', InfoCheck::getOptionsValue(47, '待审核'))
       ->orderByDesc('id')
       ->pagination();

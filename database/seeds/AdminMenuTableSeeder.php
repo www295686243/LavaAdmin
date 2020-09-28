@@ -46,7 +46,7 @@ class AdminMenuTableSeeder extends Seeder
           'display_name' => '信息审核',
           'icon' => 'el-icon-s-check',
           'route' => '/hr/info-check',
-          'default_params' => ['_type' => 'Info/Hr']
+          'default_params' => ['_type' => 'Info/Hr/HrJob,Info/Hr/HrResume']
         ],
         [
           'display_name' => '招聘列表',

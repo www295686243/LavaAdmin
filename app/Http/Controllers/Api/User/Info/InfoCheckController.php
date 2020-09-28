@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Api\Info;
+namespace App\Http\Controllers\Api\User\Info;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Info\InfoCheckRequest;
 use App\Models\Api\User;
 use App\Models\Info\InfoCheck;
 use Illuminate\Http\Request;

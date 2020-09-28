@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Api\Info\InfoCheckController;
 use App\Http\Controllers\Api\User\Info\HrJobController;
 use App\Http\Controllers\Api\User\Info\HrResumeController;
+use App\Http\Controllers\Api\User\Info\InfoCheckController;
 use App\Http\Controllers\Api\User\NotifyController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\UserCouponController;
