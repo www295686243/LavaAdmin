@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserEnterpriseRequest;
 use App\Models\User\UserEnterprise;
+use Illuminate\Support\Facades\DB;
 
 class UserEnterpriseController extends Controller
 {
@@ -14,7 +15,8 @@ class UserEnterpriseController extends Controller
    */
   public function show($id)
   {
-    $data = UserEnterprise::where('user_id', $id)->first();
+    $data = UserEnterprise::where('user_id', $id)->firstOrFail();
+    $data->industry;
     return $this->setParams($data)->success();
   }
 
@@ -22,12 +24,22 @@ class UserEnterpriseController extends Controller
    * @param UserEnterpriseRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function update(UserEnterpriseRequest $request, $id)
   {
     $input = $request->only(UserEnterprise::getUpdateFillable());
-    $data = UserEnterprise::where('user_id', $id)->first();
-    $data->update($input);
-    return $this->success();
+    $data = UserEnterprise::where('user_id', $id)->firstOrFail();
+    DB::beginTransaction();
+    try {
+      $data->update($input);
+      $data->attachIndustry();
+      DB::commit();
+      return $this->success();
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage().':'.__LINE__);
+      return $this->error();
+    }
   }
 }

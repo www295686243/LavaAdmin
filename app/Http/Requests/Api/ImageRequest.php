@@ -16,7 +16,7 @@ class ImageRequest extends BaseRequest
     switch (request()->route()->getActionMethod()) {
       case 'store':
         return [
-          'type' => 'required|string',
+          '_type' => 'required|string',
           'info_id' => 'sometimes|numeric',
           'marking' => 'sometimes|nullable|numeric',
           'file' => 'image'

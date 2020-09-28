@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AppRequest;
 use App\Models\Config;
+use App\Models\Info\Industry;
 
 class AppController extends Controller
 {
@@ -21,6 +22,21 @@ class AppController extends Controller
       })
       ->get()
       ->groupBy('guard_name');
+    if (!$guard_name || $guard_name === 'industry') {
+      $data['industry'] = Industry::all()->toTree();
+      $this->removeEmptyChildren($data['industry']);
+    }
     return $this->setParams($data)->success();
+  }
+
+  private function removeEmptyChildren($elements)
+  {
+    foreach ($elements as $element) {
+      if($element->children->isNotEmpty()) {
+        $this->removeEmptyChildren($element->children);
+      } else {
+        $element->unsetRelation('children');
+      }
+    }
   }
 }

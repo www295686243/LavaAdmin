@@ -3,12 +3,14 @@
 namespace App\Models\User;
 
 use App\Models\Base;
+use App\Models\Info\Industry;
+use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserEnterprise extends Base
 {
-  use SoftDeletes, HasSnowflakePrimary;
+  use SoftDeletes, HasSnowflakePrimary, IndustryTrait;
 
   protected $fillable = [
     'user_id',
@@ -45,5 +47,13 @@ class UserEnterprise extends Base
   public static function getUpdateFillable()
   {
     return collect(static::getFillFields())->diff(['user_id'])->values()->toArray();
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+   */
+  public function industry()
+  {
+    return $this->morphToMany(Industry::class, 'industrygable');
   }
 }

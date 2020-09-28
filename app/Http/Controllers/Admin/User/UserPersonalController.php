@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserPersonalRequest;
 use App\Models\User\UserPersonal;
+use Illuminate\Support\Facades\DB;
 
 class UserPersonalController extends Controller
 {
@@ -14,7 +15,8 @@ class UserPersonalController extends Controller
    */
   public function show($id)
   {
-    $data = UserPersonal::where('user_id', $id)->first();
+    $data = UserPersonal::where('user_id', $id)->firstOrFail();
+    $data->industry;
     return $this->setParams($data)->success();
   }
 
@@ -22,12 +24,22 @@ class UserPersonalController extends Controller
    * @param UserPersonalRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function update(UserPersonalRequest $request, $id)
   {
     $input = $request->only(UserPersonal::getUpdateFillable());
-    $data = UserPersonal::where('user_id', $id)->first();
-    $data->update($input);
-    return $this->success();
+    $data = UserPersonal::where('user_id', $id)->firstOrFail();
+    DB::beginTransaction();
+    try {
+      $data->update($input);
+      $data->attachIndustry();
+      DB::commit();
+      return $this->success();
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage().':'.__LINE__);
+      return $this->error();
+    }
   }
 }

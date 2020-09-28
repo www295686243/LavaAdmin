@@ -55,8 +55,8 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('employee', EmployeeController::class);
   // 会员
   Route::apiResource('user', UserController::class);
-  Route::apiResource('user_personal', UserPersonalController::class);
-  Route::apiResource('user_enterprise', UserEnterpriseController::class);
+  Route::apiResource('user_personal', UserPersonalController::class)->only(['show', 'update']);
+  Route::apiResource('user_enterprise', UserEnterpriseController::class)->only(['show', 'update']);
   Route::apiResource('user_control', UserControlController::class);
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index', 'store']);
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['index', 'show', 'update']);
