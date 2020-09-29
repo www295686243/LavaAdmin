@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserRequest;
 use App\Models\Api\User;
 use App\Models\SmsCaptcha;
+use App\Models\User\UserBill;
+use App\Models\User\UserWallet;
 
 class UserController extends Controller
 {
@@ -140,5 +142,27 @@ class UserController extends Controller
     // 验证短信验证码
     $SmsCaptcha->checkSmsCaptcha($phone, $code, array_search('验证手机号', $SmsCaptcha->TYPE));
     return $this->success('验证成功，请输入新的手机号进行验证');
+  }
+
+  /**
+   * 我的钱包
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getWallet()
+  {
+    $data = UserWallet::where('user_id', User::getUserId())->firstOrFail();
+    return $this->setParams($data)->success();
+  }
+
+  /**
+   * 我的账单
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getBill()
+  {
+    $data = UserBill::where('user_id', User::getUserId())
+      ->orderByDesc('id')
+      ->simplePagination();
+    return $this->setParams($data)->success();
   }
 }

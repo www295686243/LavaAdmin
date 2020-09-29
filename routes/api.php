@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\User\Info\HrJobController;
 use App\Http\Controllers\Api\User\Info\HrResumeController;
 use App\Http\Controllers\Api\User\Info\InfoCheckController;
 use App\Http\Controllers\Api\User\NotifyController;
+use App\Http\Controllers\Api\User\UserCashController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\UserCouponController;
 use App\Http\Controllers\Api\User\UserEnterpriseAuthController;
@@ -39,11 +40,14 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('user/bindPhone', [UserController::class, 'bindPhone']);
   Route::post('user/updatePhone', [UserController::class, 'updatePhone']);
   Route::post('user/verifyPhone', [UserController::class, 'verifyPhone']);
+  Route::get('user/getWallet', [UserController::class, 'getWallet']);
+  Route::get('user/getBill', [UserController::class, 'getBill']);
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['show', 'store']);
   Route::apiResource('user_enterprise_auth', UserEnterpriseAuthController::class)->only(['show', 'store']);
   Route::post('user_personal/check', [UserPersonalController::class, 'check']);
   Route::apiResource('user_personal', UserPersonalController::class)->only(['show', 'update']);
   Route::apiResource('user_enterprise', UserEnterpriseController::class)->only(['show', 'update']);
+  Route::apiResource('user_cash', UserCashController::class)->only(['index', 'store', 'update']);
 
   Route::apiResource('image', ImageController::class)->only(['store']);
   Route::post('wechat/notify', [WeChatController::class, 'notify']);
