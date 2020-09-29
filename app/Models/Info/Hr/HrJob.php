@@ -9,6 +9,8 @@ use App\Models\Info\InfoSub;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 class HrJob extends Base
@@ -99,5 +101,66 @@ class HrJob extends Base
   public function info_check()
   {
     return $this->morphMany(InfoCheck::class, 'info_checkable');
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   * @return int|mixed
+   * @throws \Throwable
+   */
+  public function createOrUpdateData($input, $id = 0)
+  {
+    $input['status'] = optional($input)['status'] ?? self::getOptionsValue(50, '已发布');
+    $input['intro'] = $input['description'] ? mb_substr($input['description'], 0, 60) : '';
+    $input['refresh_at'] = date('Y-m-d H:i:s');
+    if ($id) {
+      $this->updateData($input, $id);
+      return $id;
+    } else {
+      return $this->createData($input);
+    }
+  }
+
+  /**
+   * @param $input
+   * @return mixed
+   * @throws \Throwable
+   */
+  private function createData($input)
+  {
+    DB::beginTransaction();
+    try {
+      $data = $this->create(Arr::only($input, $this->getFillable()));
+      $data->info_sub()->create(Arr::only($input, InfoSub::getFillFields()));
+      $data->attachIndustry($input);
+      DB::commit();
+      return $data->id;
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage().':'.__LINE__);
+      $this->error();
+    }
+  }
+
+  /**
+   * @param $input
+   * @param $id
+   * @throws \Throwable
+   */
+  private function updateData($input, $id)
+  {
+    $data = self::findOrAuth($id);
+    DB::beginTransaction();
+    try {
+      $data->update(Arr::only($input, $this->getFillable()));
+      $data->info_sub()->update(Arr::only($input, InfoSub::getFillFields()));
+      $data->attachIndustry($input);
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage().':'.__LINE__);
+      $this->error();
+    }
   }
 }

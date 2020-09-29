@@ -29,23 +29,11 @@ class HrResumeController extends Controller
    */
   public function store(HrResumeRequest $request)
   {
-    $input = $request->only(HrResume::getFillFields());
+    $input = $request->all();
     $input['user_id'] = User::getUserId();
     $input['admin_user_id'] = User::getUserId();
-    $input['intro'] = $request->input('description') ? mb_substr($request->input('description'), 0, 60) : '';
-    $input['refresh_at'] = date('Y-m-d H:i:s');
-    DB::beginTransaction();
-    try {
-      $data = HrResume::create($input);
-      $data->info_sub()->create($request->only(InfoSub::getFillFields()));
-      $data->attachIndustry();
-      DB::commit();
-      return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    (new HrResume())->createOrUpdateData($input);
+    return $this->success();
   }
 
   /**
@@ -69,22 +57,9 @@ class HrResumeController extends Controller
    */
   public function update(HrResumeRequest $request, $id)
   {
-    $input = $request->only(HrResume::getFillFields());
-    $input['intro'] = $request->input('description') ? mb_substr($request->input('description'), 0, 60) : '';
-    $input['refresh_at'] = date('Y-m-d H:i:s');
-    $data = HrResume::findOrAuth($id);
-    DB::beginTransaction();
-    try {
-      $data->update($input);
-      $data->info_sub()->update($request->only(InfoSub::getFillFields()));
-      $data->attachIndustry();
-      DB::commit();
-      return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    $input = $request->all();
+    (new HrResume())->createOrUpdateData($input, $id);
+    return $this->success();
   }
 
   /**

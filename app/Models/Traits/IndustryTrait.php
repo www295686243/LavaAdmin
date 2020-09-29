@@ -12,9 +12,9 @@ use App\Models\Info\Industry;
 
 trait IndustryTrait
 {
-  public function attachIndustry()
+  public function attachIndustry($input = null)
   {
-    $industries = request()->input('industry', []);
+    $industries = $input ? $input['industry'] : request()->input('industry', []);
     $arr = [];
     $time = date('Y-m-d H:i:s');
     foreach ($industries as $industry_id) {

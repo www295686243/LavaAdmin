@@ -30,24 +30,11 @@ class HrJobController extends Controller
    */
   public function store(HrJobRequest $request)
   {
-    $input = $request->only(HrJob::getFillFields());
+    $input = $request->all();
     $input['user_id'] = User::getUserId();
     $input['admin_user_id'] = User::getUserId();
-    $input['status'] = optional($input)['status'] ?? HrJob::getOptionsValue(50, '已发布');
-    $input['intro'] = $request->input('description') ? mb_substr($request->input('description'), 0, 60) : '';
-    $input['refresh_at'] = date('Y-m-d H:i:s');
-    DB::beginTransaction();
-    try {
-      $data = HrJob::create($input);
-      $data->info_sub()->create($request->only(InfoSub::getFillFields()));
-      $data->attachIndustry();
-      DB::commit();
-      return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    (new HrJob())->createOrUpdateData($input);
+    return $this->success();
   }
 
   /**
@@ -71,23 +58,9 @@ class HrJobController extends Controller
    */
   public function update(HrJobRequest $request, $id)
   {
-    $input = $request->only(HrJob::getFillFields());
-    $input['status'] = optional($input)['status'] ?? HrJob::getOptionsValue(50, '已发布');
-    $input['intro'] = $request->input('description') ? mb_substr($request->input('description'), 0, 60) : '';
-    $input['refresh_at'] = date('Y-m-d H:i:s');
-    $data = HrJob::findOrAuth($id);
-    DB::beginTransaction();
-    try {
-      $data->update($input);
-      $data->info_sub()->update($request->only(InfoSub::getFillFields()));
-      $data->attachIndustry();
-      DB::commit();
-      return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    $input = $request->all();
+    (new HrJob())->createOrUpdateData($input, $id);
+    return $this->success();
   }
 
   /**

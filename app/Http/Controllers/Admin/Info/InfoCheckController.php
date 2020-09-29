@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\InfoCheckRequest;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
+use Illuminate\Support\Facades\DB;
 
 class InfoCheckController extends Controller
 {
@@ -33,11 +34,10 @@ class InfoCheckController extends Controller
   }
 
   /**
-   * Update the specified resource in storage.
-   *
-   * @param  \Illuminate\Http\Request $request
-   * @param  int $id
-   * @return \Illuminate\Http\Response
+   * @param InfoCheckRequest $request
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function update(InfoCheckRequest $request, $id)
   {
@@ -48,6 +48,30 @@ class InfoCheckController extends Controller
     $infoCheckData->contents = $contents;
     $infoCheckData->save();
 
-
+    DB::beginTransaction();
+    try {
+      if ($checkStatus === InfoCheck::getOptionsValue(48, '已审核')) {
+        if ($infoCheckData->status === $checkStatus) {
+          return $this->error('状态错误');
+        }
+        /**
+         * @var HrJob $Model
+         */
+        $modelPath = $infoCheckData->info_checkable_type;
+        $Model = new $modelPath();
+        $id = $Model->createOrUpdateData($infoCheckData->contents, $infoCheckData->info_checkable_id);
+        $infoCheckData->info_checkable_id = $id;
+      } else if ($checkStatus === InfoCheck::getOptionsValue(49, '已拒绝')) {
+        $infoCheckData->refuse_reason = $refuseReason;
+      }
+      $infoCheckData->status = $checkStatus;
+      $infoCheckData->save();
+      DB::commit();
+      return $this->success();
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage().':'.__LINE__);
+      return $this->error();
+    }
   }
 }
