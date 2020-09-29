@@ -29,7 +29,7 @@ class HrResumeController extends Controller
   public function store(HrResumeRequest $request)
   {
     $input = $request->getAll();
-    $input['_type'] = HrResume::class;
+    $input['_model'] = HrResume::class;
     InfoCheck::createInfo($input);
     return $this->success();
   }

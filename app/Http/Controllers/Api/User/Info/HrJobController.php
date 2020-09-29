@@ -29,7 +29,7 @@ class HrJobController extends Controller
   public function store(HrJobRequest $request)
   {
     $input = $request->getAll();
-    $input['_type'] = HrJob::class;
+    $input['_model'] = HrJob::class;
     InfoCheck::createInfo($input);
     return $this->success();
   }

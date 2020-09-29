@@ -48,7 +48,7 @@ class InfoCheck extends Base
   {
     $input['user_id'] = \App\Models\Api\User::getUserId();
     return InfoCheck::create([
-      'info_checkable_type' => $input['_type'],
+      'info_checkable_type' => $input['_model'],
       'info_checkable_id' => $input['id'],
       'info_title' => $input['title'],
       'user_id' => $input['user_id'],
@@ -63,10 +63,10 @@ class InfoCheck extends Base
    */
   public function scopeSearchType($query)
   {
-    $_type = request()->input('_type');
-    $_types = collect(array_filter(explode(',', $_type)))->map(function ($type) {
+    $_model = request()->input('_model');
+    $_models = collect(array_filter(explode(',', $_model)))->map(function ($type) {
       return 'App\Models\\'.str_replace('/', '\\', $type);
     });
-    return $query->whereIn('info_checkable_type', $_types);
+    return $query->whereIn('info_checkable_type', $_models);
   }
 }

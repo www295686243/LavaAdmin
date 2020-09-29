@@ -101,7 +101,7 @@ class Controller extends BaseController
    * @return string
    */
   protected function getModelPath ($modelPath = '') {
-    $innerModelPath = $modelPath ? $modelPath : request()->input('_type');
+    $innerModelPath = $modelPath ? $modelPath : request()->input('_model');
     return 'App\Models\\'.str_replace('/', '\\', $innerModelPath);
   }
 }

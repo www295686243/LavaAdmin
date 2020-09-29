@@ -46,7 +46,7 @@ class AdminMenuTableSeeder extends Seeder
           'display_name' => '信息审核',
           'icon' => 'el-icon-s-check',
           'route' => '/hr/info-check',
-          'default_params' => ['_type' => 'Info/Hr/HrJob,Info/Hr/HrResume']
+          'default_params' => ['_model' => 'Info/Hr/HrJob,Info/Hr/HrResume']
         ],
         [
           'display_name' => '招聘列表',
@@ -112,6 +112,12 @@ class AdminMenuTableSeeder extends Seeder
             [
               'display_name' => '会员角色',
               'route' => '/user/member/role'
+            ],
+            [
+              'display_name' => '资料审核',
+              'icon' => 'el-icon-s-check',
+              'route' => '/user/info-check',
+              'default_params' => ['_model' => 'User/UserPersonal,User/UserEnterprise']
             ],
             [
               'display_name' => '个人认证',

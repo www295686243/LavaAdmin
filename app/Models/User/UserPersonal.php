@@ -6,6 +6,7 @@ use App\Models\Base;
 use App\Models\Info\Industry;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserPersonal extends Base
@@ -49,7 +50,7 @@ class UserPersonal extends Base
    */
   public static function getUpdateFillable()
   {
-    return collect(static::getFillFields())->diff(['user_id'])->values()->toArray();
+    return collect(static::getFillFields())->diff(['user_id', 'avatar', 'tags', 'education_experience', 'work_experience', 'honorary_certificate'])->values()->toArray();
   }
 
   /**
@@ -58,5 +59,17 @@ class UserPersonal extends Base
   public function industry()
   {
     return $this->morphToMany(Industry::class, 'industrygable');
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   * @return int
+   */
+  public function createOrUpdateData($input, $id = 0)
+  {
+    $data = self::findOrFail($id);
+    $data->update(Arr::only($input, ['avatar', 'tags', 'education_experience', 'work_experience', 'honorary_certificate']));
+    return $id;
   }
 }
