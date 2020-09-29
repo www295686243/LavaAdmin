@@ -12,16 +12,16 @@ class ConfigObserver
    */
   public function created(Config $config)
   {
-    (new Version())->updateOrCreateVersion($config->guard_name, $config->display_name);
+    (new Version())->updateOrCreateVersion($config->guard_name, '选项配置');
   }
 
   public function updated(Config $config)
   {
-    (new Version())->updateOrCreateVersion($config->guard_name, $config->display_name);
+    (new Version())->updateOrCreateVersion($config->guard_name, '选项配置');
   }
 
   public function deleted(Config $config)
   {
-    (new Version())->updateOrCreateVersion($config->guard_name, $config->display_name);
+    (new Version())->updateOrCreateVersion($config->guard_name, '选项配置');
   }
 }
