@@ -84,4 +84,22 @@ class HrJobController extends Controller
       return $this->error();
     }
   }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function transfer(HrJobRequest $request)
+  {
+    $id = $request->input('info_id');
+    $transfer_user_id = $request->input('transfer_user_id');
+    $userData = \App\Models\Api\User::find($transfer_user_id);
+    if (!$userData) {
+      return $this->error('该用户不存在');
+    }
+    $Job = HrJob::findOrFail($id);
+    $Job->user_id = $transfer_user_id;
+    $Job->save();
+    return $this->success();
+  }
 }

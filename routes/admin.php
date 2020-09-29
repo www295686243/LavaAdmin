@@ -95,6 +95,8 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   // 信息审核
   Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'show', 'update']);
   // hr
+  Route::post('hr_job/transfer', [HrJobController::class, 'transfer']);
+  Route::post('hr_resume/transfer', [HrResumeController::class, 'transfer']);
   Route::apiResource('hr_job', HrJobController::class);
   Route::apiResource('hr_resume', HrResumeController::class);
   // 行业
