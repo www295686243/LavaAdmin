@@ -33,4 +33,32 @@ class UserWallet extends Base
     'updated_at',
     'deleted_at'
   ];
+
+  /**
+   * @param $amount
+   * @param int $user_id
+   */
+  public function incrementAmount($amount, int $user_id)
+  {
+    $userWalletData = self::where('user_id', $user_id)->first();
+    if (!$userWalletData) {
+      $this->error('该钱包不存在');
+    }
+    $userWalletData->money += $amount;
+    $userWalletData->save();
+  }
+
+  /**
+   * @param $amount
+   * @param int $user_id
+   */
+  public function decrementAmount($amount, int $user_id)
+  {
+    $userWalletData = self::where('user_id', $user_id)->first();
+    if (!$userWalletData) {
+      $this->error('该钱包不存在');
+    }
+    $userWalletData->money -= $amount;
+    $userWalletData->save();
+  }
 }

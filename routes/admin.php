@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\User\EmployeeController;
 use App\Http\Controllers\Admin\User\PositionController;
 use App\Http\Controllers\Admin\User\RoleController;
 use App\Http\Controllers\Admin\User\UserBillController;
+use App\Http\Controllers\Admin\User\UserCashController;
 use App\Http\Controllers\Admin\User\UserControlController;
 use App\Http\Controllers\Admin\User\UserController;
 use App\Http\Controllers\Admin\User\UserCouponController;
@@ -62,6 +63,7 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index', 'store']);
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['index', 'show', 'update']);
   Route::apiResource('user_enterprise_auth', UserEnterpriseAuthController::class)->only(['index', 'show', 'update']);
+  Route::apiResource('user_cash', UserCashController::class)->only(['index', 'show', 'update']);
   // 角色
   Route::get('role/getPermissions/{id}', [RoleController::class, 'getPermissions']);
   Route::get('role/getAssignPermissions/{id}', [RoleController::class, 'getAssignPermissions']);

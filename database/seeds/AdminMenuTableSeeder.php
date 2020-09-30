@@ -156,6 +156,22 @@ class AdminMenuTableSeeder extends Seeder
       ]
     ],
     [
+      'display_name' => '财务管理',
+      'route' => '/financial',
+      'children' => [
+        [
+          'display_name' => '提现申请',
+          'icon' => 'el-icon-s-order',
+          'route' => '/financial/cash-apply'
+        ],
+        [
+          'display_name' => '提现审批',
+          'icon' => 'el-icon-s-claim',
+          'route' => '/financial/cash-approve'
+        ]
+      ]
+    ],
+    [
       'display_name' => '其它管理',
       'route' => '/other',
       'children' => [
