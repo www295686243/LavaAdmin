@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Info\InfoCheckController;
 use App\Http\Controllers\Admin\Notify\NotifyController;
 use App\Http\Controllers\Admin\Notify\NotifyTemplateController;
 use App\Http\Controllers\Admin\Notify\NotifyUserController;
+use App\Http\Controllers\Admin\Task\TaskController;
+use App\Http\Controllers\Admin\Task\TaskRuleController;
 use App\Http\Controllers\Admin\User\EmployeeController;
 use App\Http\Controllers\Admin\User\PositionController;
 use App\Http\Controllers\Admin\User\RoleController;
@@ -104,5 +106,8 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   // 行业
   Route::get('industry/getParentTree', [IndustryController::class, 'getParentTree']);
   Route::apiResource('industry', IndustryController::class);
+  // 任务
+  Route::apiResource('task', TaskController::class)->only(['index', 'store', 'show', 'update']);
+  Route::apiResource('task_rule', TaskRuleController::class);
 
 });

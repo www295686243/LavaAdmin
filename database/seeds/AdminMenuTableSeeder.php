@@ -78,6 +78,11 @@ class AdminMenuTableSeeder extends Seeder
               'route' => '/operation/coupon/coupon'
             ]
           ]
+        ],
+        [
+          'display_name' => '任务管理',
+          'icon' => 'el-icon-s-flag',
+          'route' => '/operation/task'
         ]
       ]
     ],
