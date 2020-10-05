@@ -20,9 +20,9 @@ class CreateTaskRulesTable extends Migration
       $table->unsignedSmallInteger('get_number')->comment('领取次数')->default(1);
       /**
        * 需要支持 且运算 与 或运算的情况
-       * 且运算格式：[{xxx, xxx, xxx}, {xxx, xxx, xxx}]
+       * 且运算格式：[[{xxx, xxx, xxx}], [{xxx, xxx, xxx}]]
        * 或运算格式：[[{xxx, xxx, xxx}, {xxx, xxx, xxx}]]
-       * 且与或的组合：[{xxx, xxx, xxx}, [{xxx, xxx, xxx}, {xxx, xxx, xxx}]]
+       * 且与或的组合：[[{xxx, xxx, xxx}], [{xxx, xxx, xxx}, {xxx, xxx, xxx}]]
        * 对象内的字段：
        * rule_name 规则类型(标识)：register-view:新用户查看, view:用户查看
        * operator 规则限制(例如：>=/>/=/<等等)
