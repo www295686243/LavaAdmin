@@ -55,15 +55,4 @@ class TaskRuleController extends Controller
     $data->update($input);
     return $this->success();
   }
-
-  /**
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   * @throws \Exception
-   */
-  public function destroy($id)
-  {
-    $data = TaskRule::findOrFail($id);
-    return $data->delete() ? $this->success() : $this->error();
-  }
 }

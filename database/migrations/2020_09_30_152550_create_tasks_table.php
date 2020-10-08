@@ -17,6 +17,7 @@ class CreateTasksTable extends Migration
       $table->id();
       $table->string('title', 60)->comment('任务标题');
       $table->string('desc', 255)->comment('任务描述');
+      $table->string('task_interface', 255)->comment('任务接口');
       $table->timestamps();
     });
   }

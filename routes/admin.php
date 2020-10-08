@@ -108,6 +108,6 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('industry', IndustryController::class);
   // 任务
   Route::apiResource('task', TaskController::class)->only(['index', 'store', 'show', 'update']);
-  Route::apiResource('task_rule', TaskRuleController::class);
+  Route::apiResource('task_rule', TaskRuleController::class)->only(['index', 'store', 'show', 'update']);
 
 });

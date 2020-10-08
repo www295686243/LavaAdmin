@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\InterfacePermission;
+use App\Http\Middleware\Task;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful;
 
@@ -45,6 +46,7 @@ class Kernel extends HttpKernel
       EnsureFrontendRequestsAreStateful::class,
       'throttle:60,1',
       \Illuminate\Routing\Middleware\SubstituteBindings::class,
+      Task::class
     ],
   ];
 
