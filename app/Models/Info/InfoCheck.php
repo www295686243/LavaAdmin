@@ -56,17 +56,4 @@ class InfoCheck extends Base
       'status' => InfoCheck::getOptionsValue(47, '待审核')
     ]);
   }
-
-  /**
-   * @param \Illuminate\Database\Eloquent\Builder  $query
-   * @return \Illuminate\Database\Eloquent\Builder
-   */
-  public function scopeSearchType($query)
-  {
-    $_model = request()->input('_model');
-    $_models = collect(array_filter(explode(',', $_model)))->map(function ($type) {
-      return 'App\Models\\'.str_replace('/', '\\', $type);
-    });
-    return $query->whereIn('info_checkable_type', $_models);
-  }
 }

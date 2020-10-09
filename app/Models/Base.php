@@ -24,6 +24,9 @@ class Base extends Model
 {
   use ResourceTrait, IdToStrTrait;
 
+  public static $ENABLE = 1;
+  public static $DISABLE = 0;
+
   /**
    * @param \DateTimeInterface $date
    * @return string
@@ -69,6 +72,20 @@ class Base extends Model
   public function scopeSearchQuery($query)
   {
     return (new SearchQueryService())->searchQuery($query);
+  }
+
+  /**
+   * @param \Illuminate\Database\Eloquent\Builder  $query
+   * @param $typeField
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeSearchModel($query, $typeField)
+  {
+    $_model = request()->input('_model');
+    $_models = collect(array_filter(explode(',', $_model)))->map(function ($type) {
+      return 'App\Models\\'.str_replace('/', '\\', $type);
+    })->toArray();
+    return $query->whereIn($typeField, $_models);
   }
 
   /**

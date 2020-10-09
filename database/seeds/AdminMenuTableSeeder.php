@@ -57,6 +57,12 @@ class AdminMenuTableSeeder extends Seeder
           'display_name' => '求职列表',
           'icon' => 'el-icon-user-solid',
           'route' => '/hr/resume'
+        ],
+        [
+          'display_name' => '信息投诉',
+          'icon' => 'el-icon-phone',
+          'route' => '/hr/info-complaint',
+          'default_params' => ['_model' => 'Info/Hr/HrJob,Info/Hr/HrResume']
         ]
       ]
     ],

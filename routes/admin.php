@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Info\HrJobController;
 use App\Http\Controllers\Admin\Info\HrResumeController;
 use App\Http\Controllers\Admin\Info\IndustryController;
 use App\Http\Controllers\Admin\Info\InfoCheckController;
+use App\Http\Controllers\Admin\Info\InfoComplaintController;
 use App\Http\Controllers\Admin\Notify\NotifyController;
 use App\Http\Controllers\Admin\Notify\NotifyTemplateController;
 use App\Http\Controllers\Admin\Notify\NotifyUserController;
@@ -109,5 +110,6 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   // 任务
   Route::apiResource('task', TaskController::class)->only(['index', 'store', 'show', 'update']);
   Route::apiResource('task_rule', TaskRuleController::class)->only(['index', 'store', 'show', 'update']);
-
+  // 信息投诉
+  Route::apiResource('info_complaint', InfoComplaintController::class)->only(['index', 'show', 'update']);
 });

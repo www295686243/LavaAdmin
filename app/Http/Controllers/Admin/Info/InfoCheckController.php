@@ -16,7 +16,7 @@ class InfoCheckController extends Controller
   public function index()
   {
     $data = InfoCheck::with('user:id,nickname')
-      ->searchType()
+      ->searchModel('info_checkable_type')
       ->where('status', InfoCheck::getOptionsValue(47, '待审核'))
       ->orderByDesc('id')
       ->pagination();
