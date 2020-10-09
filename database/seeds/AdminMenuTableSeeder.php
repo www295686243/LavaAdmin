@@ -63,6 +63,12 @@ class AdminMenuTableSeeder extends Seeder
           'icon' => 'el-icon-phone',
           'route' => '/hr/info-complaint',
           'default_params' => ['_model' => 'Info/Hr/HrJob,Info/Hr/HrResume']
+        ],
+        [
+          'display_name' => '信息提供',
+          'icon' => 'el-icon-document-add',
+          'route' => '/hr/info-provide',
+          'default_params' => ['_model' => 'Info/Hr/HrJob']
         ]
       ]
     ],
