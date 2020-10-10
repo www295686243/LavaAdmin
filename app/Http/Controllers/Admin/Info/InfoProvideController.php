@@ -17,7 +17,9 @@ class InfoProvideController extends Controller
    */
   public function index()
   {
-    $data = InfoProvide::searchQuery()->with(['user:id,nickname', 'admin_user:id,nickname'])
+    $data = InfoProvide::with(['user:id,nickname', 'admin_user:id,nickname'])
+      ->searchQuery()
+      ->searchModel('info_provideable_type')
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();
@@ -60,7 +62,7 @@ class InfoProvideController extends Controller
   public function update(InfoProvideRequest $request, $id)
   {
     $status = $request->input('status');
-    $reward = $request->input('reward');
+    $rewards = $request->input('rewards', []);
     $pushText = $request->input('push_text');
     $infoProvideData = InfoProvide::findOrFail($id);
 
@@ -71,9 +73,13 @@ class InfoProvideController extends Controller
         $infoProvideData->admin_user_id = User::getUserId();
 
         if ($infoProvideData->is_admin === InfoProvide::$DISABLE && $infoProvideData->is_reward === InfoProvide::$DISABLE) {
-          $couponTemplateData = CouponTemplate::getCouponTemplateData($reward['coupon_template_id']);
-          $couponTemplateData->giveCoupons($infoProvideData->user_id, $reward['give_number'], $reward['amount'], $reward['expiry_day'], '招聘信息提供：'.$infoProvideData->id);
-          $infoProvideData->is_reward = InfoProvide::$ENABLE;
+          foreach ($rewards as $reward) {
+            $couponTemplateData = CouponTemplate::getCouponTemplateData($reward['coupon_template_id']);
+            $couponTemplateData->giveCoupons($infoProvideData->user_id, $reward['give_number'], $reward['amount'], $reward['expiry_day'], '招聘信息提供：'.$infoProvideData->id);
+          }
+          if (count($rewards) > 0) {
+            $infoProvideData->is_reward = InfoProvide::$ENABLE;
+          }
         }
         $infoProvideData->save();
       }
@@ -81,6 +87,7 @@ class InfoProvideController extends Controller
       return $this->success();
     } catch (\Exception $e) {
       DB::rollBack();
+      \Log::error($e->getMessage());
       return $this->error();
     }
   }
