@@ -39,8 +39,8 @@ class InfoProvideController extends Controller
     if ($input['status'] !== InfoProvide::getOptionsValue(93, '待审核')) {
       $input['admin_user_id'] = User::getUserId();
     }
-    InfoProvide::create($input);
-    return $this->success();
+    $data = InfoProvide::create($input);
+    return $this->setParams($data)->success();
   }
 
   /**

@@ -6,6 +6,7 @@ use App\Models\Base;
 use App\Models\Info\Industry;
 use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoComplaint;
+use App\Models\Info\InfoProvide;
 use App\Models\Info\InfoSub;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
@@ -144,6 +145,7 @@ class HrJob extends Base
       $data = $this->create(Arr::only($input, $this->getFillable()));
       $data->info_sub()->create(Arr::only($input, InfoSub::getFillFields()));
       $data->attachIndustry($input);
+      $data->attachInfoProvide();
       DB::commit();
       return $data->id;
     } catch (\Exception $e) {
@@ -171,6 +173,16 @@ class HrJob extends Base
       DB::rollBack();
       \Log::error($e->getMessage().':'.__LINE__);
       $this->error();
+    }
+  }
+
+  private function attachInfoProvide()
+  {
+    $info_provide_id = request()->input('info_provide_id');
+    if ($info_provide_id) {
+      $infoProvideData = InfoProvide::findOrFail($info_provide_id);
+      $infoProvideData->info_provideable_id = $this->id;
+      $infoProvideData->save();
     }
   }
 }
