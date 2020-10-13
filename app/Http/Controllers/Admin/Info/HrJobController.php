@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\HrJobRequest;
 use App\Models\Admin\User;
 use App\Models\Info\Hr\HrJob;
-use App\Models\Info\InfoSub;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HrJobController extends Controller

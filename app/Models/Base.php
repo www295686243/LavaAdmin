@@ -151,7 +151,7 @@ class Base extends Model
   /**
    * @param $guard_name
    * @param $name
-   * @return \Illuminate\Database\Eloquent\Builder|Model
+   * @return \Illuminate\Database\Eloquent\Builder|Config
    */
   private static function getConfig($guard_name, $name)
   {
@@ -170,6 +170,19 @@ class Base extends Model
   {
     $item = self::getOptionsList()->firstWhere('id', $id);
     return $item->id;
+  }
+
+  /**
+   * @param $name
+   * @param $display_name
+   * @return int
+   */
+  public static function getOptionsValue2($name, $display_name)
+  {
+    $className = class_basename(static::class);
+    $configData = self::getConfig('options', $className.'@'.$name);
+    $configOptionData = $configData->options->where('display_name', $display_name)->first();
+    return $configOptionData->id;
   }
 
   /**

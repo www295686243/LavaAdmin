@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoComplaintController;
 use App\Http\Controllers\Api\User\Info\HrJobController;
 use App\Http\Controllers\Api\User\Info\HrResumeController;
@@ -73,6 +74,9 @@ Route::middleware('auth:sanctum')->group(function () {
   // 信息投诉
   Route::get('info_complaint/getInfoComplaint', [InfoComplaintController::class, 'getInfoComplaint']);
   Route::apiResource('info_complaint', InfoComplaintController::class)->only(['store']);
+  // 信息投递
+  Route::get('info_delivery/getInfoList', [InfoDeliveryController::class, 'getInfoList']);
+  Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index', 'store', 'show']);
 });
 
 // 支付回调 为了在chart表中区别是支付哪些信息类型的
