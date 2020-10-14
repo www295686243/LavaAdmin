@@ -13,6 +13,7 @@ use App\Models\ApiLog;
 use App\Models\Version;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Str;
 
 class ResourceService
 {
@@ -153,14 +154,15 @@ class ResourceService
    */
   public function response()
   {
-    if (request()->route()->getPrefix() === 'admin') {
+    $prefix = Str::beforeLast(request()->route()->getPrefix(), '/');
+    if ($prefix === 'admin') {
       (new AdminLog())->createLog([
         'desc' => $this->message,
         'status' => $this->status,
         'code' => $this->statusCode,
         'data' => $this->params
       ]);
-    } else if (request()->route()->getPrefix() === 'api') {
+    } else if ($prefix === 'api') {
       (new ApiLog())->createLog([
         'desc' => $this->message,
         'status' => $this->status,

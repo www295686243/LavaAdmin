@@ -21,7 +21,6 @@ class CreateInfoDeliveriesTable extends Migration
       $table->unsignedBigInteger('receive_user_id');
       $table->string('receive_info_type', 120);
       $table->unsignedBigInteger('receive_info_id');
-      $table->unsignedInteger('info_delivery_type');
       $table->unsignedBigInteger('order_id')->nullable();
       $table->timestamps();
 

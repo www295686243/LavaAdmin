@@ -23,6 +23,7 @@ class UserTableSeeder extends Seeder
       'is_admin' => 1
     ]);
     $admin2->assignRole('Operations Manager');
+
     $user = \App\Models\Api\User::createUser([
       'username' => 'wanxin',
       'nickname' => '万鑫',

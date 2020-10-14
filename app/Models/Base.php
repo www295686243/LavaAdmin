@@ -8,6 +8,7 @@ use App\Models\User\User;
 use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 /**
  * App\Models\Base
@@ -61,7 +62,7 @@ class Base extends Model
   public function scopeListQuery($query)
   {
     return $query->when($this->checkMyself(), function ($query) {
-      return $query->where('user_id', auth(request()->route()->getPrefix())->id());
+      return $query->where('user_id', auth($this->getPrefix())->id());
     })->searchQuery($query);
   }
 
@@ -114,7 +115,7 @@ class Base extends Model
    */
   public static function findOrAuth($id)
   {
-    $userData = auth(request()->route()->getPrefix())->user();
+    $userData = auth((new self())->getPrefix())->user();
     $data = static::findOrFail($id);
     $_this = new self();
     if ($_this->checkMyself() && $userData->id !== $data->user_id) {
@@ -130,7 +131,7 @@ class Base extends Model
     /**
      * @var User $userData
      */
-    $userData = auth(request()->route()->getPrefix())->user();
+    $userData = auth($this->getPrefix())->user();
     if (!$userData->hasRole('root')) {
       list($controllerName, $methodName) = explode('@', class_basename(request()->route()->getActionName()));
       if (in_array($methodName, ['index', 'show', 'update', 'destroy']) && $userData->can($controllerName.'@_myself')) {
@@ -179,8 +180,9 @@ class Base extends Model
    */
   public static function getOptionsValue2($name, $display_name)
   {
-    $className = class_basename(static::class);
-    $configData = self::getConfig('options', $className.'@'.$name);
+    $className = str_replace('App\\Models\\', '', static::class);
+    $className = str_replace('\\', '/', $className);
+    $configData = self::getConfig('options', $className.':'.$name);
     $configOptionData = $configData->options->where('display_name', $display_name)->first();
     return $configOptionData->id;
   }
@@ -194,5 +196,13 @@ class Base extends Model
     $className = class_basename(static::class);
     $configData = self::getConfig('system', $className.'@'.$name);
     return $configData->value;
+  }
+
+  /**
+   * @return string
+   */
+  public function getPrefix()
+  {
+    return Str::beforeLast(request()->route()->getPrefix(), '/');
   }
 }

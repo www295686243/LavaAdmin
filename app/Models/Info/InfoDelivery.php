@@ -14,7 +14,6 @@ class InfoDelivery extends Base
     'receive_user_id',
     'receive_info_type',
     'receive_info_id',
-    'info_delivery_type',
     'order_id'
   ];
 

@@ -76,8 +76,13 @@ class InfoDeliveryController extends Controller
       return $this->error('信息状态错误');
     }
 
+    $receiveInfo = (new $input['receive_info_type']())->findOrFail($input['receive_info_id']);
+    if ($receiveInfo->status !== $input['receive_info_type']::getOptionsValue2('status', '已发布')) {
+      return $this->error('信息状态错误');
+    }
+
     InfoDelivery::create($input);
-    return $this->success();
+    return $this->success('投递成功');
   }
 
   /**
