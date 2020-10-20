@@ -14,7 +14,14 @@ class InfoDelivery extends Base
     'receive_user_id',
     'receive_info_type',
     'receive_info_id',
-    'order_id'
+    'user_order_id'
+  ];
+
+  protected $casts = [
+    'send_user_id' => 'string',
+    'send_info_id' => 'string',
+    'receive_user_id' => 'string',
+    'receive_info_id' => 'string',
   ];
 
   /**

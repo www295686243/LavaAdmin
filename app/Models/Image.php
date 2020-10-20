@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
  * \App\Models\Image
@@ -47,8 +46,6 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  */
 class Image extends Base
 {
-  use HasSnowflakePrimary;
-
   protected $fillable = [
     'user_id',
     'imageable_type',

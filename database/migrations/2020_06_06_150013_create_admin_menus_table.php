@@ -22,8 +22,13 @@ class CreateAdminMenusTable extends Migration
       $table->json('params')->comment('所需参数(一般二级以上的菜单会用到)')->nullable();
       $table->json('default_params')->comment('默认参数')->nullable();
       $table->unsignedSmallInteger('sort')->comment('排序')->nullable();
+      $table->unsignedInteger('_lft')->default(0);
+      $table->unsignedInteger('_rgt')->default(0);
+      $table->unsignedBigInteger('parent_id')->nullable();
+
       $table->timestamps();
-      $table->nestedSet();
+
+      $table->index(['_lft', '_rgt', 'parent_id']);
     });
   }
 

@@ -20,8 +20,12 @@ class CreateIndustriesTable extends Migration
         $table->unsignedInteger('sort')->comment('排序')->nullable();
         $table->decimal('hr_job_amount', 8, 2)->comment('招聘金额')->nullable();
         $table->decimal('hr_resume_amount', 8, 2)->comment('求职金额')->nullable();
-        $table->nestedSet();
+        $table->unsignedInteger('_lft')->default(0);
+        $table->unsignedInteger('_rgt')->default(0);
+        $table->unsignedBigInteger('parent_id')->nullable();
         $table->timestamps();
+
+        $table->index(['_lft', '_rgt', 'parent_id']);
       });
     }
   }

@@ -7,17 +7,19 @@ use App\Models\Info\Industry;
 use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoComplaint;
 use App\Models\Info\InfoProvide;
+use App\Models\Info\InfoShare;
 use App\Models\Info\InfoSub;
+use App\Models\Info\InfoView;
+use App\Models\Task\TaskRecord;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class HrJob extends Base
 {
-  use HasSnowflakePrimary, SoftDeletes, IndustryTrait;
+  use SoftDeletes, IndustryTrait;
 
   protected $fillable = [
     'user_id',
@@ -110,7 +112,31 @@ class HrJob extends Base
    */
   public function info_complaint()
   {
-    return $this->morphMany(InfoComplaint::class, 'info_complaint');
+    return $this->morphMany(InfoComplaint::class, 'info_complaintable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_share()
+  {
+    return $this->morphMany(InfoShare::class, 'info_shareable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_view()
+  {
+    return $this->morphMany(InfoView::class, 'info_viewable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function task_record()
+  {
+    return $this->morphMany(TaskRecord::class, 'task_recordable');
   }
 
 

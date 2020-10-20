@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Info\Hr\HrJob;
+use App\Models\Info\Hr\HrResume;
 use App\Models\News;
 use App\Services\ResourceService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -80,18 +83,15 @@ class Controller extends BaseController
   }
 
   /**
-   * @return News
+   * @return HrJob|HrJob[]|HrResume|HrResume[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
    */
   protected function getModelData () {
     $id = request()->input('id');
     $modelPath = $this->getModelPath();
     /**
-     * @var \Illuminate\Database\Eloquent\Builder $Model
+     * @var HrJob|HrResume $Model
      */
     $Model = new $modelPath();
-    /**
-     * @var News $infoData
-     */
     $infoData = $Model->findOrFail($id);
     return $infoData;
   }
@@ -102,6 +102,10 @@ class Controller extends BaseController
    */
   protected function getModelPath ($modelPath = '') {
     $innerModelPath = $modelPath ? $modelPath : request()->input('_model');
-    return 'App\Models\\'.str_replace('/', '\\', $innerModelPath);
+    if (Str::contains($innerModelPath, 'App\Models')) {
+      return $innerModelPath;
+    } else {
+      return 'App\Models\\'.str_replace('/', '\\', $innerModelPath);
+    }
   }
 }

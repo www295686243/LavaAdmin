@@ -3,11 +3,9 @@
 namespace App\Models\User;
 
 use App\Models\Base;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserCash extends Base
 {
-  use HasSnowflakePrimary;
   protected $fillable = [
     'user_id',
     'amount',

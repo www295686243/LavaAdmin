@@ -3,6 +3,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoComplaintController;
+use App\Http\Controllers\Api\Info\InfoViewController;
+use App\Http\Controllers\Api\Task\TaskRecordController;
 use App\Http\Controllers\Api\User\Info\HrJobController;
 use App\Http\Controllers\Api\User\Info\HrResumeController;
 use App\Http\Controllers\Api\User\Info\InfoCheckController;
@@ -62,7 +64,9 @@ Route::middleware('auth:sanctum')->group(function () {
   // 信息
   Route::apiResource('news', NewsController::class)->only(['index']);
   Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'destroy']);
+  Route::apiResource('hr_job', \App\Http\Controllers\Api\Info\HrJobController::class)->only(['index', 'show']);
   Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'destroy']);
+  Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
   // 优惠券
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
 
@@ -77,6 +81,10 @@ Route::middleware('auth:sanctum')->group(function () {
   // 信息投递
   Route::get('info_delivery/getInfoList', [InfoDeliveryController::class, 'getInfoList']);
   Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index', 'store', 'show']);
+  // 任务记录
+  Route::apiResource('task_record', TaskRecordController::class)->only(['store']);
+  // 信息访问
+  Route::apiResource('info_view', InfoViewController::class)->only(['store']);
 });
 
 // 支付回调 为了在chart表中区别是支付哪些信息类型的

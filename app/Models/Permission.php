@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Traits\IdToStrTrait;
 use Kalnoy\Nestedset\NodeTrait;
+use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
  * \App\Models\Permission
@@ -49,7 +51,7 @@ use Kalnoy\Nestedset\NodeTrait;
  */
 class Permission extends \Spatie\Permission\Models\Permission
 {
-  use NodeTrait;
+  use NodeTrait, HasSnowflakePrimary, IdToStrTrait;
 
   protected $fillable = [
     'name',

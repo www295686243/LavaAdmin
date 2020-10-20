@@ -19,6 +19,11 @@ class InfoProvide extends Base
     'is_reward'
   ];
 
+  protected $casts = [
+    'info_provideable_id' => 'string',
+    'admin_user_id' => 'string',
+  ];
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */

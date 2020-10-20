@@ -6,11 +6,10 @@ use App\Models\Base;
 use App\Models\Info\Industry;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserEnterprise extends Base
 {
-  use SoftDeletes, HasSnowflakePrimary, IndustryTrait;
+  use SoftDeletes, IndustryTrait;
 
   protected $fillable = [
     'user_id',

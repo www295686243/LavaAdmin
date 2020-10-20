@@ -4,11 +4,9 @@ namespace App\Models\User;
 
 use App\Models\Base;
 use App\Models\Image;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserPersonalAuth extends Base
 {
-  use HasSnowflakePrimary;
   protected $fillable = [
     'user_id',
     'name',

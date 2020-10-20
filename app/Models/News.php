@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\User\UserOrder;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
  * App\Models\News
@@ -61,7 +60,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  */
 class News extends Base
 {
-  use SoftDeletes, HasSnowflakePrimary;
+  use SoftDeletes;
 
   protected $fillable = [
     'user_id',

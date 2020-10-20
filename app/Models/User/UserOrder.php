@@ -5,11 +5,9 @@ namespace App\Models\User;
 use App\Models\ApiLog;
 use App\Models\Base;
 use Illuminate\Support\Str;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserOrder extends Base
 {
-  use HasSnowflakePrimary;
   protected $fillable = [
     'user_id',
     'user_orderable_type',

@@ -16,7 +16,7 @@ class CreateConfigOptionsTable extends Migration
     if (!Schema::hasTable('config_options')) {
       Schema::create('config_options', function (Blueprint $table) {
         $table->increments('id');
-        $table->unsignedInteger('config_id');
+        $table->unsignedBigInteger('config_id');
         $table->string('display_name', 60);
         $table->string('color', 20)->nullable();
         $table->unsignedSmallInteger('sort')->nullable();

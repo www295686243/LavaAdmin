@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Info\Hr\HrJob;
+use App\Models\Info\Hr\HrResume;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
 use App\Models\User\User;
@@ -9,6 +11,7 @@ use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
+use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
  * App\Models\Base
@@ -23,7 +26,7 @@ use Illuminate\Support\Str;
  */
 class Base extends Model
 {
-  use ResourceTrait, IdToStrTrait;
+  use ResourceTrait, IdToStrTrait, HasSnowflakePrimary;
 
   public static $ENABLE = 1;
   public static $DISABLE = 0;
@@ -204,5 +207,32 @@ class Base extends Model
   public function getPrefix()
   {
     return Str::beforeLast(request()->route()->getPrefix(), '/');
+  }
+
+  /**
+   * @return HrJob|HrJob[]|HrResume|HrResume[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
+   */
+  public function getModelData () {
+    $id = request()->input('id');
+    $modelPath = $this->getModelPath();
+    /**
+     * @var HrJob|HrResume $Model
+     */
+    $Model = new $modelPath();
+    $infoData = $Model->findOrFail($id);
+    return $infoData;
+  }
+
+  /**
+   * @param string $modelPath
+   * @return string
+   */
+  public function getModelPath ($modelPath = '') {
+    $innerModelPath = $modelPath ? $modelPath : request()->input('_model');
+    if (Str::contains($innerModelPath, 'App\Models')) {
+      return $innerModelPath;
+    } else {
+      return 'App\Models\\'.str_replace('/', '\\', $innerModelPath);
+    }
   }
 }

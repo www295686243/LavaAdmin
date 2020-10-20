@@ -3,12 +3,9 @@
 namespace App\Models\User;
 
 use App\Models\Base;
-use App\Models\ConfigOption;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserCoupon extends Base
 {
-  use HasSnowflakePrimary;
   protected $fillable = [
     'coupon_template_id',
     'user_id',
@@ -24,7 +21,8 @@ class UserCoupon extends Base
 
   protected $casts = [
     'amount' => 'float',
-    'end_at' => 'datetime:Y-m-d H:i'
+    'end_at' => 'datetime:Y-m-d H:i',
+    'coupon_template_id' => 'string'
   ];
 
   /**

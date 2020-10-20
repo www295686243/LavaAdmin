@@ -5,20 +5,19 @@ namespace App\Models\Info;
 use App\Models\Base;
 use App\Models\User\User;
 
-class InfoComplaint extends Base
+class InfoView extends Base
 {
   protected $fillable = [
+    'info_viewable_type',
+    'info_viewable_id',
+    'share_user_id',
     'user_id',
-    'info_complaintable_type',
-    'info_complaintable_id',
-    'complaint_type',
-    'complaint_content',
-    'handle_content',
-    'is_solve',
+    'is_new_user'
   ];
 
   protected $casts = [
-    'info_complaintable_id' => 'string'
+    'info_viewable_id' => 'string',
+    'share_user_id' => 'string',
   ];
 
   /**
@@ -32,7 +31,7 @@ class InfoComplaint extends Base
   /**
    * @return \Illuminate\Database\Eloquent\Relations\MorphTo
    */
-  public function info_complaintable()
+  public function info_viewable()
   {
     return $this->morphTo();
   }

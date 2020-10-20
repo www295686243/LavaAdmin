@@ -17,6 +17,10 @@ class NotifyUser extends Base
     'updated_at'
   ];
 
+  protected $casts = [
+    'notify_template_id' => 'string'
+  ];
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */

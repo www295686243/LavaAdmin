@@ -40,6 +40,10 @@ class ConfigOption extends Base
     'updated_at'
   ];
 
+  protected $casts = [
+    'config_id' => 'string'
+  ];
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */

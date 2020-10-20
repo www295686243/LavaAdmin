@@ -9,10 +9,12 @@ use App\Http\Controllers\Admin\Info\InfoCheckController;
 use App\Http\Controllers\Admin\Info\InfoComplaintController;
 use App\Http\Controllers\Admin\Info\InfoDeliveryController;
 use App\Http\Controllers\Admin\Info\InfoProvideController;
+use App\Http\Controllers\Admin\Info\InfoViewController;
 use App\Http\Controllers\Admin\Notify\NotifyController;
 use App\Http\Controllers\Admin\Notify\NotifyTemplateController;
 use App\Http\Controllers\Admin\Notify\NotifyUserController;
 use App\Http\Controllers\Admin\Task\TaskController;
+use App\Http\Controllers\Admin\Task\TaskRecordController;
 use App\Http\Controllers\Admin\Task\TaskRuleController;
 use App\Http\Controllers\Admin\User\EmployeeController;
 use App\Http\Controllers\Admin\User\PositionController;
@@ -110,12 +112,16 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::get('industry/getParentTree', [IndustryController::class, 'getParentTree']);
   Route::apiResource('industry', IndustryController::class);
   // 任务
+  Route::get('task/all', [TaskController::class, 'indexAll']);
   Route::apiResource('task', TaskController::class)->only(['index', 'store', 'show', 'update']);
   Route::apiResource('task_rule', TaskRuleController::class)->only(['index', 'store', 'show', 'update']);
+  Route::apiResource('task_record', TaskRecordController::class)->only(['index']);
   // 信息投诉
   Route::apiResource('info_complaint', InfoComplaintController::class)->only(['index', 'show', 'update']);
   // 信息提供
   Route::apiResource('info_provide', InfoProvideController::class)->only(['index', 'show', 'store', 'update']);
   // 信息投递
   Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index']);
+  // 信息访问
+  Route::apiResource('info_view', InfoViewController::class)->only(['index']);
 });

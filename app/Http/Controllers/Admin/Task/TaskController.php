@@ -12,6 +12,14 @@ class TaskController extends Controller
   /**
    * @return \Illuminate\Http\JsonResponse
    */
+  public function indexAll() {
+    $data = Task::orderByDesc('id')->get();
+    return $this->setParams($data)->success();
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function index()
   {
     $data = Task::orderByDesc('id')->pagination();

@@ -15,7 +15,7 @@ class CreateUserCouponsTable extends Migration
   {
     Schema::create('user_coupons', function (Blueprint $table) {
       $table->id();
-      $table->unsignedInteger('coupon_template_id')->comment('互助券模板id');
+      $table->unsignedBigInteger('coupon_template_id')->comment('互助券模板id');
       $table->unsignedBigInteger('user_id')->comment('所属user_id');
       $table->string('display_name', 60)->comment('券名');
       $table->string('desc', 255)->comment('描述')->nullable();

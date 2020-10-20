@@ -23,7 +23,8 @@ class TaskRule extends Base
 
   protected $casts = [
     'rules' => 'array',
-    'rewards' => 'array'
+    'rewards' => 'array',
+    'task_id' => 'string'
   ];
 
   /**

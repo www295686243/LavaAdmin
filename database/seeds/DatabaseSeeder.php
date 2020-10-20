@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
       VersionTableSeeder::class,
       NotifyTemplateTableSeeder::class,
       HrJobTableSeeder::class,
-      HrResumeTableSeeder::class
+      HrResumeTableSeeder::class,
+      CouponTemplateSeeder::class,
+      TaskTableSeeder::class,
     ]);
   }
 }

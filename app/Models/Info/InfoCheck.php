@@ -4,11 +4,9 @@ namespace App\Models\Info;
 
 use App\Models\Base;
 use App\Models\User\User;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class InfoCheck extends Base
 {
-  use HasSnowflakePrimary;
 
   protected $fillable = [
     'info_checkable_type',
@@ -21,7 +19,8 @@ class InfoCheck extends Base
   ];
 
   protected $casts = [
-    'contents' => 'array'
+    'contents' => 'array',
+    'info_checkable_id' => 'string'
   ];
 
   /**

@@ -4,11 +4,10 @@ namespace App\Models\User;
 
 use App\Models\Base;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserAuth extends Base
 {
-  use SoftDeletes, HasSnowflakePrimary;
+  use SoftDeletes;
 
   protected $fillable = [
     'user_id',

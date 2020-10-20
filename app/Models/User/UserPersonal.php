@@ -7,11 +7,10 @@ use App\Models\Info\Industry;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class UserPersonal extends Base
 {
-  use SoftDeletes, HasSnowflakePrimary, IndustryTrait;
+  use SoftDeletes, IndustryTrait;
 
   protected $fillable = [
     'user_id',

@@ -4,12 +4,9 @@ namespace App\Models\Notify;
 
 use App\Models\Base;
 use App\Models\User\User;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 class Notify extends Base
 {
-  use HasSnowflakePrimary;
-
   protected $fillable = [
     'title',
     'user_id',

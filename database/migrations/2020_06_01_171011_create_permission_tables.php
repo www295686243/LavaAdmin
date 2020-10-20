@@ -24,8 +24,12 @@ class CreatePermissionTables extends Migration
       $table->string('display_name', 30)->comment('名称');
       $table->unsignedTinyInteger('sort')->comment('排序')->nullable();
       $table->string('guard_name');
-      $table->nestedSet();
+      $table->unsignedInteger('_lft')->default(0);
+      $table->unsignedInteger('_rgt')->default(0);
+      $table->unsignedBigInteger('parent_id')->nullable();
       $table->timestamps();
+
+      $table->index(['_lft', '_rgt', 'parent_id']);
     });
 
     Schema::create($tableNames['roles'], function (Blueprint $table) {
