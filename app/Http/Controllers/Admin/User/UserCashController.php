@@ -41,20 +41,20 @@ class UserCashController extends Controller
   {
     $status = $request->input('status');
     $userCashData = UserCash::findOrFail($id);
-    if ($status === UserCash::getOptionsValue(85, '已通过') && $userCashData->status !== UserCash::getOptionsValue(84, '申请中')) {
+    if ($status === UserCash::getStatusValue(2, '已通过') && $userCashData->status !== UserCash::getStatusValue(1, '申请中')) {
       return $this->error('无法修改该状态');
     }
-    if ($status === UserCash::getOptionsValue(86, '已拒绝') && !in_array($userCashData->status, [UserCash::getOptionsValue(84, '申请中'), UserCash::getOptionsValue(85, '已通过')])) {
+    if ($status === UserCash::getStatusValue(3, '已拒绝') && !in_array($userCashData->status, [UserCash::getStatusValue(1, '申请中'), UserCash::getStatusValue(2, '已通过')])) {
       return $this->error('无法修改该状态');
     }
-    if ($status === UserCash::getOptionsValue(88, '已转款') && $userCashData->status !== UserCash::getOptionsValue(85, '已通过')) {
+    if ($status === UserCash::getStatusValue(5, '已转款') && $userCashData->status !== UserCash::getStatusValue(2, '已通过')) {
       return $this->error('无法修改该状态');
     }
     DB::beginTransaction();
     try {
       $userCashData->status = $status;
       $userCashData->save();
-      if ($status === UserCash::getOptionsValue(86, '已拒绝')) {
+      if ($status === UserCash::getStatusValue(3, '已拒绝')) {
         (new UserWallet())->incrementAmount($userCashData->amount, $userCashData->user_id);
       }
       DB::commit();

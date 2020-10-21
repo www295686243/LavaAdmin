@@ -16,7 +16,7 @@ class UserPersonalAuth extends Base
     'address',
     'intro',
     'certificates',
-    'auth_status',
+    'status',
     'refuse_reason'
   ];
 

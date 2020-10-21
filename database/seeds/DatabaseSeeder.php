@@ -18,11 +18,12 @@ class DatabaseSeeder extends Seeder
       UserTableSeeder::class,
 //      NewsTableSeeder::class,
       VersionTableSeeder::class,
+      ConfigTableSeeder::class,
       NotifyTemplateTableSeeder::class,
       HrJobTableSeeder::class,
       HrResumeTableSeeder::class,
       CouponTemplateSeeder::class,
-      TaskTableSeeder::class,
+//      TaskTableSeeder::class,
     ]);
   }
 }

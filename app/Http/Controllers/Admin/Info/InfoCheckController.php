@@ -17,7 +17,7 @@ class InfoCheckController extends Controller
   {
     $data = InfoCheck::with('user:id,nickname')
       ->searchModel('info_checkable_type')
-      ->where('status', InfoCheck::getOptionsValue(47, '待审核'))
+      ->where('status', InfoCheck::getStatusValue(1, '待审核'))
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();
@@ -50,7 +50,7 @@ class InfoCheckController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($checkStatus === InfoCheck::getOptionsValue(48, '已审核')) {
+      if ($checkStatus === InfoCheck::getStatusValue(2, '已通过')) {
         if ($infoCheckData->status === $checkStatus) {
           return $this->error('状态错误');
         }
@@ -61,7 +61,7 @@ class InfoCheckController extends Controller
         $Model = new $modelPath();
         $id = $Model->createOrUpdateData($infoCheckData->contents, $infoCheckData->info_checkable_id);
         $infoCheckData->info_checkable_id = $id;
-      } else if ($checkStatus === InfoCheck::getOptionsValue(49, '已拒绝')) {
+      } else if ($checkStatus === InfoCheck::getStatusValue(3, '已拒绝')) {
         $infoCheckData->refuse_reason = $refuseReason;
       }
       $infoCheckData->status = $checkStatus;

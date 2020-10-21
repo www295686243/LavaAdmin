@@ -41,7 +41,7 @@ class UserCashController extends Controller
     try {
       UserCash::create([
         'user_id' => User::getUserId(),
-        'status' => UserCash::getOptionsValue(84, '申请中'),
+        'status' => UserCash::getStatusValue(1, '申请中'),
         'amount' => $amount
       ]);
       $userWalletData->money -= $amount;
@@ -64,14 +64,14 @@ class UserCashController extends Controller
   public function update(UserCashRequest $request, $id)
   {
     $userCashData = UserCash::findOrFail($id);
-    if ($userCashData->status !== UserCash::getOptionsValue(84, '申请中')) {
+    if ($userCashData->status !== UserCash::getStatusValue(1, '申请中')) {
       return $this->error('状态错误，请刷新后重试');
     }
     $userWalletData = UserWallet::where('user_id', User::getUserId())->firstOrFail();
 
     DB::beginTransaction();
     try {
-      $userCashData->update(['status' => UserCash::getOptionsValue(87, '已撤回')]);
+      $userCashData->update(['status' => UserCash::getStatusValue(4, '已撤回')]);
       $userWalletData->money += $userCashData->amount;
       $userWalletData->save();
       DB::commit();

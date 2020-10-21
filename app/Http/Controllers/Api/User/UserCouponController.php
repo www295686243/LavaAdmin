@@ -12,7 +12,7 @@ class UserCouponController extends Controller
    */
   public function index()
   {
-    $data = UserCoupon::where('coupon_status', UserCoupon::getOptionsValue(33, '未使用'))->pagination();
+    $data = UserCoupon::where('coupon_status', UserCoupon::getCouponStatusValue(1, '未使用'))->pagination();
     return $this->setParams($data)->success();
   }
 }

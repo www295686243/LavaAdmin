@@ -36,7 +36,7 @@ class InfoProvideController extends Controller
     $input['info_provideable_type'] = $this->getModelPath();
     $input['is_admin'] = InfoProvide::$ENABLE;
     $input['description'] = trim($input['description']);
-    if ($input['status'] !== InfoProvide::getOptionsValue(93, '待审核')) {
+    if ($input['status'] !== InfoProvide::getStatusValue(1, '待审核')) {
       $input['admin_user_id'] = User::getUserId();
     }
     $data = InfoProvide::create($input);
@@ -68,7 +68,7 @@ class InfoProvideController extends Controller
 
     DB::beginTransaction();
     try {
-      if ($status !== InfoProvide::getOptionsValue(93, '待审核')) {
+      if ($status !== InfoProvide::getStatusValue(1, '待审核')) {
         $infoProvideData->status = $status;
         $infoProvideData->admin_user_id = User::getUserId();
 

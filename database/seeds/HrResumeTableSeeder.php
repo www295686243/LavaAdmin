@@ -26,7 +26,7 @@ class HrResumeTableSeeder extends Seeder
         'end_time' => '2020-10-20',
         'contacts' => '万鑫'.$i,
         'phone' => '12111111111',
-        'status' => 80,
+        'status' => HrResume::getStatusValue(1, '已发布'),
         'industry' => [17]
       ]);
     }

@@ -17,7 +17,7 @@ class ConfigController extends Controller
   public function index(ConfigRequest $request)
   {
     $guard_name = $request->input('guard_name');
-    $data = Config::searchQuery()->where('guard_name', $guard_name)->pagination();
+    $data = Config::searchQuery()->where('guard_name', $guard_name)->orderBy('id', 'asc')->pagination();
     return $this->setParams($data)->success();
   }
 

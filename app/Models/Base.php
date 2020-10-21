@@ -145,49 +145,71 @@ class Base extends Model
   }
 
   /**
-   * @return ConfigOption[]|\Illuminate\Database\Eloquent\Collection
+   * @param $className
+   * @param $field
+   * @return Config|\Illuminate\Database\Eloquent\Builder|Model
    */
-  private static function getOptionsList()
+  private static function getConfig($className, $field)
   {
-    return ConfigOption::all();
+    return Config::where('name', $className.'@'.$field)->firstOrFail();
   }
 
-  /**
-   * @param $guard_name
-   * @param $name
-   * @return \Illuminate\Database\Eloquent\Builder|Config
-   */
-  private static function getConfig($guard_name, $name)
-  {
+  private static function getOptions ($className, $field) {
     return Config::with('options')
-      ->where('name', $name)
-      ->where('guard_name', $guard_name)
+      ->orWhere('name', $className.':'.$field)
+      ->orWhere('name', '_global:'.$field)
       ->firstOrFail();
   }
 
   /**
-   * @param $id
-   * @param $display_name
-   * @return int
+   * @param $field
+   * @param $value
+   * @return mixed
    */
-  public static function getOptionsValue($id, $display_name)
-  {
-    $item = self::getOptionsList()->firstWhere('id', $id);
-    return $item->id;
-  }
-
-  /**
-   * @param $name
-   * @param $display_name
-   * @return int
-   */
-  public static function getOptionsValue2($name, $display_name)
+  private static function getOptionItem($field, $value)
   {
     $className = str_replace('App\\Models\\', '', static::class);
     $className = str_replace('\\', '/', $className);
-    $configData = self::getConfig('options', $className.':'.$name);
+    $configData = self::getOptions($className, $field);
+    $configOptionData = $configData->options->where('value', $value)->first();
+    return $configOptionData;
+  }
+
+  /**
+   * @param $field
+   * @param $value
+   * @param $display_name
+   * @return int
+   */
+  public static function getOptionsValue($field, $value, $display_name)
+  {
+    $configOptionData = static::getOptionItem($field, $value);
+    return $configOptionData->value;
+  }
+
+  /**
+   * @param $field
+   * @param $value
+   * @return mixed
+   */
+  public static function getOptionsItem($field, $value)
+  {
+    $configOptionData = static::getOptionItem($field, $value);
+    return $configOptionData;
+  }
+
+  /**
+   * @param $field
+   * @param $display_name
+   * @return int
+   */
+  public static function getOptionsValue2($field, $display_name)
+  {
+    $className = str_replace('App\\Models\\', '', static::class);
+    $className = str_replace('\\', '/', $className);
+    $configData = self::getOptions($className, $field);
     $configOptionData = $configData->options->where('display_name', $display_name)->first();
-    return $configOptionData->id;
+    return $configOptionData->value;
   }
 
   /**
@@ -196,9 +218,20 @@ class Base extends Model
    */
   public static function getConfigValue($name)
   {
-    $className = class_basename(static::class);
-    $configData = self::getConfig('system', $className.'@'.$name);
+    $className = str_replace('App\\Models\\', '', static::class);
+    $className = str_replace('\\', '/', $className);
+    $configData = self::getConfig($className, $name);
     return $configData->value;
+  }
+
+  /**
+   * @param $value
+   * @param $display_name
+   * @return int
+   */
+  public static function getStatusValue($value, $display_name)
+  {
+    return static::getOptionsValue('status', $value, $display_name);
   }
 
   /**

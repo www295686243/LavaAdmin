@@ -17,16 +17,16 @@ class UserEnterpriseAuthController extends Controller
    */
   public function store(UserEnterpriseAuthRequest $request)
   {
-    $checking = UserEnterpriseAuth::getOptionsValue(44, '审核中');
+    $checking = UserEnterpriseAuth::getStatusValue(1, '审核中');
     $isExistCheckData = UserEnterpriseAuth::where('user_id', User::getUserId())
-      ->where('auth_status', $checking)
+      ->where('status', $checking)
       ->exists();
     if ($isExistCheckData) {
       return $this->error('请等待管理员审核');
     }
 
     $input = $request->only(['company', 'business_license', 'city', 'address', 'intro', 'certificates']);
-    $input['auth_status'] = $checking;
+    $input['status'] = $checking;
     $input['user_id'] = User::getUserId();
 
     $data = UserEnterpriseAuth::create($input);

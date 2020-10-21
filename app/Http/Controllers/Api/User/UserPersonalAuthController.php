@@ -18,16 +18,16 @@ class UserPersonalAuthController extends Controller
    */
   public function store(UserPersonalAuthRequest $request)
   {
-    $checking = UserPersonalAuth::getOptionsValue(41, '审核中');
+    $checking = UserPersonalAuth::getStatusValue(1, '审核中');
     $isExistCheckData = UserPersonalAuth::where('user_id', User::getUserId())
-      ->where('auth_status', $checking)
+      ->where('status', $checking)
       ->exists();
     if ($isExistCheckData) {
       return $this->error('请等待管理员审核');
     }
 
     $input = $request->only(['name', 'company', 'position', 'city', 'address', 'intro', 'certificates']);
-    $input['auth_status'] = $checking;
+    $input['status'] = $checking;
     $input['user_id'] = User::getUserId();
 
     $data = UserPersonalAuth::create($input);

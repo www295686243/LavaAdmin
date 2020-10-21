@@ -73,7 +73,7 @@ class UserOrder extends Base
 
   public function paySuccess()
   {
-    $this->pay_status = self::getOptionsValue(39, '已支付');
+    $this->pay_status = self::getPayStatusValue(2, '已支付');
     $this->paid_at = date('Y-m-d H:i:s');
     $this->save();
     if (Str::contains(request()->getPathInfo(), 'pay_callback')) {
@@ -94,7 +94,7 @@ class UserOrder extends Base
 
   public function payFail()
   {
-    $this->pay_status = self::getOptionsValue(40, '支付失败');
+    $this->pay_status = self::getPayStatusValue(3, '支付失败');
     $this->save();
     if (Str::contains(request()->getPathInfo(), 'pay_callback')) {
       (new ApiLog())->createLog([
@@ -113,7 +113,7 @@ class UserOrder extends Base
    */
   public function isFirstPay()
   {
-    $count = self::where('user_id', $this->user_id)->where('pay_status', self::getOptionsValue(39, '已支付'))->count();
+    $count = self::where('user_id', $this->user_id)->where('pay_status', self::getPayStatusValue(2, '已支付'))->count();
     return $count === 1;
   }
 
@@ -124,9 +124,18 @@ class UserOrder extends Base
   {
     $count = self::where('user_id', $this->user_id)
       ->where('user_orderable_type', $this->user_orderable_type)
-      ->where('pay_status', self::getOptionsValue(39, '已支付'))
+      ->where('pay_status', self::getPayStatusValue(2, '已支付'))
       ->count();
     return $count === 1;
   }
 
+  /**
+   * @param $value
+   * @param $display_name
+   * @return int
+   */
+  public static function getPayStatusValue($value, $display_name)
+  {
+    return static::getOptionsValue('pay_status', $value, $display_name);
+  }
 }

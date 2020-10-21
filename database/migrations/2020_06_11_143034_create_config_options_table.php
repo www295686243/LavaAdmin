@@ -13,16 +13,16 @@ class CreateConfigOptionsTable extends Migration
    */
   public function up()
   {
-    if (!Schema::hasTable('config_options')) {
-      Schema::create('config_options', function (Blueprint $table) {
-        $table->increments('id');
-        $table->unsignedBigInteger('config_id');
-        $table->string('display_name', 60);
-        $table->string('color', 20)->nullable();
-        $table->unsignedSmallInteger('sort')->nullable();
-        $table->timestamps();
-      });
-    }
+    Schema::create('config_options', function (Blueprint $table) {
+      $table->id('id');
+      $table->string('name', 120)->comment('标识')->nullable();
+      $table->unsignedBigInteger('config_id');
+      $table->string('display_name', 60);
+      $table->unsignedInteger('value')->comment('值');
+      $table->string('color', 20)->nullable();
+      $table->unsignedSmallInteger('sort')->nullable();
+      $table->timestamps();
+    });
   }
 
   /**
@@ -32,6 +32,6 @@ class CreateConfigOptionsTable extends Migration
    */
   public function down()
   {
-//    Schema::dropIfExists('config_options');
+    Schema::dropIfExists('config_options');
   }
 }

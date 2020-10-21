@@ -10,10 +10,11 @@ class TaskRule extends Base
 {
   protected $fillable = [
     'task_id',
-    'title',
-    'get_number',
-    'rules',
-    'rewards'
+    'task_rule_name',
+    'operator',
+    'target_number',
+    'rewards',
+    'task_interface'
   ];
 
   protected $hidden = [
@@ -22,7 +23,6 @@ class TaskRule extends Base
   ];
 
   protected $casts = [
-    'rules' => 'array',
     'rewards' => 'array',
     'task_id' => 'string'
   ];

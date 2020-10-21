@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class Task
 {
@@ -15,7 +16,7 @@ class Task
   public function handle(Request $request, Closure $next)
   {
     $response = $next($request);
-    $interface = class_basename($request->route()->getActionName());
+    $interface = Str::of($request->route()->getActionName())->after('App\Http\Controllers\\');
     (new \App\Models\Task\Task())->checkFinishTask($interface);
     return $response;
   }

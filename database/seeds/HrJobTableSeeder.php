@@ -28,7 +28,7 @@ class HrJobTableSeeder extends Seeder
         'end_time' => '2020-10-20',
         'contacts' => '万鑫'.$i,
         'phone' => '11111111111',
-        'status' => 50,
+        'status' => HrJob::getStatusValue(1, '已发布'),
         'industry' => [17]
       ]);
     }

@@ -52,7 +52,7 @@ class InfoCheck extends Base
       'info_title' => $input['title'],
       'user_id' => $input['user_id'],
       'contents' => $input,
-      'status' => InfoCheck::getOptionsValue(47, '待审核')
+      'status' => InfoCheck::getStatusValue(1, '待审核')
     ]);
   }
 }

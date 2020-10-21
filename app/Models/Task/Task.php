@@ -4,9 +4,8 @@ namespace App\Models\Task;
 
 use App\Models\Api\User;
 use App\Models\Base;
-use Illuminate\Auth\Events\Login;
+use App\Models\CouponTemplate;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Task extends Base
@@ -14,12 +13,19 @@ class Task extends Base
   protected $fillable = [
     'title',
     'desc',
-    'task_interface'
+    'task_name',
+    'task_type',
+    'task_interface',
+    'rewards'
   ];
 
   protected $hidden = [
     'created_at',
     'updated_at'
+  ];
+
+  protected $casts = [
+    'rewards' => 'array'
   ];
 
   /**
@@ -36,7 +42,7 @@ class Task extends Base
   private function getCacheAllList()
   {
     return Cache::tags(self::class)->rememberForever($this->getTable(), function () {
-      return self::all();
+      return self::with('task_rule')->get();
     });
   }
 
@@ -44,11 +50,34 @@ class Task extends Base
    * @param $interface
    * @return \Illuminate\Database\Eloquent\Collection
    */
-  private function getMatchedTaskList($interface)
+  private function getInterfaceTaskList ($interface) {
+    return $this->getCacheAllList()->filter(function ($task) use ($interface) {
+      return $this->checkInterface($task->task_interface, $interface);
+    });
+  }
+
+  private function checkInterface($task_interface, $interface)
   {
-    $list = $this->getCacheAllList();
-    return $list->filter(function ($item) use ($interface) {
-      return Str::contains($item->task_interface, $interface);
+    $arr = explode(',', $task_interface);
+    $arr = collect($arr)->map(function ($item) {
+      $item = str_replace('/', '\\', $item);
+      return $item;
+    })->toArray();
+    return in_array($interface, $arr);
+  }
+
+  /**
+   * @param $user_id
+   * @param $title
+   * @param $rewards
+   */
+  public function taskRewards($user_id, $title, $rewards)
+  {
+    collect($rewards)->each(function ($reward) use ($user_id, $title) {
+      if ($reward['reward_name'] === 'coupon') {
+        $couponTemplateData = CouponTemplate::getCouponTemplateData($reward['coupon_template_id']);
+        $couponTemplateData->giveCoupons($user_id, $reward['give_number'], $reward['amount'], $reward['expiry_day'], $title);
+      }
     });
   }
 
@@ -57,64 +86,93 @@ class Task extends Base
    */
   public function checkFinishTask($interface)
   {
-    $taskList = $this->getMatchedTaskList($interface);
+    $taskList = $this->getInterfaceTaskList($interface);
     $taskList->each(function ($task) {
-      $taskRuleList = $task->task_rule()->get();
-      $taskRuleList->each(function ($taskRule) use ($task) {
-        $taskRecordData = $this->getRecordData($task->task_interface, $taskRule);
-        if ($taskRecordData && !$taskRecordData->is_complete) {
-          $result = collect($taskRule->rules)->every(function ($rules) {
-            return collect($rules)->some(function ($rule) {
-              $method = Str::camel($rule->rule_name).'Rule';
-              return $this->$method($rule);
-            });
-          });
-          if ($result) {
-            DB::beginTransaction();
-            try {
-              $taskRecordData->taskRewards();
-              $taskRecordData->is_complete = 1;
-              $taskRecordData->save();
-              DB::commit();
-            } catch (\Exception $e) {
-              DB::rollBack();
-              \Log::error($e->getMessage());
-            }
-          }
+      $taskOption = Task::getOptionsItem('task_name', $task->task_name);
+      // 接主任务
+      $taskMethod = 'create'.Str::studly($taskOption->name).'Task';
+      $taskRecordData = $this->$taskMethod($task);
+      // 接子任务
+      $task->task_rule->each(function ($taskRule) use ($taskRecordData) {
+        $taskRuleOption = TaskRule::getOptionsItem('task_name', $taskRule->task_rule_name);
+        $taskRuleMethod = 'create'.Str::studly($taskRuleOption->name).'TaskRule';
+        $this->$taskRuleMethod($taskRecordData, $taskRule);
+      });
+    });
+
+    $taskRuleList->each(function ($taskRule) {
+      $optionItem = TaskRule::getOptionsItem('task_rule_name', $taskRule->task_rule_name);
+      // 接任务
+      $getTaskMethod = Str::camel($optionItem->name).'GetTask';
+      $taskRecordSubData = $this->$getTaskMethod($taskRule);
+
+    });
+    $taskList->each(function ($task) use ($interface) {
+      /**
+       * @var self $task
+       */
+      $task->task_rule->each(function ($taskRule) use ($task, $interface) {
+        $optionItem = TaskRule::getOptionsItem('task_rule_name', $taskRule->task_rule_name);
+        // 接任务
+        $getTaskMethod = Str::studly($optionItem->name).'GetTask';
+        $taskRecordSubData = $this->$getTaskMethod($taskRule);
+        // 统计任务
+        if ($taskRecordSubData) {
+          $statTaskMethod = Str::camel($optionItem->name).'StatTask';
+          $this->$statTaskMethod($taskRecordSubData);
         }
       });
+      $task->checkRewards();
     });
   }
 
   /**
-   * @param $interface
-   * @param $taskRule
-   * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\MorphMany|\Illuminate\Http\JsonResponse|null|object
+   * @param $taskData
+   * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\MorphMany|null|object
    */
-  public function getRecordData($interface, $taskRule)
+  public function createShareTask($taskData)
   {
-    $user_id = User::getUserId();
-    if ($interface === 'InfoViewController@store') {
-      $infoData = $this->getModelData();
-      $share_user_id = request()->input('su');
+    $infoData = $this->getModelData();
+    $share_user_id = request()->input('su');
+    if ($share_user_id) {
       $recordData = $infoData->task_record()->where('user_id', $share_user_id)
-        ->where('task_rule_id', $taskRule->id)
+        ->where('task_id', $taskData->id)
         ->first();
-      if (!$recordData && $share_user_id) {
+      if (!$recordData) {
         $recordData = $infoData->task_record()->create([
           'user_id' => $share_user_id,
-          'task_id' => $taskRule->task_id,
-          'task_rule_id' => $taskRule->id,
-          'rules' => $taskRule->rules,
-          'rewards' => $taskRule->rewards
+          'task_id' => $taskData->id,
+          'rewards' => $taskData->rewards
         ]);
       }
       return $recordData;
     }
-    return $this->error('接口不存在');
+    return null;
   }
 
-  public function registerViewRule($rule)
+  /**
+   * @param TaskRecord $taskRecordData
+   * @param TaskRule $taskRule
+   * @return mixed
+   */
+  public function createRegisterViewTaskRule($taskRecordData, $taskRule)
+  {
+    $taskRuleRecordData = $taskRecordData->task_rule_record()
+      ->where('task_rule_name', $taskRule->task_rule_name)
+      ->first();
+    if (!$taskRuleRecordData) {
+      $taskRuleRecordData = $taskRecordData->task_rule_record()->create([
+        'user_id' => $taskRecordData->user_id,
+        'task_rule_name' => $taskRule->task_rule_name,
+        'operator' => $taskRule->operator,
+        'target_number' => $taskRule->target_number,
+        'rewards' => $taskRule->rewards,
+      ]);
+    }
+    return $taskRuleRecordData;
+  }
+
+  public function registerViewStatTask($taskRecordSubData)
   {
     $infoData = $this->getModelData();
     $share_user_id = request()->input('su');
@@ -122,7 +180,8 @@ class Task extends Base
       ->where('share_user_id', $share_user_id)
       ->where('is_new_user', 1)
       ->count();
-    return $this->_calc($count, $rule->target_number, $rule->operator);
+    $taskRecordSubData->complete_number = $count;
+    $taskRecordSubData->save();
   }
 
   /**
@@ -146,15 +205,5 @@ class Task extends Base
       default:
         return false;
     }
-  }
-
-  public function loginRule()
-  {
-    return false;
-  }
-
-  public function personalUpdateRule()
-  {
-    return true;
   }
 }

@@ -43,7 +43,7 @@ class UserCoupon extends Base
     if ($user_coupon_id) {
       $userCouponData = self::findOrFail($user_coupon_id);
       $userCouponData->checkExpired();
-      $userCouponData->coupon_status = UserCoupon::getOptionsValue(34, '已使用');
+      $userCouponData->coupon_status = UserCoupon::getCouponStatusValue(2, '已使用');
       $userCouponData->save();
     }
     return optional($userCouponData)->amount ?? 0;
@@ -62,5 +62,15 @@ class UserCoupon extends Base
       $this->error('该优惠券已过期');
     }
     return true;
+  }
+
+  /**
+   * @param $value
+   * @param $display_name
+   * @return int
+   */
+  public static function getCouponStatusValue($value, $display_name)
+  {
+    return static::getOptionsValue('coupon_status', $value, $display_name);
   }
 }

@@ -17,7 +17,7 @@ class InfoCheckController extends Controller
     $data = InfoCheck::select(['id', 'user_id', 'info_title', 'status', 'refuse_reason', 'created_at'])
       ->where('user_id', User::getUserId())
       ->where('info_checkable_type', $this->getModelPath())
-      ->where('status', '!=', InfoCheck::getOptionsValue(48, '已审核'))
+      ->where('status', '!=', InfoCheck::getStatusValue(2, '已通过'))
       ->orderByDesc('id')
       ->get();
     return $this->setParams($data)->success();

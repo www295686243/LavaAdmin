@@ -13,7 +13,7 @@ class AdminMenuTableSeeder extends Seeder
           'display_name' => '参数配置',
           'icon' => 'el-icon-setting',
           'route' => '/system/config',
-          'default_params' => ['guard_name' => 'options']
+          'default_params' => ['guard_name' => 'config']
         ],
         [
           'display_name' => '选项配置',

@@ -40,18 +40,18 @@ class UserPersonalAuthController extends Controller
    */
   public function update(UserPersonalAuthRequest $request, $id)
   {
-    $auth_status = $request->input('auth_status');
+    $status = $request->input('status');
     $authData = UserPersonalAuth::findOrFail($id);
     $userData = User::findOrFail($authData->user_id);
 
-    $passed = UserPersonalAuth::getOptionsValue(42, '已通过');
-    $notPass = UserPersonalAuth::getOptionsValue(43, '已拒绝');
+    $passed = UserPersonalAuth::getStatusValue(2, '已通过');
+    $notPass = UserPersonalAuth::getStatusValue(3, '已拒绝');
 
     DB::beginTransaction();
 
     try {
-      if ($auth_status === $passed) {
-        if ($authData->auth_status === $passed) {
+      if ($status === $passed) {
+        if ($authData->status === $passed) {
           return $this->error('该申请已经审核通过了');
         }
 
@@ -64,11 +64,11 @@ class UserPersonalAuthController extends Controller
         $userPersonalData->intro = $authData->intro;
         $userPersonalData->save();
         $userData->assignRole('Personal Member');
-      } else if ($auth_status === $notPass) {
+      } else if ($status === $notPass) {
         $authData->refuse_reason = $request->input('refuse_reason');
       }
 
-      $authData->auth_status = $auth_status;
+      $authData->status = $status;
       $authData->save();
       DB::commit();
       return $this->success();
