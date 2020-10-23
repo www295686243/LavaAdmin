@@ -22,6 +22,8 @@ class CreateTaskRuleRecordsTable extends Migration
       $table->unsignedInteger('target_number')->comment('目标数量')->default(0);
       $table->unsignedInteger('complete_number')->comment('完成数量')->default(0);
       $table->json('rewards')->comment('任务奖励(同任务规则表)')->nullable();
+      $table->unsignedTinyInteger('is_complete')->comment('是否完成任务')->default(0);
+      $table->timestamp('task_complete_time')->comment('任务完成时间')->nullable();
 
       $table->timestamps();
 

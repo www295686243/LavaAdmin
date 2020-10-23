@@ -19,6 +19,7 @@ class CreateTaskRulesTable extends Migration
       $table->unsignedInteger('task_rule_name')->comment('任务规则标识(看配置表)');
       $table->string('operator', 10)->comment('任务条件(>=、>、=、<等等)');
       $table->unsignedInteger('target_number')->comment('目标数量')->default(0);
+      $table->string('task_interface', 255)->comment('任务接口');
       /**
        * 格式：[{xxx, xxx, xxx}, {xxx, xxx, xxx}]
        * 对象内的字段：

@@ -6,7 +6,6 @@ use App\Models\Base;
 use App\Models\Info\Industry;
 use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoComplaint;
-use App\Models\Info\InfoShare;
 use App\Models\Info\InfoSub;
 use App\Models\Info\InfoView;
 use App\Models\Task\TaskRecord;
@@ -100,14 +99,6 @@ class HrResume extends Base
   public function info_complaint()
   {
     return $this->morphMany(InfoComplaint::class, 'info_complaintable');
-  }
-
-  /**
-   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-   */
-  public function info_share()
-  {
-    return $this->morphMany(InfoShare::class, 'info_shareable');
   }
 
   /**

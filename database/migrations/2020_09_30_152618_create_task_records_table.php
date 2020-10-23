@@ -17,6 +17,7 @@ class CreateTaskRecordsTable extends Migration
       $table->id();
       $table->unsignedBigInteger('user_id')->comment('任务领取用户');
       $table->unsignedBigInteger('task_id')->comment('任务id');
+      $table->string('title', 60)->comment('任务名');
       $table->string('task_recordable_type', 120)->nullable();
       $table->unsignedBigInteger('task_recordable_id')->nullable();
       $table->unsignedTinyInteger('task_type')->comment('任务类型(1全并且，2全或者，3阶梯式)');
