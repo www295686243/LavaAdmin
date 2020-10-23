@@ -35,6 +35,20 @@ class CouponTemplate extends Base
 
   /**
    * @param $user_id
+   * @param $rewards
+   * @param $source
+   * @throws \Exception
+   */
+  public static function giveManyCoupons($user_id, $rewards, $source)
+  {
+    foreach ($rewards as $reward) {
+      $couponTemplateData = self::getCouponTemplateData($reward['coupon_template_id']);
+      $couponTemplateData->giveCoupons($user_id, $reward['give_number'], $reward['amount'], $reward['expiry_day'], $source);
+    }
+  }
+
+  /**
+   * @param $user_id
    * @param $give_number
    * @param $amount
    * @param $expiry_day

@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Notify\NotifyUserController;
 use App\Http\Controllers\Admin\Task\TaskController;
 use App\Http\Controllers\Admin\Task\TaskRecordController;
 use App\Http\Controllers\Admin\Task\TaskRuleController;
+use App\Http\Controllers\Admin\Task\TaskRuleRecordController;
 use App\Http\Controllers\Admin\User\EmployeeController;
 use App\Http\Controllers\Admin\User\PositionController;
 use App\Http\Controllers\Admin\User\RoleController;
@@ -116,6 +117,7 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('task', TaskController::class)->only(['index', 'store', 'show', 'update']);
   Route::apiResource('task_rule', TaskRuleController::class)->only(['index', 'store', 'show', 'update']);
   Route::apiResource('task_record', TaskRecordController::class)->only(['index']);
+  Route::apiResource('task_rule_record', TaskRuleRecordController::class)->only(['index']);
   // 信息投诉
   Route::apiResource('info_complaint', InfoComplaintController::class)->only(['index', 'show', 'update']);
   // 信息提供

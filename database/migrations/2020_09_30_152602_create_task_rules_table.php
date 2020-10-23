@@ -29,7 +29,7 @@ class CreateTaskRulesTable extends Migration
        * amount 优惠券金额
        * expiry_day 优惠券有效期多少天
        */
-      $table->json('rewards')->comment('任务奖励');
+      $table->json('rewards')->comment('任务奖励')->nullable();
       $table->timestamps();
     });
   }

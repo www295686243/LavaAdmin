@@ -64,6 +64,10 @@ class ConfigTableSeeder extends Seeder
       ['display_name' => '新用户访问', 'name' => 'register_view'],
       ['display_name' => '用户访问', 'name' => 'view']
     ]);
+    $this->createOptions('Task/Task:task_name', '任务标识', [
+      ['display_name' => '分享任务', 'name' => 'share']
+    ]);
+    $this->createOptions('_global/Task:task_type', '任务模式', ['联合任务', '可选任务', '阶梯任务']);
   }
 
   private function createOptions($name, $display_name, $options)

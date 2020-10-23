@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\Task;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task\TaskRecord;
-use Illuminate\Http\Request;
 
 class TaskRecordController extends Controller
 {
@@ -13,7 +12,10 @@ class TaskRecordController extends Controller
    */
   public function index()
   {
-    $data = TaskRecord::searchQuery()->with(['task_rule:id,title', 'user:id,nickname', 'task_recordable:id,title'])
+    $data = TaskRecord::searchQuery()
+      ->with(['user:id,nickname', 'task_recordable' => function ($query) {
+        $query->select(['id', 'title']);
+      }])
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();

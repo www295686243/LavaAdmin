@@ -18,7 +18,7 @@ class CreateTasksTable extends Migration
       $table->unsignedInteger('task_name')->comment('任务标识(看配置表)');
       $table->string('title', 60)->comment('任务标题');
       $table->string('desc', 255)->comment('任务描述');
-      $table->unsignedTinyInteger('task_type')->comment('任务类型(1全并且，2全或者，3阶梯式)');
+      $table->unsignedTinyInteger('task_type')->comment('任务模式(看配置表)');
       /**
        * 格式：[{xxx, xxx, xxx}, {xxx, xxx, xxx}]
        * 对象内的字段：

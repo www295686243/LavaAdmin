@@ -51,43 +51,39 @@ class TaskRecord extends Base
     return $this->hasMany(TaskRuleRecord::class);
   }
 
+  /**
+   * @throws \Exception
+   */
   public function checkRewards()
   {
-    if ($this->task_type === 3) {
-      $this->task_rule_record->each(function ($taskRuleRecord) {
-        if (!$taskRuleRecord->is_complete && $this->_calc($taskRuleRecord->target_number, $taskRuleRecord->complete_number, $taskRuleRecord->operator)) {
-          $couponTemplateData = CouponTemplate::getCouponTemplateData($this->reward['coupon_template_id']);
-          $couponTemplateData->giveCoupons($this->user_id, $this->reward['give_number'], $this->reward['amount'], $this->reward['expiry_day'], $this->title);
-          $taskRuleRecord->is_complete = 1;
-          $taskRuleRecord->task_complete_time = date('Y-m-d H:i:s');
-          $taskRuleRecord->save();
+    $this->task_rule_record->each(function ($taskRuleRecord) {
+      if (!$taskRuleRecord->is_complete && $this->_calc($taskRuleRecord->target_number, $taskRuleRecord->complete_number, $taskRuleRecord->operator)) {
+        $taskRuleRecord->is_complete = 1;
+        $taskRuleRecord->task_complete_time = date('Y-m-d H:i:s');
+        $taskRuleRecord->save();
+        if ($this->task_type === 3) {
+          $taskRuleRecordOption = TaskRuleRecord::getOptionsItem('task_rule_name', $taskRuleRecord->task_rule_name);
+          CouponTemplate::giveManyCoupons($this->user_id, $taskRuleRecord->rewards, $this->title.'-'.$taskRuleRecordOption->display_name);
         }
-      });
+      }
+    });
+    $result = false;
+    if ($this->task_type === 1 || $this->task_type === 3) {
       $result = $this->task_rule_record->every(function ($taskRuleRecord) {
         return $taskRuleRecord->is_complete;
       });
-      if ($result) {
-        $this->is_complete = $result;
-        $this->save();
+    } else if ($this->task_type === 2) {
+      $result = $this->task_rule_record->some(function ($taskRuleRecord) {
+        return $taskRuleRecord->is_complete;
+      });
+    }
+    if ($result) {
+      if ($this->task_type === 1 || $this->task_type === 2) {
+        CouponTemplate::giveManyCoupons($this->user_id, $this->rewards, $this->title);
       }
-    } else {
-      $result = false;
-      if ($this->task_type === 1) {
-        $result = $this->task_rule_record->every(function ($taskRuleRecord) {
-          return $this->_calc($taskRuleRecord->target_number, $taskRuleRecord->complete_number, $taskRuleRecord->operator);
-        });
-      } else if ($this->task_type === 2) {
-        $result = $this->task_rule_record->some(function ($taskRuleRecord) {
-          return $this->_calc($taskRuleRecord->target_number, $taskRuleRecord->complete_number, $taskRuleRecord->operator);
-        });
-      }
-      if ($result) {
-        $couponTemplateData = CouponTemplate::getCouponTemplateData($this->reward['coupon_template_id']);
-        $couponTemplateData->giveCoupons($this->user_id, $this->reward['give_number'], $this->reward['amount'], $this->reward['expiry_day'], $this->title);
-        $this->is_complete = $result;
-        $this->task_complete_time = date('Y-m-d H:i:s');
-        $this->save();
-      }
+      $this->is_complete = $result;
+      $this->task_complete_time = date('Y-m-d H:i:s');
+      $this->save();
     }
   }
 
