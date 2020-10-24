@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Task;
+namespace App\Http\Controllers\Admin\Coupon;
 
 use App\Http\Controllers\Controller;
-use App\Models\Task\TaskRecord;
+use App\Models\Coupon\CouponOrder;
+use Illuminate\Http\Request;
 
-class TaskRecordController extends Controller
+class CouponOrderController extends Controller
 {
   /**
    * @return \Illuminate\Http\JsonResponse
    */
   public function index()
   {
-    $data = TaskRecord::searchQuery()
-      ->with(['user:id,nickname', 'task_recordable'])
+    $data = CouponOrder::searchQuery()->with('user:id,nickname')
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();

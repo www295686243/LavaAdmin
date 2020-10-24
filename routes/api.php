@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Api\Coupon\CouponMarketController;
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoComplaintController;
 use App\Http\Controllers\Api\Info\InfoViewController;
@@ -69,6 +70,8 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
   // 优惠券
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
+    // 优惠券市场
+  Route::apiResource('coupon_market', CouponMarketController::class)->only(['index', 'store']);
 
   // 支付
   Route::post('news/pay', [NewsController::class, 'pay']);

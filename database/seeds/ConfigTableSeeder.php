@@ -68,6 +68,12 @@ class ConfigTableSeeder extends Seeder
       ['display_name' => '分享任务', 'name' => 'share']
     ]);
     $this->createOptions('_global/Task:task_type', '任务模式', ['联合任务', '可选任务', '阶梯任务']);
+    $this->createOptions('Coupon/CouponMarket:status', '出售状态', ['出售中', '待支付', '已出售', '已下架', '已撤回']);
+    $this->createOptions('Coupon/CouponOrder:payment', '支付方式', ['微信', '余额']);
+    $this->createOptions('Coupon/CouponOrder:pay_status', '支付状态', ['未支付', [
+      'display_name' => '已支付',
+      'color' => 'success'
+    ], '已过期', '已放弃']);
   }
 
   private function createOptions($name, $display_name, $options)

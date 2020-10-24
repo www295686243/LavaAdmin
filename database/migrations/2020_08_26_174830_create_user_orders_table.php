@@ -14,7 +14,7 @@ class CreateUserOrdersTable extends Migration
   public function up()
   {
     Schema::create('user_orders', function (Blueprint $table) {
-      $table->id();
+      $table->id()->comment('主键/订单id');
       $table->unsignedBigInteger('user_id')->comment('支付者user_id');
       $table->string('user_orderable_type', 120);
       $table->unsignedBigInteger('user_orderable_id');

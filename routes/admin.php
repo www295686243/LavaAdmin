@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Admin\Coupon\CouponMarketController;
+use App\Http\Controllers\Admin\Coupon\CouponOrderController;
+use App\Http\Controllers\Admin\Coupon\CouponOrderSubController;
+use App\Http\Controllers\Admin\Coupon\CouponTemplateController;
 use App\Http\Controllers\Admin\Info\HrJobController;
 use App\Http\Controllers\Admin\Info\HrResumeController;
 use App\Http\Controllers\Admin\Info\IndustryController;
@@ -95,9 +99,15 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::get('chart/createTodayData', [ChartController::class, 'createTodayData']);
   Route::get('chart/getCurrentMonthData', [ChartController::class, 'getCurrentMonthData']);
   Route::get('chart/getCurrentYearData', [ChartController::class, 'getCurrentYearData']);
-  // 优惠券模板
+  // 优惠券
+    // 优惠券模板
   Route::get('coupon_template/getAll', [CouponTemplateController::class, 'getAll']);
   Route::apiResource('coupon_template', CouponTemplateController::class)->only(['index', 'store', 'show', 'update']);
+    // 优惠券市场
+  Route::apiResource('coupon_market', CouponMarketController::class)->only(['index']);
+    // 优惠券订单
+  Route::apiResource('coupon_order', CouponOrderController::class)->only(['index']);
+  Route::apiResource('coupon_order_sub', CouponOrderSubController::class)->only(['index']);
   // 订单记录
   Route::apiResource('user_order', UserOrderController::class)->only(['index', 'show']);
   // 账单记录

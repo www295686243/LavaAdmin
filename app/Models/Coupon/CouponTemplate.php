@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Coupon;
 
+use App\Models\Base;
 use App\Models\User\UserCoupon;
 use Illuminate\Support\Facades\DB;
 use Kra8\Snowflake\Snowflake;

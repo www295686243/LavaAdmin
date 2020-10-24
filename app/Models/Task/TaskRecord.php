@@ -3,7 +3,7 @@
 namespace App\Models\Task;
 
 use App\Models\Base;
-use App\Models\CouponTemplate;
+use App\Models\Coupon\CouponTemplate;
 use App\Models\User\User;
 
 class TaskRecord extends Base

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Admin\Coupon;
 
 use App\Http\Requests\BaseRequest;
 
-class CouponTemplateRequest extends BaseRequest
+class CouponOrderSubRequest extends BaseRequest
 {
   /**
    * Get the validation rules that apply to the request.

@@ -11,7 +11,7 @@ class CouponTemplateSeeder extends Seeder
    */
   public function run()
   {
-    \App\Models\CouponTemplate::create([
+    \App\Models\Coupon\CouponTemplate::create([
       'display_name' => '优惠券',
       'desc' => '优惠券',
       'is_trade' => 1

@@ -127,11 +127,10 @@ trait PayTrait
    */
   private function getPayAmount()
   {
-    $type = request()->input('type');
     /**
      * @var Base $modelPath
      */
-    $modelPath = 'App\Models\\'.$type;
+    $modelPath = $this->getModelPath();
     $amount = $modelPath::getConfigValue('amount');
     return floatval($amount);
   }
@@ -140,8 +139,8 @@ trait PayTrait
    * @return string
    */
   private function getNotifyUrl () {
-    $type = request()->input('type');
-    $snakeType = Str::snake($type);
+    $modelPath = $this->getModelPath();
+    $snakeType = Str::snake($modelPath);
     return env('APP_URL').'/api/'.$snakeType.'/pay_callback';
   }
 }

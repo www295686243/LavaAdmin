@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Admin\Info;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\InfoProvideRequest;
 use App\Models\Admin\User;
-use App\Models\CouponTemplate;
+use App\Models\Coupon\CouponTemplate;
 use App\Models\Info\InfoProvide;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InfoProvideController extends Controller
@@ -73,10 +72,7 @@ class InfoProvideController extends Controller
         $infoProvideData->admin_user_id = User::getUserId();
 
         if ($infoProvideData->is_admin === InfoProvide::$DISABLE && $infoProvideData->is_reward === InfoProvide::$DISABLE) {
-          foreach ($rewards as $reward) {
-            $couponTemplateData = CouponTemplate::getCouponTemplateData($reward['coupon_template_id']);
-            $couponTemplateData->giveCoupons($infoProvideData->user_id, $reward['give_number'], $reward['amount'], $reward['expiry_day'], '招聘信息提供：'.$infoProvideData->id);
-          }
+          CouponTemplate::giveManyCoupons($infoProvideData->user_id, $rewards, '招聘信息提供：'.$infoProvideData->id);
           if (count($rewards) > 0) {
             $infoProvideData->is_reward = InfoProvide::$ENABLE;
           }

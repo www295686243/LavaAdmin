@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserCouponRequest;
-use App\Models\CouponTemplate;
+use App\Models\Coupon\CouponTemplate;
 use App\Models\User\UserCoupon;
 
 class UserCouponController extends Controller
