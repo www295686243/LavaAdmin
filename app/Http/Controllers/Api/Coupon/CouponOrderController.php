@@ -99,6 +99,12 @@ class CouponOrderController extends Controller
     $app = app('wechat.payment');
     return $app->handlePaidNotify(function ($res, $fail) {
       $couponOrderId = $res['out_trade_no'];
+      if ($res['return_code'] !== 'SUCCESS') {
+        return $fail('通信失败');
+      }
+      if ($res['result_code'] !== 'SUCCESS') {
+        return $fail('支付失败'.$res['result_code']);
+      }
       /**
        * @var CouponOrder $couponOrderData
        */
@@ -107,31 +113,28 @@ class CouponOrderController extends Controller
         return $fail('订单不存在');
       }
 
-      if ($res['return_code'] === 'SUCCESS') { // return_code 表示通信状态，不代表支付状态
-        // 用户是否支付成功
-        if ($res['result_code'] === 'SUCCESS') {
-          $buyUserData = User::find($couponOrderData->user_id);
-          if (!$buyUserData) {
-            return $fail('购买用户不存在');
-          }
-          $couponOrderData->createUserBill('通用券购买');
-          if ($couponOrderData->pay_status !== CouponOrder::getPayStatusValue(1, '未支付')) {
-            // 这里应该退款，暂时没做
-            return true;
-          }
-          // 给购买人记录账单
-          $couponOrderData->paid_at = date('Y-m-d H:i:s'); // 更新支付时间为当前时间
-          $couponOrderData->pay_status = CouponOrder::getPayStatusValue(2, '已支付');
-          $couponOrderData->save();
-          $couponOrderData->actionAfterPay();
-          // 用户支付失败
-        } else if ($res['result_code'] === 'FAIL') {
-          return $fail('支付失败');
-        }
-      } else {
-        return $fail('通信失败');
+      $buyUserData = User::find($couponOrderData->user_id);
+      if (!$buyUserData) {
+        return $fail('购买用户不存在');
       }
-      return true;
+      if ($couponOrderData->pay_status !== CouponOrder::getPayStatusValue(1, '未支付')) {
+        // 这里应该退款，暂时没做
+        $couponOrderData->remark = '订单状态错误，之前的状态是：'.$couponOrderData->pay_status;
+      }
+      // 给购买人记录账单
+      DB::beginTransaction();
+      try {
+        $couponOrderData->paid_at = date('Y-m-d H:i:s'); // 更新支付时间为当前时间
+        $couponOrderData->pay_status = CouponOrder::getPayStatusValue(2, '已支付');
+        $couponOrderData->save();
+        $couponOrderData->actionAfterPay();
+        DB::commit();
+        return true;
+      } catch (\Exception $e) {
+        DB::rollBack();
+        \Log::error($e->getMessage());
+        return $fail($e->getMessage());
+      }
     });
   }
 }

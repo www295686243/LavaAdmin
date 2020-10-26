@@ -15,16 +15,16 @@ class CreateCouponOrderSubsTable extends Migration
   {
     Schema::create('coupon_order_subs', function (Blueprint $table) {
       $table->id();
-      $table->unsignedInteger('sell_user_id')->comment('出售人');
-      $table->unsignedInteger('buy_user_id')->comment('购买人');
-      $table->unsignedInteger('coupon_order_id');
-      $table->unsignedInteger('user_coupon_id');
-      $table->unsignedInteger('coupon_market_id');
+      $table->unsignedBigInteger('sell_user_id')->comment('出售人');
+      $table->unsignedBigInteger('buy_user_id')->comment('购买人');
+      $table->unsignedBigInteger('coupon_order_id');
+      $table->unsignedBigInteger('user_coupon_id');
+      $table->unsignedBigInteger('coupon_market_id');
       $table->decimal('amount', 6, 2)->comment('购买金额');
       $table->timestamps();
 
       $table->index('coupon_order_id');
-      $table->index('coupon_id');
+      $table->index('user_coupon_id');
     });
   }
 

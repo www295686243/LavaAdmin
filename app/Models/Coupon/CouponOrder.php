@@ -6,7 +6,10 @@ use App\Models\Base;
 use App\Models\User\User;
 use App\Models\User\UserAuth;
 use App\Models\User\UserBill;
+use App\Models\User\UserCoupon;
+use App\Models\User\UserWallet;
 use Illuminate\Support\Facades\DB;
+use Kra8\Snowflake\Snowflake;
 
 class CouponOrder extends Base
 {
@@ -16,7 +19,8 @@ class CouponOrder extends Base
     'total_amount',
     'pay_status',
     'payment',
-    'paid_at'
+    'paid_at',
+    'remark'
   ];
 
   /**
@@ -123,7 +127,71 @@ class CouponOrder extends Base
       'user_id' => $this->user_id,
       'user_order_id' => $this->id,
       'total_amount' => -$this->total_amount,
+      'cash_amount' => -$this->total_amount,
       'desc' => $desc
     ]);
+  }
+
+  public function actionAfterPay()
+  {
+    // 购买人账单
+    $this->createUserBill('通用券购买');
+    // 创建优惠券给购买人
+    $couponOrderSubList = $this->coupon_order_sub()->with('user_coupon')->get();
+    $couponSql = $couponOrderSubList->map(function ($couponOrderSubData) {
+      return [
+        'id' => app(Snowflake::class)->next(),
+        'coupon_template_id' => $couponOrderSubData->user_coupon->coupon_template_id,
+        'user_id' => $this->user_id,
+        'display_name' => $couponOrderSubData->user_coupon->display_name,
+        'desc' => $couponOrderSubData->user_coupon->desc,
+        'amount' => $couponOrderSubData->user_coupon->amount,
+        'coupon_status' => UserCoupon::getStatusValue(1, '未使用'),
+        'start_at' => $couponOrderSubData->user_coupon->start_at,
+        'end_at' => $couponOrderSubData->user_coupon->end_at,
+        'source' => '市场交易',
+        'is_trade' => 1,
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s')
+      ];
+    })->toArray();
+    DB::table('user_coupons')->insert($couponSql);
+    // 更新交易市场的优惠券状态
+    $coupon_market_ids = $couponOrderSubList->pluck('coupon_market_id');
+    $CouponMarketQuery = CouponMarket::with('user_coupon:id,display_name,amount')->whereIn('id', $coupon_market_ids);
+    $CouponMarketQuery->update([
+      'status' => CouponMarket::getStatusValue(3, '已出售'),
+      'buy_user_id' => $this->user_id
+    ]);
+    // 更新优惠券表的状态
+    $user_coupon_ids = $couponOrderSubList->pluck('user_coupon_id');
+    UserCoupon::whereIn('id', $user_coupon_ids)->update(['status' => UserCoupon::getStatusValue(5, '已出售')]);
+    // 给出售人记录账单并入账
+    $couponMarketList = $CouponMarketQuery->get();
+    $userBillSql = [];
+    foreach ($couponMarketList as $couponMarketData) {
+      $userBillSql[] = [
+        'user_id' => $couponMarketData->sell_user_id,
+        'total_amount' => $couponMarketData->amount,
+        'cash_amount' => $couponMarketData->amount,
+        'desc' => $couponMarketData->user_coupon->amount.'元'.$couponMarketData->user_coupon->display_name.'出售',
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s')
+      ];
+      $userBillSql[] = [
+        'user_id' => $couponMarketData->sell_user_id,
+        'total_amount' => -($couponMarketData->amount * 0.1),
+        'cash_amount' => -($couponMarketData->amount * 0.1),
+        'desc' => '手续费10%',
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s')
+      ];
+      $sellUserData = UserWallet::where('user_id', $couponMarketData->sell_user_id)->first();
+      if ($sellUserData) {
+        $sellUserData->increment('money', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
+        $sellUserData->increment('total_earning', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
+      }
+    }
+    DB::table('user_bills')->insert($userBillSql);
   }
 }

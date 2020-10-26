@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Coupon\CouponMarketController;
+use App\Http\Controllers\Api\Coupon\CouponOrderController;
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoComplaintController;
 use App\Http\Controllers\Api\Info\InfoViewController;
@@ -72,7 +73,10 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
     // 优惠券市场
   Route::apiResource('coupon_market', CouponMarketController::class)->only(['index', 'store']);
-
+  Route::get('coupon_order/checkUnpaidOrder', [CouponOrderController::class, 'checkUnpaidOrder']);
+  Route::post('coupon_order/continueUnpaidOrder', [CouponOrderController::class, 'continueUnpaidOrder']);
+  Route::post('coupon_order/cancelUnpaidOrder', [CouponOrderController::class, 'cancelUnpaidOrder']);
+  Route::apiResource('coupon_order', 'CouponOrderController')->only(['store']);
   // 支付
   Route::post('news/pay', [NewsController::class, 'pay']);
 
