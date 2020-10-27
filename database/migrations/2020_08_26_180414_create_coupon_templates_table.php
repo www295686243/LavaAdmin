@@ -18,6 +18,7 @@ class CreateCouponTemplatesTable extends Migration
       $table->string('display_name', 60)->comment('券名');
       $table->string('desc', 255)->comment('描述')->nullable();
       $table->unsignedTinyInteger('is_trade')->comment('是否可交易')->default(0);
+      $table->unsignedInteger('sort')->comment('排序')->nullable();
 
       $table->timestamps();
     });

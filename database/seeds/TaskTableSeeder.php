@@ -11,7 +11,7 @@ class TaskTableSeeder extends Seeder
    */
   public function run()
   {
-    $couponTemplateData = \App\Models\Coupon\CouponTemplate::where('display_name', '优惠券')->first();
+    $couponTemplateData = \App\Models\Coupon\CouponTemplate::where('display_name', '通用券')->first();
     $taskData = \App\Models\Task\Task::create([
       'title' => '分享任务',
       'desc' => '分享任务',

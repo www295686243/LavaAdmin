@@ -21,6 +21,11 @@ class VersionTableSeeder extends Seeder
         'name' => 'industry',
         'display_name' => '行业版本',
         'value' => 1
+      ],
+      [
+        'name' => 'coupon_template',
+        'display_name' => '互助券模板',
+        'value' => 1
       ]
     ];
     foreach ($data as $datum) {

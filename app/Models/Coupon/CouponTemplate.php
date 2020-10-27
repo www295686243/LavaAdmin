@@ -12,7 +12,8 @@ class CouponTemplate extends Base
   protected $fillable = [
     'display_name',
     'desc',
-    'is_trade'
+    'is_trade',
+    'sort'
   ];
 
   protected $hidden = [

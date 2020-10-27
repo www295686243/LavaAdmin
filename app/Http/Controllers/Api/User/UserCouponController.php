@@ -44,7 +44,7 @@ class UserCouponController extends Controller
     $user_coupon_ids = $request->input('user_coupon_ids');
     $userCouponQuery = UserCoupon::whereIn('id', $user_coupon_ids)
       ->where('user_id', User::getUserId())
-      ->where('status', UserCoupon::getCouponStatusValue(4, '挂售中'));
+      ->where('coupon_status', UserCoupon::getCouponStatusValue(4, '挂售中'));
     $userCouponCount = $userCouponQuery->count();
     if ($userCouponCount !== count($user_coupon_ids)) {
       return $this->error('通用券状态错误，请刷新后再试');
@@ -61,7 +61,7 @@ class UserCouponController extends Controller
     DB::beginTransaction();
     try {
       $couponMarketQuery->update(['status' => CouponMarket::getStatusValue(5, '已撤回')]);
-      $userCouponQuery->update(['status' => UserCoupon::getCouponStatusValue(1, '未使用')]);
+      $userCouponQuery->update(['coupon_status' => UserCoupon::getCouponStatusValue(1, '未使用')]);
       DB::commit();
       return $this->success('撤回成功');
     } catch (\Exception $e) {

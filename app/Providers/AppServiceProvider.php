@@ -4,12 +4,14 @@ namespace App\Providers;
 
 use App\Models\Config;
 use App\Models\ConfigOption;
+use App\Models\Coupon\CouponTemplate;
 use App\Models\Info\Industry;
 use App\Models\Task\Task;
 use App\Models\Task\TaskRule;
 use App\Models\Version;
 use App\Observers\ConfigObserver;
 use App\Observers\ConfigOptionObserver;
+use App\Observers\CouponTemplateObserver;
 use App\Observers\IndustryObserver;
 use App\Observers\TaskObserver;
 use App\Observers\TaskRuleObserver;
@@ -43,5 +45,6 @@ class AppServiceProvider extends ServiceProvider
     Industry::observe(IndustryObserver::class);
     Task::observe(TaskObserver::class);
     TaskRule::observe(TaskRuleObserver::class);
+    CouponTemplate::observe(CouponTemplateObserver::class);
   }
 }
