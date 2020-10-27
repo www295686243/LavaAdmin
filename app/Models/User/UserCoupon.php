@@ -25,6 +25,18 @@ class UserCoupon extends Base
     'coupon_template_id' => 'string'
   ];
 
+  protected $appends = [
+    'active'
+  ];
+
+  /**
+   * @return bool
+   */
+  public function getActiveAttribute()
+  {
+    return false;
+  }
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */

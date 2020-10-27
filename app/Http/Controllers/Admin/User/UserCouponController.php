@@ -26,14 +26,8 @@ class UserCouponController extends Controller
   public function store(UserCouponRequest $request)
   {
     $user_id = $request->input('user_id');
-    $coupon_template_id = $request->input('coupon_template_id');
-    $amount = $request->input('amount');
-    $give_number = $request->input('give_number');
-    $expiry_day = $request->input('expiry_day');
-
-    $couponTemplateData = CouponTemplate::getCouponTemplateData($coupon_template_id);
-    $couponTemplateData->giveCoupons($user_id, $give_number, $amount, $expiry_day, '后台赠送');
-
+    $rewards = $request->input('rewards');
+    CouponTemplate::giveManyCoupons($user_id, $rewards, '后台赠送');
     return $this->success('赠送成功');
   }
 }

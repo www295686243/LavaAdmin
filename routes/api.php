@@ -70,6 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'destroy']);
   Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
   // 优惠券
+  Route::post('coupon/recall', [UserCouponController::class, 'recall']);
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
     // 优惠券市场
   Route::apiResource('coupon_market', CouponMarketController::class)->only(['index', 'store']);

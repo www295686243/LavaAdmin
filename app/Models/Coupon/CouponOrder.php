@@ -146,7 +146,7 @@ class CouponOrder extends Base
         'display_name' => $couponOrderSubData->user_coupon->display_name,
         'desc' => $couponOrderSubData->user_coupon->desc,
         'amount' => $couponOrderSubData->user_coupon->amount,
-        'coupon_status' => UserCoupon::getStatusValue(1, '未使用'),
+        'coupon_status' => UserCoupon::getCouponStatusValue(1, '未使用'),
         'start_at' => $couponOrderSubData->user_coupon->start_at,
         'end_at' => $couponOrderSubData->user_coupon->end_at,
         'source' => '市场交易',
@@ -165,7 +165,7 @@ class CouponOrder extends Base
     ]);
     // 更新优惠券表的状态
     $user_coupon_ids = $couponOrderSubList->pluck('user_coupon_id');
-    UserCoupon::whereIn('id', $user_coupon_ids)->update(['status' => UserCoupon::getStatusValue(5, '已出售')]);
+    UserCoupon::whereIn('id', $user_coupon_ids)->update(['status' => UserCoupon::getCouponStatusValue(5, '已出售')]);
     // 给出售人记录账单并入账
     $couponMarketList = $CouponMarketQuery->get();
     $userBillSql = [];

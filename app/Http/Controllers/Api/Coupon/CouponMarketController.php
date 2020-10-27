@@ -8,7 +8,6 @@ use App\Models\Api\User;
 use App\Models\Coupon\CouponMarket;
 use App\Models\User\UserCoupon;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CouponMarketController extends Controller
@@ -44,15 +43,11 @@ class CouponMarketController extends Controller
   {
     $coupon_template_id = $request->input('coupon_template_id');
     $sort = $request->input('sort', 0);
-    $type = $request->input('type');
     $sortItem = $this->sortType[$sort];
 
     $data = CouponMarket::with(['coupon:id,display_name,desc,amount,is_trade', 'sell_user:id,nickname'])
       ->when($coupon_template_id, function (Builder $query, $coupon_template_id) {
         return $query->where('coupon_template_id', $coupon_template_id);
-      })
-      ->when($type === 'my-sell', function (Builder $query) {
-        $query->where('sell_user_id', User::getUserId());
       })
       ->where('status', CouponMarket::getStatusValue(1, '出售中'))
       ->orderBy($sortItem['field'], $sortItem['sort'])
@@ -63,6 +58,7 @@ class CouponMarketController extends Controller
   /**
    * @param CouponMarketRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function store(CouponMarketRequest $request)
   {
@@ -70,9 +66,10 @@ class CouponMarketController extends Controller
     $amount = $request->input('amount');
 
     $couponList = UserCoupon::where('user_id', User::getUserId())
-      ->where('status', UserCoupon::getStatusValue(1, '未使用'))
+      ->where('coupon_status', UserCoupon::getCouponStatusValue(1, '未使用'))
       ->whereIn('id', $coupon_ids)
       ->get();
+
     if ($couponList->count() !== count($coupon_ids)) {
       return $this->error('您的通用券状态异常，请重试');
     }
@@ -90,15 +87,25 @@ class CouponMarketController extends Controller
         'coupon_template_id' => $item->coupon_template_id,
         'amount' => $amount,
         'amount_sort' => $amount * 100,
+        'status' => CouponMarket::getStatusValue(1, '出售中'),
         'end_at' => $item->end_at,
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s')
       ];
     })->toArray();
-    DB::table('coupon_markets')->insert($couponMarketSql);
-    UserCoupon::whereIn('id', $coupon_ids)->update([
-      'status' => UserCoupon::getStatusValue(4, '挂售中')
-    ]);
-    return $this->success('您已挂售成功!');
+
+    DB::beginTransaction();
+    try {
+      DB::table('coupon_markets')->insert($couponMarketSql);
+      UserCoupon::whereIn('id', $coupon_ids)->update([
+        'coupon_status' => UserCoupon::getCouponStatusValue(4, '挂售中')
+      ]);
+      DB::commit();
+      return $this->success('您已挂售成功!');
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage());
+      return $this->error('挂售失败');
+    }
   }
 }
