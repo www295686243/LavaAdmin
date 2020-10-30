@@ -15,7 +15,7 @@ class HrResumeTableSeeder extends Seeder
     for ($i = 1; $i <= 2; $i++) {
       (new HrResume())->createOrUpdateData([
         'user_id' => $user->id,
-        'title' => '标题'.$i,
+        'title' => '简历标题'.$i,
         'description' => '描述'.$i,
         'is_negotiate' => 1,
         'recruiter_number' => 1,

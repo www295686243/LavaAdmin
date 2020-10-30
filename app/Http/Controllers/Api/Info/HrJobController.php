@@ -11,13 +11,12 @@ use Illuminate\Http\Request;
 class HrJobController extends Controller
 {
   /**
-   * Display a listing of the resource.
-   *
-   * @return \Illuminate\Http\Response
+   * @return \Illuminate\Http\JsonResponse
    */
   public function index()
   {
-    //
+    $data = HrJob::pagination();
+    return $this->setParams($data)->success();
   }
 
   /**

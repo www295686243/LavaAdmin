@@ -15,7 +15,7 @@ class HrJobTableSeeder extends Seeder
     for ($i = 1; $i <= 2; $i++) {
       (new HrJob())->createOrUpdateData([
         'user_id' => $user->id,
-        'title' => '标题'.$i,
+        'title' => '招聘标题'.$i,
         'description' => '描述'.$i,
         'company_name' => '公司名称'.$i,
         'is_negotiate' => 1,
