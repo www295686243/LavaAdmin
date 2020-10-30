@@ -44,6 +44,8 @@ class Config extends Base
     'updated_at'
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasMany
    */

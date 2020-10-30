@@ -77,7 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('coupon_order/checkUnpaidOrder', [CouponOrderController::class, 'checkUnpaidOrder']);
   Route::post('coupon_order/continueUnpaidOrder', [CouponOrderController::class, 'continueUnpaidOrder']);
   Route::post('coupon_order/cancelUnpaidOrder', [CouponOrderController::class, 'cancelUnpaidOrder']);
-  Route::apiResource('coupon_order', 'CouponOrderController')->only(['store']);
+  Route::apiResource('coupon_order', CouponOrderController::class)->only(['store']);
   // 支付
   Route::post('news/pay', [NewsController::class, 'pay']);
 

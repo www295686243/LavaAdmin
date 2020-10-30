@@ -36,7 +36,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  */
 class Role extends \Spatie\Permission\Models\Role
 {
-  use ResourceTrait, HasSnowflakePrimary, IdToStrTrait;
+  use ResourceTrait;
 
   protected $fillable = [
     'name',

@@ -49,11 +49,13 @@ class CouponOrder extends Base
       'user_id' => User::getUserId(),
       'quantity' => $couponMarketList->count(),
       'total_amount' => $couponMarketList->sum('amount'),
+      'pay_status' => self::getPayStatusValue(1, '未支付'),
       'payment' => self::getOptionsValue('payment', 1, '微信')
     ]);
 
     $couponOrderSubSql = $couponMarketList->map(function ($item) use ($couponOrderData) {
       return [
+        'id' => app(Snowflake::class)->next(),
         'sell_user_id' => $item->sell_user_id,
         'buy_user_id' => $couponOrderData->user_id,
         'coupon_order_id' => $couponOrderData->id,
@@ -69,10 +71,13 @@ class CouponOrder extends Base
   }
 
   /**
-   * @return mixed
+   * @return bool
    */
   public function getPayOrderConfig()
   {
+    if (env('APP_ENV') === 'dev') {
+      return true;
+    }
     $app = app('wechat.payment');
     $userId = User::getUserId();
     $authData = UserAuth::where('user_id', $userId)->first();
@@ -82,8 +87,8 @@ class CouponOrder extends Base
     $order = $app->order->unify([
       'body' => '购买通用券',
       'out_trade_no' => $this->id,
-      'total_fee' => $this->total_amount * 100,
-//      'total_fee' => 1,
+//      'total_fee' => $this->total_amount * 100,
+      'total_fee' => 1,
       'trade_type' => 'JSAPI',
       'openid' => $authData->wx_openid,
       'notify_url' => env('APP_URL').'/api/coupon_market_pay_callback'
@@ -171,6 +176,7 @@ class CouponOrder extends Base
     $userBillSql = [];
     foreach ($couponMarketList as $couponMarketData) {
       $userBillSql[] = [
+        'id' => app(Snowflake::class)->next(),
         'user_id' => $couponMarketData->sell_user_id,
         'total_amount' => $couponMarketData->amount,
         'cash_amount' => $couponMarketData->amount,
@@ -179,6 +185,7 @@ class CouponOrder extends Base
         'updated_at' => date('Y-m-d H:i:s')
       ];
       $userBillSql[] = [
+        'id' => app(Snowflake::class)->next(),
         'user_id' => $couponMarketData->sell_user_id,
         'total_amount' => -($couponMarketData->amount * 0.1),
         'cash_amount' => -($couponMarketData->amount * 0.1),

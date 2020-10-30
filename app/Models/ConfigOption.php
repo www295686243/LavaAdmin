@@ -44,6 +44,8 @@ class ConfigOption extends Base
     'config_id' => 'string'
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
    */

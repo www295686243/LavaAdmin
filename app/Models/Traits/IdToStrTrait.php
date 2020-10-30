@@ -54,13 +54,4 @@ trait IdToStrTrait
   {
     return $value ? strval($value) : null;
   }
-
-  /**
-   * @param $value
-   * @return null|string
-   */
-  public function getParentIdAttribute($value)
-  {
-    return $value ? strval($value) : null;
-  }
 }

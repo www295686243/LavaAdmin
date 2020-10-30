@@ -31,6 +31,8 @@ class Industry extends Base
     'hr_resume_amount' => 'float',
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
    */

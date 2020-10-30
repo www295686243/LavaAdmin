@@ -101,6 +101,16 @@ class AdminMenuTableSeeder extends Seeder
           'display_name' => '任务记录',
           'icon' => 'el-icon-s-order',
           'route' => '/operation/task-record'
+        ],
+        [
+          'display_name' => '优惠券市场',
+          'icon' => 'el-icon-s-shop',
+          'route' => '/operation/coupon-market'
+        ],
+        [
+          'display_name' => '优惠券订单',
+          'icon' => 'el-icon-s-order',
+          'route' => '/operation/coupon-order'
         ]
       ]
     ],

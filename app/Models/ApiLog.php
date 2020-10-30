@@ -65,6 +65,8 @@ class ApiLog extends Base
     'extra' => 'array',
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   public function createLog($params)
   {
     $user = User::getUserData();

@@ -60,6 +60,8 @@ class AdminLog extends Base
     'input' => 'array',
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   public function createLog($params)
   {
     $user = User::getUserData();

@@ -51,7 +51,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  */
 class Permission extends \Spatie\Permission\Models\Permission
 {
-  use NodeTrait, HasSnowflakePrimary, IdToStrTrait;
+  use NodeTrait;
 
   protected $fillable = [
     'name',

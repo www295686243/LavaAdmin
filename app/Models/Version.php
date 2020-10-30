@@ -40,6 +40,8 @@ class Version extends Base
     'updated_at'
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   public function getList()
   {
     return Cache::tags('app')->rememberForever($this->getTable(), function () {

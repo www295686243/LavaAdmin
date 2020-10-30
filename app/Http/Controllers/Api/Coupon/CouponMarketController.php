@@ -9,6 +9,7 @@ use App\Models\Coupon\CouponMarket;
 use App\Models\User\UserCoupon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
+use Kra8\Snowflake\Snowflake;
 
 class CouponMarketController extends Controller
 {
@@ -45,7 +46,7 @@ class CouponMarketController extends Controller
     $sort = $request->input('sort', 0);
     $sortItem = $this->sortType[$sort];
 
-    $data = CouponMarket::with(['coupon:id,display_name,desc,amount,is_trade', 'sell_user:id,nickname'])
+    $data = CouponMarket::with(['user_coupon:id,display_name,desc,amount', 'sell_user:id,nickname'])
       ->when($coupon_template_id, function (Builder $query, $coupon_template_id) {
         return $query->where('coupon_template_id', $coupon_template_id);
       })
@@ -82,6 +83,7 @@ class CouponMarketController extends Controller
 
     $couponMarketSql = $couponList->map(function ($item) use ($amount) {
       return [
+        'id' => app(Snowflake::class)->next(),
         'sell_user_id' => User::getUserId(),
         'user_coupon_id' => $item->id,
         'coupon_template_id' => $item->coupon_template_id,

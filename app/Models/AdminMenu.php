@@ -72,4 +72,6 @@ class AdminMenu extends Base
     'params' => 'array',
     'default_params' => 'array'
   ];
+
+  public static function bootHasSnowflakePrimary() {}
 }

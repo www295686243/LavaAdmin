@@ -21,8 +21,8 @@ class CouponOrderController extends Controller
   public function store(CouponOrderRequest $request)
   {
     $ids = $request->input('ids', []);
-    if (count($ids) > 5) {
-      return $this->error('每笔订单最多购买5张');
+    if (count($ids) === 0) {
+      return $this->error('请至少选择一张券');
     }
     $couponMarketList = CouponMarket::whereIn('id', $ids)
       ->where('status', CouponMarket::getStatusValue(1, '出售中'))
@@ -43,7 +43,7 @@ class CouponOrderController extends Controller
       return $this->setParams($payResult)->success('下单成功');
     } catch (\Exception $e) {
       DB::rollBack();
-      \Log::error($e->getMessage());
+      \Log::error($e->getTraceAsString());
       return $this->error($e->getMessage());
     }
   }
