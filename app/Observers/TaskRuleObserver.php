@@ -2,7 +2,8 @@
 
 namespace App\Observers;
 
-use App\Models\Task\TaskRule;
+use App\Models\Task\Task;
+use App\Models\Version;
 use Illuminate\Support\Facades\Cache;
 
 class TaskRuleObserver
@@ -10,22 +11,27 @@ class TaskRuleObserver
   /**
    * Handle the task rule "created" event.
    *
-   * @param \App\Models\Task\TaskRule $taskRule
    * @return void
    */
-  public function created(TaskRule $taskRule)
+  public function created()
   {
-    Cache::tags(TaskRule::class)->forget((new TaskRule())->getTable());
+    Cache::tags(Task::class)->forget((new Task())->getTable());
+    (new Version())->updateOrCreateVersion('task', '任务版本');
   }
 
   /**
    * Handle the task rule "updated" event.
    *
-   * @param \App\Models\Task\TaskRule $taskRule
    * @return void
    */
-  public function updated(TaskRule $taskRule)
+  public function updated()
   {
-    Cache::tags(TaskRule::class)->forget((new TaskRule())->getTable());
+    Cache::tags(Task::class)->forget((new Task())->getTable());
+    (new Version())->updateOrCreateVersion('task', '任务版本');
+  }
+
+  public function deleted()
+  {
+    (new Version())->updateOrCreateVersion('task', '任务版本');
   }
 }

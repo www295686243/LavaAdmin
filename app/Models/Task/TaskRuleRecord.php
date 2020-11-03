@@ -19,7 +19,7 @@ class TaskRuleRecord extends Base
   ];
 
   protected $casts = [
-    'task_record_id',
+    'task_record_id' => 'string',
     'rewards' => 'array'
   ];
 }

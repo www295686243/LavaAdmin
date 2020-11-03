@@ -21,6 +21,8 @@ class CouponTemplate extends Base
     'updated_at'
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   /**
    * @param $idOrName
    * @return CouponTemplate|CouponTemplate[]|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model

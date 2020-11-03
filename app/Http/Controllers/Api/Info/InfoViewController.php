@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\InfoViewRequest;
 use App\Models\Api\User;
 use App\Models\Info\InfoView;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InfoViewController extends Controller
@@ -22,7 +21,14 @@ class InfoViewController extends Controller
     $user_id = User::getUserId();
     $infoData = $this->getModelData();
     $share_user_id = $request->input('su');
-    $isExists = $infoData->info_view()->where('user_id', $user_id)->exists();
+    if ($share_user_id) {
+      $isExists = $infoData->info_view()
+        ->where('user_id', $user_id)
+        ->where('share_user_id', $user_id)
+        ->exists();
+    } else {
+      $isExists = $infoData->info_view()->where('user_id', $user_id)->exists();
+    }
     $isAllExists = InfoView::where('user_id', $user_id)->exists();
     if ($infoData->user_id !== $user_id) {
       DB::beginTransaction();

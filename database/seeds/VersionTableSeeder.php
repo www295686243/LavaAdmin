@@ -24,7 +24,12 @@ class VersionTableSeeder extends Seeder
       ],
       [
         'name' => 'coupon_template',
-        'display_name' => '互助券模板',
+        'display_name' => '优惠券版本',
+        'value' => 1
+      ],
+      [
+        'name' => 'task',
+        'display_name' => '任务版本',
         'value' => 1
       ]
     ];

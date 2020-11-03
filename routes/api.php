@@ -48,6 +48,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('user/verifyPhone', [UserController::class, 'verifyPhone']);
   Route::get('user/getWallet', [UserController::class, 'getWallet']);
   Route::get('user/getBill', [UserController::class, 'getBill']);
+  Route::post('user/setInviteUser', [UserController::class, 'setInviteUser']);
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['show', 'store']);
   Route::apiResource('user_enterprise_auth', UserEnterpriseAuthController::class)->only(['show', 'store']);
   Route::post('user_personal/check', [UserPersonalController::class, 'check']);

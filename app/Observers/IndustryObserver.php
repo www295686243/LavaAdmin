@@ -4,39 +4,40 @@ namespace App\Observers;
 
 use App\Models\Info\Industry;
 use App\Models\Version;
+use Illuminate\Support\Facades\Cache;
 
 class IndustryObserver
 {
   /**
    * Handle the industry "created" event.
    *
-   * @param  \App\Models\Info\Industry $industry
    * @return void
    */
-  public function created(Industry $industry)
+  public function created()
   {
     (new Version())->updateOrCreateVersion('industry', '行业版本');
+    Cache::tags(Industry::class)->forget((new Industry())->getTable());
   }
 
   /**
    * Handle the industry "updated" event.
    *
-   * @param  \App\Models\Info\Industry $industry
    * @return void
    */
-  public function updated(Industry $industry)
+  public function updated()
   {
     (new Version())->updateOrCreateVersion('industry', '行业版本');
+    Cache::tags(Industry::class)->forget((new Industry())->getTable());
   }
 
   /**
    * Handle the industry "deleted" event.
    *
-   * @param  \App\Models\Info\Industry $industry
    * @return void
    */
-  public function deleted(Industry $industry)
+  public function deleted()
   {
     (new Version())->updateOrCreateVersion('industry', '行业版本');
+    Cache::tags(Industry::class)->forget((new Industry())->getTable());
   }
 }

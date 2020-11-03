@@ -23,7 +23,6 @@ class TaskRecord extends Base
 
   protected $casts = [
     'rewards' => 'array',
-    'task_id' => 'string',
     'task_recordable_id' => 'string'
   ];
 
@@ -57,7 +56,7 @@ class TaskRecord extends Base
   public function checkRewards()
   {
     $this->task_rule_record->each(function ($taskRuleRecord) {
-      if (!$taskRuleRecord->is_complete && $this->_calc($taskRuleRecord->target_number, $taskRuleRecord->complete_number, $taskRuleRecord->operator)) {
+      if (!$taskRuleRecord->is_complete && $this->_calc($taskRuleRecord->complete_number, $taskRuleRecord->target_number, $taskRuleRecord->operator)) {
         $taskRuleRecord->is_complete = 1;
         $taskRuleRecord->task_complete_time = date('Y-m-d H:i:s');
         $taskRuleRecord->save();

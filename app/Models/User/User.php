@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use App\Models\AdminMenu;
 use App\Models\Permission;
+use App\Models\Task\TaskRecord;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
 use App\Services\SearchQueryService;
@@ -122,6 +123,10 @@ class User extends Authenticatable
     'api_token'
   ];
 
+  protected $casts = [
+    'invite_user_id' => 'string'
+  ];
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasOne
    */
@@ -160,6 +165,14 @@ class User extends Authenticatable
   public function auth()
   {
     return $this->hasOne(UserAuth::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function task_record()
+  {
+    return $this->morphMany(TaskRecord::class, 'task_recordable');
   }
 
   /**
@@ -223,11 +236,17 @@ class User extends Authenticatable
   }
 
   /**
-   * @return \Illuminate\Contracts\Auth\Authenticatable|static|null
+   * @param int $user_id
+   * @return User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
    */
-  public static function getUserData()
+  public static function getUserData($user_id = 0)
   {
-    return auth((new self())->guard_name)->user();
+    $user_id = $user_id ?: static::getUserId();
+    if ($user_id) {
+      return static::where('id', $user_id)->firstOrFail();
+    } else {
+      return null;
+    }
   }
 
   /**

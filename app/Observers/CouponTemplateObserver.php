@@ -4,39 +4,40 @@ namespace App\Observers;
 
 use App\Models\Coupon\CouponTemplate;
 use App\Models\Version;
+use Illuminate\Support\Facades\Cache;
 
 class CouponTemplateObserver
 {
   /**
    * Handle the coupon template "created" event.
    *
-   * @param  \App\Models\Coupon\CouponTemplate $couponTemplate
    * @return void
    */
-  public function created(CouponTemplate $couponTemplate)
+  public function created()
   {
-    (new Version())->updateOrCreateVersion('coupon_template', '优惠券模板');
+    (new Version())->updateOrCreateVersion('coupon_template', '优惠券版本');
+    Cache::tags(CouponTemplate::class)->forget((new CouponTemplate())->getTable());
   }
 
   /**
    * Handle the coupon template "updated" event.
    *
-   * @param  \App\Models\Coupon\CouponTemplate $couponTemplate
    * @return void
    */
-  public function updated(CouponTemplate $couponTemplate)
+  public function updated()
   {
-    (new Version())->updateOrCreateVersion('coupon_template', '优惠券模板');
+    (new Version())->updateOrCreateVersion('coupon_template', '优惠券版本');
+    Cache::tags(CouponTemplate::class)->forget((new CouponTemplate())->getTable());
   }
 
   /**
    * Handle the coupon template "deleted" event.
    *
-   * @param  \App\Models\Coupon\CouponTemplate $couponTemplate
    * @return void
    */
-  public function deleted(CouponTemplate $couponTemplate)
+  public function deleted()
   {
-    (new Version())->updateOrCreateVersion('coupon_template', '优惠券模板');
+    (new Version())->updateOrCreateVersion('coupon_template', '优惠券版本');
+    Cache::tags(CouponTemplate::class)->forget((new CouponTemplate())->getTable());
   }
 }

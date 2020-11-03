@@ -7,6 +7,7 @@ use App\Http\Requests\Api\AppRequest;
 use App\Models\Config;
 use App\Models\Coupon\CouponTemplate;
 use App\Models\Info\Industry;
+use App\Models\Task\Task;
 
 class AppController extends Controller
 {
@@ -24,10 +25,13 @@ class AppController extends Controller
       ->get()
       ->groupBy('guard_name');
     if (!$guard_name || $guard_name === 'industry') {
-      $data['industry'] = Industry::all()->toTree();
+      $data['industry'] = (new Industry())->cacheGetAll()->toTree();
     }
     if (!$guard_name || $guard_name === 'coupon_template') {
-      $data['coupon_template'] = CouponTemplate::orderBy('id', 'asc')->orderBy('sort', 'desc')->get();
+      $data['coupon_template'] = (new CouponTemplate())->cacheGetAll();
+    }
+    if (!$guard_name || $guard_name === 'task') {
+      $data['task'] = (new Task())->cacheGetAll();
     }
     return $this->setParams($data)->success();
   }

@@ -165,4 +165,24 @@ class UserController extends Controller
       ->simplePagination();
     return $this->setParams($data)->success();
   }
+
+  /**
+   * @param UserRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function setInviteUser(UserRequest $request)
+  {
+    $invite_user_id = $request->input('iu');
+    $userData = User::getUserData();
+    if (
+      $invite_user_id &&
+      !$userData->invite_user_id &&
+      $userData->created_at > date('Y-m-d 00:00:00') &&
+      $invite_user_id !== $userData->invite_user_id
+    ) {
+      $userData->invite_user_id = $invite_user_id;
+      $userData->save();
+    }
+    return $this->success();
+  }
 }

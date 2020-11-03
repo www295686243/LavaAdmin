@@ -23,6 +23,7 @@ class CreateInfoViewsTable extends Migration
       $table->timestamps();
 
       $table->index('info_viewable_id');
+      $table->index('user_id');
     });
   }
 

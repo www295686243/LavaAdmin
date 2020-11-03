@@ -10,6 +10,7 @@ use App\Models\User\User;
 use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
@@ -267,5 +268,14 @@ class Base extends Model
     } else {
       return 'App\Models\\'.str_replace('/', '\\', $innerModelPath);
     }
+  }
+
+  /**
+   * @return mixed
+   */
+  public function cacheGetAll () {
+    return Cache::tags(self::class)->rememberForever($this->getTable(), function () {
+      return self::orderBy('id')->get();
+    });
   }
 }
