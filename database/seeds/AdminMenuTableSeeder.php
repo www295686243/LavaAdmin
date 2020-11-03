@@ -93,16 +93,6 @@ class AdminMenuTableSeeder extends Seeder
           'route' => '/operation/coupon'
         ],
         [
-          'display_name' => '任务管理',
-          'icon' => 'el-icon-s-flag',
-          'route' => '/operation/task'
-        ],
-        [
-          'display_name' => '任务记录',
-          'icon' => 'el-icon-s-order',
-          'route' => '/operation/task-record'
-        ],
-        [
           'display_name' => '优惠券市场',
           'icon' => 'el-icon-s-shop',
           'route' => '/operation/coupon-market'
@@ -111,6 +101,16 @@ class AdminMenuTableSeeder extends Seeder
           'display_name' => '优惠券订单',
           'icon' => 'el-icon-s-order',
           'route' => '/operation/coupon-order'
+        ],
+        [
+          'display_name' => '任务管理',
+          'icon' => 'el-icon-s-flag',
+          'route' => '/operation/task'
+        ],
+        [
+          'display_name' => '任务记录',
+          'icon' => 'el-icon-s-order',
+          'route' => '/operation/task-record'
         ]
       ]
     ],
