@@ -4,6 +4,7 @@ namespace App\Models\User;
 
 use App\Models\Base;
 use App\Models\Info\Industry;
+use App\Models\Info\InfoCheck;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
@@ -58,6 +59,14 @@ class UserPersonal extends Base
   public function industry()
   {
     return $this->morphToMany(Industry::class, 'industrygable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_check()
+  {
+    return $this->morphMany(InfoCheck::class, 'info_checkable');
   }
 
   /**

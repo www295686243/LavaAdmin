@@ -228,6 +228,7 @@ class User extends Authenticatable
     if (!$userData || !Hash::check($password, $userData->password)) {
       $this->error('用户名或密码错误!');
     }
+    $userData->tokens()->delete();
     $plainTextToken = $userData->createToken('token')->plainTextToken;
     [$id, $token] = explode('|', $plainTextToken, 2);
     $userData->api_token = $token;

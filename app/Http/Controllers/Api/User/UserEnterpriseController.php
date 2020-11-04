@@ -37,6 +37,11 @@ class UserEnterpriseController extends Controller
     try {
       $data->update($input);
       $data->attachIndustry();
+      if (isset($input['city'])) {
+        $userData = User::getUserData();
+        $userData->city = $input['city'];
+        $userData->save();
+      }
       DB::commit();
       return $this->success();
     } catch (\Exception $e) {

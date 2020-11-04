@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('user/getWallet', [UserController::class, 'getWallet']);
   Route::get('user/getBill', [UserController::class, 'getBill']);
   Route::post('user/setInviteUser', [UserController::class, 'setInviteUser']);
+  Route::get('user/checkOfficialAccounts', [UserController::class, 'checkOfficialAccounts']);
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['show', 'store']);
   Route::apiResource('user_enterprise_auth', UserEnterpriseAuthController::class)->only(['show', 'store']);
   Route::post('user_personal/check', [UserPersonalController::class, 'check']);
@@ -72,6 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);
+  Route::get('user_coupon/getUsableCoupon', [UserCouponController::class, 'getUsableCoupon']);
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
     // 优惠券市场
   Route::apiResource('coupon_market', CouponMarketController::class)->only(['index', 'store']);

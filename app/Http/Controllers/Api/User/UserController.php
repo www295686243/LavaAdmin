@@ -185,4 +185,20 @@ class UserController extends Controller
     }
     return $this->success();
   }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function checkOfficialAccounts()
+  {
+    if (env('APP_ENV') === 'dev') {
+      return $this->success();
+    }
+    $userData = User::getUserData();
+    if ($userData->register_at < date('Y-m-d H:i:s', time() - (3600 * 24 * 7))) {
+      return $userData->is_follow_official_account ? $this->success() : $this->error();
+    } else {
+      return $this->success();
+    }
+  }
 }

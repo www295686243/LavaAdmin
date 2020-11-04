@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\UserCouponRequest;
 use App\Models\Api\User;
 use App\Models\Coupon\CouponMarket;
+use App\Models\Info\Hr\HrJob;
+use App\Models\Info\Hr\HrResume;
 use App\Models\User\UserCoupon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
@@ -69,5 +71,25 @@ class UserCouponController extends Controller
       \Log::error($e->getMessage());
       return $this->error('撤回失败');
     }
+  }
+
+  /**
+   * @param UserCouponRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getUsableCoupon(UserCouponRequest $request)
+  {
+    $modelPath = $this->getModelPath();
+    $data = UserCoupon::where('user_id', User::getUserId())
+      ->where('coupon_status', UserCoupon::getCouponStatusValue(1, '未使用'))
+      ->when($modelPath === HrJob::class, function (Builder $query) {
+        return $query->whereIn('coupon_template_id', [1, 3]);
+      })
+      ->when($modelPath === HrResume::class, function (Builder $query) {
+        return $query->whereIn('coupon_template_id', [2, 3]);
+      })
+      ->orderBy('is_trade', 'asc')
+      ->first();
+    return $this->setParams($data)->success();
   }
 }

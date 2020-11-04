@@ -22,6 +22,7 @@ class UserPersonalController extends Controller
     $userId = User::getUserId();
     $data = UserPersonal::where('user_id', $userId)->firstOrFail();
     $data->industry;
+    $data->is_check = $data->info_check()->where('status', InfoCheck::getStatusValue(1, '待审核'))->exists();
     return $this->setParams($data)->success();
   }
 
@@ -33,12 +34,16 @@ class UserPersonalController extends Controller
    */
   public function update(UserPersonalRequest $request, $id)
   {
-    $data = UserPersonal::findOrFail($id);
+    $userId = User::getUserId();
+    $data = UserPersonal::where('user_id', $userId)->firstOrFail();
     $input = $request->only(UserPersonal::getUpdateFillable());
+    $userData = User::getUserData();
     DB::beginTransaction();
     try {
       $data->update($input);
       $data->attachIndustry();
+      $userData->city = $input['city'];
+      $userData->save();
       DB::commit();
       return $this->success();
     } catch (\Exception $e) {
@@ -50,16 +55,22 @@ class UserPersonalController extends Controller
 
   /**
    * @param UserPersonalRequest $request
-   * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
   public function check(UserPersonalRequest $request)
   {
+    $data = UserPersonal::where('user_id', User::getUserId())->first();
+    if ($data) {
+      $isCheck = $data->info_check()->where('status', InfoCheck::getStatusValue(1, '待审核'))->exists();
+      if ($isCheck) {
+        return $this->error('请等待管理员审核');
+      }
+    }
     $input = $request->getAll();
     $input['_model'] = UserPersonal::class;
     $input['user_id'] = User::getUserId();
     $input['title'] = User::getUserData()->nickname.'的资料审核';
     InfoCheck::createInfo($input);
-    return $this->success();
+    return $this->success('更新成功，请等待审核！');
   }
 }

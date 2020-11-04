@@ -86,6 +86,10 @@ class ConfigTableSeeder extends Seeder
       'display_name' => '已支付',
       'color' => 'success'
     ], '已过期', '已放弃']);
+    $this->createConfig('Info/Hr/HrJob@amount', 3, '查看招聘金额');
+    $this->createConfig('Info/Hr/HrJob@original_amount', 10, '查看招聘金额原价');
+    $this->createConfig('Info/Hr/HrResume@amount', 3, '查看求职金额');
+    $this->createConfig('Info/Hr/HrResume@original_amount', 10, '查看求职金额原价');
   }
 
   private function createOptions($name, $display_name, $options)
@@ -114,5 +118,14 @@ class ConfigTableSeeder extends Seeder
       'guard_name' => 'options'
     ]);
     $configData->options()->createMany($options);
+  }
+
+  private function createConfig($name, $value, $display_name) {
+    \App\Models\Config::create([
+      'name' => $name,
+      'display_name' => $display_name,
+      'value' => $value,
+      'guard_name' => 'config'
+    ]);
   }
 }
