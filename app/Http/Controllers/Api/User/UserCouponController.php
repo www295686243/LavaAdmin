@@ -89,7 +89,7 @@ class UserCouponController extends Controller
         return $query->whereIn('coupon_template_id', [2, 3]);
       })
       ->orderBy('is_trade', 'asc')
-      ->first();
+      ->simplePagination();
     return $this->setParams($data)->success();
   }
 }
