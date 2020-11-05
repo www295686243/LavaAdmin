@@ -19,8 +19,8 @@ class CreateHrJobsTable extends Migration
       $table->string('title', 120);
       $table->string('intro', 120)->comment('简介')->nullable();
       $table->string('company_name', 60)->comment('企业名称')->nullable();
-      $table->unsignedMediumInteger('monthly_pay_min')->comment('最小月薪')->nullable();
-      $table->unsignedMediumInteger('monthly_pay_max')->comment('最大月薪')->nullable();
+      $table->unsignedMediumInteger('monthly_salary_min')->comment('最小月薪')->nullable();
+      $table->unsignedMediumInteger('monthly_salary_max')->comment('最大月薪')->nullable();
       $table->unsignedTinyInteger('is_negotiate')->comment('是否面议')->default(0);
       $table->unsignedSmallInteger('recruiter_number')->comment('招聘人数')->default(1);
       $table->unsignedMediumInteger('education')->comment('学历')->nullable();

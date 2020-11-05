@@ -106,7 +106,6 @@ class InfoDeliveryController extends Controller
       ['send_user_id', '=', $input['send_user_id']],
       ['receive_user_id', '=', $input['receive_user_id']],
       ['send_info_type', '=', $input['send_info_type']],
-      ['send_info_id', '=', $input['send_info_id']],
       ['receive_info_type', '=', $input['receive_info_type']],
       ['receive_info_id', '=', $input['receive_info_id']]
     ]);

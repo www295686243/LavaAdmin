@@ -20,7 +20,7 @@ class HrJobTableSeeder extends Seeder
         'company_name' => '公司名称'.$i,
         'is_negotiate' => 1,
         'recruiter_number' => 1,
-        'education' => 66,
+        'education' => 1,
         'seniority' => 1,
         'treatment' => '包吃,包住',
         'city' => 440203,

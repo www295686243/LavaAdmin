@@ -14,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Kra8\Snowflake\HasSnowflakePrimary;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -255,7 +256,20 @@ class User extends Authenticatable
    */
   public static function getUserId()
   {
-    return auth((new self())->guard_name)->id();
+    $_this = new self();
+    $guard_name = $_this->guard_name;
+    if (!$guard_name) {
+      $guard_name = $_this->getPrefix();
+    }
+    return auth($guard_name)->id();
+  }
+
+  /**
+   * @return string
+   */
+  public function getPrefix()
+  {
+    return Str::beforeLast(request()->route()->getPrefix(), '/');
   }
 
   /**

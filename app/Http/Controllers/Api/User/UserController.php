@@ -7,7 +7,10 @@ use App\Http\Requests\Api\UserRequest;
 use App\Models\Api\User;
 use App\Models\SmsCaptcha;
 use App\Models\User\UserBill;
+use App\Models\User\UserEnterprise;
+use App\Models\User\UserPersonal;
 use App\Models\User\UserWallet;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -199,6 +202,33 @@ class UserController extends Controller
       return $userData->is_follow_official_account ? $this->success() : $this->error();
     } else {
       return $this->success();
+    }
+  }
+
+  /**
+   * @param UserRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
+   */
+  public function baseInfoUpdate(UserRequest $request)
+  {
+    $input = $request->only(['role', 'industry', 'industry_attr', 'position_attr', 'city']);
+    $userData = User::getUserData();
+    $userData->assignRole($input['role']);
+
+    DB::beginTransaction();
+    try {
+      if ($input['role'] === 'Enterprise Member') {
+        UserEnterprise::updateInfo($request->only(UserEnterprise::getUpdateFillable()));
+      } else if ($input['role'] === 'Personal Member') {
+        UserPersonal::updateInfo($request->only(UserPersonal::getUpdateFillable()));
+      }
+      DB::commit();
+      return $this->success();
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getMessage().':'.__LINE__);
+      return $this->error();
     }
   }
 }

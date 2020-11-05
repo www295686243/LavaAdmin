@@ -34,16 +34,10 @@ class UserPersonalController extends Controller
    */
   public function update(UserPersonalRequest $request, $id)
   {
-    $userId = User::getUserId();
-    $data = UserPersonal::where('user_id', $userId)->firstOrFail();
     $input = $request->only(UserPersonal::getUpdateFillable());
-    $userData = User::getUserData();
     DB::beginTransaction();
     try {
-      $data->update($input);
-      $data->attachIndustry();
-      $userData->city = $input['city'];
-      $userData->save();
+      UserPersonal::updateInfo($input);
       DB::commit();
       return $this->success();
     } catch (\Exception $e) {

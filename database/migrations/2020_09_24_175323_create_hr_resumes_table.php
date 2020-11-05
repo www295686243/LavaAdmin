@@ -18,8 +18,8 @@ class CreateHrResumesTable extends Migration
       $table->unsignedBigInteger('user_id');
       $table->string('title', 120)->comment('简历标题');
       $table->string('intro', 120)->comment('简介')->nullable();
-      $table->unsignedMediumInteger('monthly_pay_min')->comment('最小月薪')->nullable();
-      $table->unsignedMediumInteger('monthly_pay_max')->comment('最大月薪')->nullable();
+      $table->unsignedMediumInteger('monthly_salary_min')->comment('最小月薪')->nullable();
+      $table->unsignedMediumInteger('monthly_salary_max')->comment('最大月薪')->nullable();
       $table->unsignedTinyInteger('is_negotiate')->comment('是否面议')->default(0);
       $table->unsignedMediumInteger('education')->comment('学历')->nullable();
       $table->unsignedMediumInteger('seniority')->comment('工作年限')->nullable();

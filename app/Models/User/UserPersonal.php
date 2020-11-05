@@ -70,6 +70,15 @@ class UserPersonal extends Base
   }
 
   /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  /**
+   * 信息审核用到
    * @param $input
    * @param int $id
    * @return int
@@ -79,5 +88,20 @@ class UserPersonal extends Base
     $data = self::findOrFail($id);
     $data->update(Arr::only($input, ['avatar', 'tags', 'education_experience', 'work_experience', 'honorary_certificate']));
     return $id;
+  }
+
+  /**
+   * @param $input
+   * @param int $userId
+   */
+  public static function updateInfo($input, $userId = 0)
+  {
+    $userId = $userId ?: User::getUserId();
+    $data = static::where('user_id', $userId)->firstOrFail();
+    $data->update($input);
+    $data->attachIndustry();
+    if (isset($input['city'])) {
+      $data->user()->update(['city' => $input['city']]);
+    }
   }
 }

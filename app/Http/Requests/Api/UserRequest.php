@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api;
 
 use App\Http\Requests\BaseRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends BaseRequest
 {
@@ -38,6 +39,12 @@ class UserRequest extends BaseRequest
         return [
           'code' => 'required|digits:4',
           'phone' => 'required|numeric|digits:11'
+        ];
+      case 'baseInfoUpdate':
+        return [
+          'role' => ['required', Rule::in(['Personal Member', 'Enterprise Member'])],
+          'industry' => 'required|array',
+          'city' => 'required'
         ];
       default:
         return [];

@@ -29,11 +29,9 @@ class UserEnterpriseController extends Controller
   public function update(UserEnterpriseRequest $request, $id)
   {
     $input = $request->only(UserEnterprise::getUpdateFillable());
-    $data = UserEnterprise::where('user_id', $id)->firstOrFail();
     DB::beginTransaction();
     try {
-      $data->update($input);
-      $data->attachIndustry();
+      UserEnterprise::updateInfo($input, $id);
       DB::commit();
       return $this->success();
     } catch (\Exception $e) {

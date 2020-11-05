@@ -55,4 +55,27 @@ class UserEnterprise extends Base
   {
     return $this->morphToMany(Industry::class, 'industrygable');
   }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  /**
+   * @param $input
+   * @param int $userId
+   */
+  public static function updateInfo($input, $userId = 0)
+  {
+    $userId = $userId ?: User::getUserId();
+    $data = static::where('user_id', $userId)->firstOrFail();
+    $data->update($input);
+    $data->attachIndustry();
+    if (isset($input['city'])) {
+      $data->user()->update(['city' => $input['city']]);
+    }
+  }
 }

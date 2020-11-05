@@ -30,18 +30,10 @@ class UserEnterpriseController extends Controller
    */
   public function update(UserEnterpriseRequest $request, $id)
   {
-    $userId = User::getUserId();
-    $data = UserEnterprise::where('user_id', $userId)->firstOrFail();
     $input = $request->only(UserEnterprise::getUpdateFillable());
     DB::beginTransaction();
     try {
-      $data->update($input);
-      $data->attachIndustry();
-      if (isset($input['city'])) {
-        $userData = User::getUserData();
-        $userData->city = $input['city'];
-        $userData->save();
-      }
+      UserEnterprise::updateInfo($input);
       DB::commit();
       return $this->success();
     } catch (\Exception $e) {
