@@ -66,6 +66,11 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('notify/markHaveRead', [NotifyController::class, 'markHaveRead']);
   Route::apiResource('notify', NotifyController::class)->only(['index', 'show']);
 
+  // 支付
+  Route::post('hr_job/pay', [\App\Http\Controllers\Api\Info\HrJobController::class, 'pay']);
+  Route::post('hr_resume/pay', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'pay']);
+  Route::get('hr_job/getContacts', [\App\Http\Controllers\Api\Info\HrJobController::class, 'getContacts']);
+  Route::get('hr_resume/getContacts', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'getContacts']);
   // 信息
   Route::apiResource('news', NewsController::class)->only(['index']);
   Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'destroy']);
@@ -82,8 +87,6 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('coupon_order/continueUnpaidOrder', [CouponOrderController::class, 'continueUnpaidOrder']);
   Route::post('coupon_order/cancelUnpaidOrder', [CouponOrderController::class, 'cancelUnpaidOrder']);
   Route::apiResource('coupon_order', CouponOrderController::class)->only(['store']);
-  // 支付
-  Route::post('news/pay', [NewsController::class, 'pay']);
 
   // 信息审核
   Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'destroy']);
@@ -100,4 +103,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // 支付回调 为了在chart表中区别是支付哪些信息类型的
-Route::any('news/pay_callback', [NewsController::class, 'payCallback']);
+Route::any('hr_job/pay_callback', [\App\Http\Controllers\Api\Info\HrJobController::class, 'payCallback']);
+Route::any('hr_resume/pay_callback', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'payCallback']);

@@ -11,6 +11,7 @@ use App\Models\Info\InfoView;
 use App\Models\Task\TaskRecord;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
+use App\Models\User\UserOrder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -118,6 +119,14 @@ class HrResume extends Base
   }
 
   /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function user_order()
+  {
+    return $this->morphMany(UserOrder::class, 'user_orderable');
+  }
+
+  /**
    * @param $input
    * @param int $id
    * @return int|mixed
@@ -176,5 +185,13 @@ class HrResume extends Base
       \Log::error($e->getMessage().':'.__LINE__);
       $this->error();
     }
+  }
+
+  /**
+   * @param UserOrder $userOrderData
+   */
+  public function payCallback(UserOrder $userOrderData)
+  {
+    $userOrderData->createUserBill('查看简历联系方式');
   }
 }

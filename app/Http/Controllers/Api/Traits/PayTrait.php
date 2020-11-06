@@ -19,22 +19,20 @@ use Illuminate\Support\Str;
 trait PayTrait
 {
   /**
-   * @param WeChatRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
    * @throws \Throwable
    */
-  public function pay(WeChatRequest $request)
+  public function pay()
   {
-    $user_coupon_id = $request->input('user_coupon_id');
+    $user_coupon_id = request()->input('user_coupon_id');
+    $userData = User::getUserData();
+    $userAuthData = $userData->auth;
+    $total_amount = $this->getPayAmount();
+    $coupon_amount = (new UserCoupon())->getUsableCouponAmount($user_coupon_id);
+    $cash_amount = $total_amount - $coupon_amount;
+    $cash_amount = $cash_amount > 0 ? $cash_amount : 0;
     DB::beginTransaction();
     try {
-      $userData = User::getUserData();
-      $userAuthData = $userData->auth;
-      $total_amount = $this->getPayAmount();
-      $coupon_amount = (new UserCoupon())->getUsableCouponAmount($user_coupon_id);
-      $cash_amount = $total_amount - $coupon_amount;
-      $cash_amount = $cash_amount > 0 ? $cash_amount : 0;
-
       $infoData = $this->getModelData();
       /**
        * @var UserOrder $userOrderData
@@ -48,18 +46,23 @@ trait PayTrait
       ]);
 
       if ($cash_amount > 0) {
-        $app = app('wechat.payment');
-        $order = $app->order->unify([
-          'body' => '查看联系方式',
-          'out_trade_no' => $userOrderData->id,
-          'total_fee' => $userOrderData->total_amount * 100,
-          'trade_type' => 'JSAPI',
-          'openid' => $userAuthData->wx_openid,
-          'notify_url' => $this->getNotifyUrl()
-        ]);
-        $config = $app->jssdk->sdkConfig($order['prepay_id']);
-        DB::commit();
-        return $this->setParams($config)->success('获取支付配置成功');
+        if ($userAuthData && $userAuthData->wx_openid) {
+          $app = app('wechat.payment');
+          $order = $app->order->unify([
+            'body' => '查看联系方式',
+            'out_trade_no' => $userOrderData->id,
+            'total_fee' => $userOrderData->total_amount * 100,
+            'trade_type' => 'JSAPI',
+            'openid' => $userAuthData->wx_openid,
+            'notify_url' => $this->getNotifyUrl()
+          ]);
+          $config = $app->jssdk->sdkConfig($order['prepay_id']);
+          DB::commit();
+          return $this->setParams($config)->success('获取支付配置成功');
+        } else {
+          DB::rollBack();
+          return $this->error('支付失败');
+        }
       } else {
         $userOrderData->paySuccess();
         $userOrderData->user_orderable->payCallback($userOrderData);
@@ -122,6 +125,23 @@ trait PayTrait
     });
   }
 
+  public function getContacts()
+  {
+    $infoData = $this->getModelData();
+    $isPay = $infoData->user_order()
+      ->where('user_id', User::getUserId())
+      ->where('pay_status', UserOrder::getPayStatusValue(2, '已支付'))
+      ->exists();
+    if ($isPay) {
+      return $this->setParams([
+        'phone' => $infoData->phone,
+        'contacts' => $infoData->contacts
+      ])->success();
+    } else {
+      return $this->error();
+    }
+  }
+
   /**
    * @return float
    */
@@ -140,7 +160,7 @@ trait PayTrait
    */
   private function getNotifyUrl () {
     $modelPath = $this->getModelPath();
-    $snakeType = Str::snake($modelPath);
+    $snakeType = Str::of($modelPath)->basename()->snake();
     return env('APP_URL').'/api/'.$snakeType.'/pay_callback';
   }
 }
