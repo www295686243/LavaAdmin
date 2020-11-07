@@ -239,15 +239,19 @@ class User extends Authenticatable
 
   /**
    * @param int $user_id
-   * @return User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|null
+   * @return User|\App\Models\Api\User|\App\Models\Admin\User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
    */
   public static function getUserData($user_id = 0)
   {
-    $user_id = $user_id ?: static::getUserId();
     if ($user_id) {
       return static::where('id', $user_id)->firstOrFail();
     } else {
-      return null;
+      $_this = new static();
+      $guard_name = $_this->guard_name;
+      if (!$guard_name) {
+        $guard_name = $_this->getPrefix();
+      }
+      return auth($guard_name)->user();
     }
   }
 
@@ -256,7 +260,7 @@ class User extends Authenticatable
    */
   public static function getUserId()
   {
-    $_this = new self();
+    $_this = new static();
     $guard_name = $_this->guard_name;
     if (!$guard_name) {
       $guard_name = $_this->getPrefix();

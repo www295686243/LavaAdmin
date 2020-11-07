@@ -51,6 +51,8 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('user/setInviteUser', [UserController::class, 'setInviteUser']);
   Route::get('user/checkOfficialAccounts', [UserController::class, 'checkOfficialAccounts']);
   Route::post('user/baseInfoUpdate', [UserController::class, 'baseInfoUpdate']);
+  Route::get('user/isFreeForLimitedTime', [UserController::class, 'isFreeForLimitedTime']);
+
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['show', 'store']);
   Route::apiResource('user_enterprise_auth', UserEnterpriseAuthController::class)->only(['show', 'store']);
   Route::post('user_personal/check', [UserPersonalController::class, 'check']);

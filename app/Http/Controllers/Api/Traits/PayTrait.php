@@ -27,10 +27,11 @@ trait PayTrait
     $user_coupon_id = request()->input('user_coupon_id');
     $userData = User::getUserData();
     $userAuthData = $userData->auth;
-    $total_amount = $this->getPayAmount();
+    $total_amount = $this->getPayAmount($userData);
     $coupon_amount = (new UserCoupon())->getUsableCouponAmount($user_coupon_id);
     $cash_amount = $total_amount - $coupon_amount;
     $cash_amount = $cash_amount > 0 ? $cash_amount : 0;
+
     DB::beginTransaction();
     try {
       $infoData = $this->getModelData();
@@ -60,8 +61,7 @@ trait PayTrait
           DB::commit();
           return $this->setParams($config)->success('获取支付配置成功');
         } else {
-          DB::rollBack();
-          return $this->error('支付失败');
+          throw new \Exception('支付失败');
         }
       } else {
         $userOrderData->paySuccess();
@@ -143,16 +143,21 @@ trait PayTrait
   }
 
   /**
-   * @return float
+   * @param User $userData
+   * @return float|int
    */
-  private function getPayAmount()
+  private function getPayAmount($userData)
   {
     /**
      * @var Base $modelPath
      */
-    $modelPath = $this->getModelPath();
-    $amount = $modelPath::getConfigValue('amount');
-    return floatval($amount);
+    if ($userData->isFreeForLimitedTime()) {
+      return 0;
+    } else {
+      $modelPath = $this->getModelPath();
+      $amount = $modelPath::getConfigValue('amount');
+      return floatval($amount);
+    }
   }
 
   /**

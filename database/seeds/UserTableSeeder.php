@@ -30,13 +30,13 @@ class UserTableSeeder extends Seeder
       'password' => '111111',
       'phone' => '11111111111'
     ]);
-    $user->syncRoles(['General Member', 'Enterprise Member']);
+    $user->syncRoles(['General Member']);
     $user2 = \App\Models\Api\User::createUser([
       'username' => 'wanxin2',
       'nickname' => '求职者',
       'password' => '111111',
       'phone' => '11111111112'
     ]);
-    $user2->syncRoles(['General Member', 'Personal Member']);
+    $user2->syncRoles(['General Member']);
   }
 }

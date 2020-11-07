@@ -2,6 +2,8 @@
 
 namespace App\Models\Api;
 
+use App\Models\Info\Hr\HrJob;
+
 /**
  * App\Models\Api\User
  *
@@ -57,4 +59,26 @@ class User extends \App\Models\User\User
    * @var string
    */
   protected $guard_name = 'api';
+
+  /**
+   * @param int $userId
+   * @return bool
+   */
+  public function isPublishHrJob($userId = 0)
+  {
+    $userId = $userId ?: $this->id;
+    return HrJob::where('user_id', $userId)
+      ->where('status', HrJob::getStatusValue(1, '已发布'))
+      ->exists();
+  }
+
+  /**
+   * @param string $_model
+   * @return bool
+   */
+  public function isFreeForLimitedTime($_model = '')
+  {
+    $_model = $_model ?: request()->input('_model');
+    return $_model === 'Info/Hr/HrResume' && $this->hasRole('Enterprise Member') && $this->isPublishHrJob();
+  }
 }
