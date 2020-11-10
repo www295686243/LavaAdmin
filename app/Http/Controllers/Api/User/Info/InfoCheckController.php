@@ -19,7 +19,17 @@ class InfoCheckController extends Controller
       ->where('info_checkable_type', $this->getModelPath())
       ->where('status', '!=', InfoCheck::getStatusValue(2, '已通过'))
       ->orderByDesc('id')
-      ->get();
+      ->simplePagination();
+    return $this->setParams($data)->success();
+  }
+
+  /**
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function show($id)
+  {
+    $data = InfoCheck::findOrAuth($id);
     return $this->setParams($data)->success();
   }
 

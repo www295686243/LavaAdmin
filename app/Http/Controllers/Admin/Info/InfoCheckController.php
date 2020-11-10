@@ -59,7 +59,9 @@ class InfoCheckController extends Controller
          */
         $modelPath = $infoCheckData->info_checkable_type;
         $Model = new $modelPath();
-        $id = $Model->createOrUpdateData($infoCheckData->contents, $infoCheckData->info_checkable_id);
+        $input = $infoCheckData->contents;
+        $input['user_id'] = $infoCheckData->user_id;
+        $id = $Model->createOrUpdateData($input, $infoCheckData->info_checkable_id);
         $infoCheckData->info_checkable_id = $id;
       } else if ($checkStatus === InfoCheck::getStatusValue(3, '已拒绝')) {
         $infoCheckData->refuse_reason = $refuseReason;

@@ -134,7 +134,7 @@ class HrResume extends Base
    */
   public function createOrUpdateData($input, $id = 0)
   {
-    $input['status'] = optional($input)['status'] ?? self::getStatusValue(1, '已发布');
+    $input['status'] = optional($input)['status'] ?: self::getStatusValue(1, '已发布');
     $input['intro'] = $input['description'] ? mb_substr($input['description'], 0, 60) : '';
     $input['refresh_at'] = date('Y-m-d H:i:s');
     if ($id) {

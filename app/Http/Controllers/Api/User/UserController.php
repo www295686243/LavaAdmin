@@ -42,18 +42,13 @@ class UserController extends Controller
   public function getUserInfo($message = '')
   {
     $userData = User::getUserData();
-    $permissions = $userData->getInterfacePermissions();
-    $roles = $userData->roles()->get(['name', 'display_name'])->makeHidden('pivot');
-    $userData->makeHidden('roles', 'permissions');
+    $userData->getInterfacePermissions();
+    $userData->roles()->get(['name', 'display_name'])->makeHidden('pivot');
     if ($message === '每日登陆') {
       $userData->last_login_at = date('Y-m-d H:i:s');
       $userData->save();
     }
-    return $this->setParams([
-      'user' => $userData,
-      'roles' => $roles,
-      'permissions' =>$permissions
-    ])->success($message);
+    return $this->setParams($userData)->success($message);
   }
 
   /**

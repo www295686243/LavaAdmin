@@ -24,6 +24,7 @@ class CreateInfoChecksTable extends Migration
       $table->string('refuse_reason', 255)->comment('拒绝原因')->nullable();
 
       $table->timestamps();
+      $table->softDeletes();
 
       $table->index('user_id');
     });

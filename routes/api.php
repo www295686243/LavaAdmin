@@ -74,10 +74,14 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('hr_job/getContacts', [\App\Http\Controllers\Api\Info\HrJobController::class, 'getContacts']);
   Route::get('hr_resume/getContacts', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'getContacts']);
   // 信息
-  Route::apiResource('news', NewsController::class)->only(['index']);
-  Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'destroy']);
+  Route::post('user/hr_job/refreshUpdateAt', [HrJobController::class, 'refreshUpdateAt']);
+  Route::post('user/hr_job/updateDisable', [HrJobController::class, 'updateDisable']);
+  Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
   Route::apiResource('hr_job', \App\Http\Controllers\Api\Info\HrJobController::class)->only(['index', 'show']);
-  Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'destroy']);
+
+  Route::post('user/hr_resume/refreshUpdateAt', [HrResumeController::class, 'refreshUpdateAt']);
+  Route::post('user/hr_resume/updateDisable', [HrResumeController::class, 'updateDisable']);
+  Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
   Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);
@@ -91,7 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('coupon_order', CouponOrderController::class)->only(['store']);
 
   // 信息审核
-  Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'destroy']);
+  Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'show', 'destroy']);
   // 信息投诉
   Route::get('info_complaint/getInfoComplaint', [InfoComplaintController::class, 'getInfoComplaint']);
   Route::apiResource('info_complaint', InfoComplaintController::class)->only(['store']);

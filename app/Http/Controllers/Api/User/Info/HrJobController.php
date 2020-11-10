@@ -35,13 +35,40 @@ class HrJobController extends Controller
   }
 
   /**
+   * @param HrJobRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
-  public function show($id)
+  public function show(HrJobRequest $request, $id)
   {
-    $data = HrJob::findOrAuth($id);
+    $check = $request->input('_check');
+    if ($check) {
+      $infoCheckData = InfoCheck::findOrAuth($id);
+      $data = $infoCheckData->contents;
+    } else {
+      $data = HrJob::findOrAuth($id);
+      $subData = $data->info_sub()->first();
+      $data->description = $subData->description;
+    }
     return $this->setParams($data)->success();
+  }
+
+  /**
+   * @param HrJobRequest $request
+   * @param $id
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function update(HrJobRequest $request, $id)
+  {
+    $check = $request->input('_check');
+    $input = $request->getAll();
+    if ($check) {
+      InfoCheck::updateInfo($input, $id);
+    } else {
+      $input['_model'] = HrJob::class;
+      InfoCheck::createInfo($input);
+    }
+    return $this->success('职位已提交成功，请等待管理员审核!');
   }
 
   /**
@@ -52,5 +79,33 @@ class HrJobController extends Controller
   {
     $data = HrJob::findOrAuth($id);
     return $data->delete() ? $this->success() : $this->error();
+  }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function updateDisable(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $data = HrJob::findOrAuth($id);
+    if (!($data->status === HrJob::getStatusValue(1, '已发布') || $data->status === HrJob::getStatusValue(3, '已下架'))) {
+      return $this->error('状态错误');
+    }
+    $data->status = $data->status === HrJob::getStatusValue(3, '已下架') ? HrJob::getStatusValue(1, '已发布') : HrJob::getStatusValue(3, '已下架');
+    return $data->save() ? $this->setParams(['status' => $data->status])->success($data->status === HrJob::getStatusValue(1, '已发布') ? '上架成功': '下架成功') : $this->error();
+  }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function refreshUpdateAt(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $Job = HrJob::findOrAuth($id);
+    $Job->refresh_at = date('Y-m-d H:i:s');
+    $Job->save();
+    return $this->success('刷新成功');
   }
 }
