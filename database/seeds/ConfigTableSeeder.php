@@ -61,25 +61,30 @@ class ConfigTableSeeder extends Seeder
     $this->createOptions('Info/InfoComplaint:complaint_type', '投诉类型', ['已招到', '中介', '电话有误', '其他']);
     $this->createOptions('	Info/InfoProvide:status', '信息提供状态', ['待审核', '已发布', '中介', '已招到', '面试中', '不需要', '未接通', '电话错', '态度差', '正在忙', '已关机', '挂电话', '难沟通']);
     $this->createOptions('_global:task_rule_name', '任务规则', [
-      ['display_name' => '分享-新用户访问', 'name' => 'register_view'],
-      ['display_name' => '分享-用户访问', 'name' => 'view'],
+      ['display_name' => '分享简历-新用户访问', 'name' => 'share_resume_register_view'],
+      ['display_name' => '分享职位-新用户访问', 'name' => 'share_job_register_view'],
+      ['display_name' => '分享简历-用户访问', 'name' => 'share_resume_view'],
+      ['display_name' => '分享职位-用户访问', 'name' => 'share_job_view'],
       ['display_name' => '关注公众号', 'name' => 'follow_we_chat'],
       ['display_name' => '绑定手机号', 'name' => 'bind_phone'],
-      ['display_name' => '完善个人简历资料', 'name' => 'perfect_user_info'],
+      ['display_name' => '完善个人资料', 'name' => 'perfect_personal_info'],
+      ['display_name' => '完善企业资料', 'name' => 'perfect_enterprise_info'],
       ['display_name' => '企业每天登录', 'name' => 'enterprise_every_day_login'],
       ['display_name' => '个人每天登录', 'name' => 'personal_every_day_login'],
       ['display_name' => '邀请加入', 'name' => 'invite_user'],
     ]);
     $this->createOptions('Task/Task:task_name', '任务标识', [
-      ['display_name' => '分享', 'name' => 'share'],
+      ['display_name' => '分享信息', 'name' => 'share'],
       ['display_name' => '关注公众号', 'name' => 'follow_we_chat'],
       ['display_name' => '绑定手机号', 'name' => 'bind_phone'],
-      ['display_name' => '完善个人简历资料', 'name' => 'perfect_user_info'],
-      ['display_name' => '企业每天登录', 'name' => 'enterprise_every_day_login'],
+      ['display_name' => '完善个人资料', 'name' => 'perfect_personal_info'],
+      ['display_name' => '完善企业资料', 'name' => 'perfect_enterprise_info'],
       ['display_name' => '个人每天登录', 'name' => 'personal_every_day_login'],
+      ['display_name' => '企业每天登录', 'name' => 'enterprise_every_day_login'],
       ['display_name' => '邀请加入', 'name' => 'invite_user'],
     ]);
-    $this->createOptions('_global:task_type', '任务模式', ['联合任务', '可选任务', '阶梯任务']);
+    $this->createOptions('_global:task_mode', '任务模式', ['联合任务', '可选任务', '阶梯任务']);
+    $this->createOptions('Task/Task:task_type', '任务类型', ['通用任务', '个人任务', '企业任务']);
     $this->createOptions('Coupon/CouponMarket:status', '出售状态', ['出售中', '待支付', '已出售', '已下架', '已撤回']);
     $this->createOptions('Coupon/CouponOrder:payment', '支付方式', ['微信', '余额']);
     $this->createOptions('Coupon/CouponOrder:pay_status', '支付状态', ['未支付', [

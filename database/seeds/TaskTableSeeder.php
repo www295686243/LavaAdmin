@@ -14,29 +14,43 @@ class TaskTableSeeder extends Seeder
     $hrJobCoupon = \App\Models\Coupon\CouponTemplate::where('display_name', '求职券')->first();
     $hrResumeCoupon = \App\Models\Coupon\CouponTemplate::where('display_name', '招聘券')->first();
     $hrCoupon = \App\Models\Coupon\CouponTemplate::where('display_name', '通用券')->first();
+
     $taskData = \App\Models\Task\Task::create([
-      'title' => '信息分享',
-      'desc' => '分享信息后被1个新用户查看获得1张通用券',
-      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 1, '分享任务'),
-      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '联合任务'),
-      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id]]
+      'title' => '分享信息',
+      'desc' => '分享简历被1个以上新用户查看获得1张求职券，分享招聘被1个以上新用户查看获得1张招聘券',
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 1, '分享信息'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 2, '可选任务'),
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '通用任务'),
     ]);
-    $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 1, '新用户访问'),
-      'operator' => '>=',
-      'target_number' => 1,
-      'task_interface' => 'Api\Info\InfoViewController@store'
+    $taskData->task_rule()->createMany([
+      [
+        'title' => '分享简历',
+        'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 1, '分享简历-新用户访问'),
+        'operator' => '>=',
+        'target_number' => 1,
+        'task_interface' => 'Api\Info\HrResumeController@view',
+        'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id]]
+      ],
+      [
+        'title' => '分享职位',
+        'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 2, '分享职位-新用户访问'),
+        'operator' => '>=',
+        'target_number' => 1,
+        'task_interface' => 'Api\Info\HrJobController@view',
+        'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
+      ]
     ]);
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '关注公众号',
       'desc' => '首次关注公众号，奖励2张求职券和招聘券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 2, '关注公众号'),
-      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '联合任务'),
-      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 2, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id], ["amount" => 3, "expiry_day" => 30, "give_number" => 2, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 2, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id], ["amount" => 3, "expiry_day" => 30, "give_number" => 2, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]],
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '通用任务'),
     ]);
     $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 3, '关注公众号'),
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 5, '关注公众号'),
       'operator' => '>=',
       'target_number' => 1
     ]);
@@ -45,53 +59,72 @@ class TaskTableSeeder extends Seeder
       'title' => '绑定手机号',
       'desc' => '首次注册绑定手机号，奖励3张求职券和招聘券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 3, '绑定手机号'),
-      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '联合任务'),
-      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id], ["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id], ["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]],
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '通用任务'),
     ]);
     $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 4, '绑定手机号'),
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 6, '绑定手机号'),
       'operator' => '>=',
       'target_number' => 1,
       'task_interface' => 'Api\User\UserController@bindPhone'
     ]);
 
     $taskData = \App\Models\Task\Task::create([
-      'title' => '完善个人简历资料',
-      'desc' => '完善个人简历资料，奖励3张求职券',
-      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 4, '完善个人简历资料'),
-      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '联合任务'),
+      'title' => '完善个人资料',
+      'desc' => '完善个人资料奖励3张求职券，企业完善资料奖励3张招聘券',
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 4, '完善个人资料'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 2, '个人任务'),
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id]]
     ]);
     $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 5, '完善个人简历资料'),
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 7, '完善个人资料'),
       'operator' => '>=',
       'target_number' => 1,
       'task_interface' => 'Admin\Info\InfoCheckController@update'
     ]);
 
     $taskData = \App\Models\Task\Task::create([
-      'title' => '企业每天登录',
-      'desc' => '每天首次登录，奖励1张招聘券',
-      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 5, '企业每天登录'),
-      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '联合任务'),
+      'title' => '完善企业资料',
+      'desc' => '完善企业资料奖励3张招聘券',
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 5, '完善资料'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 3, '企业任务'),
+      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
+    ]);
+    $taskData->task_rule()->create([
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 8, '完善企业资料'),
+      'operator' => '>=',
+      'target_number' => 1,
+      'task_interface' => 'Admin\Info\InfoCheckController@update'
+    ]);
+
+    $taskData = \App\Models\Task\Task::create([
+      'title' => '个人每天登录',
+      'desc' => '个人每天登录奖励1张求职券',
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 6, '个人每天登录'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 2, '个人任务'),
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id]]
     ]);
     $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 6, '企业每天登录'),
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 10, '个人每天登录'),
       'operator' => '>=',
       'target_number' => 1,
       'task_interface' => 'Api\User\UserController@todayFirstLogin'
     ]);
 
     $taskData = \App\Models\Task\Task::create([
-      'title' => '个人每天登录',
-      'desc' => '每天首次登录，奖励1张求职券',
-      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 6, '个人每天登录'),
-      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '联合任务'),
+      'title' => '企业每天登录',
+      'desc' => '企业每天登录奖励1张招聘券',
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 7, '企业每天登录'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 3, '企业任务'),
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
     ]);
     $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 7, '个人每天登录'),
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 9, '企业每天登录'),
       'operator' => '>=',
       'target_number' => 1,
       'task_interface' => 'Api\User\UserController@todayFirstLogin'
@@ -100,12 +133,13 @@ class TaskTableSeeder extends Seeder
     $taskData = \App\Models\Task\Task::create([
       'title' => '邀请加入',
       'desc' => '邀请注册成功后获得1张通用券',
-      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 7, '邀请加入'),
-      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '联合任务'),
-      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]]
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 8, '邀请加入'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]],
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '通用任务'),
     ]);
     $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 8, '邀请加入'),
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 11, '邀请加入'),
       'operator' => '>=',
       'target_number' => 1,
       'task_interface' => 'Api\User\UserController@setInviteUser'

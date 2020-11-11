@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\UserCouponController;
 use App\Http\Controllers\Api\User\UserEnterpriseAuthController;
 use App\Http\Controllers\Api\User\UserEnterpriseController;
+use App\Http\Controllers\Api\User\UserOrderController;
 use App\Http\Controllers\Api\User\UserPersonalAuthController;
 use App\Http\Controllers\Api\User\UserPersonalController;
 use Illuminate\Support\Facades\Route;
@@ -77,11 +78,13 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('user/hr_job/refreshUpdateAt', [HrJobController::class, 'refreshUpdateAt']);
   Route::post('user/hr_job/updateDisable', [HrJobController::class, 'updateDisable']);
   Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
+  Route::get('hr_job/view', [\App\Http\Controllers\Api\Info\HrJobController::class, 'view']);
   Route::apiResource('hr_job', \App\Http\Controllers\Api\Info\HrJobController::class)->only(['index', 'show']);
 
   Route::post('user/hr_resume/refreshUpdateAt', [HrResumeController::class, 'refreshUpdateAt']);
   Route::post('user/hr_resume/updateDisable', [HrResumeController::class, 'updateDisable']);
   Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
+  Route::get('hr_resume/view', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'view']);
   Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);
@@ -104,8 +107,8 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index', 'store', 'show']);
   // 任务记录
   Route::apiResource('task_record', TaskRecordController::class)->only(['store']);
-  // 信息访问
-  Route::apiResource('info_view', InfoViewController::class)->only(['store']);
+  // 查看订单
+  Route::apiResource('user_order', UserOrderController::class)->only(['index']);
 });
 
 // 支付回调 为了在chart表中区别是支付哪些信息类型的

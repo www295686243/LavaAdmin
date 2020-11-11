@@ -17,6 +17,7 @@ class CreateTaskRulesTable extends Migration
       $table->id();
       $table->unsignedBigInteger('task_id')->comment('任务id');
       $table->unsignedInteger('task_rule_name')->comment('任务规则标识(看配置表)');
+      $table->string('title', 60)->comment('子任务标题')->nullable();
       $table->string('operator', 10)->comment('任务条件(>=、>、=、<等等)');
       $table->unsignedInteger('target_number')->comment('目标数量')->default(0);
       $table->string('task_interface', 255)->comment('任务接口')->nullable();
