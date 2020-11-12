@@ -14,6 +14,7 @@ class TaskRecord extends Base
     'title',
     'task_recordable_type',
     'task_recordable_id',
+    'task_name',
     'task_mode',
     'task_type',
     'rewards',
@@ -61,7 +62,7 @@ class TaskRecord extends Base
         $taskRuleRecord->is_complete = 1;
         $taskRuleRecord->task_complete_time = date('Y-m-d H:i:s');
         $taskRuleRecord->save();
-        if ($this->task_mode === 3) {
+        if ($taskRuleRecord->rewards) {
           $taskRuleRecordOption = TaskRuleRecord::getOptionsItem('task_rule_name', $taskRuleRecord->task_rule_name);
           CouponTemplate::giveManyCoupons($this->user_id, $taskRuleRecord->rewards, $this->title.'-'.$taskRuleRecordOption->display_name);
         }
@@ -78,7 +79,7 @@ class TaskRecord extends Base
       });
     }
     if ($result) {
-      if ($this->task_mode === 1 || $this->task_mode === 2) {
+      if (($this->task_mode === 1 || $this->task_mode === 2) && $this->rewards) {
         CouponTemplate::giveManyCoupons($this->user_id, $this->rewards, $this->title);
       }
       $this->is_complete = $result;

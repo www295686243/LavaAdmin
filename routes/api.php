@@ -108,6 +108,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('info_delivery/getInfoList', [InfoDeliveryController::class, 'getInfoList']);
   Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index', 'store', 'show']);
   // 任务记录
+  Route::get('task_record/shareIndex', [TaskRecordController::class, 'shareIndex']);
   Route::apiResource('task_record', TaskRecordController::class)->only(['index']);
   // 查看订单
   Route::apiResource('user_order', UserOrderController::class)->only(['index']);

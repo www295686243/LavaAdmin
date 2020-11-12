@@ -3,14 +3,16 @@
 namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\Task\TaskRecordRequest;
 use App\Models\Api\User;
+use App\Models\Task\Task;
 use App\Models\Task\TaskRecord;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class TaskRecordController extends Controller
 {
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function index()
   {
     $data = TaskRecord::where('user_id', User::getUserId())
@@ -22,6 +24,20 @@ class TaskRecordController extends Controller
           });
       })
       ->get();
+    return $this->setParams($data)->success();
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function shareIndex()
+  {
+    $taskData = Task::where('task_name', Task::getOptionsValue('task_name', 1, '分享信息'))
+      ->firstOrFail();
+    $data = TaskRecord::with('task_rule_record', 'task_recordable:id,title')
+      ->where('user_id', User::getUserId())
+      ->where('task_id', $taskData->id)
+      ->simplePagination();
     return $this->setParams($data)->success();
   }
 }

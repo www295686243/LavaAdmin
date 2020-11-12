@@ -27,6 +27,7 @@ trait BindPhoneTraits {
         'user_id' => User::getUserId(),
         'task_id' => $taskData->id,
         'title' => $taskData->title,
+        'task_name' => $taskData->task_name,
         'task_mode' => $taskData->task_mode,
         'task_type' => $taskData->task_type,
         'rewards' => $taskData->rewards

@@ -42,6 +42,7 @@ trait ShareTraits {
           'user_id' => $share_user_id,
           'task_id' => $taskData->id,
           'title' => $taskData->title,
+          'task_name' => $taskData->task_name,
           'task_mode' => $taskData->task_mode,
           'task_type' => $taskData->task_type,
           'rewards' => $taskData->rewards
