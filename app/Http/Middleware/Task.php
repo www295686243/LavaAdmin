@@ -12,6 +12,7 @@ class Task
    * @param Request $request
    * @param Closure $next
    * @return mixed
+   * @throws \Throwable
    */
   public function handle(Request $request, Closure $next)
   {

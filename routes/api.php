@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Coupon\CouponMarketController;
 use App\Http\Controllers\Api\Coupon\CouponOrderController;
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoComplaintController;
+use App\Http\Controllers\Api\Info\InfoProvideController;
 use App\Http\Controllers\Api\Info\InfoViewController;
 use App\Http\Controllers\Api\Task\TaskRecordController;
 use App\Http\Controllers\Api\User\Info\HrJobController;
@@ -107,9 +108,11 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('info_delivery/getInfoList', [InfoDeliveryController::class, 'getInfoList']);
   Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index', 'store', 'show']);
   // 任务记录
-  Route::apiResource('task_record', TaskRecordController::class)->only(['store']);
+  Route::apiResource('task_record', TaskRecordController::class)->only(['index']);
   // 查看订单
   Route::apiResource('user_order', UserOrderController::class)->only(['index']);
+  // 信息提供
+  Route::apiResource('info_provide', InfoProvideController::class)->only(['store']);
 });
 
 // 支付回调 为了在chart表中区别是支付哪些信息类型的

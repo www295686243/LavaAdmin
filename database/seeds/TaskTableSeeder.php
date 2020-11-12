@@ -17,7 +17,7 @@ class TaskTableSeeder extends Seeder
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '分享信息',
-      'desc' => '分享简历被1个以上新用户查看获得1张求职券，分享招聘被1个以上新用户查看获得1张招聘券',
+      'desc' => '1个新用户点击，即可获得1张互助券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 1, '分享信息'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 2, '可选任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '通用任务'),
@@ -72,7 +72,7 @@ class TaskTableSeeder extends Seeder
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '完善个人资料',
-      'desc' => '完善个人资料奖励3张求职券',
+      'desc' => '奖励3张求职券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 4, '完善个人资料'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 2, '个人任务'),
@@ -82,12 +82,12 @@ class TaskTableSeeder extends Seeder
       'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 7, '完善个人资料'),
       'operator' => '>=',
       'target_number' => 1,
-      'task_interface' => 'Admin\Info\InfoCheckController@update'
+      'task_interface' => 'Admin\Info\InfoCheckController@update,Api\User\UserPersonalController@check'
     ]);
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '完善企业资料',
-      'desc' => '完善企业资料奖励3张招聘券',
+      'desc' => '奖励3张招聘券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 5, '完善资料'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 3, '企业任务'),
@@ -97,12 +97,12 @@ class TaskTableSeeder extends Seeder
       'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 8, '完善企业资料'),
       'operator' => '>=',
       'target_number' => 1,
-      'task_interface' => 'Admin\Info\InfoCheckController@update'
+      'task_interface' => 'Admin\Info\InfoCheckController@update,Api\User\UserEnterpriseController@update'
     ]);
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '个人每天登录',
-      'desc' => '个人每天登录奖励1张求职券',
+      'desc' => '发布简历并完善资料后每天登录奖励1张求职券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 6, '个人每天登录'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 2, '个人任务'),
@@ -117,7 +117,7 @@ class TaskTableSeeder extends Seeder
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '企业每天登录',
-      'desc' => '企业每天登录奖励1张招聘券',
+      'desc' => '发布职位并完善资料后每天登录奖励1张招聘券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 7, '企业每天登录'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 3, '企业任务'),
@@ -140,6 +140,21 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 11, '邀请加入'),
+      'operator' => '>=',
+      'target_number' => 1,
+      'task_interface' => 'Api\User\UserController@setInviteUser'
+    ]);
+
+    $taskData = \App\Models\Task\Task::create([
+      'title' => '提供信息',
+      'desc' => '提供职位信息可获得互助券1张',
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 9, '邀请加入'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
+      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]],
+      'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '通用任务'),
+    ]);
+    $taskData->task_rule()->create([
+      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 12, '提供信息'),
       'operator' => '>=',
       'target_number' => 1,
       'task_interface' => 'Api\User\UserController@setInviteUser'

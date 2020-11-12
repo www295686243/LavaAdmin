@@ -72,6 +72,7 @@ class ConfigTableSeeder extends Seeder
       ['display_name' => '企业每天登录', 'name' => 'enterprise_every_day_login'],
       ['display_name' => '个人每天登录', 'name' => 'personal_every_day_login'],
       ['display_name' => '邀请加入', 'name' => 'invite_user'],
+      ['display_name' => '提供信息', 'name' => 'provide_info'],
     ]);
     $this->createOptions('Task/Task:task_name', '任务标识', [
       ['display_name' => '分享信息', 'name' => 'share'],
@@ -82,6 +83,7 @@ class ConfigTableSeeder extends Seeder
       ['display_name' => '个人每天登录', 'name' => 'personal_every_day_login'],
       ['display_name' => '企业每天登录', 'name' => 'enterprise_every_day_login'],
       ['display_name' => '邀请加入', 'name' => 'invite_user'],
+      ['display_name' => '提供信息', 'name' => 'provide_info'],
     ]);
     $this->createOptions('_global:task_mode', '任务模式', ['联合任务', '可选任务', '阶梯任务']);
     $this->createOptions('Task/Task:task_type', '任务类型', ['通用任务', '个人任务', '企业任务']);
@@ -118,7 +120,7 @@ class ConfigTableSeeder extends Seeder
     })->toArray();
     $Config = new \App\Models\Config();
     $configData = $Config->create([
-      'name' => $name,
+      'name' => trim($name),
       'display_name' => $display_name,
       'guard_name' => 'options'
     ]);
