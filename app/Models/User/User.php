@@ -103,6 +103,7 @@ class User extends Authenticatable
     'phone',
     'head_url',
     'city',
+    'current_role',
     'is_follow_official_account',
     'follow_official_account_scene',
     'password',

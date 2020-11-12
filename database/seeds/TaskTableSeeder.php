@@ -72,7 +72,7 @@ class TaskTableSeeder extends Seeder
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '完善个人资料',
-      'desc' => '完善个人资料奖励3张求职券，企业完善资料奖励3张招聘券',
+      'desc' => '完善个人资料奖励3张求职券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 4, '完善个人资料'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 2, '个人任务'),

@@ -207,17 +207,21 @@ class UserController extends Controller
    */
   public function baseInfoUpdate(UserRequest $request)
   {
-    $input = $request->only(['role', 'industry', 'industry_attr', 'position_attr', 'city']);
+    $input = $request->only(['role', 'name', 'company', 'industry', 'industry_attr', 'position_attr', 'city']);
     $userData = User::getUserData();
-    $userData->assignRole($input['role']);
 
     DB::beginTransaction();
     try {
       if ($input['role'] === 'Enterprise Member') {
+        $userData->assignRole($input['role']);
+        $userData->current_role = $input['role'];
         UserEnterprise::updateInfo($request->only(UserEnterprise::getUpdateFillable()));
       } else if ($input['role'] === 'Personal Member') {
+        $userData->assignRole($input['role']);
+        $userData->current_role = $input['role'];
         UserPersonal::updateInfo($request->only(UserPersonal::getUpdateFillable()));
       }
+      $userData->save();
       DB::commit();
       return $this->success();
     } catch (\Exception $e) {
@@ -235,5 +239,22 @@ class UserController extends Controller
     $userData = User::getUserData();
     $exists = $userData->isFreeForLimitedTime();
     return $exists ? $this->success() : $this->error();
+  }
+
+  /**
+   * @param UserRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function switchRole(UserRequest $request)
+  {
+    $role = $request->input('role');
+    $userData = User::getUserData();
+    if ($userData->hasRole($role)) {
+      $userData->current_role = $role;
+      $userData->save();
+      return $this->setParams($userData)->success();
+    } else {
+      return $this->error();
+    }
   }
 }
