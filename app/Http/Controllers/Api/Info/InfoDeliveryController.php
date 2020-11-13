@@ -34,7 +34,7 @@ class InfoDeliveryController extends Controller
   private function getSendInfo(InfoDeliveryRequest $request)
   {
     $receive_info_type = $this->getModelPath($request->input('receive_info_type'));
-    return InfoDelivery::with('receive_info:id,title')
+    return InfoDelivery::with('receive_info:id,title,status,end_time,company_name')
       ->where('send_user_id', User::getUserId())
       ->where('receive_info_type', $receive_info_type)
       ->orderByDesc('id')
@@ -48,7 +48,7 @@ class InfoDeliveryController extends Controller
   private function getReceiveInfo(InfoDeliveryRequest $request)
   {
     $send_info_type = $this->getModelPath($request->input('send_info_type'));
-    return InfoDelivery::with('send_info:id,title')
+    return InfoDelivery::with('send_info:id,title,status,end_time,contacts')
       ->where('receive_user_id', User::getUserId())
       ->where('send_info_type', $send_info_type)
       ->orderByDesc('id')

@@ -101,7 +101,7 @@ class TaskTableSeeder extends Seeder
     ]);
 
     $taskData = \App\Models\Task\Task::create([
-      'title' => '个人每天登录',
+      'title' => '每天登录',
       'desc' => '发布简历并完善资料后每天登录奖励1张求职券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 6, '个人每天登录'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
@@ -116,7 +116,7 @@ class TaskTableSeeder extends Seeder
     ]);
 
     $taskData = \App\Models\Task\Task::create([
-      'title' => '企业每天登录',
+      'title' => '每天登录',
       'desc' => '发布职位并完善资料后每天登录奖励1张招聘券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 7, '企业每天登录'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
