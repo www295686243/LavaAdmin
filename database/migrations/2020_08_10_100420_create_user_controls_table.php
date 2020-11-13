@@ -17,6 +17,8 @@ class CreateUserControlsTable extends Migration
       $table->id();
       $table->unsignedBigInteger('user_id');
       $table->unsignedTinyInteger('is_disable_all_push')->comment('是否关闭所有推送')->default(0);
+      $table->unsignedTinyInteger('is_open_resume_push')->comment('是否开启简历推送')->default(1);
+      $table->unsignedTinyInteger('is_open_job_push')->comment('是否开启职位推送')->default(1);
       $table->timestamps();
       $table->softDeletes();
 

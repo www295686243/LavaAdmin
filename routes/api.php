@@ -6,13 +6,13 @@ use App\Http\Controllers\Api\Coupon\CouponOrderController;
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoComplaintController;
 use App\Http\Controllers\Api\Info\InfoProvideController;
-use App\Http\Controllers\Api\Info\InfoViewController;
 use App\Http\Controllers\Api\Task\TaskRecordController;
 use App\Http\Controllers\Api\User\Info\HrJobController;
 use App\Http\Controllers\Api\User\Info\HrResumeController;
 use App\Http\Controllers\Api\User\Info\InfoCheckController;
 use App\Http\Controllers\Api\User\NotifyController;
 use App\Http\Controllers\Api\User\UserCashController;
+use App\Http\Controllers\Api\User\UserControlController;
 use App\Http\Controllers\Api\User\UserController;
 use App\Http\Controllers\Api\User\UserCouponController;
 use App\Http\Controllers\Api\User\UserEnterpriseAuthController;
@@ -63,6 +63,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('user_personal/check', [UserPersonalController::class, 'check']);
   Route::apiResource('user_personal', UserPersonalController::class)->only(['show', 'update']);
   Route::apiResource('user_enterprise', UserEnterpriseController::class)->only(['show', 'update']);
+  Route::apiResource('user_control', UserControlController::class)->only(['show', 'update']);
   Route::apiResource('user_cash', UserCashController::class)->only(['index', 'store', 'update']);
 
   Route::apiResource('image', ImageController::class)->only(['store']);

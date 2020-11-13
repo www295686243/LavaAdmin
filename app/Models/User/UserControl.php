@@ -11,7 +11,9 @@ class UserControl extends Base
 
   protected $fillable = [
     'user_id',
-    'is_disable_all_push'
+    'is_disable_all_push',
+    'is_open_resume_push',
+    'is_open_job_push'
   ];
 
   protected $hidden = [
