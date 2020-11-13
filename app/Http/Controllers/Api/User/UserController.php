@@ -187,6 +187,30 @@ class UserController extends Controller
   /**
    * @return \Illuminate\Http\JsonResponse
    */
+  public function getInviteList()
+  {
+    $invite_user_id = User::getUserId();
+    $data = User::select(['id', 'username', 'nickname', 'register_at', 'created_at'])
+      ->where('invite_user_id', $invite_user_id)
+      ->orderByDesc('id')
+      ->simplePaginate();
+    return $this->setParams($data)->success();
+  }
+
+  /**
+   * @param UserRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getInviteUser(UserRequest $request)
+  {
+    $invite_user_id = $request->input('iu');
+    $inviteUserData = User::getUserData($invite_user_id);
+    return $this->setParams(['nickname' => $inviteUserData->nickname])->success();
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
   public function checkOfficialAccounts()
   {
     if (env('APP_ENV') === 'dev') {

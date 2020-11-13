@@ -51,6 +51,8 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('user/getWallet', [UserController::class, 'getWallet']);
   Route::get('user/getBill', [UserController::class, 'getBill']);
   Route::post('user/setInviteUser', [UserController::class, 'setInviteUser']);
+  Route::get('user/getInviteList', [UserController::class, 'getInviteList']);
+  Route::get('user/getInviteUser', [UserController::class, 'getInviteUser']);
   Route::get('user/checkOfficialAccounts', [UserController::class, 'checkOfficialAccounts']);
   Route::post('user/baseInfoUpdate', [UserController::class, 'baseInfoUpdate']);
   Route::get('user/isFreeForLimitedTime', [UserController::class, 'isFreeForLimitedTime']);
