@@ -47,6 +47,16 @@ class RoleTableSeeder extends Seeder
         'name' => 'Enterprise Member',
         'display_name' => '企业会员',
         'guard_name' => 'api'
+      ],
+      [
+        'name' => 'Personal Auth',
+        'display_name' => '个人认证',
+        'guard_name' => 'api'
+      ],
+      [
+        'name' => 'Enterprise Auth',
+        'display_name' => '企业认证',
+        'guard_name' => 'api'
       ]
     ];
 

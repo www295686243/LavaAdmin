@@ -63,7 +63,7 @@ class UserPersonalAuthController extends Controller
         $userPersonalData->address = $authData->address;
         $userPersonalData->intro = $authData->intro;
         $userPersonalData->save();
-        $userData->assignRole('Personal Member');
+        $userData->assignRole('Personal Auth');
       } else if ($status === $notPass) {
         $authData->refuse_reason = $request->input('refuse_reason');
       }

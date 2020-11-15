@@ -63,7 +63,7 @@ class UserEnterpriseAuthController extends Controller
         $userPersonalData->address = $authData->address;
         $userPersonalData->intro = $authData->intro;
         $userPersonalData->save();
-        $userData->assignRole('Enterprise Member');
+        $userData->assignRole('Enterprise Auth');
       } else if ($status === $notPass) {
         $authData->refuse_reason = $request->input('refuse_reason');
       }
