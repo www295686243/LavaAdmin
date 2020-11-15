@@ -17,9 +17,17 @@ class TaskRecordController extends Controller
   {
     $data = TaskRecord::where('user_id', User::getUserId())
       ->where(function (Builder $query) {
-        $query->orWhereIn('title', ['关注公众号', '绑定手机号', '完善个人资料', '完善企业资料'])
+        $query->orWhereIn('task_name', [
+          Task::getOptionsValue('task_name', 2, '关注公众号'),
+          Task::getOptionsValue('task_name', 3, '绑定手机号'),
+          Task::getOptionsValue('task_name', 4, '完善个人资料'),
+          Task::getOptionsValue('task_name', 5, '完善企业资料'),
+        ])
           ->orWhere(function (Builder $query) {
-            $query->whereIn('title', ['个人每天登录', '企业每天登录'])
+            $query->whereIn('task_name', [
+              Task::getOptionsValue('task_name', 6, '个人每天登录'),
+              Task::getOptionsValue('task_name', 7, '企业每天登录'),
+            ])
               ->where('task_complete_time', '>', date('Y-m-d 00:00:00'));
           });
       })

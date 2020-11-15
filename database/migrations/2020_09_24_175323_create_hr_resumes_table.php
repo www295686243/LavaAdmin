@@ -30,18 +30,19 @@ class CreateHrResumesTable extends Migration
       $table->date('end_time')->comment('截止日期')->nullable();
       $table->string('contacts', 20)->comment('联系人')->nullable();
       $table->string('phone', 15)->comment('联系电话')->nullable();
-      $table->unsignedTinyInteger('is_force_show_user_info')->comment('是否强制显示个人详情(支付前也可显示)')->default(0);
+      $table->unsignedTinyInteger('is_force_show_user_info')->comment('是否强制显示个人详情(支付前也可显示)')->default(1);
       $table->unsignedMediumInteger('status')->comment('0审核1发布2解决3下架');
       $table->unsignedInteger('views')->comment('查看数')->default(0);
       $table->unsignedSmallInteger('pay_count')->comment('支付数')->default(0);
-      $table->unsignedTinyInteger('is_other_user')->comment('是否帮其它人发')->default(0);
       $table->timestamp('refresh_at')->comment('刷新时间')->nullable();
       $table->unsignedBigInteger('admin_user_id')->comment('信息归属人，用于员工后台发布能知道谁发的')->nullable();
+      $table->unsignedBigInteger('provide_user_id')->comment('信息提供人')->nullable();
 
       $table->timestamps();
       $table->softDeletes();
 
       $table->index('user_id');
+      $table->index('city');
     });
   }
 

@@ -72,7 +72,8 @@ class ConfigTableSeeder extends Seeder
       ['display_name' => '企业每天登录', 'name' => 'enterprise_every_day_login'],
       ['display_name' => '个人每天登录', 'name' => 'personal_every_day_login'],
       ['display_name' => '邀请加入', 'name' => 'invite_user'],
-      ['display_name' => '提供信息', 'name' => 'provide_info'],
+      ['display_name' => '提供职位', 'name' => 'provide_job'],
+      ['display_name' => '提供人才', 'name' => 'provide_resume'],
     ]);
     $this->createOptions('Task/Task:task_name', '任务标识', [
       ['display_name' => '分享信息', 'name' => 'share'],

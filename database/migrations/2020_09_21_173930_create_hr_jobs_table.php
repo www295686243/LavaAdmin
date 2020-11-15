@@ -36,7 +36,6 @@ class CreateHrJobsTable extends Migration
       $table->unsignedMediumInteger('status')->comment('0审核1发布2解决3下架4到期');
       $table->unsignedInteger('views')->comment('查看数')->default(0);
       $table->unsignedSmallInteger('pay_count')->comment('支付数')->default(0);
-      $table->unsignedTinyInteger('is_other_user')->comment('是否帮其它人发')->default(0);
       $table->timestamp('refresh_at')->comment('刷新时间')->nullable();
       $table->unsignedBigInteger('admin_user_id')->comment('信息归属人，用于员工后台发布能知道谁发的')->nullable();
       $table->unsignedBigInteger('provide_user_id')->comment('信息提供人')->nullable();
@@ -45,6 +44,7 @@ class CreateHrJobsTable extends Migration
       $table->softDeletes();
 
       $table->index('user_id');
+      $table->index('city');
     });
   }
 

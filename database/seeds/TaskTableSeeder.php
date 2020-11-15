@@ -102,7 +102,7 @@ class TaskTableSeeder extends Seeder
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '每天登录',
-      'desc' => '发布简历并完善资料后每天登录奖励1张求职券',
+      'desc' => '发布简历并完善个人资料后每天登录奖励1张求职券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 6, '个人每天登录'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 2, '个人任务'),
@@ -117,7 +117,7 @@ class TaskTableSeeder extends Seeder
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '每天登录',
-      'desc' => '发布职位并完善资料后每天登录奖励1张招聘券',
+      'desc' => '发布职位并完善企业资料后每天登录奖励1张招聘券',
       'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 7, '企业每天登录'),
       'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 3, '企业任务'),
@@ -147,17 +147,28 @@ class TaskTableSeeder extends Seeder
 
     $taskData = \App\Models\Task\Task::create([
       'title' => '提供信息',
-      'desc' => '提供职位信息可获得互助券1张',
-      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 9, '邀请加入'),
-      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 1, '联合任务'),
-      'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]],
+      'desc' => '提供职位或人才信息可获得通用券1张',
+      'task_name' => \App\Models\Task\Task::getOptionsValue('task_name', 9, '信息提供'),
+      'task_mode' => \App\Models\Task\Task::getOptionsValue('task_mode', 2, '可选任务'),
       'task_type' => \App\Models\Task\Task::getOptionsValue('task_type', 1, '通用任务'),
     ]);
-    $taskData->task_rule()->create([
-      'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 12, '提供信息'),
-      'operator' => '>=',
-      'target_number' => 1,
-      'task_interface' => 'Api\User\UserController@setInviteUser'
+    $taskData->task_rule()->createMany([
+      [
+        'title' => '提供职位',
+        'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 12, '提供职位'),
+        'operator' => '>=',
+        'target_number' => 1,
+        'task_interface' => 'Api\Info\InfoProvideController@store,Admin\Info\InfoProvideController@update',
+        'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]]
+      ],
+      [
+        'title' => '提供人才',
+        'task_rule_name' => \App\Models\Task\TaskRule::getOptionsValue('task_rule_name', 13, '提供人才'),
+        'operator' => '>=',
+        'target_number' => 1,
+        'task_interface' => 'Api\Info\InfoProvideController@store,Admin\Info\InfoProvideController@update',
+        'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]]
+      ]
     ]);
   }
 }

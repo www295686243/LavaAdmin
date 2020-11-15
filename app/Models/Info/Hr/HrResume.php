@@ -35,11 +35,10 @@ class HrResume extends Base
     'end_time',
     'contacts',
     'phone',
-    'is_force_show_user_info',
     'status',
-    'is_other_user',
     'refresh_at',
-    'admin_user_id'
+    'admin_user_id',
+    'provide_user_id'
   ];
 
   protected $casts = [

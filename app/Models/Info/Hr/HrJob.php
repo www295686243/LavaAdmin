@@ -40,7 +40,6 @@ class HrJob extends Base
     'contacts',
     'phone',
     'status',
-    'is_other_user',
     'refresh_at',
     'admin_user_id',
     'provide_user_id',

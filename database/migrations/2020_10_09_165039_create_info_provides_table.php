@@ -17,6 +17,7 @@ class CreateInfoProvidesTable extends Migration
       $table->id();
       $table->unsignedBigInteger('user_id');
       $table->string('description', 255);
+      $table->string('contacts', 20)->comment('联系人')->nullable();
       $table->string('phone', 18);
       $table->unsignedInteger('status')->comment('0待审核1已发布2中介3已招到4面试中5不需要6未接通7电话错8态度差')->default(0);
       $table->string('info_provideable_type', 120);

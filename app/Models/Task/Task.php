@@ -12,6 +12,7 @@ use App\Models\Task\Traits\InviteUserTraits;
 use App\Models\Task\Traits\PerfectEnterpriseInfoTraits;
 use App\Models\Task\Traits\PerfectPersonalInfoTraits;
 use App\Models\Task\Traits\PersonalEveryDayLoginTraits;
+use App\Models\Task\Traits\ProvideInfoTraits;
 use App\Models\Task\Traits\ShareTraits;
 use App\Models\Task\Traits\StatTraits;
 use App\Models\User\UserPersonal;
@@ -30,6 +31,7 @@ class Task extends Base
     EnterpriseEveryDayLoginTraits,
     PersonalEveryDayLoginTraits,
     InviteUserTraits,
+    ProvideInfoTraits,
     StatTraits;
 
   protected $fillable = [
@@ -78,7 +80,7 @@ class Task extends Base
     return $this->cacheGetAll()->filter(function ($task) use ($interface) {
       $task_interface = $task->task_rule()->get()->implode('task_interface', ',');
       return $this->checkInterface($task_interface, $interface);
-    });
+    })->values();
   }
 
   /**
@@ -109,7 +111,7 @@ class Task extends Base
       $taskList->each(function ($taskData) use ($interface) {
         $taskRecordData = $this->getMainTask($taskData);
         if ($taskRecordData) {
-          $this->statTask($taskData, $taskRecordData, $interface);
+          $this->statTask($taskRecordData);
           $this->rewardTask($taskRecordData);
         }
       });
@@ -132,26 +134,16 @@ class Task extends Base
   }
 
   /**
-   * @param Task $taskData
    * @param TaskRecord $taskRecordData
-   * @param string $interface
    */
-  private function statTask(Task $taskData, TaskRecord $taskRecordData, $interface = '')
+  private function statTask(TaskRecord $taskRecordData)
   {
     if (!$taskRecordData->is_complete) {
-      // 统计任务
-      $taskData->task_rule
-        ->filter(function ($taskRule) use ($interface) {
-          return $this->checkInterface($taskRule->task_interface, $interface);
-        })
-        ->each(function ($taskRule) use ($taskRecordData) {
-          $taskRuleOption = TaskRule::getOptionsItem('task_rule_name', $taskRule->task_rule_name);
-          $taskRuleRecordData = $taskRecordData->task_rule_record()
-            ->where('task_rule_name', $taskRule->task_rule_name)
-            ->first();
-          $taskRuleMethod = 'stat'.Str::studly($taskRuleOption->name).'TaskRule';
-          $this->$taskRuleMethod($taskRuleRecordData);
-        });
+      $taskRecordData->task_rule_record->each(function ($taskRuleRecordData) {
+        $taskRuleOption = TaskRule::getOptionsItem('task_rule_name', $taskRuleRecordData->task_rule_name);
+        $taskRuleMethod = 'stat'.Str::studly($taskRuleOption->name).'TaskRule';
+        $this->$taskRuleMethod($taskRuleRecordData);
+      });
     }
   }
 

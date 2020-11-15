@@ -3,6 +3,7 @@
 namespace App\Models\Info;
 
 use App\Models\Base;
+use App\Models\Task\TaskRecord;
 use App\Models\User\User;
 
 class InfoProvide extends Base
@@ -10,6 +11,7 @@ class InfoProvide extends Base
   protected $fillable = [
     'user_id',
     'description',
+    'contacts',
     'phone',
     'status',
     'info_provideable_type',
@@ -38,5 +40,13 @@ class InfoProvide extends Base
   public function admin_user()
   {
     return $this->belongsTo(User::class, 'admin_user_id');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function task_record()
+  {
+    return $this->morphMany(TaskRecord::class, 'task_recordable');
   }
 }

@@ -21,7 +21,7 @@ class InfoProvideController extends Controller
     $input['user_id'] = User::getUserId();
     $input['description'] = trim($input['description']);
     $input['status'] = InfoProvide::getStatusValue(1, '待审核');
-    $input['info_provideable_type'] = HrJob::class;
+    $input['info_provideable_type'] = $this->getModelPath();
 
     $data = InfoProvide::where('description', $input['description'])->first();
     if ($data) {

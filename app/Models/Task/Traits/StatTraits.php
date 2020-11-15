@@ -11,6 +11,7 @@ namespace App\Models\Task\Traits;
 use App\Models\Api\User;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\Hr\HrResume;
+use App\Models\Info\InfoProvide;
 use App\Models\Task\TaskRuleRecord;
 use App\Models\User\UserEnterprise;
 use App\Models\User\UserPersonal;
@@ -124,6 +125,32 @@ trait StatTraits {
     if ($userData->phone && $userData->invite_user_id === $taskRuleRecordData->user_id) {
       $taskRuleRecordData->complete_number = 1;
       $taskRuleRecordData->save();
+    }
+  }
+
+  public function statProvideJobTaskRule(TaskRuleRecord $taskRuleRecordData)
+  {
+    $userData = User::getUserData();
+    if ($userData->is_admin) {
+      $id = request()->input('id');
+      $infoData = InfoProvide::findOrFail($id);
+      if ($infoData->status !== InfoProvide::getStatusValue(1, '待审核')) {
+        $taskRuleRecordData->complete_number = 1;
+        $taskRuleRecordData->save();
+      }
+    }
+  }
+
+  public function statProvideResumeTaskRule(TaskRuleRecord $taskRuleRecordData)
+  {
+    $userData = User::getUserData();
+    if ($userData->is_admin) {
+      $id = request()->input('id');
+      $infoData = InfoProvide::findOrFail($id);
+      if ($infoData->status !== InfoProvide::getStatusValue(1, '待审核')) {
+        $taskRuleRecordData->complete_number = 1;
+        $taskRuleRecordData->save();
+      }
     }
   }
 }
