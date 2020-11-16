@@ -12,25 +12,57 @@ class HrJobTableSeeder extends Seeder
   public function run()
   {
     $user = User::where('username', 'wanxin')->first();
-    for ($i = 1; $i <= 2; $i++) {
-      (new HrJob())->createOrUpdateData([
-        'user_id' => $user->id,
+    $data = [
+      'user_id' => $user->id,
+      'is_negotiate' => 1,
+      'recruiter_number' => 1,
+      'education' => 1,
+      'seniority' => 1,
+      'treatment' => '包吃,包住',
+      'address' => 'address',
+      'end_time' => '2020-10-20',
+      'phone' => '11111111111',
+      'status' => HrJob::getStatusValue(1, '已发布')
+    ];
+    for ($i = 1; $i <= 5; $i++) {
+      (new HrJob())->createOrUpdateData(array_merge($data, [
         'title' => '招聘标题'.$i,
         'description' => '描述'.$i,
         'company_name' => '公司名称'.$i,
-        'is_negotiate' => 1,
-        'recruiter_number' => 1,
-        'education' => 1,
-        'seniority' => 1,
-        'treatment' => '包吃,包住',
-        'city' => 440203,
-        'address' => 'address',
-        'end_time' => '2020-10-20',
         'contacts' => '万鑫'.$i,
-        'phone' => '11111111111',
-        'status' => HrJob::getStatusValue(1, '已发布'),
+        'city' => 440104,
         'industry' => [17]
-      ]);
+      ]));
+    }
+    for ($i = 6; $i <= 10; $i++) {
+      (new HrJob())->createOrUpdateData(array_merge($data, [
+        'title' => '招聘标题'.$i,
+        'description' => '描述'.$i,
+        'company_name' => '公司名称'.$i,
+        'contacts' => '万鑫'.$i,
+        'city' => 440303,
+        'industry' => [25]
+      ]));
+    }
+    for ($i = 11; $i <= 15; $i++) {
+      (new HrJob())->createOrUpdateData(array_merge($data, [
+        'title' => '招聘标题'.$i,
+        'description' => '描述'.$i,
+        'company_name' => '公司名称'.$i,
+        'contacts' => '万鑫'.$i,
+        'city' => 330102,
+        'industry' => [62]
+      ]));
+    }
+    for ($i = 16; $i <= 20; $i++) {
+      (new HrJob())->createOrUpdateData(array_merge($data, [
+        'title' => '招聘标题'.$i,
+        'description' => '描述'.$i,
+        'company_name' => '公司名称'.$i,
+        'contacts' => '万鑫'.$i,
+        'city' => 320102,
+        'industry' => [101, 108]
+      ]));
     }
   }
 }
