@@ -89,7 +89,7 @@ class HrJobController extends Controller
    */
   public function transfer(HrJobRequest $request)
   {
-    $id = $request->input('info_id');
+    $id = $request->input('id');
     $transfer_user_id = $request->input('transfer_user_id');
     $userData = \App\Models\Api\User::find($transfer_user_id);
     if (!$userData) {
