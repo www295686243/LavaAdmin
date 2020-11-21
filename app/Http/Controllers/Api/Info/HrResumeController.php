@@ -13,12 +13,14 @@ use App\Models\User\UserOrder;
 class HrResumeController extends Controller
 {
   use PayTrait;
+
   /**
+   * @param HrResumeRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function index()
+  public function index(HrResumeRequest $request)
   {
-    $data = HrResume::pagination();
+    $data = HrResume::aiQuery($request->input('industry'), $request->input('city'), $request->input('order'));
     return $this->setParams($data)->success();
   }
 
