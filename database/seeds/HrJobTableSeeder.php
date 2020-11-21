@@ -31,7 +31,7 @@ class HrJobTableSeeder extends Seeder
         'company_name' => '公司名称'.$i,
         'contacts' => '万鑫'.$i,
         'city' => 440104,
-        'industry' => [17]
+        'industry' => [17, 18]
       ]));
     }
     for ($i = 6; $i <= 10; $i++) {

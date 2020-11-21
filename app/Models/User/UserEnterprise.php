@@ -6,6 +6,7 @@ use App\Models\Base;
 use App\Models\Info\Industry;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 
 class UserEnterprise extends Base
 {
@@ -72,8 +73,8 @@ class UserEnterprise extends Base
   {
     $userId = $userId ?: User::getUserId();
     $data = static::where('user_id', $userId)->firstOrFail();
-    $data->update($input);
-    $data->attachIndustry();
+    $data->update(Arr::only($input, self::getFillFields()));
+    $data->attachIndustry($input);
     if (isset($input['city'])) {
       $data->user()->update(['city' => $input['city']]);
     }

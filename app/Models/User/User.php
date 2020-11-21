@@ -3,6 +3,7 @@
 namespace App\Models\User;
 
 use App\Models\AdminMenu;
+use App\Models\Info\Industry;
 use App\Models\Permission;
 use App\Models\Task\TaskRecord;
 use App\Models\Traits\IdToStrTrait;
@@ -90,7 +91,14 @@ use Spatie\Permission\Traits\HasRoles;
  */
 class User extends Authenticatable
 {
-  use Notifiable, HasRoles, HasApiTokens, ResourceTrait, SoftDeletes, IdToStrTrait, HasSnowflakePrimary;
+  use
+    Notifiable,
+    HasRoles,
+    HasApiTokens,
+    ResourceTrait,
+    SoftDeletes,
+    IdToStrTrait,
+    HasSnowflakePrimary;
 
   /**
    * @var array

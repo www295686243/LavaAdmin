@@ -3,6 +3,7 @@
 namespace App\Models\Info\Hr;
 
 use App\Models\Base;
+use App\Models\Info\Hr\Traits\InfoQueryTraits;
 use App\Models\Info\Industry;
 use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoComplaint;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\DB;
 
 class HrJob extends Base
 {
-  use SoftDeletes, IndustryTrait;
+  use SoftDeletes, IndustryTrait, InfoQueryTraits;
 
   protected $fillable = [
     'user_id',
@@ -137,7 +138,6 @@ class HrJob extends Base
   {
     return $this->morphMany(UserOrder::class, 'user_orderable');
   }
-
 
   /**
    * @param $input

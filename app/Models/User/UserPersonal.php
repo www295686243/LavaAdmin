@@ -98,8 +98,8 @@ class UserPersonal extends Base
   {
     $userId = $userId ?: User::getUserId();
     $data = static::where('user_id', $userId)->firstOrFail();
-    $data->update($input);
-    $data->attachIndustry();
+    $data->update(Arr::only($input, self::getFillFields()));
+    $data->attachIndustry($input);
     if (isset($input['city'])) {
       $data->user()->update(['city' => $input['city']]);
     }

@@ -18,13 +18,9 @@ class CreateIndustrygablesTable extends Migration
       $table->unsignedBigInteger('industry_id');
       $table->unsignedBigInteger('industrygable_id');
       $table->string('industrygable_type', 120);
-      $table->unsignedBigInteger('industry_root_id')->nullable();
-      $table->string('industry_path', 120)->nullable();
-      $table->timestamps();
-      $table->softDeletes();
 
       $table->index('industry_id');
-      $table->index('industry_root_id');
+      $table->index('industrygable_id');
     });
   }
 
