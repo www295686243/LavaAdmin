@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserPersonalAuthRequest;
 use App\Models\Api\User;
+use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserPersonal;
 use App\Models\User\UserPersonalAuth;
 use Illuminate\Support\Facades\DB;
@@ -40,13 +41,17 @@ class UserPersonalAuthController extends Controller
    */
   public function update(UserPersonalAuthRequest $request, $id)
   {
-    $status = $request->input('status');
+    $status = (int)$request->input('status');
     $authData = UserPersonalAuth::findOrFail($id);
     $userData = User::findOrFail($authData->user_id);
 
     $passed = UserPersonalAuth::getStatusValue(2, '已通过');
     $notPass = UserPersonalAuth::getStatusValue(3, '已拒绝');
 
+    // 如果未改变状态，直接返回
+    if ($status === $authData->status) {
+      return $this->success();
+    }
     DB::beginTransaction();
 
     try {
@@ -64,8 +69,17 @@ class UserPersonalAuthController extends Controller
         $userPersonalData->intro = $authData->intro;
         $userPersonalData->save();
         $userData->assignRole('Personal Auth');
+        NotifyTemplate::send(1, '个人认证通过通知', $userData, [
+          'nickname' => $userData->nickname,
+          'name' => $authData->name,
+          'datetime' => date('Y-m-d H:i:s')
+        ]);
       } else if ($status === $notPass) {
         $authData->refuse_reason = $request->input('refuse_reason');
+        NotifyTemplate::send(2, '个人认证不通过通知', $userData, [
+          'refuse_reason' => $authData->refuse_reason,
+          'name' => '原草客服'
+        ]);
       }
 
       $authData->status = $status;

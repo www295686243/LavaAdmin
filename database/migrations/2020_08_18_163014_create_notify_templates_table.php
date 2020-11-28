@@ -19,6 +19,7 @@ class CreateNotifyTemplatesTable extends Migration
       $table->string('title', 60)->comment('通知标题');
       $table->string('content', 120)->comment('通知内容');
       $table->string('remark', 120)->comment('通知备注');
+      $table->string('host', 60)->comment('域名,格式：https://m.yuancaowang.com');
       $table->string('url', 120)->comment('跳转地址，格式：/xxx');
       // 格式 xxx,xxx,xxx
       $table->string('url_params', 120)->comment('地址参数')->nullable();

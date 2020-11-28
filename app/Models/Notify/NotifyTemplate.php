@@ -17,6 +17,7 @@ class NotifyTemplate extends Base
     'template_id',
     'content',
     'remark',
+    'host',
     'url',
     'url_params',
     'keyword_names',
@@ -29,6 +30,8 @@ class NotifyTemplate extends Base
     'updated_at'
   ];
 
+  public static function bootHasSnowflakePrimary() {}
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasMany
    */
@@ -38,25 +41,27 @@ class NotifyTemplate extends Base
   }
 
   /**
-   * @param $title
+   * @param $id
+   * @param $_title
    * @param $user
    * @param $params
    */
-  public static function send($title, $user, $params)
+  public static function send($id, $_title, $user, $params)
   {
     /**
      * @var self $notifyTemplateData
      */
-    $notifyTemplateData = (new self())->getData($title);
+    $notifyTemplateData = (new self())->getData($id);
     $notifyTemplateData->createNotify($user, $params);
     $notifyTemplateData->pushAdminNotify($params);
   }
 
   /**
+   * @param $id
    * @param $title
    * @param $params
    */
-  public static function sendAdmin($title, $params)
+  public static function sendAdmin($id, $title, $params)
   {
     /**
      * @var self $notifyTemplateData
@@ -66,12 +71,12 @@ class NotifyTemplate extends Base
   }
 
   /**
-   * @param $title
-   * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+   * @param $id
+   * @return NotifyTemplate|NotifyTemplate[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model
    */
-  private function getData($title)
+  private function getData($id)
   {
-    return self::where('title', $title)->firstOrFail();
+    return self::findOrFail($id);
   }
 
   /**
@@ -87,10 +92,11 @@ class NotifyTemplate extends Base
     } else {
       $userData = $user;
     }
-    $data['title'] = $this->title;
+    $data['title'] = $this->resolveContent($this->title, $params);
     $data['user_id'] = $userData->id;
     $data['openid'] = optional($userData->auth)->wx_openid;
     $data['template_id'] = $this->template_id;
+    $data['host'] = $this->host;
     $data['url'] = $this->url;
     $data['url_params'] = $this->resolveUrlParams($this->url_params, $params);
     $data['content'] = $this->resolveContent($this->content, $params);

@@ -12,6 +12,7 @@ class Notify extends Base
     'user_id',
     'openid',
     'template_id',
+    'host',
     'url',
     'url_params',
     'content',
@@ -62,6 +63,6 @@ class Notify extends Base
     $urlParams = collect($this->url_params ?? [])->put('notify_id', $this->id)->map(function ($value, $key) {
       return $key.'='.$value;
     })->implode('&');
-    return env('APP_M_URL').$this->url.($urlParams ? '?'.$urlParams : '');
+    return $this->host.$this->url.($urlParams ? '?'.$urlParams : '');
   }
 }

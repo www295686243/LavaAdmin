@@ -23,7 +23,7 @@ class UserPersonalAuthRequest extends BaseRequest
           'address' => 'string|max:60',
           'intro' => 'string|max:255',
           'certificates' => 'array',
-          'refuse_reason' => 'sometime|nullable|string|max:255'
+          'refuse_reason' => 'sometimes|nullable|string|max:255'
         ];
       default:
         return [];

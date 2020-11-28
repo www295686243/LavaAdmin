@@ -88,7 +88,11 @@ class Base extends Model
   {
     $_model = request()->input('_model');
     $_models = collect(array_filter(explode(',', $_model)))->map(function ($type) {
-      return 'App\Models\\'.str_replace('/', '\\', $type);
+      if (Str::contains($type, 'App\Models')) {
+        return $type;
+      } else {
+        return 'App\Models\\'.str_replace('/', '\\', $type);
+      }
     })->toArray();
     return $query->whereIn($typeField, $_models);
   }

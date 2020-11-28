@@ -49,20 +49,26 @@ class AdminMenuTableSeeder extends Seeder
           'default_params' => ['_model' => 'Info/Hr/HrJob,Info/Hr/HrResume']
         ],
         [
+          'display_name' => '提供招聘',
+          'icon' => 'el-icon-document-add',
+          'route' => '/hr/job-provide',
+          'default_params' => ['_model' => 'Info/Hr/HrJob']
+        ],
+        [
           'display_name' => '招聘列表',
           'icon' => 'el-icon-s-custom',
           'route' => '/hr/job'
         ],
         [
-          'display_name' => '求职列表',
-          'icon' => 'el-icon-user-solid',
-          'route' => '/hr/resume'
+          'display_name' => '提供简历',
+          'icon' => 'el-icon-document-add',
+          'route' => '/hr/resume-provide',
+          'default_params' => ['_model' => 'Info/Hr/HrResume']
         ],
         [
-          'display_name' => '信息提供',
-          'icon' => 'el-icon-document-add',
-          'route' => '/hr/info-provide',
-          'default_params' => ['_model' => 'Info/Hr/HrJob,Info/Hr/HrResume']
+          'display_name' => '简历列表',
+          'icon' => 'el-icon-user-solid',
+          'route' => '/hr/resume'
         ],
         [
           'display_name' => '信息投诉',

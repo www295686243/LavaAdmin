@@ -19,6 +19,7 @@ class CreateNotifiesTable extends Migration
       $table->unsignedBigInteger('user_id')->comment('发送人');
       $table->string('openid', 60)->comment('微信用户唯一id')->nullable();
       $table->string('template_id', 100)->comment('模板id');
+      $table->string('host', 60)->comment('域名,格式：https://m.yuancaowang.com');
       $table->string('url', 255)->comment('url');
       $table->json('url_params')->comment('url参数')->nullable();
       $table->string('content', 100)->comment('信息内容');
