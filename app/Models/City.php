@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Cache;
 
 class City extends Base
 {
@@ -54,5 +55,33 @@ class City extends Base
       return $carry;
     }, ['currentCode' => '', 'codes' => []]);
     return $result['codes'];
+  }
+
+  public static function getNames($id, $format = ' ')
+  {
+    $paths = self::getGather($id);
+    $between = $paths[0];
+    return (new self())->getCacheIndex($between[0], $between[1])
+      ->filter(function ($row) use ($paths) {
+        return in_array($row->id, $paths);
+      })
+      ->sortBy('deep') // 升序
+      ->unique('name') // 根据name去重
+      ->implode('name', $format);
+  }
+
+  /**
+   * @param $minId
+   * @param $maxId
+   * @return mixed
+   */
+  public function getCacheIndex($minId, $maxId)
+  {
+    $query = self::query()
+      ->where('id', '>=', $minId)
+      ->where('id', '<', $maxId);
+    return Cache::tags($this->getTable().$minId.'-'.$maxId)->rememberForever($query->toSql(), function () use ($query) {
+      return $query->get();
+    });
   }
 }

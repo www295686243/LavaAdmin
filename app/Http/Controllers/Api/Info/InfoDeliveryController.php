@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Api\Info;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\InfoDeliveryRequest;
 use App\Models\Api\User;
+use App\Models\City;
 use App\Models\Info\InfoDelivery;
+use App\Models\Notify\NotifyTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class InfoDeliveryController extends Controller
 {
@@ -82,6 +85,26 @@ class InfoDeliveryController extends Controller
     }
 
     InfoDelivery::create($input);
+
+    if (Str::contains($input['receive_info_type'], 'HrJob')) {
+      NotifyTemplate::send(24, '投递后简历信息推送', $receiveInfo->user_id, [
+        'id' => $sendInfo->id,
+        'source' => 'delivery',
+        'title' => $sendInfo->title,
+        'city' => (new City())->getNames($sendInfo->city),
+        'contacts' => $sendInfo->contacts,
+        'created_at' => $sendInfo->created_at
+      ]);
+    } else if (Str::contains($input['receive_info_type'], 'HrResume')) {
+      NotifyTemplate::send(22, '投递后职位信息推送', $receiveInfo->user_id, [
+        'id' => $sendInfo->id,
+        'source' => 'delivery',
+        'title' => $sendInfo->title,
+        'city' => (new City())->getNames($sendInfo->city),
+        'contacts' => $sendInfo->contacts,
+        'created_at' => $sendInfo->created_at
+      ]);
+    }
     return $this->success('投递成功');
   }
 
