@@ -9,6 +9,7 @@ use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoComplaint;
 use App\Models\Info\InfoSub;
 use App\Models\Info\InfoView;
+use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\TaskRecord;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
@@ -142,6 +143,60 @@ class HrResume extends Base
       return $id;
     } else {
       return $this->createData($input);
+    }
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   * @return int|mixed
+   * @throws \Throwable
+   */
+  public function checkInfoSuccess($input, $id = 0)
+  {
+    $infoId = $this->createOrUpdateData($input, $id);
+    if ($id) {
+      NotifyTemplate::send(8, '简历信息修改审核通过通知', $input['user_id'], [
+        'id' => $id,
+        'title' => $input['title'],
+        'datetime' => date('Y-m-d H:i:s'),
+        'result' => '通过',
+        'remark' => '感谢您使用原草互助，人人为我，我为人人！'
+      ]);
+    } else {
+      NotifyTemplate::send(7, '简历信息添加审核通过通知', $input['user_id'], [
+        'id' => $infoId,
+        'title' => $input['title'],
+        'datetime' => date('Y-m-d H:i:s'),
+        'result' => '通过',
+        'remark' => '感谢您使用原草互助，人人为我，我为人人！'
+      ]);
+    }
+    return $infoId;
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   */
+  public function checkInfoFail($input, $id = 0)
+  {
+    if ($id) {
+      NotifyTemplate::send(12, '简历信息修改审核失败通知', $input['user_id'], [
+        'id' => $id,
+        'title' => $input['title'],
+        'datetime' => date('Y-m-d H:i:s'),
+        'result' => '未通过',
+        'remark' => $input['refuse_reason']
+      ]);
+    } else {
+      NotifyTemplate::send(11, '简历信息添加审核失败通知', $input['user_id'], [
+        'id' => $id,
+        'title' => $input['title'],
+        'datetime' => date('Y-m-d H:i:s'),
+        'result' => '未通过',
+        'remark' => $input['refuse_reason']
+      ]);
     }
   }
 

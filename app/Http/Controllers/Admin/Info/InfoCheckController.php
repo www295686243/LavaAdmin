@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\InfoCheckRequest;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
+use App\Models\Notify\NotifyTemplate;
 use Illuminate\Support\Facades\DB;
 
 class InfoCheckController extends Controller
@@ -48,23 +49,31 @@ class InfoCheckController extends Controller
     $infoCheckData->contents = $contents;
     $infoCheckData->save();
 
+    // 如果未改变状态，直接返回
+    if ($checkStatus === $infoCheckData->status) {
+      return $this->success();
+    }
+    if ($infoCheckData->status !== InfoCheck::getStatusValue(1, '待审核')) {
+      return $this->error('状态错误');
+    }
+
     DB::beginTransaction();
     try {
+      /**
+       * @var HrJob $Model
+       */
+      $modelPath = $infoCheckData->info_checkable_type;
+      $Model = new $modelPath();
+      $input = $infoCheckData->contents;
+      $input['user_id'] = $infoCheckData->user_id;
+      $input['refuse_reason'] = $refuseReason;
+
       if ($checkStatus === InfoCheck::getStatusValue(2, '已通过')) {
-        if ($infoCheckData->status === $checkStatus) {
-          return $this->error('状态错误');
-        }
-        /**
-         * @var HrJob $Model
-         */
-        $modelPath = $infoCheckData->info_checkable_type;
-        $Model = new $modelPath();
-        $input = $infoCheckData->contents;
-        $input['user_id'] = $infoCheckData->user_id;
-        $id = $Model->createOrUpdateData($input, $infoCheckData->info_checkable_id);
+        $id = $Model->checkInfoSuccess($input, $infoCheckData->info_checkable_id);
         $infoCheckData->info_checkable_id = $id;
       } else if ($checkStatus === InfoCheck::getStatusValue(3, '已拒绝')) {
         $infoCheckData->refuse_reason = $refuseReason;
+        $Model->checkInfoFail($input, $infoCheckData->info_checkable_id);
       }
       $infoCheckData->status = $checkStatus;
       $infoCheckData->save();

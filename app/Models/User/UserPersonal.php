@@ -92,6 +92,25 @@ class UserPersonal extends Base
 
   /**
    * @param $input
+   * @param int $id
+   * @return int
+   */
+  public function checkInfoSuccess($input, $id = 0)
+  {
+    $infoId = $this->createOrUpdateData($input, $id);
+    return $infoId;
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   */
+  public function checkInfoFail($input, $id = 0)
+  {
+  }
+
+  /**
+   * @param $input
    * @param int $userId
    */
   public static function updateInfo($input, $userId = 0)
