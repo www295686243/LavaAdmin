@@ -248,6 +248,23 @@ class HrJob extends Base
       $data->update(Arr::only($input, $this->getFillable()));
       $data->info_sub()->update(Arr::only($input, InfoSub::getFillFields()));
       $data->attachIndustry($input);
+      if ($input['status'] === self::getStatusValue(3, '已下架')) {
+        NotifyTemplate::send(17, '职位信息下架通知', $data->user_id, [
+          'id' => $id,
+          'nickname' => $data->user->nickname,
+          'title' => $data->title,
+          'created_at' => $data->created_at,
+          'end_time' => $data->end_time.' 23:59:59'
+        ]);
+      } else if ($input['status'] === self::getStatusValue(2, '已解决')) {
+        NotifyTemplate::send(19, '职位信息解决通知', $data->user_id, [
+          'id' => $id,
+          'nickname' => $data->user->nickname,
+          'title' => $data->title,
+          'created_at' => $data->created_at,
+          'end_time' => $data->end_time.' 23:59:59'
+        ]);
+      }
       DB::commit();
     } catch (\Exception $e) {
       DB::rollBack();
