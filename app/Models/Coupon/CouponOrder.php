@@ -3,6 +3,7 @@
 namespace App\Models\Coupon;
 
 use App\Models\Base;
+use App\Models\Notify\NotifyTemplate;
 use App\Models\User\User;
 use App\Models\User\UserAuth;
 use App\Models\User\UserBill;
@@ -197,6 +198,13 @@ class CouponOrder extends Base
       if ($sellUserData) {
         $sellUserData->increment('money', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
         $sellUserData->increment('total_earning', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
+        NotifyTemplate::send(37, '互助券出售成功通知', $sellUserData, [
+          'nickname' => $sellUserData->nickname,
+          'couponFullName' => $couponMarketData->user_coupon->amount.'元'.$couponMarketData->user_coupon->display_name,
+          'couponName' => $couponMarketData->user_coupon->display_name,
+          'amount' => $couponMarketData->amount.'元',
+          'datetime' => date('Y-m-d H:i:s'),
+        ]);
       }
     }
     DB::table('user_bills')->insert($userBillSql);

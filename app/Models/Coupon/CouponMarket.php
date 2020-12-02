@@ -63,7 +63,7 @@ class CouponMarket extends Base
       ->where('end_at', '<', $date);
     $query->update(['status' => self::getStatusValue(4, '已下架')]);
     $query->get()->each(function ($item) {
-      NotifyTemplate::sendAdmin(38, '互助券到期通知', [
+      NotifyTemplate::send(38, '互助券到期通知', $item->sell_user, [
         'nickname' => $item->sell_user->nickname,
         'couponFullName' => $item->user_coupon->amount.'元'.$item->user_coupon->display_name,
         'type' => self::getStatusLabel(1),

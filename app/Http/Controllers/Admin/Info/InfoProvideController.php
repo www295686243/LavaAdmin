@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Info;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\InfoProvideRequest;
 use App\Models\Admin\User;
-use App\Models\Coupon\CouponTemplate;
 use App\Models\Info\InfoProvide;
 use Illuminate\Support\Facades\DB;
 
@@ -61,7 +60,6 @@ class InfoProvideController extends Controller
   public function update(InfoProvideRequest $request, $id)
   {
     $status = $request->input('status');
-    $rewards = $request->input('rewards', []);
     $pushText = $request->input('push_text');
     $infoProvideData = InfoProvide::findOrFail($id);
 
@@ -70,13 +68,6 @@ class InfoProvideController extends Controller
       if ($status !== InfoProvide::getStatusValue(1, '待审核')) {
         $infoProvideData->status = $status;
         $infoProvideData->admin_user_id = User::getUserId();
-
-        if ($infoProvideData->is_admin === InfoProvide::$DISABLE && $infoProvideData->is_reward === InfoProvide::$DISABLE) {
-          CouponTemplate::giveManyCoupons($infoProvideData->user_id, $rewards, '招聘信息提供：'.$infoProvideData->id);
-          if (count($rewards) > 0) {
-            $infoProvideData->is_reward = InfoProvide::$ENABLE;
-          }
-        }
         $infoProvideData->save();
       }
       DB::commit();

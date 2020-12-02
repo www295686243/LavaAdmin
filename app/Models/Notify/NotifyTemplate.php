@@ -186,4 +186,19 @@ class NotifyTemplate extends Base
     }
     return $content;
   }
+
+  /**
+   * @param $params
+   */
+  public static function sendGiveCoupon($params)
+  {
+    $start_at = date('Y-m-d 00:00:00');
+    $end_at = date('Y-m-d 05:00:00', strtotime('+'.$params['expiry_day'].' day'));
+    static::send(36, '信息提供互助券赠送成功通知', $params['user_id'], [
+      'push_text' => $params['pushText'],
+      'expiry_day' => $params['expiry_day'],
+      'start_at' => $start_at,
+      'end_at' => $end_at
+    ]);
+  }
 }
