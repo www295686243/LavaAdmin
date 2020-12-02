@@ -84,6 +84,7 @@ class UserController extends Controller
   /**
    * @param UserRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Exception
    */
   public function bindPhone(UserRequest $request)
   {
@@ -104,6 +105,7 @@ class UserController extends Controller
       $userData->register_at = date('Y-m-d H:i:s');
     }
     $userData->save();
+    $userData->checkBindPhoneFinishTask();
     return $this->success('绑定成功');
   }
 

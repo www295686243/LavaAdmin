@@ -5,7 +5,7 @@ namespace App\Models\Task;
 use App\Models\Api\User;
 use App\Models\Base;
 use App\Models\Info\InfoCheck;
-use App\Models\Task\Traits\BindPhoneTraits;
+use App\Models\Task\Traits\BindPhoneTaskTraits;
 use App\Models\Task\Traits\EnterpriseEveryDayLoginTraits;
 use App\Models\Task\Traits\FollowWeChatTraits;
 use App\Models\Task\Traits\InviteUserTraits;
@@ -25,7 +25,7 @@ class Task extends Base
   use
     ShareTraits,
     FollowWeChatTraits,
-    BindPhoneTraits,
+    BindPhoneTaskTraits,
     PerfectEnterpriseInfoTraits,
     PerfectPersonalInfoTraits,
     EnterpriseEveryDayLoginTraits,

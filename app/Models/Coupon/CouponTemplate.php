@@ -29,10 +29,11 @@ class CouponTemplate extends Base
    */
   public static function getCouponTemplateData($idOrName)
   {
+    $list = (new static())->cacheGetAll();
     if (is_numeric($idOrName)) {
-      $data = self::findOrFail($idOrName);
+      $data = $list->firstWhere('id', $idOrName);
     } else {
-      $data = self::where('name', $idOrName)->firstOrFail();
+      $data = $list->firstWhere('display_name', $idOrName);
     }
     return $data;
   }
@@ -41,14 +42,20 @@ class CouponTemplate extends Base
    * @param $user_id
    * @param $rewards
    * @param $source
+   * @return string
    * @throws \Exception
    */
   public static function giveManyCoupons($user_id, $rewards, $source)
   {
+    $giveCouponsText = '';
+    $dot = '';
     foreach ($rewards as $reward) {
       $couponTemplateData = self::getCouponTemplateData($reward['coupon_template_id']);
       $couponTemplateData->giveCoupons($user_id, $reward['give_number'], $reward['amount'], $reward['expiry_day'], $source);
+      $giveCouponsText .= $dot.$couponTemplateData->display_name.$reward['give_number'].'张';
+      $dot = '、';
     }
+    return $giveCouponsText;
   }
 
   /**

@@ -295,7 +295,7 @@ class Base extends Model
   }
 
   /**
-   * @return mixed
+   * @return \Illuminate\Database\Eloquent\Builder
    */
   public function cacheGetAll () {
     return Cache::tags(self::class)->rememberForever($this->getTable(), function () {

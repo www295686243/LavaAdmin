@@ -467,5 +467,53 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_official_account' => 1,
       'is_push_message' => 1
     ]);
+    \App\Models\Notify\NotifyTemplate::create([
+      'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
+      'title' => '职位分享任务互助券赠送成功通知',
+      'content' => '您完成了《{title}》分享任务，赠送您{give_number}张招聘券，可以用来查看简历信息联系方式，请注意查收！',
+      'remark' => '点击进入互助卷页面查看！原草互助，互帮互助！',
+      'host' => env('APP_M_URL'),
+      'url' => '/user/coupon/my-coupon',
+      'url_params' => '',
+      'keyword_names' => 'expiry_day,到期时间|start_at,开始时间|end_at,结束时间',
+      'is_push_official_account' => 1,
+      'is_push_message' => 1
+    ]);
+    \App\Models\Notify\NotifyTemplate::create([
+      'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
+      'title' => '绑定手机号任务互助券赠送成功通知',
+      'content' => '您已完成绑定手机号任务，赠送您{giveCouponsText}，希望能帮到您，查收在【我的-互助卷】！',
+      'remark' => '点击了解更多的互助券免费获得方式！\n如果您是求职者、招聘企业，发布求职、招聘信息，审核通过后，第二天每天将会获得1张求职卷或者招聘卷，解决您迫切的需求！',
+      'host' => env('APP_M_URL'),
+      'url' => '/other/help',
+      'url_params' => '',
+      'keyword_names' => 'expiry_day,到期时间|start_at,开始时间|end_at,结束时间',
+      'is_push_official_account' => 1,
+      'is_push_message' => 1
+    ]);
+    \App\Models\Notify\NotifyTemplate::create([
+      'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
+      'title' => '完善简历资料任务互助券赠送成功通知',
+      'content' => '您已完成完善简历资料任务，赠送您{giveCouponsText}，希望能帮到您，查收在【我的-互助卷】！',
+      'remark' => '点击了解更多的互助券免费获得方式！\n如果您是求职者、招聘企业，发布求职、招聘信息，审核通过后，第二天每天将会获得1张求职卷或者招聘卷，解决您迫切的需求！',
+      'host' => env('APP_M_URL'),
+      'url' => '/other/help',
+      'url_params' => '',
+      'keyword_names' => 'expiry_day,到期时间|start_at,开始时间|end_at,结束时间',
+      'is_push_official_account' => 1,
+      'is_push_message' => 1
+    ]);
+    \App\Models\Notify\NotifyTemplate::create([
+      'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
+      'title' => '关注公众号任务互助券赠送成功通知',
+      'content' => '您已完成关注公众号任务，赠送您{giveCouponsText}，希望能帮到您，查收在【我的-互助卷】！',
+      'remark' => '点击了解更多的互助券免费获得方式！\n如果您是求职者、招聘企业，发布求职、招聘信息，审核通过后，第二天每天将会获得1张求职卷或者招聘卷，解决您迫切的需求！',
+      'host' => env('APP_M_URL'),
+      'url' => '/other/help',
+      'url_params' => '',
+      'keyword_names' => 'expiry_day,到期时间|start_at,开始时间|end_at,结束时间',
+      'is_push_official_account' => 1,
+      'is_push_message' => 1
+    ]);
   }
 }

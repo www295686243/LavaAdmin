@@ -6,6 +6,7 @@ use App\Models\AdminMenu;
 use App\Models\Info\Industry;
 use App\Models\Permission;
 use App\Models\Task\TaskRecord;
+use App\Models\Task\Traits\BindPhoneTaskTraits;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
 use App\Services\SearchQueryService;
@@ -98,7 +99,8 @@ class User extends Authenticatable
     ResourceTrait,
     SoftDeletes,
     IdToStrTrait,
-    HasSnowflakePrimary;
+    HasSnowflakePrimary,
+    BindPhoneTaskTraits;
 
   /**
    * @var array

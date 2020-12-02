@@ -18,7 +18,6 @@ use App\Models\Task\TaskRule;
 use Illuminate\Support\Str;
 
 trait InfoProvideTaskTraits {
-
   public function getTask()
   {
     $taskData = Task::findOrFail(9);
@@ -71,13 +70,14 @@ trait InfoProvideTaskTraits {
       CouponTemplate::giveManyCoupons($this->user_id, $taskRuleRecordData->rewards, $title);
       // 送券通知
       $pushText = request()->input('pushText');
-      foreach ($taskRuleRecordData->rewards as $reward) {
-        NotifyTemplate::sendGiveCoupon([
-          'pushText' => $pushText,
-          'user_id' => $this->user_id,
-          'expiry_day' => $reward['expiry_day']
-        ]);
-      }
+      NotifyTemplate::sendGiveCoupon(
+        36,
+        '信息提供互助券赠送成功通知',
+        $this->user_id,
+        [
+          'pushText' => $pushText
+        ]
+      );
     }
   }
 }
