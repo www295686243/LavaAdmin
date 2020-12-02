@@ -15,10 +15,8 @@ class CreateTasksTable extends Migration
   {
     Schema::create('tasks', function (Blueprint $table) {
       $table->id();
-      $table->unsignedInteger('task_name')->comment('任务标识(看配置表)');
       $table->string('title', 60)->comment('任务标题');
       $table->string('desc', 255)->comment('任务描述');
-      $table->unsignedTinyInteger('task_mode')->comment('任务模式(看配置表)');
       $table->unsignedTinyInteger('task_type')->comment('任务类型(看配置表)');
       /**
        * 格式：[{xxx, xxx, xxx}, {xxx, xxx, xxx}]

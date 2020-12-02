@@ -9,7 +9,7 @@ class TaskRuleRecord extends Base
   protected $fillable = [
     'user_id',
     'task_record_id',
-    'task_rule_name',
+    'title',
     'operator',
     'target_number',
     'complete_number',

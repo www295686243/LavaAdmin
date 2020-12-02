@@ -17,17 +17,9 @@ class TaskRecordController extends Controller
   {
     $data = TaskRecord::where('user_id', User::getUserId())
       ->where(function (Builder $query) {
-        $query->orWhereIn('task_name', [
-          Task::getOptionsValue('task_name', 2, '关注公众号'),
-          Task::getOptionsValue('task_name', 3, '绑定手机号'),
-          Task::getOptionsValue('task_name', 4, '完善个人资料'),
-          Task::getOptionsValue('task_name', 5, '完善企业资料'),
-        ])
+        $query->orWhereIn('task_id', [2, 3, 4, 5])
           ->orWhere(function (Builder $query) {
-            $query->whereIn('task_name', [
-              Task::getOptionsValue('task_name', 6, '个人每天登录'),
-              Task::getOptionsValue('task_name', 7, '企业每天登录'),
-            ])
+            $query->whereIn('task_id', [6, 7])
               ->where('task_complete_time', '>', date('Y-m-d 00:00:00'));
           });
       })
@@ -40,11 +32,9 @@ class TaskRecordController extends Controller
    */
   public function shareIndex()
   {
-    $taskData = Task::where('task_name', Task::getOptionsValue('task_name', 1, '分享信息'))
-      ->firstOrFail();
     $data = TaskRecord::with('task_rule_record', 'task_recordable:id,title')
       ->where('user_id', User::getUserId())
-      ->where('task_id', $taskData->id)
+      ->where('task_id', 1)
       ->simplePagination();
     return $this->setParams($data)->success();
   }

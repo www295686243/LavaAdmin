@@ -60,7 +60,7 @@ class InfoProvideController extends Controller
   public function update(InfoProvideRequest $request, $id)
   {
     $status = $request->input('status');
-    $pushText = $request->input('push_text');
+//    $pushText = $request->input('push_text'); // 任务完成后送券通知会用到，这里仅仅是标识这个变量是有用的
     $infoProvideData = InfoProvide::findOrFail($id);
 
     DB::beginTransaction();
@@ -69,6 +69,7 @@ class InfoProvideController extends Controller
         $infoProvideData->status = $status;
         $infoProvideData->admin_user_id = User::getUserId();
         $infoProvideData->save();
+        $infoProvideData->checkFinishTask();
       }
       DB::commit();
       return $this->success();

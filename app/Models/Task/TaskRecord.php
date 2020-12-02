@@ -14,8 +14,6 @@ class TaskRecord extends Base
     'title',
     'task_recordable_type',
     'task_recordable_id',
-    'task_name',
-    'task_mode',
     'task_type',
     'rewards',
     'is_complete',

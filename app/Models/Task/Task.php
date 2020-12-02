@@ -12,7 +12,7 @@ use App\Models\Task\Traits\InviteUserTraits;
 use App\Models\Task\Traits\PerfectEnterpriseInfoTraits;
 use App\Models\Task\Traits\PerfectPersonalInfoTraits;
 use App\Models\Task\Traits\PersonalEveryDayLoginTraits;
-use App\Models\Task\Traits\ProvideInfoTraits;
+use App\Models\Task\Traits\InfoProvideTaskTraits;
 use App\Models\Task\Traits\ShareTraits;
 use App\Models\Task\Traits\StatTraits;
 use App\Models\User\UserPersonal;
@@ -31,14 +31,12 @@ class Task extends Base
     EnterpriseEveryDayLoginTraits,
     PersonalEveryDayLoginTraits,
     InviteUserTraits,
-    ProvideInfoTraits,
+    InfoProvideTaskTraits,
     StatTraits;
 
   protected $fillable = [
     'title',
     'desc',
-    'task_name',
-    'task_mode',
     'task_type',
     'rewards'
   ];

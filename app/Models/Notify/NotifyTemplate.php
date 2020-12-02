@@ -196,7 +196,7 @@ class NotifyTemplate extends Base
     $end_at = date('Y-m-d 05:00:00', strtotime('+'.$params['expiry_day'].' day'));
     static::send(36, '信息提供互助券赠送成功通知', $params['user_id'], [
       'push_text' => $params['pushText'],
-      'expiry_day' => $params['expiry_day'],
+      'expiry_day' => $params['expiry_day'].'天',
       'start_at' => $start_at,
       'end_at' => $end_at
     ]);

@@ -4,10 +4,12 @@ namespace App\Models\Info;
 
 use App\Models\Base;
 use App\Models\Task\TaskRecord;
+use App\Models\Task\Traits\InfoProvideTaskTraits;
 use App\Models\User\User;
 
 class InfoProvide extends Base
 {
+  use InfoProvideTaskTraits;
   protected $fillable = [
     'user_id',
     'description',

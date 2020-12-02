@@ -10,12 +10,10 @@ class TaskRule extends Base
 {
   protected $fillable = [
     'task_id',
-    'task_rule_name',
     'title',
     'operator',
     'target_number',
-    'rewards',
-    'task_interface'
+    'rewards'
   ];
 
   protected $hidden = [

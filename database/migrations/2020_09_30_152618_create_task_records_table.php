@@ -20,8 +20,6 @@ class CreateTaskRecordsTable extends Migration
       $table->string('title', 60)->comment('任务名');
       $table->string('task_recordable_type', 120)->nullable();
       $table->unsignedBigInteger('task_recordable_id')->nullable();
-      $table->unsignedTinyInteger('task_name')->comment('任务标识(看配置表)');
-      $table->unsignedTinyInteger('task_mode')->comment('任务模式(看配置表)');
       $table->unsignedTinyInteger('task_type')->comment('任务类型(看配置表)');
       $table->json('rewards')->comment('任务奖励(同任务规则表)')->nullable();
       $table->unsignedTinyInteger('is_complete')->comment('是否完成任务')->default(0);
