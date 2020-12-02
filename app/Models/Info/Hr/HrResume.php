@@ -239,7 +239,7 @@ class HrResume extends Base
           'id' => $id,
           'nickname' => $data->user->nickname,
           'title' => $data->title,
-          'created_at' => $data->created_at,
+          'created_at' => $data->created_at->format('Y-m-d H:i:s'),
           'end_time' => $data->end_time.' 23:59:59'
         ]);
       } else if ($input['status'] === self::getStatusValue(2, '已解决')) {
@@ -247,7 +247,7 @@ class HrResume extends Base
           'id' => $id,
           'nickname' => $data->user->nickname,
           'title' => $data->title,
-          'created_at' => $data->created_at,
+          'created_at' => $data->created_at->format('Y-m-d H:i:s'),
           'end_time' => $data->end_time.' 23:59:59'
         ]);
       }

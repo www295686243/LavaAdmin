@@ -37,7 +37,7 @@ class HrJobController extends Controller
       'title' => $input['title'],
       'contacts' => $input['contacts'].'/'.$input['phone'],
       'description' => $input['description'],
-      'created_at' => $checkData->created_at,
+      'created_at' => $checkData->created_at->format('Y-m-d H:i:s'),
       '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
     ]);
     return $this->success();

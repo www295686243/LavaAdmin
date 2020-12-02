@@ -93,7 +93,7 @@ class InfoDeliveryController extends Controller
         'title' => $sendInfo->title,
         'city' => (new City())->getNames($sendInfo->city),
         'contacts' => $sendInfo->contacts,
-        'created_at' => $sendInfo->created_at
+        'created_at' => $sendInfo->created_at->format('Y-m-d H:i:s')
       ]);
     } else if (Str::contains($input['receive_info_type'], 'HrResume')) {
       NotifyTemplate::send(22, '投递后职位信息推送', $receiveInfo->user_id, [
@@ -102,7 +102,7 @@ class InfoDeliveryController extends Controller
         'title' => $sendInfo->title,
         'city' => (new City())->getNames($sendInfo->city),
         'contacts' => $sendInfo->contacts,
-        'created_at' => $sendInfo->created_at
+        'created_at' => $sendInfo->created_at->format('Y-m-d H:i:s')
       ]);
     }
     return $this->success('投递成功');

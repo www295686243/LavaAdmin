@@ -38,7 +38,7 @@ class UserEnterpriseAuthController extends Controller
       'title' => '企业认证',
       'contacts' => $data->company,
       'description' => $data->intro,
-      'created_at' => $data->created_at
+      'created_at' => $data->created_at->format('Y-m-d H:i:s')
     ]);
 
     return $this->success('提交成功，请等待审核！');
