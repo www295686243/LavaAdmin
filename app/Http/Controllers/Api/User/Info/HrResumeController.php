@@ -7,6 +7,7 @@ use App\Http\Requests\Api\User\Info\HrResumeRequest;
 use App\Models\Api\User;
 use App\Models\Info\Hr\HrResume;
 use App\Models\Info\InfoCheck;
+use App\Models\Notify\NotifyTemplate;
 use Illuminate\Http\Request;
 
 class HrResumeController extends Controller
@@ -30,7 +31,15 @@ class HrResumeController extends Controller
   {
     $input = $request->getAll();
     $input['_model'] = HrResume::class;
-    InfoCheck::createInfo($input);
+    $checkData = InfoCheck::createInfo($input);
+    NotifyTemplate::sendAdmin(25, '运营管理员审核信息通知', [
+      'id' => $checkData->id,
+      'title' => $input['title'],
+      'contacts' => $input['contacts'].'/'.$input['phone'],
+      'description' => $input['description'],
+      'created_at' => $checkData->created_at,
+      '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
+    ]);
     return $this->success('简历已提交成功，请等待管理员审核!');
   }
 

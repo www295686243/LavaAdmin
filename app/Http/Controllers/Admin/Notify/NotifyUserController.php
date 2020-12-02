@@ -11,12 +11,14 @@ use Illuminate\Http\Request;
 class NotifyUserController extends Controller
 {
   /**
+   * @param NotifyUserRequest $request
    * @return \Illuminate\Http\JsonResponse
    */
-  public function index()
+  public function index(NotifyUserRequest $request)
   {
-    $data = NotifyUser::searchQuery()
-      ->with('user:id,nickname')
+    $notify_template_id = $request->input('notify_template_id');
+    $data = NotifyUser::with('user:id,nickname')
+      ->where('notify_template_id', $notify_template_id)
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();

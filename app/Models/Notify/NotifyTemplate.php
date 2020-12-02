@@ -61,12 +61,12 @@ class NotifyTemplate extends Base
    * @param $title
    * @param $params
    */
-  public static function sendAdmin($id, $title, $params)
+  public static function sendAdmin($id, $_title, $params)
   {
     /**
      * @var self $notifyTemplateData
      */
-    $notifyTemplateData = (new self())->getData($title);
+    $notifyTemplateData = (new self())->getData($id);
     $notifyTemplateData->pushAdminNotify($params);
   }
 

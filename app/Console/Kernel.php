@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Models\ApiLog;
 use App\Models\Chart;
+use App\Models\Coupon\CouponMarket;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
   {
     $schedule->call(function () {
       ApiLog::storeLog();
+      (new CouponMarket())->setExpiredCoupon();
     })->dailyAt('5:00');
     $schedule->call(function () {
       (new Chart())->createData(date('Y-m-d', strtotime('-1 day')));

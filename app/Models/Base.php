@@ -197,6 +197,17 @@ class Base extends Model
    * @param $value
    * @return mixed
    */
+  public static function getOptionsLabel($field, $value)
+  {
+    $configOptionData = static::getOptionItem($field, $value);
+    return $configOptionData->display_name;
+  }
+
+  /**
+   * @param $field
+   * @param $value
+   * @return mixed
+   */
   public static function getOptionsItem($field, $value)
   {
     $configOptionData = static::getOptionItem($field, $value);
@@ -237,6 +248,15 @@ class Base extends Model
   public static function getStatusValue($value, $display_name)
   {
     return static::getOptionsValue('status', $value, $display_name);
+  }
+
+  /**
+   * @param $value
+   * @return mixed
+   */
+  public static function getStatusLabel($value)
+  {
+    return static::getOptionsLabel('status', $value);
   }
 
   /**

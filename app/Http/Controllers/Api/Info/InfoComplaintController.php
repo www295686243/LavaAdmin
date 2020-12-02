@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\InfoComplaintRequest;
 use App\Models\Api\User;
 use App\Models\Info\InfoComplaint;
+use App\Models\Notify\NotifyTemplate;
 use Illuminate\Http\Request;
 
 class InfoComplaintController extends Controller
@@ -27,6 +28,16 @@ class InfoComplaintController extends Controller
     }
 
     $data = InfoComplaint::create($input);
+
+    $userData = User::getUserData();
+    $infoData = $data->info_complaintable()->first();
+    NotifyTemplate::sendAdmin(28, '运营管理员审核投诉信息通知', [
+      'nickname' => $userData->id.'-'.$userData->nickname,
+      'phone' => $userData->phone ?? '--',
+      'title' => $infoData->id.'-'.$infoData->title,
+      'content' => InfoComplaint::getOptionsLabel('complaint_type', $data->complaint_type).'：'.$data->complaint_content,
+      '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
+    ]);
 
     return $this->setParams($data)->success('反馈成功');
   }

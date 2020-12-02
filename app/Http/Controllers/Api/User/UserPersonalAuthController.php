@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\UserPersonalAuthRequest;
 use App\Models\Api\User;
 use App\Models\Image;
+use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserPersonalAuth;
 use Illuminate\Http\Request;
 
@@ -32,6 +33,14 @@ class UserPersonalAuthController extends Controller
 
     $data = UserPersonalAuth::create($input);
     (new Image())->updateImageableId($data->id);
+
+    NotifyTemplate::sendAdmin(26, '运营管理员审核个人认证通知', [
+      'id' => $data->id,
+      'title' => '个人认证',
+      'contacts' => $data->name,
+      'description' => $data->intro,
+      'created_at' => $data->created_at
+    ]);
 
     return $this->success('提交成功，请等待审核！');
   }
