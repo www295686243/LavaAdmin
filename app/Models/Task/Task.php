@@ -13,7 +13,7 @@ use App\Models\Task\Traits\PerfectEnterpriseInfoTraits;
 use App\Models\Task\Traits\PerfectPersonalInfoTraits;
 use App\Models\Task\Traits\PersonalEveryDayLoginTaskTraits;
 use App\Models\Task\Traits\InfoProvideTaskTraits;
-use App\Models\Task\Traits\ShareTraits;
+use App\Models\Task\Traits\ShareTaskTraits;
 use App\Models\Task\Traits\StatTraits;
 use App\Models\User\UserPersonal;
 use Illuminate\Support\Facades\Cache;
@@ -23,7 +23,7 @@ use Illuminate\Support\Str;
 class Task extends Base
 {
   use
-    ShareTraits,
+    ShareTaskTraits,
     PerfectEnterpriseInfoTraits,
     PerfectPersonalInfoTraits,
     InviteUserTaskTraits,

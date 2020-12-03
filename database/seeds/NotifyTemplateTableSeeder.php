@@ -398,7 +398,7 @@ class NotifyTemplateTableSeeder extends Seeder
     \App\Models\Notify\NotifyTemplate::create([
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '简历分享任务互助券赠送成功通知',
-      'content' => '您完成了《{title}》分享任务，赠送您{give_number}张求职券，可以用来查看职位信息联系方式，请注意查收！',
+      'content' => '您完成了《{title}》分享任务，赠送您{giveCouponsText}，可以用来查看职位信息联系方式，请注意查收！',
       'remark' => '点击进入互助卷页面查看！原草互助，互帮互助！',
       'host' => env('APP_M_URL'),
       'url' => '/user/coupon/my-coupon',
@@ -470,7 +470,7 @@ class NotifyTemplateTableSeeder extends Seeder
     \App\Models\Notify\NotifyTemplate::create([
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '职位分享任务互助券赠送成功通知',
-      'content' => '您完成了《{title}》分享任务，赠送您{give_number}张招聘券，可以用来查看简历信息联系方式，请注意查收！',
+      'content' => '您完成了《{title}》分享任务，赠送您{giveCouponsText}，可以用来查看简历信息联系方式，请注意查收！',
       'remark' => '点击进入互助卷页面查看！原草互助，互帮互助！',
       'host' => env('APP_M_URL'),
       'url' => '/user/coupon/my-coupon',

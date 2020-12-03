@@ -70,6 +70,7 @@ class InfoView extends Base
         }
         $infoData->views += 1;
         $infoData->save();
+        $infoData->checkShareFinishTask();
         DB::commit();
       } catch (\Exception $e) {
         DB::rollBack();

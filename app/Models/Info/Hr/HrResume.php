@@ -11,6 +11,7 @@ use App\Models\Info\InfoSub;
 use App\Models\Info\InfoView;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\TaskRecord;
+use App\Models\Task\Traits\ShareTaskTraits;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
 use App\Models\User\UserOrder;
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\DB;
 
 class HrResume extends Base
 {
-  use SoftDeletes, IndustryTrait, InfoQueryTraits;
+  use SoftDeletes, IndustryTrait, InfoQueryTraits, ShareTaskTraits;
 
   protected $fillable = [
     'user_id',
