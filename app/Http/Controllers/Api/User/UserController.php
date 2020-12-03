@@ -29,6 +29,7 @@ class UserController extends Controller
 
   /**
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Exception
    */
   public function todayFirstLogin()
   {
@@ -38,6 +39,7 @@ class UserController extends Controller
   /**
    * @param string $message
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Exception
    */
   public function getUserInfo($message = '')
   {
@@ -47,6 +49,8 @@ class UserController extends Controller
     if ($message === '每日登陆') {
       $userData->last_login_at = date('Y-m-d H:i:s');
       $userData->save();
+      $userData->checkPersonalEveryDayLoginFinishTask();
+      $userData->checkEnterpriseEveryDayLoginFinishTask();
     }
     return $this->setParams($userData)->success($message);
   }

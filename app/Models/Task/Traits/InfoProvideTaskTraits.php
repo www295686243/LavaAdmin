@@ -63,7 +63,7 @@ trait InfoProvideTaskTraits {
     }
   }
 
-  public function checkRewards($taskRecordData, $taskRuleRecordData)
+  private function checkRewards($taskRecordData, $taskRuleRecordData)
   {
     if ($taskRuleRecordData->rewards) {
       $title = $taskRecordData->title === $taskRuleRecordData->title ? $taskRecordData->title : $taskRecordData->title.'-'.$taskRuleRecordData->title;

@@ -77,7 +77,7 @@ trait BindPhoneTaskTraits {
    * @param $taskRuleRecordData
    * @throws \Exception
    */
-  public function checkBindPhoneRewards($taskRecordData, $taskRuleRecordData)
+  private function checkBindPhoneRewards($taskRecordData, $taskRuleRecordData)
   {
     if ($taskRuleRecordData->rewards) {
       $title = $taskRecordData->title === $taskRuleRecordData->title ? $taskRecordData->title : $taskRecordData->title.'-'.$taskRuleRecordData->title;

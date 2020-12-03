@@ -79,4 +79,15 @@ class UserEnterprise extends Base
       $data->user()->update(['city' => $input['city']]);
     }
   }
+
+  /**
+   * @param int $userId
+   * @return bool
+   */
+  public static function checkPerfectInfo($userId = 0)
+  {
+    $userId = $userId ?: User::getUserId();
+    $userEnterpriseData = static::where('user_id', $userId)->firstOrFail();
+    return $userEnterpriseData->tags && $userEnterpriseData->intro && $userEnterpriseData->company_scale;
+  }
 }

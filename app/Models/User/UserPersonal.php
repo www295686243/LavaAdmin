@@ -123,4 +123,15 @@ class UserPersonal extends Base
       $data->user()->update(['city' => $input['city']]);
     }
   }
+
+  /**
+   * @param $userId
+   * @return bool
+   */
+  public static function checkPerfectInfo($userId = 0)
+  {
+    $userId = $userId ?: User::getUserId();
+    $userPersonalData = static::where('user_id', $userId)->firstOrFail();
+    return $userPersonalData->tags && ($userPersonalData->education_experience && count($userPersonalData->education_experience)) && ($userPersonalData->work_experience && count($userPersonalData->work_experience));
+  }
 }

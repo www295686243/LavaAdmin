@@ -6,12 +6,12 @@ use App\Models\Api\User;
 use App\Models\Base;
 use App\Models\Info\InfoCheck;
 use App\Models\Task\Traits\BindPhoneTaskTraits;
-use App\Models\Task\Traits\EnterpriseEveryDayLoginTraits;
+use App\Models\Task\Traits\EnterpriseEveryDayLoginTaskTraits;
 use App\Models\Task\Traits\FollowWeChatTaskTraits;
 use App\Models\Task\Traits\InviteUserTraits;
 use App\Models\Task\Traits\PerfectEnterpriseInfoTraits;
 use App\Models\Task\Traits\PerfectPersonalInfoTraits;
-use App\Models\Task\Traits\PersonalEveryDayLoginTraits;
+use App\Models\Task\Traits\PersonalEveryDayLoginTaskTraits;
 use App\Models\Task\Traits\InfoProvideTaskTraits;
 use App\Models\Task\Traits\ShareTraits;
 use App\Models\Task\Traits\StatTraits;
@@ -24,14 +24,9 @@ class Task extends Base
 {
   use
     ShareTraits,
-    FollowWeChatTaskTraits,
-    BindPhoneTaskTraits,
     PerfectEnterpriseInfoTraits,
     PerfectPersonalInfoTraits,
-    EnterpriseEveryDayLoginTraits,
-    PersonalEveryDayLoginTraits,
     InviteUserTraits,
-    InfoProvideTaskTraits,
     StatTraits;
 
   protected $fillable = [

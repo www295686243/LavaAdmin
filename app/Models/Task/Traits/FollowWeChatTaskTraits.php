@@ -84,7 +84,7 @@ trait FollowWeChatTaskTraits {
    * @param $taskRuleRecordData
    * @throws \Exception
    */
-  public function checkFollowWeChatRewards($taskRecordData, $taskRuleRecordData)
+  private function checkFollowWeChatRewards($taskRecordData, $taskRuleRecordData)
   {
     if ($taskRuleRecordData->rewards) {
       $title = $taskRecordData->title === $taskRuleRecordData->title ? $taskRecordData->title : $taskRecordData->title.'-'.$taskRuleRecordData->title;
