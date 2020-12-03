@@ -8,7 +8,7 @@ use App\Models\Info\InfoCheck;
 use App\Models\Task\Traits\BindPhoneTaskTraits;
 use App\Models\Task\Traits\EnterpriseEveryDayLoginTaskTraits;
 use App\Models\Task\Traits\FollowWeChatTaskTraits;
-use App\Models\Task\Traits\InviteUserTraits;
+use App\Models\Task\Traits\InviteUserTaskTraits;
 use App\Models\Task\Traits\PerfectEnterpriseInfoTraits;
 use App\Models\Task\Traits\PerfectPersonalInfoTraits;
 use App\Models\Task\Traits\PersonalEveryDayLoginTaskTraits;
@@ -26,7 +26,7 @@ class Task extends Base
     ShareTraits,
     PerfectEnterpriseInfoTraits,
     PerfectPersonalInfoTraits,
-    InviteUserTraits,
+    InviteUserTaskTraits,
     StatTraits;
 
   protected $fillable = [

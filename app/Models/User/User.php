@@ -9,6 +9,7 @@ use App\Models\Task\TaskRecord;
 use App\Models\Task\Traits\BindPhoneTaskTraits;
 use App\Models\Task\Traits\EnterpriseEveryDayLoginTaskTraits;
 use App\Models\Task\Traits\FollowWeChatTaskTraits;
+use App\Models\Task\Traits\InviteUserTaskTraits;
 use App\Models\Task\Traits\PersonalEveryDayLoginTaskTraits;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
@@ -106,7 +107,8 @@ class User extends Authenticatable
     BindPhoneTaskTraits,
     FollowWeChatTaskTraits,
     PersonalEveryDayLoginTaskTraits,
-    EnterpriseEveryDayLoginTaskTraits;
+    EnterpriseEveryDayLoginTaskTraits,
+    InviteUserTaskTraits;
 
   /**
    * @var array

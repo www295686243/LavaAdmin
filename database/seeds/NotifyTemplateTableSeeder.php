@@ -374,7 +374,7 @@ class NotifyTemplateTableSeeder extends Seeder
     \App\Models\Notify\NotifyTemplate::create([
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '邀请好友互助券赠送成功通知',
-      'content' => '您邀请了朋友{nickname}加入原草互助，赠送您1张通用卷，可用来查看求职、招聘联系方式，也可以转售他人，请注意查收！',
+      'content' => '您邀请了朋友{nickname}加入原草互助，赠送您{giveCouponsText}，请注意查收！',
       'remark' => '点击进入互助卷页面查看！原草互助，互帮互助！',
       'host' => env('APP_M_URL'),
       'url' => '/user/coupon/my-coupon',

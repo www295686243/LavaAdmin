@@ -173,6 +173,7 @@ class UserController extends Controller
   /**
    * @param UserRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Exception
    */
   public function setInviteUser(UserRequest $request)
   {
@@ -186,6 +187,7 @@ class UserController extends Controller
     ) {
       $userData->invite_user_id = $invite_user_id;
       $userData->save();
+      $userData->checkInviteUserFinishTask();
     }
     return $this->success();
   }
