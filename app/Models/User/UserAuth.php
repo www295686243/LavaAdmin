@@ -89,6 +89,8 @@ class UserAuth extends Base
     [$id, $token] = explode('|', $plainTextToken, 2);
     $userData->api_token = $token;
     $userData->save();
+
+    $userData->checkFollowWeChatFinishTask();
     return [
       'is_register' => $is_register,
       'api_token' => $token,

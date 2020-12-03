@@ -7,6 +7,7 @@ use App\Models\Info\Industry;
 use App\Models\Permission;
 use App\Models\Task\TaskRecord;
 use App\Models\Task\Traits\BindPhoneTaskTraits;
+use App\Models\Task\Traits\FollowWeChatTaskTraits;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
 use App\Services\SearchQueryService;
@@ -100,7 +101,8 @@ class User extends Authenticatable
     SoftDeletes,
     IdToStrTrait,
     HasSnowflakePrimary,
-    BindPhoneTaskTraits;
+    BindPhoneTaskTraits,
+    FollowWeChatTaskTraits;
 
   /**
    * @var array
