@@ -22,7 +22,6 @@ class UserPersonalController extends Controller
     $userId = User::getUserId();
     $data = UserPersonal::where('user_id', $userId)->firstOrFail();
     $data->industry;
-    $data->is_check = $data->info_check()->where('status', InfoCheck::getStatusValue(1, '待审核'))->exists();
     return $this->setParams($data)->success();
   }
 
@@ -34,7 +33,7 @@ class UserPersonalController extends Controller
    */
   public function update(UserPersonalRequest $request, $id)
   {
-    $input = $request->only(UserPersonal::getUpdateFillable());
+    $input = $request->only(UserPersonal::getFillFields());
     DB::beginTransaction();
     try {
       UserPersonal::updateInfo($input);
@@ -45,26 +44,5 @@ class UserPersonalController extends Controller
       \Log::error($e->getMessage().':'.__LINE__);
       return $this->error();
     }
-  }
-
-  /**
-   * @param UserPersonalRequest $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function check(UserPersonalRequest $request)
-  {
-    $data = UserPersonal::where('user_id', User::getUserId())->first();
-    if ($data) {
-      $isCheck = $data->info_check()->where('status', InfoCheck::getStatusValue(1, '待审核'))->exists();
-      if ($isCheck) {
-        return $this->error('请等待管理员审核');
-      }
-    }
-    $input = $request->getAll();
-    $input['_model'] = UserPersonal::class;
-    $input['user_id'] = User::getUserId();
-    $input['title'] = User::getUserData()->nickname.'的资料审核';
-    InfoCheck::createInfo($input);
-    return $this->success('更新成功，请等待审核！');
   }
 }

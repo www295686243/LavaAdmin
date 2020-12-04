@@ -15,7 +15,6 @@ use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\Task;
 use App\Models\Task\TaskRecord;
 use App\Models\Task\TaskRule;
-use App\Models\User\UserPersonal;
 
 trait PersonalEveryDayLoginTaskTraits {
   private function getPersonalEveryDayLoginMainTask()
@@ -64,7 +63,7 @@ trait PersonalEveryDayLoginTaskTraits {
     $taskRuleRecordData = $this->getPersonalEveryDayLoginSubTask($taskRecordData);
     if ($taskRecordData && $taskRuleRecordData) {
       $isExistsHrResume = HrResume::where('user_id', $this->id)->where('status', HrResume::getStatusValue(1, '已发布'))->exists();
-      $isPerfectUserPersonalInfo = UserPersonal::checkPerfectInfo($this->id);
+      $isPerfectUserPersonalInfo = $this->checkPerfectPersonalInfo();
       if ($isExistsHrResume && $isPerfectUserPersonalInfo) {
         $taskRecordData->is_complete = 1;
         $taskRecordData->task_complete_time = date('Y-m-d H:i:s');

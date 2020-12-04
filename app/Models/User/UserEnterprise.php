@@ -4,13 +4,15 @@ namespace App\Models\User;
 
 use App\Models\Base;
 use App\Models\Info\Industry;
+use App\Models\Info\InfoCheck;
+use App\Models\Task\Traits\PerfectEnterpriseInfoTaskTraits;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 
 class UserEnterprise extends Base
 {
-  use SoftDeletes, IndustryTrait;
+  use SoftDeletes, IndustryTrait, PerfectEnterpriseInfoTaskTraits;
 
   protected $fillable = [
     'user_id',
@@ -42,14 +44,6 @@ class UserEnterprise extends Base
   ];
 
   /**
-   * @return array
-   */
-  public static function getUpdateFillable()
-  {
-    return collect(static::getFillFields())->diff(['user_id'])->values()->toArray();
-  }
-
-  /**
    * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
    */
   public function industry()
@@ -68,6 +62,7 @@ class UserEnterprise extends Base
   /**
    * @param $input
    * @param int $userId
+   * @throws \Exception
    */
   public static function updateInfo($input, $userId = 0)
   {
@@ -78,16 +73,14 @@ class UserEnterprise extends Base
     if (isset($input['city'])) {
       $data->user()->update(['city' => $input['city']]);
     }
+    $data->checkPerfectEnterpriseInfoFinishTask();
   }
 
   /**
-   * @param int $userId
    * @return bool
    */
-  public static function checkPerfectInfo($userId = 0)
+  public function isPerfectInfo()
   {
-    $userId = $userId ?: User::getUserId();
-    $userEnterpriseData = static::where('user_id', $userId)->firstOrFail();
-    return $userEnterpriseData->tags && $userEnterpriseData->intro && $userEnterpriseData->company_scale;
+    return $this->tags && $this->intro && $this->company_scale;
   }
 }

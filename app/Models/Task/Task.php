@@ -9,8 +9,8 @@ use App\Models\Task\Traits\BindPhoneTaskTraits;
 use App\Models\Task\Traits\EnterpriseEveryDayLoginTaskTraits;
 use App\Models\Task\Traits\FollowWeChatTaskTraits;
 use App\Models\Task\Traits\InviteUserTaskTraits;
-use App\Models\Task\Traits\PerfectEnterpriseInfoTraits;
-use App\Models\Task\Traits\PerfectPersonalInfoTraits;
+use App\Models\Task\Traits\PerfectEnterpriseInfoTaskTraits;
+use App\Models\Task\Traits\PerfectPersonalInfoTaskTraits;
 use App\Models\Task\Traits\PersonalEveryDayLoginTaskTraits;
 use App\Models\Task\Traits\InfoProvideTaskTraits;
 use App\Models\Task\Traits\ShareTaskTraits;
@@ -24,8 +24,8 @@ class Task extends Base
 {
   use
     ShareTaskTraits,
-    PerfectEnterpriseInfoTraits,
-    PerfectPersonalInfoTraits,
+    PerfectEnterpriseInfoTaskTraits,
+    PerfectPersonalInfoTaskTraits,
     InviteUserTaskTraits,
     StatTraits;
 

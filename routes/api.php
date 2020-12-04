@@ -60,7 +60,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['show', 'store']);
   Route::apiResource('user_enterprise_auth', UserEnterpriseAuthController::class)->only(['show', 'store']);
-  Route::post('user_personal/check', [UserPersonalController::class, 'check']);
   Route::apiResource('user_personal', UserPersonalController::class)->only(['show', 'update']);
   Route::apiResource('user_enterprise', UserEnterpriseController::class)->only(['show', 'update']);
   Route::apiResource('user_control', UserControlController::class)->only(['show', 'update']);

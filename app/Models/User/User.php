@@ -453,4 +453,14 @@ class User extends Authenticatable
     }
     return true;
   }
+
+  public function checkPerfectPersonalInfo()
+  {
+    return $this->personal->checkPerfectInfo();
+  }
+
+  public function checkPerfectEnterpriseInfo()
+  {
+    return $this->enterprise->checkPerfectInfo();
+  }
 }

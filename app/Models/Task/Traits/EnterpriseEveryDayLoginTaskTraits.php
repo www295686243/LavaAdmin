@@ -15,7 +15,6 @@ use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\Task;
 use App\Models\Task\TaskRecord;
 use App\Models\Task\TaskRule;
-use App\Models\User\UserEnterprise;
 
 trait EnterpriseEveryDayLoginTaskTraits {
   private function getEnterpriseEveryDayLoginMainTask()
@@ -64,7 +63,7 @@ trait EnterpriseEveryDayLoginTaskTraits {
     $taskRuleRecordData = $this->getEnterpriseEveryDayLoginSubTask($taskRecordData);
     if ($taskRecordData && $taskRuleRecordData) {
       $isExistsHrJob = HrJob::where('user_id', $this->id)->where('status', HrJob::getStatusValue(1, '已发布'))->exists();
-      $isPerfectUserEnterpriseInfo = UserEnterprise::checkPerfectInfo($this->id);
+      $isPerfectUserEnterpriseInfo = $this->checkPerfectEnterpriseInfo();
       if ($isExistsHrJob && $isPerfectUserEnterpriseInfo) {
         $taskRecordData->is_complete = 1;
         $taskRecordData->task_complete_time = date('Y-m-d H:i:s');

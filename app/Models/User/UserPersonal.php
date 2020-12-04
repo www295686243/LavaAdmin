@@ -4,14 +4,14 @@ namespace App\Models\User;
 
 use App\Models\Base;
 use App\Models\Info\Industry;
-use App\Models\Info\InfoCheck;
+use App\Models\Task\Traits\PerfectPersonalInfoTaskTraits;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 
 class UserPersonal extends Base
 {
-  use SoftDeletes, IndustryTrait;
+  use SoftDeletes, IndustryTrait, PerfectPersonalInfoTaskTraits;
 
   protected $fillable = [
     'user_id',
@@ -46,27 +46,11 @@ class UserPersonal extends Base
   ];
 
   /**
-   * @return array
-   */
-  public static function getUpdateFillable()
-  {
-    return collect(static::getFillFields())->diff(['user_id', 'avatar', 'tags', 'education_experience', 'work_experience', 'honorary_certificate'])->values()->toArray();
-  }
-
-  /**
    * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
    */
   public function industry()
   {
     return $this->morphToMany(Industry::class, 'industrygable');
-  }
-
-  /**
-   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-   */
-  public function info_check()
-  {
-    return $this->morphMany(InfoCheck::class, 'info_checkable');
   }
 
   /**
@@ -78,40 +62,9 @@ class UserPersonal extends Base
   }
 
   /**
-   * 信息审核用到
-   * @param $input
-   * @param int $id
-   * @return int
-   */
-  public function createOrUpdateData($input, $id = 0)
-  {
-    $data = self::findOrFail($id);
-    $data->update(Arr::only($input, ['avatar', 'tags', 'education_experience', 'work_experience', 'honorary_certificate']));
-    return $id;
-  }
-
-  /**
-   * @param $input
-   * @param int $id
-   * @return int
-   */
-  public function checkInfoSuccess($input, $id = 0)
-  {
-    $infoId = $this->createOrUpdateData($input, $id);
-    return $infoId;
-  }
-
-  /**
-   * @param $input
-   * @param int $id
-   */
-  public function checkInfoFail($input, $id = 0)
-  {
-  }
-
-  /**
    * @param $input
    * @param int $userId
+   * @throws \Exception
    */
   public static function updateInfo($input, $userId = 0)
   {
@@ -122,16 +75,14 @@ class UserPersonal extends Base
     if (isset($input['city'])) {
       $data->user()->update(['city' => $input['city']]);
     }
+    $data->checkPerfectPersonalInfoFinishTask();
   }
 
   /**
-   * @param $userId
    * @return bool
    */
-  public static function checkPerfectInfo($userId = 0)
+  public function isPerfectInfo()
   {
-    $userId = $userId ?: User::getUserId();
-    $userPersonalData = static::where('user_id', $userId)->firstOrFail();
-    return $userPersonalData->tags && ($userPersonalData->education_experience && count($userPersonalData->education_experience)) && ($userPersonalData->work_experience && count($userPersonalData->work_experience));
+    return $this->tags && ($this->education_experience && count($this->education_experience)) && ($this->work_experience && count($this->work_experience));
   }
 }
