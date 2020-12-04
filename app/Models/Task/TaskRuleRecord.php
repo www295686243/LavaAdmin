@@ -10,7 +10,6 @@ class TaskRuleRecord extends Base
     'user_id',
     'task_record_id',
     'title',
-    'operator',
     'target_number',
     'complete_number',
     'rewards',

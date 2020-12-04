@@ -11,7 +11,6 @@ class TaskRule extends Base
   protected $fillable = [
     'task_id',
     'title',
-    'operator',
     'target_number',
     'rewards'
   ];
@@ -24,15 +23,6 @@ class TaskRule extends Base
   protected $casts = [
     'rewards' => 'array'
   ];
-
-  /**
-   * @param $value
-   * @return array|mixed
-   */
-  public function getRulesAttribute($value)
-  {
-    return $value ? json_decode($value) : [];
-  }
 
   /**
    * @param $value

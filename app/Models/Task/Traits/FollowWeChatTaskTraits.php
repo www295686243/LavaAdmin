@@ -50,7 +50,6 @@ trait FollowWeChatTaskTraits {
       $taskRuleRecordData = $taskRecordData->task_rule_record()->create([
         'user_id' => $taskRecordData->user_id,
         'title' => $taskRuleData->title,
-        'operator' => $taskRuleData->operator,
         'target_number' => $taskRuleData->target_number,
         'rewards' => $taskRuleData->rewards,
       ]);
