@@ -28,7 +28,7 @@ class UserPersonalController extends Controller
    */
   public function update(UserPersonalRequest $request, $id)
   {
-    $input = $request->only(UserPersonal::getUpdateFillable());
+    $input = $request->only(UserPersonal::getFillFields());
     DB::beginTransaction();
     try {
       UserPersonal::updateInfo($input, $id);

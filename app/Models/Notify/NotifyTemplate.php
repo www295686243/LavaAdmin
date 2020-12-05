@@ -13,6 +13,7 @@ class NotifyTemplate extends Base
   use SoftDeletes;
 
   protected $fillable = [
+    'id',
     'title',
     'template_id',
     'content',
@@ -58,7 +59,7 @@ class NotifyTemplate extends Base
 
   /**
    * @param $id
-   * @param $title
+   * @param $_title
    * @param $params
    */
   public static function sendAdmin($id, $_title, $params)

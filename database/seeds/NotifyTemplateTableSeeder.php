@@ -12,6 +12,7 @@ class NotifyTemplateTableSeeder extends Seeder
   public function run()
   {
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 1,
       'template_id' => '-JrKtqryqqHGkwPmLxRGsUh-Utcn4nz1uJFJX0zCar0',
       'title' => '个人认证通过通知',
       'content' => '亲爱的{nickname}，您好，您的个人认证已通过！',
@@ -24,6 +25,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 2,
       'template_id' => '2bOJ-heIY_2IQc8M968w7BkA3cb0L6HZXD0qUD5UCPA',
       'title' => '个人认证不通过通知',
       'content' => '您提交的个人认证信息，审批不通过',
@@ -36,6 +38,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 3,
       'template_id' => '-JrKtqryqqHGkwPmLxRGsUh-Utcn4nz1uJFJX0zCar0',
       'title' => '企业认证通过通知',
       'content' => '亲爱的{nickname}，您好，您的企业认证已通过！',
@@ -48,6 +51,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 4,
       'template_id' => '2bOJ-heIY_2IQc8M968w7BkA3cb0L6HZXD0qUD5UCPA',
       'title' => '企业认证不通过通知',
       'content' => '您提交的企业认证信息，审批不通过',
@@ -60,6 +64,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 5,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '职位信息添加审核通过通知',
       'content' => '职位信息添加审核通过',
@@ -72,6 +77,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 6,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '职位信息修改审核通过通知',
       'content' => '职位信息修改审核通过',
@@ -84,6 +90,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 7,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '简历信息添加审核通过通知',
       'content' => '简历信息添加审核通过',
@@ -96,6 +103,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 8,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '简历信息修改审核通过通知',
       'content' => '简历信息修改审核通过',
@@ -108,6 +116,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 9,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '职位信息添加审核失败通知',
       'content' => '职位信息添加审核失败',
@@ -120,6 +129,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 10,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '职位信息修改审核失败通知',
       'content' => '职位信息修改审核失败',
@@ -132,6 +142,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 11,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '简历信息添加审核失败通知',
       'content' => '简历信息添加审核失败',
@@ -144,6 +155,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 12,
       'template_id' => 'R2HkhhoO9sul3aR6aOqJldE3incm1dz_wXJIsdMeDdQ',
       'title' => '简历信息修改审核失败通知',
       'content' => '简历信息修改审核失败',
@@ -156,6 +168,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 13,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '职位已到期通知',
       'content' => '{nickname}，您发布的招聘信息已到期',
@@ -168,6 +181,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 14,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '职位即将到期通知',
       'content' => '{nickname}，您发布的招聘信息即将到期',
@@ -180,6 +194,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 15,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '简历已到期通知',
       'content' => '{nickname}，您发布的简历信息已到期',
@@ -192,6 +207,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 16,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '简历即将到期通知',
       'content' => '{nickname}，您发布的简历信息即将到期',
@@ -204,6 +220,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 17,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '职位信息下架通知',
       'content' => '{nickname}，您发布的招聘信息已下架。',
@@ -216,6 +233,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 18,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '简历信息下架通知',
       'content' => '{nickname}，您发布的简历信息已下架。',
@@ -228,6 +246,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 19,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '职位信息解决通知',
       'content' => '{nickname}，您发布的招聘信息已解决。',
@@ -240,6 +259,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 20,
       'template_id' => 'CYqMq0rj4Vc7c28JGJZvbK83Dct8Zg5-fvQ4Ztp66-Q',
       'title' => '简历信息解决通知',
       'content' => '{nickname}，您发布的简历信息已解决。',
@@ -252,6 +272,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 21,
       'template_id' => '1h1a7y7pLYmKVYwhpXHvz4YQbXsnFgVdxDYvqIfMaro',
       'title' => '招聘信息推送',
       'content' => '您好，您收到一份职位，请查阅。',
@@ -264,6 +285,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 22,
       'template_id' => '1h1a7y7pLYmKVYwhpXHvz4YQbXsnFgVdxDYvqIfMaro',
       'title' => '投递后职位信息推送',
       'content' => '您好，您发布《{title}》的简历，有企业意中，招聘岗位详情如下，请点击查看联系！',
@@ -276,6 +298,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 23,
       'template_id' => 'GqdTmbzbOJGpO0G30Kw_OQi7b1cnHk8T9Z_iIFIDG-A',
       'title' => '简历信息推送',
       'content' => '您好，您收到一份简历，请查阅。',
@@ -288,6 +311,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 24,
       'template_id' => 'GqdTmbzbOJGpO0G30Kw_OQi7b1cnHk8T9Z_iIFIDG-A',
       'title' => '投递后简历信息推送',
       'content' => '您好，您发布的《{title}》有师傅应聘，详情如下，请点击查看联系！',
@@ -300,6 +324,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 25,
       'template_id' => 'vmsl5BmY3Dk1pXHSrIbbJiLSuMFTCAmVBe99Jn9a6Zo',
       'title' => '运营管理员审核信息通知',
       'content' => '您有新的派单审核，详情如下',
@@ -312,6 +337,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 0
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 26,
       'template_id' => 'vmsl5BmY3Dk1pXHSrIbbJiLSuMFTCAmVBe99Jn9a6Zo',
       'title' => '运营管理员审核个人认证通知',
       'content' => '您有新的个人认证审核，详情如下',
@@ -324,6 +350,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 0
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 27,
       'template_id' => 'vmsl5BmY3Dk1pXHSrIbbJiLSuMFTCAmVBe99Jn9a6Zo',
       'title' => '运营管理员审核企业认证通知',
       'content' => '您有新的企业认证审核，详情如下',
@@ -336,6 +363,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 0
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 28,
       'template_id' => 'WouafHsnIV6HfqZvT5KZHlEK7Fzi38DeCCEZCQ0AQ6Y',
       'title' => '运营管理员审核投诉信息通知',
       'content' => '您有新的投诉审核，详情如下',
@@ -348,6 +376,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 0
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 29,
       'template_id' => 'BPTCSvr53VLsucbFd6z4CZ3VJkXlQU4LHMZd4OP_FGQ',
       'title' => '推送给用户职位投诉结果通知',
       'content' => '投诉处理结果',
@@ -360,6 +389,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 30,
       'template_id' => 'BPTCSvr53VLsucbFd6z4CZ3VJkXlQU4LHMZd4OP_FGQ',
       'title' => '推送给用户简历投诉结果通知',
       'content' => '投诉处理结果',
@@ -372,6 +402,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 31,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '邀请好友互助券赠送成功通知',
       'content' => '您邀请了朋友{nickname}加入原草互助，赠送您{giveCouponsText}，请注意查收！',
@@ -384,9 +415,10 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 32,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '管理员赠送互助券成功通知',
-      'content' => '您获得管理员推送互助券{give_number}张，请查收',
+      'content' => '您获得管理员推送{giveCouponsText}，请查收',
       'remark' => '点击了解更多的互助券免费获得方式！',
       'host' => env('APP_M_URL'),
       'url' => '/user/help',
@@ -396,6 +428,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 33,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '简历分享任务互助券赠送成功通知',
       'content' => '您完成了《{title}》分享任务，赠送您{giveCouponsText}，可以用来查看职位信息联系方式，请注意查收！',
@@ -408,6 +441,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 34,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '企业每天登陆互助券赠送成功通知',
       'content' => '{nickname}您好，感谢今天登录，获得1张当日招聘券',
@@ -420,6 +454,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 35,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '个人每天登陆互助券赠送成功通知',
       'content' => '{nickname}您好，感谢今天登录，获得1张当日求职券',
@@ -432,6 +467,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 36,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '信息提供互助券赠送成功通知',
       'content' => '{push_text}',
@@ -444,6 +480,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 37,
       'template_id' => 'FbzwkSKeRTH7cOpBWDS_CxGzscxw1dP-HaRG2MHLbtQ',
       'title' => '互助券出售成功通知',
       'content' => '{nickname}您好，您的{couponFullName}已成功出售。',
@@ -456,6 +493,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 38,
       'template_id' => 'yShlcXGqSl-jN7H61OopQlnqHdA7FAY4ylQPwIyjfh8',
       'title' => '互助券到期通知',
       'content' => '{nickname}您好，您在售的{couponFullName}，有效期少于1天，已下架，请您在有效期内使用！',
@@ -468,6 +506,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 39,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '职位分享任务互助券赠送成功通知',
       'content' => '您完成了《{title}》分享任务，赠送您{giveCouponsText}，可以用来查看简历信息联系方式，请注意查收！',
@@ -480,6 +519,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 40,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '绑定手机号任务互助券赠送成功通知',
       'content' => '您已完成绑定手机号任务，赠送您{giveCouponsText}，希望能帮到您，查收在【我的-互助卷】！',
@@ -492,6 +532,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 41,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '完善个人资料任务互助券赠送成功通知',
       'content' => '您已完成完善个人资料任务，赠送您{giveCouponsText}，希望能帮到您，查收在【我的-互助卷】！',
@@ -504,6 +545,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 42,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '关注公众号任务互助券赠送成功通知',
       'content' => '您已完成关注公众号任务，赠送您{giveCouponsText}，希望能帮到您，查收在【我的-互助卷】！',
@@ -516,6 +558,7 @@ class NotifyTemplateTableSeeder extends Seeder
       'is_push_message' => 1
     ]);
     \App\Models\Notify\NotifyTemplate::create([
+      'id' => 43,
       'template_id' => 'sQUHqkEfnxiIKwuFXPnh8smOAD8lm6dHPH8aDA6I-pw',
       'title' => '完善企业资料任务互助券赠送成功通知',
       'content' => '您已完成完善企业资料任务，赠送您{giveCouponsText}，希望能帮到您，查收在【我的-互助卷】！',

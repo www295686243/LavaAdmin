@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\HrResumeRequest;
 use App\Models\Admin\User;
 use App\Models\Info\Hr\HrResume;
-use App\Models\Info\InfoSub;
 use Illuminate\Support\Facades\DB;
 
 class HrResumeController extends Controller
@@ -100,5 +99,17 @@ class HrResumeController extends Controller
     $Job->user_id = $transfer_user_id;
     $Job->save();
     return $this->success();
+  }
+
+  /**
+   * @param HrResumeRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function push(HrResumeRequest $request)
+  {
+    $id = $request->input('id');
+    $jobData = HrResume::findOrFail($id);
+    $jobData->infoPush($request->input('industries', []), $request->input('cities', []));
+    return $this->success('推送成功');
   }
 }

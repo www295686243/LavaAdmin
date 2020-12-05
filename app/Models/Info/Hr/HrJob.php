@@ -8,6 +8,7 @@ use App\Models\Info\Industry;
 use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoComplaint;
 use App\Models\Info\InfoProvide;
+use App\Models\Info\InfoPush;
 use App\Models\Info\InfoSub;
 use App\Models\Info\InfoView;
 use App\Models\Notify\NotifyTemplate;
@@ -139,6 +140,14 @@ class HrJob extends Base
   public function user_order()
   {
     return $this->morphMany(UserOrder::class, 'user_orderable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_push()
+  {
+    return $this->morphMany(InfoPush::class, 'info_pushable');
   }
 
   /**
@@ -290,5 +299,25 @@ class HrJob extends Base
   public function payCallback(UserOrder $userOrderData)
   {
     $userOrderData->createUserBill('查看职位联系方式');
+  }
+
+  /**
+   * @param $industries
+   * @param $cities
+   */
+  public function infoPush($industries, $cities)
+  {
+    $push_user_ids = (new InfoPush())->getPushUserIds($this, $industries, $cities);
+    /**
+     * @var InfoPush $infoPushData
+     */
+    $infoPushData = $this->info_push()->create([
+      'industries' => $industries,
+      'cities' => $cities,
+      'user_id' => User::getUserId(),
+      'push_users' => $push_user_ids
+    ]);
+
+    $infoPushData->createQueuePushWeChatNotify($this);
   }
 }

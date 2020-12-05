@@ -117,6 +117,8 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   // hr
   Route::post('hr_job/transfer', [HrJobController::class, 'transfer']);
   Route::post('hr_resume/transfer', [HrResumeController::class, 'transfer']);
+  Route::post('hr_job/push', [HrJobController::class, 'push']);
+  Route::post('hr_resume/push', [HrResumeController::class, 'push']);
   Route::apiResource('hr_job', HrJobController::class);
   Route::apiResource('hr_resume', HrResumeController::class);
   // 行业

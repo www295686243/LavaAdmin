@@ -100,4 +100,16 @@ class HrJobController extends Controller
     $Job->save();
     return $this->success();
   }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function push(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $jobData = HrJob::findOrFail($id);
+    $jobData->infoPush($request->input('industries', []), $request->input('cities', []));
+    return $this->success('推送成功');
+  }
 }

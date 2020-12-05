@@ -12,19 +12,19 @@ class DatabaseSeeder extends Seeder
   public function run()
   {
     $this->call([
+      ConfigTableSeeder::class,
       CityTableSeeder::class,
+      CouponTemplateSeeder::class,
+      NotifyTemplateTableSeeder::class,
+      VersionTableSeeder::class,
       AdminMenuTableSeeder::class,
+      TaskTableSeeder::class,
       PermissionTableSeeder::class,
       RoleTableSeeder::class,
       UserTableSeeder::class,
 //      NewsTableSeeder::class,
-      VersionTableSeeder::class,
-      ConfigTableSeeder::class,
-      NotifyTemplateTableSeeder::class,
       HrJobTableSeeder::class,
       HrResumeTableSeeder::class,
-      CouponTemplateSeeder::class,
-      TaskTableSeeder::class,
     ]);
   }
 }

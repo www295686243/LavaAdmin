@@ -23,13 +23,11 @@ class TaskTableSeeder extends Seeder
     $taskData->task_rule()->createMany([
       [
         'title' => '分享简历',
-        'operator' => '>=',
         'target_number' => 1,
         'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id]]
       ],
       [
         'title' => '分享职位',
-        'operator' => '>=',
         'target_number' => 1,
         'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
       ]
@@ -42,7 +40,6 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'title' => '关注公众号',
-      'operator' => '>=',
       'target_number' => 1,
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 2, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id], ["amount" => 3, "expiry_day" => 30, "give_number" => 2, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
     ]);
@@ -54,7 +51,6 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'title' => '绑定手机号',
-      'operator' => '>=',
       'target_number' => 1,
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id], ["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
     ]);
@@ -66,7 +62,6 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'title' => '完善个人资料',
-      'operator' => '>=',
       'target_number' => 1,
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id]]
     ]);
@@ -78,7 +73,6 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'title' => '完善企业资料',
-      'operator' => '>=',
       'target_number' => 1,
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 3, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
     ]);
@@ -90,7 +84,6 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'title' => '个人每天登录',
-      'operator' => '>=',
       'target_number' => 1,
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrJobCoupon->id]]
     ]);
@@ -102,7 +95,6 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'title' => '企业每天登录',
-      'operator' => '>=',
       'target_number' => 1,
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrResumeCoupon->id]]
     ]);
@@ -114,7 +106,6 @@ class TaskTableSeeder extends Seeder
     ]);
     $taskData->task_rule()->create([
       'title' => '邀请加入',
-      'operator' => '>=',
       'target_number' => 1,
       'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]]
     ]);
@@ -127,13 +118,11 @@ class TaskTableSeeder extends Seeder
     $taskData->task_rule()->createMany([
       [
         'title' => '提供职位',
-        'operator' => '>=',
         'target_number' => 1,
         'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]]
       ],
       [
         'title' => '提供人才',
-        'operator' => '>=',
         'target_number' => 1,
         'rewards' => [["amount" => 3, "expiry_day" => 30, "give_number" => 1, "reward_name" => "coupon", "coupon_template_id" => $hrCoupon->id]]
       ]
