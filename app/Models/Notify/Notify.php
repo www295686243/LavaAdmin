@@ -44,6 +44,7 @@ class Notify extends Base
    */
   public function pushWeChatNotify()
   {
+    if (env('APP_ENV') === 'dev') return false;
     $app = app('wechat.official_account');
     $app->template_message->send([
       'touser' => $this->openid,

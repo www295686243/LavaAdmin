@@ -25,6 +25,7 @@ class CouponOrderQueue implements ShouldQueue
    */
   public function __construct($coupon_order_id)
   {
+    $this->queue = 'high';
     $this->coupon_order_id = $coupon_order_id;
   }
 

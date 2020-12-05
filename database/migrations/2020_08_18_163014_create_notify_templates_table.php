@@ -25,6 +25,7 @@ class CreateNotifyTemplatesTable extends Migration
       $table->string('url_params', 120)->comment('地址参数')->nullable();
       // 格式 name,姓名|date,日期|xxx,xxx
       $table->string('keyword_names', 120)->comment('字段名称')->nullable();
+      $table->unsignedTinyInteger('queue')->comment('优先级')->default(5);
       $table->unsignedTinyInteger('is_push_official_account')->comment('是否推送微信公众号')->default(0);
       $table->unsignedTinyInteger('is_push_message')->comment('是否推送站内信')->default(0);
       $table->timestamps();

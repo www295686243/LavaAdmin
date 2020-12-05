@@ -16,6 +16,10 @@ class InfoPushQueue implements ShouldQueue
 {
   use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+  public $tries = 3;
+
+  public $timeout = 300;
+
   protected $user_id;
   protected $infoData;
 
@@ -26,6 +30,7 @@ class InfoPushQueue implements ShouldQueue
    */
   public function __construct($user_id, $infoData)
   {
+    $this->queue = 'low';
     $this->user_id = $user_id;
     $this->infoData = $infoData;
   }

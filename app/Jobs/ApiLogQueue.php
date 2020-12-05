@@ -25,7 +25,7 @@ class ApiLogQueue implements ShouldQueue
    */
   public function __construct($logs)
   {
-    $this->queue = 'log';
+    $this->queue = 'default';
     $this->logs = $logs;
   }
 

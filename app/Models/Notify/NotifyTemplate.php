@@ -19,6 +19,7 @@ class NotifyTemplate extends Base
     'content',
     'remark',
     'host',
+    'queue',
     'url',
     'url_params',
     'keyword_names',
@@ -95,7 +96,6 @@ class NotifyTemplate extends Base
     }
     $data['title'] = $this->resolveContent($this->title, $params);
     $data['user_id'] = $userData->id;
-    $data['openid'] = optional($userData->auth)->wx_openid;
     $data['template_id'] = $this->template_id;
     $data['host'] = $this->host;
     $data['url'] = $this->url;
@@ -105,9 +105,15 @@ class NotifyTemplate extends Base
     $keywordParams = $this->resolveKeywords($this->keyword_names, $params);
     $data['keywords'] = $keywordParams['keywords'];
     $data['keyword_names'] = $keywordParams['keyword_names'];
-    $data['is_follow_official_account'] = $userData->is_follow_official_account;
     $data['is_push_official_account'] = $this->is_push_official_account;
     $data['is_push_message'] = $this->is_push_message;
+    if (env('APP_ENV') === 'dev') {
+      $data['openid'] = '开发环境模拟openid';
+      $data['is_follow_official_account'] = 1;
+    } else {
+      $data['openid'] = optional($userData->auth)->wx_openid;
+      $data['is_follow_official_account'] = $userData->is_follow_official_account;
+    }
     $this->pushNotify($data);
   }
 
@@ -118,7 +124,7 @@ class NotifyTemplate extends Base
   {
     $notify = Notify::create(Arr::only($data, Notify::getFillFields()));
     if ($notify->is_push_official_account && $notify->openid && $notify->is_follow_official_account) {
-      NotifyQueue::dispatch($notify);
+      NotifyQueue::dispatch($notify)->onQueue($this->queue);
     }
   }
 
