@@ -128,11 +128,7 @@ trait PayTrait
   public function getContacts()
   {
     $infoData = $this->getModelData();
-    $isPay = $infoData->user_order()
-      ->where('user_id', User::getUserId())
-      ->where('pay_status', UserOrder::getPayStatusValue(2, '已支付'))
-      ->exists();
-    if ($isPay) {
+    if ($infoData->modelIsPay()) {
       return $this->setParams([
         'phone' => $infoData->phone,
         'contacts' => $infoData->contacts

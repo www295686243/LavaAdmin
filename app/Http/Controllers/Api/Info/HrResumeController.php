@@ -64,7 +64,7 @@ class HrResumeController extends Controller
   {
     $id = $request->input('id');
     $hrResumeData = HrResume::findOrFail($id);
-    $infoComplaintData = $hrResumeData->getComplaint();
+    $infoComplaintData = $hrResumeData->modelGetComplaint();
     return $this->setParams($infoComplaintData)->success();
   }
 
@@ -76,7 +76,7 @@ class HrResumeController extends Controller
   {
     $id = $request->input('id');
     $hrResumeData = HrResume::findOrFail($id);
-    $infoComplaintData = $hrResumeData->complaint($request->only(['complaint_type', 'complaint_content']));
+    $infoComplaintData = $hrResumeData->modelComplaint($request->only(['complaint_type', 'complaint_content']));
     return $this->setParams($infoComplaintData)->success('反馈成功');
   }
 }

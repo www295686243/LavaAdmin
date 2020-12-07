@@ -44,6 +44,7 @@ class UserWallet extends Base
       $this->error('该钱包不存在');
     }
     $userWalletData->money += $amount;
+    $userWalletData->total_earning += $amount;
     $userWalletData->save();
   }
 

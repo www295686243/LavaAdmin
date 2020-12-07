@@ -63,7 +63,7 @@ class HrJobController extends Controller
   {
     $id = $request->input('id');
     $hrJobData = HrJob::findOrFail($id);
-    $infoComplaintData = $hrJobData->getComplaint();
+    $infoComplaintData = $hrJobData->modelGetComplaint();
     return $this->setParams($infoComplaintData)->success();
   }
 
@@ -75,7 +75,7 @@ class HrJobController extends Controller
   {
     $id = $request->input('id');
     $hrJobData = HrJob::findOrFail($id);
-    $infoComplaintData = $hrJobData->complaint($request->only(['complaint_type', 'complaint_content']));
+    $infoComplaintData = $hrJobData->modelComplaint($request->only(['complaint_type', 'complaint_content']));
     return $this->setParams($infoComplaintData)->success('反馈成功');
   }
 }

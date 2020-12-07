@@ -8,6 +8,8 @@
 
 namespace App\Models\Base;
 
+use App\Models\Info\Hr\HrJob;
+use App\Models\Info\Hr\HrResume;
 use App\Models\Info\Hr\Traits\InfoQueryTraits;
 use App\Models\Info\Industry;
 use App\Models\Info\InfoCheck;
@@ -21,6 +23,7 @@ use App\Models\Task\TaskRecord;
 use App\Models\Task\Traits\ShareTaskTraits;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
+use App\Models\User\UserCoupon;
 use App\Models\User\UserOrder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
@@ -286,7 +289,7 @@ class HrBase extends Base {
   /**
    * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\MorphMany|null|object
    */
-  public function getComplaint()
+  public function modelGetComplaint()
   {
     return $this->info_complaint()->where('user_id', User::getUserId())->first();
   }
@@ -295,15 +298,39 @@ class HrBase extends Base {
    * @param $input
    * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\MorphMany|null|object
    */
-  public function complaint($input)
+  public function modelComplaint($input)
   {
     $userData = User::getUserData();
     $input['user_id'] = $userData->id;
-    $infoComplaintData = $this->getComplaint();
+    $infoComplaintData = $this->modelGetComplaint();
     if ($infoComplaintData) {
       (new static())->error('您已投诉过该信息');
     }
+
+    $userOrderData = $this->modelGetPayOrder();
+    if (!$userOrderData) {
+      return $this->error('您未查看该信息的联系方式');
+    }
+
     $infoComplaintData = $this->info_complaint()->create($input);
+
+    if ($this->modelStatusIsEqualTo(1, '已发布')) {
+      // 如果信息到期被投诉了就立即下架并退券
+      if ($this->end_time < date('Y-m-d')) {
+        $this->status = $this->modelGetStatusValue(3, '已下架');
+        $this->save();
+        $userOrderData->modelRefund();
+      }
+      // 如果有3个投诉已找到那么设置该信息为已解决
+      $foundCount = $this->info_complaint()
+        ->where('complaint_type', InfoComplaint::getOptionsValue('complaint_type', 1, '已招到'))
+        ->count();
+      if ($foundCount >= 3) {
+        $this->status = $this->modelGetStatusValue(2, '已解决');
+        $this->save();
+      }
+    }
+
     NotifyTemplate::sendAdmin(28, '运营管理员审核投诉信息通知', [
       'nickname' => $userData->id.'-'.$userData->nickname,
       'phone' => $userData->phone ?? '--',
@@ -312,5 +339,49 @@ class HrBase extends Base {
       '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
     ]);
     return $infoComplaintData;
+  }
+
+  /**
+   * @return bool
+   */
+  public function modelIsPay()
+  {
+    return $this->user_order()
+      ->where('user_id', User::getUserId())
+      ->where('pay_status', UserOrder::getPayStatusValue(2, '已支付'))
+      ->exists();
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\MorphMany|null|object
+   */
+  public function modelGetPayOrder()
+  {
+    return $this->user_order()
+      ->where('user_id', User::getUserId())
+      ->where('pay_status', UserOrder::getPayStatusValue(2, '已支付'))
+      ->first();
+  }
+
+  /**
+   * @param $id
+   * @param $_title
+   * @return bool
+   */
+  public function modelStatusIsEqualTo($id, $_title)
+  {
+    $className = get_class($this);
+    return $this->status === $className::getStatusValue($id, $_title);
+  }
+
+  /**
+   * @param $id
+   * @param $_title
+   * @return mixed
+   */
+  public function modelGetStatusValue($id, $_title)
+  {
+    $className = get_class($this);
+    return $className::getStatusValue($id, $_title);
   }
 }

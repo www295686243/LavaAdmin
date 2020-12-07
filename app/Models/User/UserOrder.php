@@ -138,4 +138,27 @@ class UserOrder extends Base
   {
     return static::getOptionsValue('pay_status', $value, $display_name);
   }
+
+  public function modelRefund()
+  {
+    if ($this->user_coupon_id) {
+      $couponData = UserCoupon::find($this->user_coupon_id);
+      if ($couponData) {
+        $couponData->coupon_status = UserCoupon::getCouponStatusValue(1, '未使用');
+        $couponData->save();
+      }
+    }
+    if ($this->cash_amount || $this->balance_amount) {
+      $totalAmount = $this->cash_amount + $this->balance_amount;
+      (new UserWallet())->incrementAmount($totalAmount, $this->user_id);
+
+      UserBill::create([
+        'user_id' => $this->user_id,
+        'user_order_id' => $this->id,
+        'total_amount' => $totalAmount,
+        'balance_amount' => $totalAmount,
+        'desc' => '退款'
+      ]);
+    }
+  }
 }
