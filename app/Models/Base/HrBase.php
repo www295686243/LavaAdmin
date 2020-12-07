@@ -1,0 +1,316 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: wanx
+ * Date: 2020/12/7
+ * Time: 11:21
+ */
+
+namespace App\Models\Base;
+
+use App\Models\Info\Hr\Traits\InfoQueryTraits;
+use App\Models\Info\Industry;
+use App\Models\Info\InfoCheck;
+use App\Models\Info\InfoComplaint;
+use App\Models\Info\InfoProvide;
+use App\Models\Info\InfoPush;
+use App\Models\Info\InfoSub;
+use App\Models\Info\InfoView;
+use App\Models\Notify\NotifyTemplate;
+use App\Models\Task\TaskRecord;
+use App\Models\Task\Traits\ShareTaskTraits;
+use App\Models\Traits\IndustryTrait;
+use App\Models\User\User;
+use App\Models\User\UserOrder;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
+
+class HrBase extends Base {
+  use SoftDeletes, IndustryTrait, InfoQueryTraits, ShareTaskTraits;
+
+  /**
+   * @var array
+   */
+  protected $hidden = [
+    'updated_at',
+    'deleted_at'
+  ];
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function admin_user()
+  {
+    return $this->belongsTo(User::class, 'admin_user_id');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+   */
+  public function provide_user()
+  {
+    return $this->belongsTo(User::class, 'provide_user_id');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_sub()
+  {
+    return $this->morphMany(InfoSub::class, 'info_subable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphToMany
+   */
+  public function industry()
+  {
+    return $this->morphToMany(Industry::class, 'industrygable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_check()
+  {
+    return $this->morphMany(InfoCheck::class, 'info_checkable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_complaint()
+  {
+    return $this->morphMany(InfoComplaint::class, 'info_complaintable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_view()
+  {
+    return $this->morphMany(InfoView::class, 'info_viewable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function task_record()
+  {
+    return $this->morphMany(TaskRecord::class, 'task_recordable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function user_order()
+  {
+    return $this->morphMany(UserOrder::class, 'user_orderable');
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function info_push()
+  {
+    return $this->morphMany(InfoPush::class, 'info_pushable');
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   * @return int|mixed
+   * @throws \Throwable
+   */
+  public function createOrUpdateData($input, $id = 0)
+  {
+    $input['status'] = optional($input)['status'] ?? static::getStatusValue(1, '已发布');
+    $input['intro'] = $input['description'] ? mb_substr($input['description'], 0, 60) : '';
+    $input['refresh_at'] = date('Y-m-d H:i:s');
+    if ($id) {
+      $this->updateData($input, $id);
+      return $id;
+    } else {
+      return $this->createData($input);
+    }
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   * @return int|mixed
+   * @throws \Throwable
+   */
+  public function checkInfoSuccess($input, $id = 0)
+  {
+    $infoId = $this->createOrUpdateData($input, $id);
+    if ($id) {
+      $tempId = $this->NotifyConfig['checkEditSuccess']['id'];
+      $tempTitle = $this->NotifyConfig['checkEditSuccess']['title'];
+    } else {
+      $tempId = $this->NotifyConfig['checkCreateSuccess']['id'];
+      $tempTitle = $this->NotifyConfig['checkCreateSuccess']['title'];
+    }
+    NotifyTemplate::send($tempId, $tempTitle, $input['user_id'], [
+      'id' => $id ?: $infoId,
+      'title' => $input['title'],
+      'datetime' => date('Y-m-d H:i:s'),
+      'result' => '通过',
+      'remark' => '感谢您使用原草互助，人人为我，我为人人！'
+    ]);
+    return $id ?: $infoId;
+  }
+
+  /**
+   * @param $input
+   * @param int $id
+   */
+  public function checkInfoFail($input, $id = 0)
+  {
+    if ($id) {
+      $tempId = $this->NotifyConfig['checkEditFail']['id'];
+      $tempTitle = $this->NotifyConfig['checkEditFail']['title'];
+    } else {
+      $tempId = $this->NotifyConfig['checkEditFail']['id'];
+      $tempTitle = $this->NotifyConfig['checkEditFail']['title'];
+    }
+    NotifyTemplate::send($tempId, $tempTitle, $input['user_id'], [
+      'id' => $id,
+      'title' => $input['title'],
+      'datetime' => date('Y-m-d H:i:s'),
+      'result' => '未通过',
+      'remark' => $input['refuse_reason']
+    ]);
+  }
+
+  /**
+   * @param $input
+   * @return mixed
+   * @throws \Throwable
+   */
+  private function createData($input)
+  {
+    DB::beginTransaction();
+    try {
+      $data = $this->create(Arr::only($input, $this->getFillable()));
+      $data->info_sub()->create(Arr::only($input, InfoSub::getFillFields()));
+      $data->attachIndustry($input);
+      $data->attachInfoProvide();
+      DB::commit();
+      return $data->id;
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getTraceAsString().':'.__LINE__);
+      $this->error();
+    }
+  }
+
+  public function attachInfoProvide()
+  {
+    $info_provide_id = request()->input('info_provide_id');
+    if ($info_provide_id) {
+      $infoProvideData = InfoProvide::findOrFail($info_provide_id);
+      $infoProvideData->info_provideable_id = $this->id;
+      $infoProvideData->save();
+    }
+  }
+
+  /**
+   * @param $input
+   * @param $id
+   * @throws \Throwable
+   */
+  private function updateData($input, $id)
+  {
+    $data = static::findOrAuth($id);
+    DB::beginTransaction();
+    try {
+      $data->update(Arr::only($input, $this->getFillable()));
+      $data->info_sub()->update(Arr::only($input, InfoSub::getFillFields()));
+      $data->attachIndustry($input);
+      $tempId = 0;
+      $tempTitle = '';
+      if ($input['status'] === static::getStatusValue(3, '已下架')) {
+        $tempId = $this->NotifyConfig['infoDisable']['id'];
+        $tempTitle = $this->NotifyConfig['infoDisable']['title'];
+      } else if ($input['status'] === static::getStatusValue(2, '已解决')) {
+        $tempId = $this->NotifyConfig['infoResolve']['id'];
+        $tempTitle = $this->NotifyConfig['infoResolve']['title'];
+      }
+      if ($tempId) {
+        NotifyTemplate::send($tempId, $tempTitle, $data->user_id, [
+          'id' => $id,
+          'nickname' => $data->user->nickname,
+          'title' => $data->title,
+          'created_at' => $data->created_at->format('Y-m-d H:i:s'),
+          'end_time' => $data->end_time.' 23:59:59'
+        ]);
+      }
+      DB::commit();
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getTraceAsString().':'.__LINE__);
+      $this->error();
+    }
+  }
+
+  /**
+   * @param $industries
+   * @param $cities
+   */
+  public function infoPush($industries, $cities)
+  {
+    $push_user_ids = (new InfoPush())->getPushUserIds($this, $industries, $cities);
+    /**
+     * @var InfoPush $infoPushData
+     */
+    $infoPushData = $this->info_push()->create([
+      'industries' => $industries,
+      'cities' => $cities,
+      'user_id' => User::getUserId(),
+      'push_users' => $push_user_ids
+    ]);
+
+    $infoPushData->createQueuePushWeChatNotify($this);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\MorphMany|null|object
+   */
+  public function getComplaint()
+  {
+    return $this->info_complaint()->where('user_id', User::getUserId())->first();
+  }
+
+  /**
+   * @param $input
+   * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Relations\MorphMany|null|object
+   */
+  public function complaint($input)
+  {
+    $userData = User::getUserData();
+    $input['user_id'] = $userData->id;
+    $infoComplaintData = $this->getComplaint();
+    if ($infoComplaintData) {
+      (new static())->error('您已投诉过该信息');
+    }
+    $infoComplaintData = $this->info_complaint()->create($input);
+    NotifyTemplate::sendAdmin(28, '运营管理员审核投诉信息通知', [
+      'nickname' => $userData->id.'-'.$userData->nickname,
+      'phone' => $userData->phone ?? '--',
+      'title' => $this->id.'-'.$this->title,
+      'content' => InfoComplaint::getOptionsLabel('complaint_type', $infoComplaintData->complaint_type).'：'.$infoComplaintData->complaint_content,
+      '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
+    ]);
+    return $infoComplaintData;
+  }
+}

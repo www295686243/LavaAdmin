@@ -51,8 +51,32 @@ class HrResumeController extends Controller
   public function view(HrResumeRequest $request)
   {
     $id = $request->input('id');
-    $hrJobData = HrResume::findOrFail($id);
-    (new InfoView())->createView($request, $hrJobData);
+    $hrResumeData = HrResume::findOrFail($id);
+    (new InfoView())->createView($request, $hrResumeData);
     return $this->success();
+  }
+
+  /**
+   * @param HrResumeRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function isComplaint(HrResumeRequest $request)
+  {
+    $id = $request->input('id');
+    $hrResumeData = HrResume::findOrFail($id);
+    $infoComplaintData = $hrResumeData->getComplaint();
+    return $this->setParams($infoComplaintData)->success();
+  }
+
+  /**
+   * @param HrResumeRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function complaint(HrResumeRequest $request)
+  {
+    $id = $request->input('id');
+    $hrResumeData = HrResume::findOrFail($id);
+    $infoComplaintData = $hrResumeData->complaint($request->only(['complaint_type', 'complaint_content']));
+    return $this->setParams($infoComplaintData)->success('反馈成功');
   }
 }

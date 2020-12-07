@@ -28,7 +28,7 @@ class UserEnterpriseController extends Controller
    */
   public function update(UserEnterpriseRequest $request, $id)
   {
-    $input = $request->only(UserEnterprise::getUpdateFillable());
+    $input = $request->only(UserEnterprise::getFillFields());
     DB::beginTransaction();
     try {
       UserEnterprise::updateInfo($input, $id);

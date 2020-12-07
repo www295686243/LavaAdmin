@@ -247,11 +247,11 @@ class UserController extends Controller
       if ($input['role'] === 'Enterprise Member') {
         $userData->assignRole($input['role']);
         $userData->current_role = $input['role'];
-        UserEnterprise::updateInfo($request->only(UserEnterprise::getUpdateFillable()));
+        UserEnterprise::updateInfo($request->only(UserEnterprise::getFillFields()));
       } else if ($input['role'] === 'Personal Member') {
         $userData->assignRole($input['role']);
         $userData->current_role = $input['role'];
-        UserPersonal::updateInfo($request->only(UserPersonal::getUpdateFillable()));
+        UserPersonal::updateInfo($request->only(UserPersonal::getFillFields()));
       }
       $userData->save();
       DB::commit();

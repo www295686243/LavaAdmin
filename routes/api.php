@@ -83,12 +83,16 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('user/hr_job/updateDisable', [HrJobController::class, 'updateDisable']);
   Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
   Route::get('hr_job/view', [\App\Http\Controllers\Api\Info\HrJobController::class, 'view']);
+  Route::get('hr_job/isComplaint', [\App\Http\Controllers\Api\Info\HrJobController::class, 'isComplaint']);
+  Route::post('hr_job/complaint', [\App\Http\Controllers\Api\Info\HrJobController::class, 'complaint']);
   Route::apiResource('hr_job', \App\Http\Controllers\Api\Info\HrJobController::class)->only(['index', 'show']);
 
   Route::post('user/hr_resume/refreshUpdateAt', [HrResumeController::class, 'refreshUpdateAt']);
   Route::post('user/hr_resume/updateDisable', [HrResumeController::class, 'updateDisable']);
   Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
   Route::get('hr_resume/view', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'view']);
+  Route::get('hr_resume/isComplaint', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'isComplaint']);
+  Route::post('hr_resume/complaint', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'complaint']);
   Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);
@@ -103,9 +107,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
   // 信息审核
   Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'show', 'destroy']);
-  // 信息投诉
-  Route::get('info_complaint/getInfoComplaint', [InfoComplaintController::class, 'getInfoComplaint']);
-  Route::apiResource('info_complaint', InfoComplaintController::class)->only(['store']);
   // 信息投递
   Route::get('info_delivery/getInfoList', [InfoDeliveryController::class, 'getInfoList']);
   Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index', 'store', 'show']);

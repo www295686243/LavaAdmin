@@ -340,8 +340,8 @@ class User extends Authenticatable
       $userData = static::findOrFail($userId);
       $userData->update(Arr::only($attributes, (new static())->getFillable()));
       $userData->control()->update(Arr::only($attributes, UserControl::getUpdateFillable()));
-      $userData->personal()->update(Arr::only($attributes, UserPersonal::getUpdateFillable()));
-      $userData->enterprise()->update(Arr::only($attributes, UserEnterprise::getUpdateFillable()));
+      $userData->personal()->update(Arr::only($attributes, UserPersonal::getFillFields()));
+      $userData->enterprise()->update(Arr::only($attributes, UserEnterprise::getFillFields()));
       return $userData;
     });
   }
@@ -456,11 +456,11 @@ class User extends Authenticatable
 
   public function checkPerfectPersonalInfo()
   {
-    return $this->personal->checkPerfectInfo();
+    return $this->personal->isPerfectInfo();
   }
 
   public function checkPerfectEnterpriseInfo()
   {
-    return $this->enterprise->checkPerfectInfo();
+    return $this->enterprise->isPerfectInfo();
   }
 }

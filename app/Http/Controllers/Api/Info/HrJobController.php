@@ -6,19 +6,13 @@ use App\Http\Controllers\Api\Traits\PayTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\HrJobRequest;
 use App\Models\Api\User;
-use App\Models\City;
 use App\Models\Info\Hr\HrJob;
-use App\Models\Info\Industry;
-use App\Models\Info\Industrygable;
 use App\Models\Info\InfoView;
 use App\Models\User\UserOrder;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class HrJobController extends Controller
 {
   use PayTrait;
-
   /**
    * @param HrJobRequest $request
    * @return \Illuminate\Http\JsonResponse
@@ -59,5 +53,29 @@ class HrJobController extends Controller
     $hrJobData = HrJob::findOrFail($id);
     (new InfoView())->createView($request, $hrJobData);
     return $this->success();
+  }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function isComplaint(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $hrJobData = HrJob::findOrFail($id);
+    $infoComplaintData = $hrJobData->getComplaint();
+    return $this->setParams($infoComplaintData)->success();
+  }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function complaint(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $hrJobData = HrJob::findOrFail($id);
+    $infoComplaintData = $hrJobData->complaint($request->only(['complaint_type', 'complaint_content']));
+    return $this->setParams($infoComplaintData)->success('反馈成功');
   }
 }
