@@ -139,6 +139,9 @@ class UserOrder extends Base
     return static::getOptionsValue('pay_status', $value, $display_name);
   }
 
+  /**
+   * 退款
+   */
   public function modelRefund()
   {
     if ($this->user_coupon_id) {
@@ -160,5 +163,36 @@ class UserOrder extends Base
         'desc' => '退款'
       ]);
     }
+  }
+
+  /**
+   * @return mixed
+   * @throws \Exception
+   */
+  public function modelGetPayConfig()
+  {
+    $userAuthData = UserAuth::where('user_id', $this->user_id)->first();
+    if (!$userAuthData->wx_openid) {
+      throw new \Exception('openid不存在');
+    }
+    $app = app('wechat.payment');
+    $order = $app->order->unify([
+      'body' => '查看联系方式',
+      'out_trade_no' => $this->id,
+      'total_fee' => $this->total_amount * 100,
+      'trade_type' => 'JSAPI',
+      'openid' => $userAuthData->wx_openid,
+      'notify_url' => $this->getNotifyUrl()
+    ]);
+    $config = $app->jssdk->sdkConfig($order['prepay_id']);
+    return $config;
+  }
+
+  /**
+   * @return string
+   */
+  private function getNotifyUrl () {
+    $snakeType = Str::of($this->user_orderable_type)->basename()->snake();
+    return env('APP_URL').'/api/'.$snakeType.'/pay_callback';
   }
 }

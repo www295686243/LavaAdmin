@@ -206,4 +206,41 @@ class HrResumeController extends Controller
     $data = InfoCheck::getList(HrResume::class);
     return $this->setParams($data)->success();
   }
+
+  /**
+   * @param HrResumeRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function pay(HrResumeRequest $request)
+  {
+    $id = $request->input('id');
+    $hrResumeData = HrResume::findOrFail($id);
+    $userOrderData = $hrResumeData->modelGetUserOrder();
+    if ($userOrderData->cash_amount > 0) {
+      $config = $userOrderData->modelGetPayConfig();
+      return $this->setParams($config)->success('获取支付配置成功');
+    } else {
+      $userOrderData->paySuccess();
+      $userOrderData->user_orderable->payCallback($userOrderData);
+      return $this
+        ->setParams(['pay_status' => 'success'])
+        ->setExtra([
+          'isFirstPay' => $userOrderData->isFirstPay(),
+          'isModelFirstPay' => $userOrderData->isModelFirstPay()
+        ])
+        ->success('支付成功');
+    }
+  }
+
+  /**
+   * @param HrResumeRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getContacts(HrResumeRequest $request)
+  {
+    $id = $request->input('id');
+    $hrResumeData = HrResume::findOrFail($id);
+    $data = $hrResumeData->modelGetContacts();
+    return $this->setParams($data)->success();
+  }
 }

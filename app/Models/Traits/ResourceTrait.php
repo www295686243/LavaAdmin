@@ -65,4 +65,17 @@ trait ResourceTrait
     $this->res->setParams($data);
     return $this;
   }
+
+  /**
+   * @param $data
+   * @return $this
+   */
+  public function setExtra($data)
+  {
+    if (!$this->res) {
+      $this->res = new ResourceService();
+    }
+    $this->res->setExtra($data);
+    return $this;
+  }
 }

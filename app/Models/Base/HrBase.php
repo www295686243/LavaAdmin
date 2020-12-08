@@ -20,6 +20,7 @@ use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\TaskRecord;
 use App\Models\Task\Traits\ShareTaskTraits;
 use App\Models\Traits\IndustryTrait;
+use App\Models\Traits\PayContactsTrait;
 use App\Models\User\User;
 use App\Models\User\UserOrder;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,7 +28,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 
 class HrBase extends Base {
-  use SoftDeletes, IndustryTrait, InfoQueryTraits, ShareTaskTraits;
+  use SoftDeletes, IndustryTrait, InfoQueryTraits, ShareTaskTraits, PayContactsTrait;
 
   /**
    * @var array

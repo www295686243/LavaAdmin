@@ -205,4 +205,41 @@ class HrJobController extends Controller
     $data = InfoCheck::getList(HrJob::class);
     return $this->setParams($data)->success();
   }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function pay(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $hrJobData = HrJob::findOrFail($id);
+    $userOrderData = $hrJobData->modelGetUserOrder();
+    if ($userOrderData->cash_amount > 0) {
+      $config = $userOrderData->modelGetPayConfig();
+      return $this->setParams($config)->success('获取支付配置成功');
+    } else {
+      $userOrderData->paySuccess();
+      $userOrderData->user_orderable->payCallback($userOrderData);
+      return $this
+        ->setParams(['pay_status' => 'success'])
+        ->setExtra([
+          'isFirstPay' => $userOrderData->isFirstPay(),
+          'isModelFirstPay' => $userOrderData->isModelFirstPay()
+        ])
+        ->success('支付成功');
+    }
+  }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getContacts(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $hrJobData = HrJob::findOrFail($id);
+    $data = $hrJobData->modelGetContacts();
+    return $this->setParams($data)->success();
+  }
 }
