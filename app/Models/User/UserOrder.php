@@ -172,7 +172,7 @@ class UserOrder extends Base
   public function modelGetPayConfig()
   {
     $userAuthData = UserAuth::where('user_id', $this->user_id)->first();
-    if (!$userAuthData->wx_openid) {
+    if (!$userAuthData || !$userAuthData->wx_openid) {
       throw new \Exception('openid不存在');
     }
     $app = app('wechat.payment');

@@ -387,4 +387,18 @@ class HrBase extends Base {
     $className = get_class($this);
     return $className::getStatusValue($id, $_title);
   }
+
+  /**
+   * @return array
+   */
+  public function modelGetRecommendList()
+  {
+    $industryIds = $this->industry->pluck('id');
+    $city = $this->city;
+    $modelPath = get_class($this);
+    $data = $modelPath::aiQuery($industryIds, $city, 0);
+    return collect($data)->filter(function ($item) {
+      return $item->id !== $this->id;
+    })->values();
+  }
 }

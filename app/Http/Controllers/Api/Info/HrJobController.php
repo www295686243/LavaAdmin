@@ -11,6 +11,7 @@ use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoView;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserCoupon;
+use Illuminate\Support\Facades\DB;
 
 class HrJobController extends Controller
 {
@@ -209,26 +210,14 @@ class HrJobController extends Controller
   /**
    * @param HrJobRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function pay(HrJobRequest $request)
   {
     $id = $request->input('id');
     $hrJobData = HrJob::findOrFail($id);
-    $userOrderData = $hrJobData->modelGetUserOrder();
-    if ($userOrderData->cash_amount > 0) {
-      $config = $userOrderData->modelGetPayConfig();
-      return $this->setParams($config)->success('获取支付配置成功');
-    } else {
-      $userOrderData->paySuccess();
-      $userOrderData->user_orderable->payCallback($userOrderData);
-      return $this
-        ->setParams(['pay_status' => 'success'])
-        ->setExtra([
-          'isFirstPay' => $userOrderData->isFirstPay(),
-          'isModelFirstPay' => $userOrderData->isModelFirstPay()
-        ])
-        ->success('支付成功');
-    }
+
+    return $this->_pay($hrJobData);
   }
 
   /**
@@ -240,6 +229,18 @@ class HrJobController extends Controller
     $id = $request->input('id');
     $hrJobData = HrJob::findOrFail($id);
     $data = $hrJobData->modelGetContacts();
+    return $this->setParams($data)->success();
+  }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function recommendList(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $hrJobData = HrJob::findOrFail($id);
+    $data = $hrJobData->modelGetRecommendList();
     return $this->setParams($data)->success();
   }
 }

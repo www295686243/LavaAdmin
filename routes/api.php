@@ -83,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('hr_job/authShow', [HrJobController::class, 'authIndex']);
   Route::get('hr_job/getUsableCoupon', [HrJobController::class, 'getUsableCoupon']);
   Route::get('hr_job/checkIndex', [HrJobController::class, 'checkIndex']);
+  Route::get('hr_job/recommendList', [HrJobController::class, 'recommendList']);
   Route::apiResource('hr_job', HrJobController::class);
 
   Route::post('hr_resume/pay', [HrResumeController::class, 'pay']);
@@ -96,6 +97,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('hr_resume/authShow', [HrResumeController::class, 'authIndex']);
   Route::get('hr_resume/getUsableCoupon', [HrResumeController::class, 'getUsableCoupon']);
   Route::get('hr_resume/checkIndex', [HrResumeController::class, 'checkIndex']);
+  Route::get('hr_resume/recommendList', [HrResumeController::class, 'recommendList']);
   Route::apiResource('hr_resume', HrResumeController::class);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);

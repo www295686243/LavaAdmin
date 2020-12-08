@@ -60,4 +60,37 @@ trait PayTrait
       }
     });
   }
+
+  /**
+   * @param $infoData
+   * @return mixed
+   * @throws \Throwable
+   */
+  public function _pay($infoData)
+  {
+    DB::beginTransaction();
+    try {
+      $userOrderData = $infoData->modelGetUserOrder();
+      if ($userOrderData->cash_amount > 0) {
+        $config = $userOrderData->modelGetPayConfig();
+        DB::commit();
+        return $this->setParams($config)->success('获取支付配置成功');
+      } else {
+        $userOrderData->paySuccess();
+        $userOrderData->user_orderable->payCallback($userOrderData);
+        DB::commit();
+        return $this
+          ->setParams(['pay_status' => 'success'])
+          ->setExtra([
+            'isFirstPay' => $userOrderData->isFirstPay(),
+            'isModelFirstPay' => $userOrderData->isModelFirstPay()
+          ])
+          ->success('支付成功');
+      }
+    } catch (\Exception $e) {
+      DB::rollBack();
+      \Log::error($e->getTraceAsString().':'.__LINE__);
+      return $this->error($e->getMessage());
+    }
+  }
 }

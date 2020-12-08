@@ -11,6 +11,7 @@ use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoView;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserCoupon;
+use Illuminate\Support\Facades\DB;
 
 class HrResumeController extends Controller
 {
@@ -210,26 +211,14 @@ class HrResumeController extends Controller
   /**
    * @param HrResumeRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function pay(HrResumeRequest $request)
   {
     $id = $request->input('id');
     $hrResumeData = HrResume::findOrFail($id);
-    $userOrderData = $hrResumeData->modelGetUserOrder();
-    if ($userOrderData->cash_amount > 0) {
-      $config = $userOrderData->modelGetPayConfig();
-      return $this->setParams($config)->success('获取支付配置成功');
-    } else {
-      $userOrderData->paySuccess();
-      $userOrderData->user_orderable->payCallback($userOrderData);
-      return $this
-        ->setParams(['pay_status' => 'success'])
-        ->setExtra([
-          'isFirstPay' => $userOrderData->isFirstPay(),
-          'isModelFirstPay' => $userOrderData->isModelFirstPay()
-        ])
-        ->success('支付成功');
-    }
+
+    return $this->_pay($hrResumeData);
   }
 
   /**
@@ -241,6 +230,18 @@ class HrResumeController extends Controller
     $id = $request->input('id');
     $hrResumeData = HrResume::findOrFail($id);
     $data = $hrResumeData->modelGetContacts();
+    return $this->setParams($data)->success();
+  }
+
+  /**
+   * @param HrResumeRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function recommendList(HrResumeRequest $request)
+  {
+    $id = $request->input('id');
+    $hrJobData = HrResume::findOrFail($id);
+    $data = $hrJobData->modelGetRecommendList();
     return $this->setParams($data)->success();
   }
 }
