@@ -72,24 +72,4 @@ class UserCouponController extends Controller
       return $this->error('撤回失败');
     }
   }
-
-  /**
-   * @param UserCouponRequest $request
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function getUsableCoupon(UserCouponRequest $request)
-  {
-    $modelPath = $this->getModelPath();
-    $data = UserCoupon::where('user_id', User::getUserId())
-      ->where('coupon_status', UserCoupon::getCouponStatusValue(1, '未使用'))
-      ->when($modelPath === HrJob::class, function (Builder $query) {
-        return $query->whereIn('coupon_template_id', [1, 3]);
-      })
-      ->when($modelPath === HrResume::class, function (Builder $query) {
-        return $query->whereIn('coupon_template_id', [2, 3]);
-      })
-      ->orderBy('is_trade', 'asc')
-      ->simplePagination();
-    return $this->setParams($data)->success();
-  }
 }

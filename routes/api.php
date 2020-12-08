@@ -6,8 +6,8 @@ use App\Http\Controllers\Api\Coupon\CouponOrderController;
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoProvideController;
 use App\Http\Controllers\Api\Task\TaskRecordController;
-use App\Http\Controllers\Api\User\Info\HrJobController;
-use App\Http\Controllers\Api\User\Info\HrResumeController;
+use App\Http\Controllers\Api\Info\HrJobController;
+use App\Http\Controllers\Api\Info\HrResumeController;
 use App\Http\Controllers\Api\User\Info\InfoCheckController;
 use App\Http\Controllers\Api\User\NotifyController;
 use App\Http\Controllers\Api\User\UserCashController;
@@ -81,6 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('hr_job/complaint', [HrJobController::class, 'complaint']);
   Route::get('hr_job/authIndex', [HrJobController::class, 'authIndex']);
   Route::get('hr_job/authShow', [HrJobController::class, 'authIndex']);
+  Route::get('hr_job/getUsableCoupon', [HrJobController::class, 'getUsableCoupon']);
   Route::apiResource('hr_job', HrJobController::class);
 
   Route::post('hr_resume/pay', [HrResumeController::class, 'pay']);
@@ -92,10 +93,10 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::post('hr_resume/complaint', [HrResumeController::class, 'complaint']);
   Route::get('hr_resume/authIndex', [HrResumeController::class, 'authIndex']);
   Route::get('hr_resume/authShow', [HrResumeController::class, 'authIndex']);
+  Route::get('hr_resume/getUsableCoupon', [HrResumeController::class, 'getUsableCoupon']);
   Route::apiResource('hr_resume', HrResumeController::class);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);
-  Route::get('user_coupon/getUsableCoupon', [UserCouponController::class, 'getUsableCoupon']);
   Route::apiResource('user_coupon', UserCouponController::class)->only(['index']);
     // 优惠券市场
   Route::apiResource('coupon_market', CouponMarketController::class)->only(['index', 'store']);

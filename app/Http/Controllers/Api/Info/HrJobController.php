@@ -10,6 +10,7 @@ use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoView;
 use App\Models\Notify\NotifyTemplate;
+use App\Models\User\UserCoupon;
 
 class HrJobController extends Controller
 {
@@ -181,5 +182,18 @@ class HrJobController extends Controller
     $hrJobData = HrJob::findOrFail($id);
     $infoComplaintData = $hrJobData->modelComplaint($request->only(['complaint_type', 'complaint_content']));
     return $this->setParams($infoComplaintData)->success('反馈成功');
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getUsableCoupon()
+  {
+    $data = UserCoupon::where('user_id', User::getUserId())
+      ->where('coupon_status', UserCoupon::getCouponStatusValue(1, '未使用'))
+      ->whereIn('coupon_template_id', [1, 3])
+      ->orderBy('is_trade', 'asc')
+      ->simplePagination();
+    return $this->setParams($data)->success();
   }
 }
