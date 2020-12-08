@@ -3,7 +3,7 @@
 namespace App\Console;
 
 use App\Models\ApiLog;
-use App\Models\Chart;
+use App\Models\Chart\Chart;
 use App\Models\Coupon\CouponMarket;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;

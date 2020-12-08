@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ChartRequest;
-use App\Models\Chart;
+use App\Models\Chart\Chart;
 
 class ChartController extends Controller
 {
