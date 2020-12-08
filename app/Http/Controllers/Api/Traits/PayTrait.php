@@ -27,7 +27,7 @@ trait PayTrait
     $user_coupon_id = request()->input('user_coupon_id');
     $userData = User::getUserData();
     $userAuthData = $userData->auth;
-    $total_amount = $this->getPayAmount($userData);
+    $total_amount = $this->getPayAmount();
     $coupon_amount = (new UserCoupon())->getUsableCouponAmount($user_coupon_id);
     $cash_amount = $total_amount - $coupon_amount;
     $cash_amount = $cash_amount > 0 ? $cash_amount : 0;
@@ -139,21 +139,16 @@ trait PayTrait
   }
 
   /**
-   * @param User $userData
-   * @return float|int
+   * @return float
    */
-  private function getPayAmount($userData)
+  private function getPayAmount()
   {
     /**
      * @var Base $modelPath
      */
-    if ($userData->isFreeForLimitedTime()) {
-      return 0;
-    } else {
-      $modelPath = $this->getModelPath();
-      $amount = $modelPath::getConfigValue('amount');
-      return floatval($amount);
-    }
+    $modelPath = $this->getModelPath();
+    $amount = $modelPath::getConfigValue('amount');
+    return floatval($amount);
   }
 
   /**

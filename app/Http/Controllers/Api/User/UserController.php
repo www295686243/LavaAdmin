@@ -264,16 +264,6 @@ class UserController extends Controller
   }
 
   /**
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function isFreeForLimitedTime()
-  {
-    $userData = User::getUserData();
-    $exists = $userData->isFreeForLimitedTime();
-    return $exists ? $this->success() : $this->error();
-  }
-
-  /**
    * @param UserRequest $request
    * @return \Illuminate\Http\JsonResponse
    */

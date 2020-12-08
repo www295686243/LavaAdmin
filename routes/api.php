@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Api\Coupon\CouponMarketController;
 use App\Http\Controllers\Api\Coupon\CouponOrderController;
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
-use App\Http\Controllers\Api\Info\InfoComplaintController;
 use App\Http\Controllers\Api\Info\InfoProvideController;
 use App\Http\Controllers\Api\Task\TaskRecordController;
 use App\Http\Controllers\Api\User\Info\HrJobController;
@@ -55,7 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('user/getInviteUser', [UserController::class, 'getInviteUser']);
   Route::get('user/checkOfficialAccounts', [UserController::class, 'checkOfficialAccounts']);
   Route::post('user/baseInfoUpdate', [UserController::class, 'baseInfoUpdate']);
-  Route::get('user/isFreeForLimitedTime', [UserController::class, 'isFreeForLimitedTime']);
   Route::post('user/switchRole', [UserController::class, 'switchRole']);
 
   Route::apiResource('user_personal_auth', UserPersonalAuthController::class)->only(['show', 'store']);
@@ -73,27 +71,28 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('notify/markHaveRead', [NotifyController::class, 'markHaveRead']);
   Route::apiResource('notify', NotifyController::class)->only(['index', 'show']);
 
-  // 支付
-  Route::post('hr_job/pay', [\App\Http\Controllers\Api\Info\HrJobController::class, 'pay']);
-  Route::post('hr_resume/pay', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'pay']);
-  Route::get('hr_job/getContacts', [\App\Http\Controllers\Api\Info\HrJobController::class, 'getContacts']);
-  Route::get('hr_resume/getContacts', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'getContacts']);
   // 信息
-  Route::post('user/hr_job/refreshUpdateAt', [HrJobController::class, 'refreshUpdateAt']);
-  Route::post('user/hr_job/updateDisable', [HrJobController::class, 'updateDisable']);
-  Route::apiResource('user/hr_job', HrJobController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
-  Route::get('hr_job/view', [\App\Http\Controllers\Api\Info\HrJobController::class, 'view']);
-  Route::get('hr_job/isComplaint', [\App\Http\Controllers\Api\Info\HrJobController::class, 'isComplaint']);
-  Route::post('hr_job/complaint', [\App\Http\Controllers\Api\Info\HrJobController::class, 'complaint']);
-  Route::apiResource('hr_job', \App\Http\Controllers\Api\Info\HrJobController::class)->only(['index', 'show']);
+  Route::post('hr_job/pay', [HrJobController::class, 'pay']);
+  Route::get('hr_job/getContacts', [HrJobController::class, 'getContacts']);
+  Route::post('hr_job/refreshUpdateAt', [HrJobController::class, 'refreshUpdateAt']);
+  Route::post('hr_job/updateDisable', [HrJobController::class, 'updateDisable']);
+  Route::get('hr_job/view', [HrJobController::class, 'view']);
+  Route::get('hr_job/isComplaint', [HrJobController::class, 'isComplaint']);
+  Route::post('hr_job/complaint', [HrJobController::class, 'complaint']);
+  Route::get('hr_job/authIndex', [HrJobController::class, 'authIndex']);
+  Route::get('hr_job/authShow', [HrJobController::class, 'authIndex']);
+  Route::apiResource('hr_job', HrJobController::class);
 
-  Route::post('user/hr_resume/refreshUpdateAt', [HrResumeController::class, 'refreshUpdateAt']);
-  Route::post('user/hr_resume/updateDisable', [HrResumeController::class, 'updateDisable']);
-  Route::apiResource('user/hr_resume', HrResumeController::class)->only(['index', 'store', 'show', 'update', 'destroy']);
-  Route::get('hr_resume/view', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'view']);
-  Route::get('hr_resume/isComplaint', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'isComplaint']);
-  Route::post('hr_resume/complaint', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'complaint']);
-  Route::apiResource('hr_resume', \App\Http\Controllers\Api\Info\HrResumeController::class)->only(['index', 'show']);
+  Route::post('hr_resume/pay', [HrResumeController::class, 'pay']);
+  Route::get('hr_resume/getContacts', [HrResumeController::class, 'getContacts']);
+  Route::post('hr_resume/refreshUpdateAt', [HrResumeController::class, 'refreshUpdateAt']);
+  Route::post('hr_resume/updateDisable', [HrResumeController::class, 'updateDisable']);
+  Route::get('hr_resume/view', [HrResumeController::class, 'view']);
+  Route::get('hr_resume/isComplaint', [HrResumeController::class, 'isComplaint']);
+  Route::post('hr_resume/complaint', [HrResumeController::class, 'complaint']);
+  Route::get('hr_resume/authIndex', [HrResumeController::class, 'authIndex']);
+  Route::get('hr_resume/authShow', [HrResumeController::class, 'authIndex']);
+  Route::apiResource('hr_resume', HrResumeController::class);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);
   Route::get('user_coupon/getUsableCoupon', [UserCouponController::class, 'getUsableCoupon']);
@@ -120,5 +119,5 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 // 支付回调 为了在chart表中区别是支付哪些信息类型的
-Route::any('hr_job/pay_callback', [\App\Http\Controllers\Api\Info\HrJobController::class, 'payCallback']);
-Route::any('hr_resume/pay_callback', [\App\Http\Controllers\Api\Info\HrResumeController::class, 'payCallback']);
+Route::any('hr_job/pay_callback', [HrJobController::class, 'payCallback']);
+Route::any('hr_resume/pay_callback', [HrResumeController::class, 'payCallback']);

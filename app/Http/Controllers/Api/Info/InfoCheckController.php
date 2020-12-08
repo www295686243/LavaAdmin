@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\User\Info;
 use App\Http\Controllers\Controller;
 use App\Models\Api\User;
 use App\Models\Info\InfoCheck;
-use Illuminate\Http\Request;
 
 class InfoCheckController extends Controller
 {

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\InfoCheckRequest;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
-use App\Models\Notify\NotifyTemplate;
 use Illuminate\Support\Facades\DB;
 
 class InfoCheckController extends Controller
