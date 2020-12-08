@@ -2,9 +2,7 @@
 
 namespace App\Models\Task;
 
-use App\Models\Api\User;
 use App\Models\Base;
-use Illuminate\Support\Facades\Cache;
 
 class TaskRule extends Base
 {

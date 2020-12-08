@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
 class City extends Base
@@ -57,17 +58,25 @@ class City extends Base
     return $result['codes'];
   }
 
+  /**
+   * @param $id
+   * @param string $format
+   * @return mixed
+   */
   public static function getNames($id, $format = ' ')
   {
     $paths = self::getGather($id);
+    $flatPaths = collect($paths)->map(function ($item) {
+      return $item[0];
+    })->toArray();
     $between = $paths[0];
     return (new self())->getCacheIndex($between[0], $between[1])
-      ->filter(function ($row) use ($paths) {
-        return in_array($row->id, $paths);
+      ->filter(function ($row) use ($flatPaths) {
+        return in_array($row->id, $flatPaths);
       })
       ->sortBy('deep') // 升序
-      ->unique('name') // 根据name去重
-      ->implode('name', $format);
+      ->unique('display_name') // 根据name去重
+      ->implode('display_name', $format);
   }
 
   /**

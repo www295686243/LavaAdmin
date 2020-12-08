@@ -50,7 +50,7 @@ class InfoPushQueue implements ShouldQueue
           'id' => $this->infoData->id,
           'company' => $this->infoData->company_name,
           'title' => $this->infoData->title,
-          'industry' => $this->infoData->industry->pluck('display_name'),
+          'industry' => implode(',', $this->infoData->industry->pluck('display_name')),
           'city' => (new City())->getNames($this->infoData->city),
           'monthly' => $this->infoData->is_negotiate ? '面议' : $this->infoData->monthly_salary_min.'~'.$this->infoData->monthly_salary_max
         ]);

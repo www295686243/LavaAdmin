@@ -8,8 +8,6 @@
 
 namespace App\Models\Base;
 
-use App\Models\Info\Hr\HrJob;
-use App\Models\Info\Hr\HrResume;
 use App\Models\Info\Hr\Traits\InfoQueryTraits;
 use App\Models\Info\Industry;
 use App\Models\Info\InfoCheck;
@@ -23,7 +21,6 @@ use App\Models\Task\TaskRecord;
 use App\Models\Task\Traits\ShareTaskTraits;
 use App\Models\Traits\IndustryTrait;
 use App\Models\User\User;
-use App\Models\User\UserCoupon;
 use App\Models\User\UserOrder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
@@ -38,6 +35,11 @@ class HrBase extends Base {
   protected $hidden = [
     'updated_at',
     'deleted_at'
+  ];
+
+  protected $casts = [
+    'admin_user_id' => 'string',
+    'provide_user_id' => 'string',
   ];
 
   /**

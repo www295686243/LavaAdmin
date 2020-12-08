@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api\Info;
 use App\Http\Controllers\Api\Traits\PayTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\HrJobRequest;
-use App\Models\Api\User;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoView;
-use App\Models\User\UserOrder;
 
 class HrJobController extends Controller
 {
@@ -30,10 +28,7 @@ class HrJobController extends Controller
   public function show($id)
   {
     $jobData = HrJob::findOrFail($id);
-    $jobData->is_pay = $jobData->user_order()
-      ->where('user_id', User::getUserId())
-      ->where('pay_status', UserOrder::getPayStatusValue(2, '已支付'))
-      ->exists();
+    $jobData->is_pay = $jobData->modelIsPay();
     if (!$jobData->is_pay) {
       $jobData->makeHidden(['contacts', 'phone']);
     }

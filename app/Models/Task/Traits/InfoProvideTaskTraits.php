@@ -68,13 +68,13 @@ trait InfoProvideTaskTraits {
       $title = $taskRecordData->title === $taskRuleRecordData->title ? $taskRecordData->title : $taskRecordData->title.'-'.$taskRuleRecordData->title;
       CouponTemplate::giveManyCoupons($this->user_id, $taskRuleRecordData->rewards, $title);
       // 送券通知
-      $pushText = request()->input('pushText');
+      $pushText = request()->input('push_text');
       NotifyTemplate::sendGiveCoupon(
         36,
         '信息提供互助券赠送成功通知',
         $this->user_id,
         [
-          'pushText' => $pushText
+          'push_text' => $pushText
         ]
       );
     }

@@ -28,10 +28,6 @@ class HrResume extends HrBase
     'provide_user_id'
   ];
 
-  protected $casts = [
-    'admin_user_id' => 'string',
-  ];
-
   public $NotifyConfig = [
     'checkEditSuccess' => [
       'id' => 8,

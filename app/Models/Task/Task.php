@@ -2,23 +2,7 @@
 
 namespace App\Models\Task;
 
-use App\Models\Api\User;
 use App\Models\Base;
-use App\Models\Info\InfoCheck;
-use App\Models\Task\Traits\BindPhoneTaskTraits;
-use App\Models\Task\Traits\EnterpriseEveryDayLoginTaskTraits;
-use App\Models\Task\Traits\FollowWeChatTaskTraits;
-use App\Models\Task\Traits\InviteUserTaskTraits;
-use App\Models\Task\Traits\PerfectEnterpriseInfoTaskTraits;
-use App\Models\Task\Traits\PerfectPersonalInfoTaskTraits;
-use App\Models\Task\Traits\PersonalEveryDayLoginTaskTraits;
-use App\Models\Task\Traits\InfoProvideTaskTraits;
-use App\Models\Task\Traits\ShareTaskTraits;
-use App\Models\Task\Traits\StatTraits;
-use App\Models\User\UserPersonal;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class Task extends Base
 {
@@ -47,4 +31,12 @@ class Task extends Base
   }
 
   public static function bootHasSnowflakePrimary() {}
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+   */
+  public function cacheGetAll()
+  {
+    return $this->with('task_rule')->get();
+  }
 }

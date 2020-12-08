@@ -75,7 +75,7 @@ class InfoProvideController extends Controller
       return $this->success();
     } catch (\Exception $e) {
       DB::rollBack();
-      \Log::error($e->getMessage());
+      \Log::error($e->getTraceAsString());
       return $this->error();
     }
   }
