@@ -82,6 +82,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('hr_job/authIndex', [HrJobController::class, 'authIndex']);
   Route::get('hr_job/authShow', [HrJobController::class, 'authIndex']);
   Route::get('hr_job/getUsableCoupon', [HrJobController::class, 'getUsableCoupon']);
+  Route::get('hr_job/checkIndex', [HrJobController::class, 'checkIndex']);
   Route::apiResource('hr_job', HrJobController::class);
 
   Route::post('hr_resume/pay', [HrResumeController::class, 'pay']);
@@ -94,6 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('hr_resume/authIndex', [HrResumeController::class, 'authIndex']);
   Route::get('hr_resume/authShow', [HrResumeController::class, 'authIndex']);
   Route::get('hr_resume/getUsableCoupon', [HrResumeController::class, 'getUsableCoupon']);
+  Route::get('hr_resume/checkIndex', [HrResumeController::class, 'checkIndex']);
   Route::apiResource('hr_resume', HrResumeController::class);
   // 优惠券
   Route::post('user_coupon/recall', [UserCouponController::class, 'recall']);
@@ -106,7 +108,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::apiResource('coupon_order', CouponOrderController::class)->only(['store']);
 
   // 信息审核
-  Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'show', 'destroy']);
+  Route::apiResource('info_check', InfoCheckController::class)->only(['show', 'destroy']);
   // 信息投递
   Route::get('info_delivery/getInfoList', [InfoDeliveryController::class, 'getInfoList']);
   Route::apiResource('info_delivery', InfoDeliveryController::class)->only(['index', 'store', 'show']);

@@ -197,4 +197,13 @@ class HrResumeController extends Controller
       ->simplePagination();
     return $this->setParams($data)->success();
   }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function checkIndex()
+  {
+    $data = InfoCheck::getList(HrResume::class);
+    return $this->setParams($data)->success();
+  }
 }

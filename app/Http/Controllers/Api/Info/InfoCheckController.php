@@ -9,20 +9,6 @@ use App\Models\Info\InfoCheck;
 class InfoCheckController extends Controller
 {
   /**
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function index()
-  {
-    $data = InfoCheck::select(['id', 'user_id', 'info_title', 'status', 'refuse_reason', 'created_at'])
-      ->where('user_id', User::getUserId())
-      ->where('info_checkable_type', $this->getModelPath())
-      ->where('status', '!=', InfoCheck::getStatusValue(2, '已通过'))
-      ->orderByDesc('id')
-      ->simplePagination();
-    return $this->setParams($data)->success();
-  }
-
-  /**
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    */

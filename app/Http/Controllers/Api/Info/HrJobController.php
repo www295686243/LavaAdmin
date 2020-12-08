@@ -196,4 +196,13 @@ class HrJobController extends Controller
       ->simplePagination();
     return $this->setParams($data)->success();
   }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function checkIndex()
+  {
+    $data = InfoCheck::getList(HrJob::class);
+    return $this->setParams($data)->success();
+  }
 }

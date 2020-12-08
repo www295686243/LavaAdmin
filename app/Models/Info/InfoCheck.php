@@ -74,4 +74,18 @@ class InfoCheck extends Base
     $infoCheckData->save();
     return $infoCheckData;
   }
+
+  /**
+   * @param $modelName
+   * @return mixed
+   */
+  public static function getList($modelName)
+  {
+    return self::select(['id', 'user_id', 'info_title', 'status', 'refuse_reason', 'created_at'])
+      ->where('user_id', User::getUserId())
+      ->where('info_checkable_type', $modelName)
+      ->where('status', '!=', self::getStatusValue(2, '已通过'))
+      ->orderByDesc('id')
+      ->simplePagination();
+  }
 }
