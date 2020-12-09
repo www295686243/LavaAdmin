@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
       TaskTableSeeder::class,
       PermissionTableSeeder::class,
       RoleTableSeeder::class,
-      UserTableSeeder::class,
-//      NewsTableSeeder::class,
-      HrJobTableSeeder::class,
-      HrResumeTableSeeder::class,
+//      UserTableSeeder::class,
+//      HrJobTableSeeder::class,
+//      HrResumeTableSeeder::class,
+      \Database\Seeders\Data\UserTableSeeder::class,
     ]);
   }
 }

@@ -31,17 +31,16 @@ class UserTableSeeder extends Seeder
       'current_role' => 'Personal Member'
 //      'phone' => '11111111111'
     ]);
-    $user->syncRoles(['General Member', 'Personal Member']);
+    $user->syncRoles(['Personal Member']);
     \App\Models\User\UserPersonal::updateInfo([
       'industry' => [17, 18],
       'city' => 440104
     ], $user->id);
-    $user2 = \App\Models\Api\User::createUser([
+    \App\Models\Api\User::createUser([
       'username' => 'wanxin2',
       'nickname' => '求职者',
       'password' => '111111',
 //      'phone' => '11111111112'
     ]);
-    $user2->syncRoles(['General Member']);
   }
 }

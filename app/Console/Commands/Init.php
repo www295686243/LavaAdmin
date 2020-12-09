@@ -41,6 +41,7 @@ class Init extends Command
     if (env('APP_ENV') === 'dev') {
       Cache::flush();
       $this->call('migrate:refresh', ['--seed' => true]);
+//      $this->call('db:seed', ['--class' => '\Database\Seeders\Data\UserTableSeeder']);
     } else {
       $this->call('migrate:refresh', ['--seed' => true]);
     }

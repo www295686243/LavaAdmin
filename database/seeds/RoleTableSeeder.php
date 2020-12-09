@@ -24,6 +24,12 @@ class RoleTableSeeder extends Seeder
         'guard_name' => 'admin'
       ],
       [
+        'name' => 'Technical Manager',
+        'display_name' => '技术经理',
+        'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
+        'guard_name' => 'admin'
+      ],
+      [
         'name' => 'Customer service Specialist',
         'display_name' => '客服专员',
         'guard_name' => 'admin'
@@ -31,6 +37,16 @@ class RoleTableSeeder extends Seeder
       [
         'name' => 'Operation Specialist',
         'display_name' => '运营专员',
+        'guard_name' => 'admin'
+      ],
+      [
+        'name' => 'Information Specialist',
+        'display_name' => '信息专员',
+        'guard_name' => 'admin'
+      ],
+      [
+        'name' => 'Finance Specialist',
+        'display_name' => '财务专员',
         'guard_name' => 'admin'
       ],
       [
@@ -56,6 +72,21 @@ class RoleTableSeeder extends Seeder
       [
         'name' => 'Enterprise Auth',
         'display_name' => '企业认证',
+        'guard_name' => 'api'
+      ],
+      [
+        'name' => 'VIP1 Member',
+        'display_name' => 'VIP1',
+        'guard_name' => 'api'
+      ],
+      [
+        'name' => 'VIP2 Member',
+        'display_name' => 'VIP2',
+        'guard_name' => 'api'
+      ],
+      [
+        'name' => 'VIP3 Member',
+        'display_name' => 'VIP3',
         'guard_name' => 'api'
       ]
     ];
