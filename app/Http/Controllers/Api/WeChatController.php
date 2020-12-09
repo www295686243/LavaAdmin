@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\WeChatRequest;
-use App\Models\Api\User;
-use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserAuth;
 
 class WeChatController extends Controller
@@ -58,15 +56,6 @@ class WeChatController extends Controller
    */
   public function notify()
   {
-    NotifyTemplate::send('通知标题', User::getUserId(), [
-      'name' => '万鑫',
-      'date' => date('Y-m-d H:i:s'),
-      'nickname' => '昵称',
-      'user_id' => 1,
-      'content' => '哈哈哈',
-      'give_number' => 1,
-      'id' => 1
-    ]);
     return $this->success('发送成功');
   }
 }
