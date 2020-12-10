@@ -13,4 +13,9 @@ class User extends Model
   {
     return $this->hasOne(UserInfo::class, 'id', 'id');
   }
+
+  public function user_auth()
+  {
+    return $this->hasOne(Auth::class);
+  }
 }
