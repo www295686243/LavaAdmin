@@ -11,6 +11,7 @@ use App\Models\Old\UserEnterpriseAuth;
 use App\Models\Old\UserPersonalAuth;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Kra8\Snowflake\Snowflake;
 
 class UserTableSeeder extends Seeder
 {
@@ -22,11 +23,11 @@ class UserTableSeeder extends Seeder
   public function run()
   {
     User::whereHas('user_info')
-      ->where(function ($query) {
-        $query->orWhere('is_admin', 1)
-          ->orWhereNotNull('phone')
-          ->orWhere('is_follow_official_account', 1);
-      })
+//      ->where(function ($query) {
+//        $query->orWhere('is_admin', 1)
+//          ->orWhereNotNull('phone')
+//          ->orWhere('is_follow_official_account', 1);
+//      })
 //      ->limit(10)
       ->get()
       ->chunk(1000)
@@ -55,6 +56,10 @@ class UserTableSeeder extends Seeder
     $userBillDatas = $this->getUserBillArr(UserBill::all());
     DB::table('user_bills')->insert($userBillDatas);
     $this->setUserRole2();
+
+    $root = \App\Models\Admin\User::find(1);
+    $root->update(['password' => '111111']);
+    $root->assignRole('root');
   }
 
   private function getUserArr($data)
@@ -84,7 +89,7 @@ class UserTableSeeder extends Seeder
     $result = [];
     $arr = [];
     foreach ($data as $item) {
-      $arr['id'] = $item->user_info->id;
+      $arr['id'] = app(Snowflake::class)->next();
       $arr['user_id'] = $item->id;
       $arr['avatar'] = optional($item->user_info->avatar)['url'] ?: $item->head_url;
       $arr['name'] = $item->name;
@@ -113,7 +118,7 @@ class UserTableSeeder extends Seeder
     $result = [];
     $arr = [];
     foreach ($data as $item) {
-      $arr['id'] = $item->user_info->id;
+      $arr['id'] = app(Snowflake::class)->next();
       $arr['user_id'] = $item->id;
       $arr['avatar'] = optional($item->user_info->avatar)['url'] ?: $item->head_url;
       $arr['company'] = $item->company;
@@ -194,7 +199,7 @@ class UserTableSeeder extends Seeder
     foreach ($data as $datum) {
       $userData = \App\Models\Api\User::findOrFail($datum->model_id);
       if ($datum->role_id === 7) {
-        $userData->assignRole(['Personal Member', 'Personal Auth']);
+        $userData->assignRole(['Personal Auth']);
       } else {
         $userData->assignRole(['Enterprise Member', 'Enterprise Auth']);
       }
@@ -284,6 +289,7 @@ class UserTableSeeder extends Seeder
     $result = [];
     $arr = [];
     foreach ($data as $item) {
+      $arr['id'] = app(Snowflake::class)->next();
       $arr['user_id'] = $item->user_id;
       $arr['wx_openid'] = $item->wx_openid;
       $arr['wx_unionid'] = $item->wx_unionid;

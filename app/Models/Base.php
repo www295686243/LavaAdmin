@@ -298,7 +298,7 @@ class Base extends Model
    * @return \Illuminate\Database\Eloquent\Builder
    */
   public function cacheGetAll () {
-    return Cache::tags(self::class)->rememberForever($this->getTable(), function () {
+    return Cache::tags(static::class)->rememberForever($this->getTable(), function () {
       return self::orderBy('id')->get();
     });
   }

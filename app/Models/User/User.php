@@ -241,7 +241,7 @@ class User extends Authenticatable
    */
   public function getToken($username, $password, $isAdmin = false)
   {
-    $userData = self::where('username', $username)->first()->makeVisible('api_token');
+    $userData = self::where('username', $username)->first();
     if ($isAdmin && (!$userData || !$userData->is_admin)) {
       $this->error('用户名或密码错误!');
     }
@@ -249,6 +249,7 @@ class User extends Authenticatable
       $this->error('用户名或密码错误!');
     }
     $userData->tokens()->delete();
+    $userData->makeVisible('api_token');
     $plainTextToken = $userData->createToken('token')->plainTextToken;
     [$id, $token] = explode('|', $plainTextToken, 2);
     $userData->api_token = $token;

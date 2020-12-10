@@ -50,11 +50,6 @@ class RoleTableSeeder extends Seeder
         'guard_name' => 'admin'
       ],
       [
-        'name' => 'General Member',
-        'display_name' => '普通会员',
-        'guard_name' => 'api'
-      ],
-      [
         'name' => 'Personal Member',
         'display_name' => '个人会员',
         'guard_name' => 'api'
