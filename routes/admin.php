@@ -85,8 +85,6 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   // 图片
   Route::post('image/destroyMore', [ImageController::class, 'destroyMore']);
   Route::apiResource('image', ImageController::class)->only(['index', 'store', 'destroy']);
-  // 新闻
-  Route::apiResource('news', NewsController::class);
   // 版本
   Route::apiResource('version', VersionController::class)->only(['index', 'update', 'show']);
   // 通知记录

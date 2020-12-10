@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
       \Database\Seeders\Data\JobTableSeeder::class,
       \Database\Seeders\Data\ResumeTableSeeder::class,
       \Database\Seeders\Data\ShareLogTableSeeder::class,
-      \Database\Seeders\Data\TaskTableSeeder::class,
+//      \Database\Seeders\Data\TaskTableSeeder::class,
+      \Database\Seeders\Data\InfoViewTableSeeder::class,
     ]);
   }
 }

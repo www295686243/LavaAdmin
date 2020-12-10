@@ -19,7 +19,7 @@ class CreateInfoViewsTable extends Migration
       $table->unsignedBigInteger('info_viewable_id');
       $table->unsignedBigInteger('share_user_id')->comment('分享者')->nullable();
       $table->unsignedBigInteger('user_id')->comment('访问者');
-      $table->unsignedTinyInteger('is_new_user')->comment('是否新用户');
+      $table->unsignedTinyInteger('is_new_user')->comment('是否新用户')->default(0);
       $table->timestamps();
 
       $table->index('info_viewable_id');

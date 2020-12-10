@@ -21,10 +21,12 @@ class UserTableSeeder extends Seeder
    */
   public function run()
   {
-    User::has('user_info')
-      ->orWhere('is_admin', 1)
-      ->orWhereNotNull('phone')
-      ->orWhere('is_follow_official_account', 1)
+    User::whereHas('user_info')
+      ->where(function ($query) {
+        $query->orWhere('is_admin', 1)
+          ->orWhereNotNull('phone')
+          ->orWhere('is_follow_official_account', 1);
+      })
 //      ->limit(10)
       ->get()
       ->chunk(1000)
