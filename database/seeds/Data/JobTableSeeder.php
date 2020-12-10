@@ -4,7 +4,7 @@ namespace Database\Seeders\Data;
 
 use App\Models\Info\Hr\HrJob;
 use App\Models\Old\Job;
-use App\Models\Old\User;
+use App\Models\User\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Kra8\Snowflake\Snowflake;

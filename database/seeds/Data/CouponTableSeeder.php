@@ -4,7 +4,7 @@ namespace Database\Seeders\Data;
 
 use App\Models\Old\Coupon;
 use App\Models\Old\CouponMarket;
-use App\Models\Old\User;
+use App\Models\User\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
