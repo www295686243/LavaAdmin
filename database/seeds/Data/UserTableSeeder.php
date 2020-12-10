@@ -21,9 +21,10 @@ class UserTableSeeder extends Seeder
    */
   public function run()
   {
-    User::with('user_info')
+    User::has('user_info')
       ->orWhere('is_admin', 1)
       ->orWhereNotNull('phone')
+      ->orWhere('is_follow_official_account', 1)
 //      ->limit(10)
       ->get()
       ->chunk(1000)
@@ -83,7 +84,7 @@ class UserTableSeeder extends Seeder
     foreach ($data as $item) {
       $arr['id'] = $item->user_info->id;
       $arr['user_id'] = $item->id;
-      $arr['avatar'] = optional($item->user_info->avatar)['url'];
+      $arr['avatar'] = optional($item->user_info->avatar)['url'] ?: $item->head_url;
       $arr['name'] = $item->name;
       $arr['id_card'] = $item->id_card;
       $arr['seniority'] = $item->seniority ?: null;
@@ -112,7 +113,7 @@ class UserTableSeeder extends Seeder
     foreach ($data as $item) {
       $arr['id'] = $item->user_info->id;
       $arr['user_id'] = $item->id;
-      $arr['avatar'] = optional($item->user_info->avatar)['url'];
+      $arr['avatar'] = optional($item->user_info->avatar)['url'] ?: $item->head_url;
       $arr['company'] = $item->company;
       $arr['business_license'] = $item->business_license;
       $arr['city'] = $item->city;
