@@ -28,9 +28,8 @@ class UserTableSeeder extends Seeder
 //          ->orWhereNotNull('phone')
 //          ->orWhere('is_follow_official_account', 1);
 //      })
-//      ->limit(10)
       ->get()
-      ->chunk(1000)
+      ->chunk(500)
       ->each(function ($lists) {
         $userDatas = $this->getUserArr($lists);
         $userPersonalDatas = $this->getUserPersonalArr($lists);
@@ -187,7 +186,7 @@ class UserTableSeeder extends Seeder
         }
       }
       $arr['role_id'] = $roleId;
-      $arr['model_type'] = $item->is_admin ? 'App\Model\Admin\User' : 'App\Model\Api\User';
+      $arr['model_type'] = $item->is_admin ? \App\Models\Admin\User::class : \App\Models\Api\User::class;
       $arr['model_id'] = $item->id;
       $result[] = $arr;
     }

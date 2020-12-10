@@ -16,7 +16,7 @@ class OrderTableSeeder extends Seeder
    */
   public function run()
   {
-    $lists = Order::where('pay_status', 1)->get()->chunk(1000);
+    $lists = Order::where('pay_status', 1)->get()->chunk(500);
     foreach ($lists as $list) {
       $result = [];
       $arr = [];
@@ -28,7 +28,7 @@ class OrderTableSeeder extends Seeder
         $arr['total_amount'] = $item->amount;
         $arr['coupon_amount'] = $item->amount;
         $arr['user_coupon_id'] = $item->coupon_id;
-        $arr['pay_status'] = $item->pay_status;
+        $arr['pay_status'] = 2;
         $arr['paid_at'] = $item->paid_at;
         $arr['source'] = $item->source;
         $arr['created_at'] = $item->created_at->format('Y-m-d H:i:s');

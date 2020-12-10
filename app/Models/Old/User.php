@@ -9,6 +9,10 @@ class User extends Model
 {
   protected $connection = 'zhizao';
 
+  protected $casts = [
+    'industries' => 'array',
+  ];
+
   public function user_info()
   {
     return $this->hasOne(UserInfo::class, 'id', 'id');

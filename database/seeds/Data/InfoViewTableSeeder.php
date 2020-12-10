@@ -18,7 +18,7 @@ class InfoViewTableSeeder extends Seeder
   public function run()
   {
     $userIds = User::all()->pluck('id');
-    $lists = ShareViewLog::whereIn('user_id', $userIds)->get()->chunk(1000);
+    $lists = ShareViewLog::whereIn('user_id', $userIds)->get()->chunk(500);
     foreach ($lists as $list) {
       $result = [];
       $arr = [];

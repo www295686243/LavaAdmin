@@ -12,9 +12,7 @@ use Kra8\Snowflake\Snowflake;
 class CouponTableSeeder extends Seeder
 {
   /**
-   * Run the database seeds.
-   *
-   * @return void
+   * @throws \Exception
    */
   public function run()
   {
@@ -29,7 +27,7 @@ class CouponTableSeeder extends Seeder
       $arr['display_name'] = $item->name;
       $arr['desc'] = $item->desc;
       $arr['amount'] = $item->amount;
-      $arr['coupon_status'] = $item->status;
+      $arr['coupon_status'] = $item->status + 1;
       $arr['start_at'] = $item->start_at;
       $arr['end_at'] = $item->end_at;
       $arr['source'] = $item->source;
@@ -51,7 +49,7 @@ class CouponTableSeeder extends Seeder
       $arr['coupon_template_id'] = $item->coupon_template_id;
       $arr['amount'] = $item->amount;
       $arr['amount_sort'] = $item->amount_sort;
-      $arr['status'] = $item->status;
+      $arr['status'] = 1;
       $arr['end_at'] = $item->end_at;
       $arr['created_at'] = $item->created_at->format('Y-m-d H:i:s');
       $arr['updated_at'] = $item->updated_at->format('Y-m-d H:i:s');
