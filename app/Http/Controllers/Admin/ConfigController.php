@@ -62,10 +62,10 @@ class ConfigController extends Controller
   public function destroy($id)
   {
     $configData = Config::findOrFail($id);
-    DB::transaction(function () use ($configData) {
+    return DB::transaction(function () use ($configData) {
       $configData->options()->delete();
       $configData->delete();
+      return $this->success();
     });
-    return $this->success();
   }
 }

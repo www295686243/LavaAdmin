@@ -29,15 +29,9 @@ class UserEnterpriseController extends Controller
   public function update(UserEnterpriseRequest $request, $id)
   {
     $input = $request->only(UserEnterprise::getFillFields());
-    DB::beginTransaction();
-    try {
+    return DB::transaction(function () use ($input, $id) {
       UserEnterprise::updateInfo($input, $id);
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 }

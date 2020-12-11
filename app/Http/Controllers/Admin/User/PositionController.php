@@ -8,6 +8,7 @@ use App\Models\Admin\User;
 use App\Models\AdminMenu;
 use App\Models\Permission;
 use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class PositionController extends Controller
@@ -110,7 +111,8 @@ class PositionController extends Controller
   /**
    * @param PositionRequest $request
    * @param $id
-   * @return \Illuminate\Http\JsonResponse
+   * @return \Illuminate\Http\JsonResponse|mixed
+   * @throws \Throwable
    */
   public function updatePermissions(PositionRequest $request, $id)
   {
@@ -120,12 +122,14 @@ class PositionController extends Controller
     if (!$userData->checkAssignMenu($menus) || !$userData->checkAssignInterface($permissions, 'admin')) {
       return $this->setStatusCode(423)->error('权限错误');
     }
-
     $positionData = Role::findOrFail($id);
-    $positionData->menu_permissions = $menus;
-    $positionData->save();
-    $positionData->syncPermissions($permissions);
-    return $this->success();
+
+    return DB::transaction(function () use ($positionData, $menus, $permissions) {
+      $positionData->menu_permissions = $menus;
+      $positionData->save();
+      $positionData->syncPermissions($permissions);
+      return $this->success();
+    });
   }
 
   /**

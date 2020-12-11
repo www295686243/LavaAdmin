@@ -50,19 +50,13 @@ class UserCashController extends Controller
     if ($status === UserCash::getStatusValue(5, '已转款') && $userCashData->status !== UserCash::getStatusValue(2, '已通过')) {
       return $this->error('无法修改该状态');
     }
-    DB::beginTransaction();
-    try {
+    return DB::transaction(function () use ($userCashData, $status) {
       $userCashData->status = $status;
       $userCashData->save();
       if ($status === UserCash::getStatusValue(3, '已拒绝')) {
         (new UserWallet())->incrementAmount($userCashData->amount, $userCashData->user_id);
       }
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 }

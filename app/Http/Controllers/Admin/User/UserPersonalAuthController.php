@@ -52,14 +52,11 @@ class UserPersonalAuthController extends Controller
     if ($status === $authData->status) {
       return $this->success();
     }
-    DB::beginTransaction();
-
-    try {
+    return DB::transaction(function () use ($status, $passed, $authData, $userData, $notPass, $request) {
       if ($status === $passed) {
         if ($authData->status === $passed) {
           return $this->error('该申请已经审核通过了');
         }
-
         $userPersonalData = UserPersonal::where('user_id', $authData->user_id)->firstOrFail();
         $userPersonalData->name = $authData->name;
         $userPersonalData->company = $authData->company;
@@ -84,12 +81,7 @@ class UserPersonalAuthController extends Controller
 
       $authData->status = $status;
       $authData->save();
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 }

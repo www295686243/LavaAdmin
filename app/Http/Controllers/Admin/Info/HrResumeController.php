@@ -31,8 +31,10 @@ class HrResumeController extends Controller
     $input = $request->all();
     $input['user_id'] = User::getUserId();
     $input['admin_user_id'] = User::getUserId();
-    (new HrResume())->createOrUpdateData($input);
-    return $this->success();
+    return DB::transaction(function () use ($input) {
+      (new HrResume())->createOrUpdateData($input);
+      return $this->success();
+    });
   }
 
   /**
@@ -57,8 +59,10 @@ class HrResumeController extends Controller
   public function update(HrResumeRequest $request, $id)
   {
     $input = $request->all();
-    (new HrResume())->createOrUpdateData($input, $id);
-    return $this->success();
+    return DB::transaction(function () use ($input, $id) {
+      (new HrResume())->createOrUpdateData($input, $id);
+      return $this->success();
+    });
   }
 
   /**
@@ -69,18 +73,12 @@ class HrResumeController extends Controller
   public function destroy($id)
   {
     $data = HrResume::findOrAuth($id);
-    DB::beginTransaction();
-    try {
+    return DB::transaction(function () use ($data) {
       $data->info_sub()->delete();
 //      $data->industry()->detach(); 信息是软删除的 这里会删数据，先注释掉 等需要从行业反向查询信息的时候看怎么弄
       $data->delete();
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 
   /**
@@ -104,12 +102,15 @@ class HrResumeController extends Controller
   /**
    * @param HrResumeRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function push(HrResumeRequest $request)
   {
     $id = $request->input('id');
-    $jobData = HrResume::findOrFail($id);
-    $jobData->infoPush($request->input('industries', []), $request->input('cities', []));
-    return $this->success('推送成功');
+    $resumeData = HrResume::findOrFail($id);
+    return DB::transaction(function () use ($resumeData, $request) {
+      $resumeData->infoPush($request->input('industries', []), $request->input('cities', []));
+      return $this->success('推送成功');
+    });
   }
 }

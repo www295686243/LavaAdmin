@@ -29,15 +29,9 @@ class UserPersonalController extends Controller
   public function update(UserPersonalRequest $request, $id)
   {
     $input = $request->only(UserPersonal::getFillFields());
-    DB::beginTransaction();
-    try {
+    return DB::transaction(function () use ($input, $id) {
       UserPersonal::updateInfo($input, $id);
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 }

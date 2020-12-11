@@ -56,6 +56,17 @@ class HrResume extends HrBase
   ];
 
   /**
+   * @return array
+   */
+  public function getComplaintNotify()
+  {
+    return [
+      'id' => 30,
+      'title' => '推送给用户简历投诉结果通知'
+    ];
+  }
+
+  /**
    * @param UserOrder $userOrderData
    */
   public function payCallback(UserOrder $userOrderData)

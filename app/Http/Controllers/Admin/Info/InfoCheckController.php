@@ -55,9 +55,7 @@ class InfoCheckController extends Controller
     if ($infoCheckData->status !== InfoCheck::getStatusValue(1, '待审核')) {
       return $this->error('状态错误');
     }
-
-    DB::beginTransaction();
-    try {
+    return DB::transaction(function () use ($infoCheckData, $refuseReason, $checkStatus) {
       /**
        * @var HrJob $Model
        */
@@ -76,12 +74,7 @@ class InfoCheckController extends Controller
       }
       $infoCheckData->status = $checkStatus;
       $infoCheckData->save();
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 }

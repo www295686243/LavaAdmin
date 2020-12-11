@@ -25,7 +25,6 @@ use App\Models\User\User;
 use App\Models\User\UserOrder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\DB;
 
 class HrBase extends Base {
   use SoftDeletes, IndustryTrait, InfoQueryTraits, ShareTaskTraits, PayContactsTrait;
@@ -205,19 +204,11 @@ class HrBase extends Base {
    */
   private function createData($input)
   {
-    DB::beginTransaction();
-    try {
-      $data = $this->create(Arr::only($input, $this->getFillable()));
-      $data->info_sub()->create(Arr::only($input, InfoSub::getFillFields()));
-      $data->attachIndustry($input);
-      $data->attachInfoProvide();
-      DB::commit();
-      return $data->id;
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getTraceAsString().':'.__LINE__);
-      $this->error();
-    }
+    $data = $this->create(Arr::only($input, $this->getFillable()));
+    $data->info_sub()->create(Arr::only($input, InfoSub::getFillFields()));
+    $data->attachIndustry($input);
+    $data->attachInfoProvide();
+    return $data->id;
   }
 
   public function attachInfoProvide()
@@ -238,34 +229,26 @@ class HrBase extends Base {
   private function updateData($input, $id)
   {
     $data = static::findOrAuth($id);
-    DB::beginTransaction();
-    try {
-      $data->update(Arr::only($input, $this->getFillable()));
-      $data->info_sub()->update(Arr::only($input, InfoSub::getFillFields()));
-      $data->attachIndustry($input);
-      $tempId = 0;
-      $tempTitle = '';
-      if ($input['status'] === static::getStatusValue(3, '已下架')) {
-        $tempId = $this->NotifyConfig['infoDisable']['id'];
-        $tempTitle = $this->NotifyConfig['infoDisable']['title'];
-      } else if ($input['status'] === static::getStatusValue(2, '已解决')) {
-        $tempId = $this->NotifyConfig['infoResolve']['id'];
-        $tempTitle = $this->NotifyConfig['infoResolve']['title'];
-      }
-      if ($tempId) {
-        NotifyTemplate::send($tempId, $tempTitle, $data->user_id, [
-          'id' => $id,
-          'nickname' => $data->user->nickname,
-          'title' => $data->title,
-          'created_at' => $data->created_at->format('Y-m-d H:i:s'),
-          'end_time' => $data->end_time.' 23:59:59'
-        ]);
-      }
-      DB::commit();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getTraceAsString().':'.__LINE__);
-      $this->error();
+    $data->update(Arr::only($input, $this->getFillable()));
+    $data->info_sub()->update(Arr::only($input, InfoSub::getFillFields()));
+    $data->attachIndustry($input);
+    $tempId = 0;
+    $tempTitle = '';
+    if ($input['status'] === static::getStatusValue(3, '已下架')) {
+      $tempId = $this->NotifyConfig['infoDisable']['id'];
+      $tempTitle = $this->NotifyConfig['infoDisable']['title'];
+    } else if ($input['status'] === static::getStatusValue(2, '已解决')) {
+      $tempId = $this->NotifyConfig['infoResolve']['id'];
+      $tempTitle = $this->NotifyConfig['infoResolve']['title'];
+    }
+    if ($tempId) {
+      NotifyTemplate::send($tempId, $tempTitle, $data->user_id, [
+        'id' => $id,
+        'nickname' => $data->user->nickname,
+        'title' => $data->title,
+        'created_at' => $data->created_at->format('Y-m-d H:i:s'),
+        'end_time' => $data->end_time.' 23:59:59'
+      ]);
     }
   }
 

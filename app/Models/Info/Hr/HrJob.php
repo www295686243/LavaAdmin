@@ -59,6 +59,17 @@ class HrJob extends HrBase
   ];
 
   /**
+   * @return array
+   */
+  public function getComplaintNotify()
+  {
+    return [
+      'id' => 29,
+      'title' => '推送给用户职位投诉结果通知'
+    ];
+  }
+
+  /**
    * @param UserOrder $userOrderData
    */
   public function payCallback(UserOrder $userOrderData)

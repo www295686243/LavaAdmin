@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UserRequest;
 use App\Models\Api\User;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -33,17 +34,21 @@ class UserController extends Controller
   /**
    * @param UserRequest $request
    * @param $id
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
+   * @throws \Throwable
    */
   public function update(UserRequest $request, $id)
   {
     $input = $request->only((new User())->getFillable());
     $userData = User::findOrFail($id);
-    $userData->update($input);
-    // 更新角色
     $role_names = $request->input('role_names', []);
-    $userData->syncRoles($role_names);
-    return $this->success();
+
+    return DB::transaction(function () use ($userData, $input, $role_names) {
+      $userData->update($input);
+      // 更新角色
+      $userData->syncRoles($role_names);
+      return $this->success();
+    });
   }
 
   /**

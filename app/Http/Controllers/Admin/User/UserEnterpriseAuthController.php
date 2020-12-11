@@ -53,14 +53,11 @@ class UserEnterpriseAuthController extends Controller
     if ($status === $authData->status) {
       return $this->success();
     }
-    DB::beginTransaction();
-
-    try {
+    return DB::transaction(function () use ($status, $passed, $authData, $userData, $notPass, $request) {
       if ($status === $passed) {
         if ($authData->status === $passed) {
           return $this->error('该申请已经审核通过了');
         }
-
         $userPersonalData = UserEnterprise::where('user_id', $authData->user_id)->firstOrFail();
         $userPersonalData->company = $authData->company;
         $userPersonalData->business_license = $authData->business_license;
@@ -84,12 +81,7 @@ class UserEnterpriseAuthController extends Controller
 
       $authData->status = $status;
       $authData->save();
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 }

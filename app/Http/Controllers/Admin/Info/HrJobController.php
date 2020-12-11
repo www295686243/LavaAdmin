@@ -31,8 +31,10 @@ class HrJobController extends Controller
     $input = $request->all();
     $input['user_id'] = User::getUserId();
     $input['admin_user_id'] = User::getUserId();
-    (new HrJob())->createOrUpdateData($input);
-    return $this->success();
+    return DB::transaction(function () use ($input) {
+      (new HrJob())->createOrUpdateData($input);
+      return $this->success();
+    });
   }
 
   /**
@@ -57,8 +59,10 @@ class HrJobController extends Controller
   public function update(HrJobRequest $request, $id)
   {
     $input = $request->all();
-    (new HrJob())->createOrUpdateData($input, $id);
-    return $this->success();
+    return DB::transaction(function () use ($input, $id) {
+      (new HrJob())->createOrUpdateData($input, $id);
+      return $this->success();
+    });
   }
 
   /**
@@ -69,18 +73,12 @@ class HrJobController extends Controller
   public function destroy($id)
   {
     $data = HrJob::findOrAuth($id);
-    DB::beginTransaction();
-    try {
+    return DB::transaction(function () use ($data) {
       $data->info_sub()->delete();
 //      $data->industry()->detach(); 信息是软删除的 这里会删数据，先注释掉 等需要从行业反向查询信息的时候看怎么弄
       $data->delete();
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getMessage().':'.__LINE__);
-      return $this->error();
-    }
+    });
   }
 
   /**
@@ -104,12 +102,15 @@ class HrJobController extends Controller
   /**
    * @param HrJobRequest $request
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function push(HrJobRequest $request)
   {
     $id = $request->input('id');
     $jobData = HrJob::findOrFail($id);
-    $jobData->infoPush($request->input('industries', []), $request->input('cities', []));
-    return $this->success('推送成功');
+    return DB::transaction(function () use ($jobData, $request) {
+      $jobData->infoPush($request->input('industries', []), $request->input('cities', []));
+      return $this->success('推送成功');
+    });
   }
 }

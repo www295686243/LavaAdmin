@@ -62,21 +62,14 @@ class InfoProvideController extends Controller
     $status = $request->input('status');
 //    $pushText = $request->input('push_text'); // 任务完成后送券通知会用到，这里仅仅是标识这个变量是有用的
     $infoProvideData = InfoProvide::findOrFail($id);
-
-    DB::beginTransaction();
-    try {
+    return DB::transaction(function () use ($status, $infoProvideData) {
       if ($status !== InfoProvide::getStatusValue(1, '待审核')) {
         $infoProvideData->status = $status;
         $infoProvideData->admin_user_id = User::getUserId();
         $infoProvideData->save();
         $infoProvideData->checkFinishTask();
       }
-      DB::commit();
       return $this->success();
-    } catch (\Exception $e) {
-      DB::rollBack();
-      \Log::error($e->getTraceAsString());
-      return $this->error();
-    }
+    });
   }
 }
