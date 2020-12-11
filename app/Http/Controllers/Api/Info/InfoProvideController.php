@@ -8,12 +8,14 @@ use App\Models\Api\User;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoProvide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InfoProvideController extends Controller
 {
   /**
    * @param InfoProvideRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return \Illuminate\Http\JsonResponse|mixed
+   * @throws \Throwable
    */
   public function store(InfoProvideRequest $request)
   {
@@ -28,8 +30,10 @@ class InfoProvideController extends Controller
       return $this->error('该信息已被提交过，不能被再次提交！');
     }
     $data = InfoProvide::where('phone', $input['phone'])->first();
-    $infoProvideData = InfoProvide::create($input);
-    $infoProvideData->getTask();
-    return $this->success($data ? '该号码发布过，请等待客服审核确认！' : '请等待客服审核！');
+    return DB::transaction(function () use ($data, $input) {
+      $infoProvideData = InfoProvide::create($input);
+      $infoProvideData->getTask();
+      return $this->success($data ? '该号码发布过，请等待客服审核确认！' : '请等待客服审核！');
+    });
   }
 }

@@ -9,6 +9,7 @@ use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
 use App\Models\Notify\NotifyTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HrJobController extends Controller
 {
@@ -25,22 +26,25 @@ class HrJobController extends Controller
 
   /**
    * @param HrJobRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
+   * @throws \Throwable
    */
   public function store(HrJobRequest $request)
   {
     $input = $request->getAll();
     $input['_model'] = HrJob::class;
-    $checkData = InfoCheck::createInfo($input);
-    NotifyTemplate::sendAdmin(25, '运营管理员审核信息通知', [
-      'id' => $checkData->id,
-      'title' => $input['title'],
-      'contacts' => $input['contacts'].'/'.$input['phone'],
-      'description' => $input['description'],
-      'created_at' => $checkData->created_at->format('Y-m-d H:i:s'),
-      '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
-    ]);
-    return $this->success();
+    return DB::transaction(function () use ($input) {
+      $checkData = InfoCheck::createInfo($input);
+      NotifyTemplate::sendAdmin(25, '运营管理员审核信息通知', [
+        'id' => $checkData->id,
+        'title' => $input['title'],
+        'contacts' => $input['contacts'].'/'.$input['phone'],
+        'description' => $input['description'],
+        'created_at' => $checkData->created_at->format('Y-m-d H:i:s'),
+        '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
+      ]);
+      return $this->success();
+    });
   }
 
   /**

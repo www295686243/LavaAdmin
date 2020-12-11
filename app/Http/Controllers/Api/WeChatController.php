@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\WeChatRequest;
 use App\Models\User\UserAuth;
+use Illuminate\Support\Facades\DB;
 
 class WeChatController extends Controller
 {
@@ -47,8 +48,11 @@ class WeChatController extends Controller
   {
     $UserAuth = new UserAuth();
     $authInfo = $UserAuth->getWeChatAuthInfo();
-    $userData = $UserAuth->getUserData($authInfo);
-    return $this->setParams($userData)->success('微信'.($userData['is_register'] ? '注册' : '登录').'成功');
+    return DB::transaction(function () use ($UserAuth, $authInfo) {
+      $userData = $UserAuth->getUserData($authInfo);
+      return $this->setParams($userData)->success('微信'.($userData['is_register'] ? '注册' : '登录').'成功');
+    });
+
   }
 
   /**

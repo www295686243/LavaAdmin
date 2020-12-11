@@ -76,19 +76,22 @@ class CouponOrderController extends Controller
   }
 
   /**
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
+   * @throws \Throwable
    */
   public function cancelUnpaidOrder()
   {
     $couponOrderData = CouponOrder::where('user_id', User::getUserId())
       ->where('pay_status', CouponOrder::getPayStatusValue(1, '未支付'))
       ->first();
-    if ($couponOrderData) {
-      $couponOrderData->pay_status = CouponOrder::getPayStatusValue(4, '已放弃');
-      $couponOrderData->save();
-      $couponOrderData->unlockCouponMarketData();
-    }
-    return $this->success('放弃成功');
+    return DB::transaction(function () use ($couponOrderData) {
+      if ($couponOrderData) {
+        $couponOrderData->pay_status = CouponOrder::getPayStatusValue(4, '已放弃');
+        $couponOrderData->save();
+        $couponOrderData->unlockCouponMarketData();
+      }
+      return $this->success('放弃成功');
+    });
   }
 
   /**

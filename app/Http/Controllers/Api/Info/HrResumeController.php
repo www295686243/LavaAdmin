@@ -69,22 +69,26 @@ class HrResumeController extends Controller
 
   /**
    * @param HrResumeRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
+   * @throws \Throwable
    */
   public function store(HrResumeRequest $request)
   {
     $input = $request->getAll();
     $input['_model'] = HrResume::class;
-    $checkData = InfoCheck::createInfo($input);
-    NotifyTemplate::sendAdmin(25, '运营管理员审核信息通知', [
-      'id' => $checkData->id,
-      'title' => $input['title'],
-      'contacts' => $input['contacts'].'/'.$input['phone'],
-      'description' => $input['description'],
-      'created_at' => $checkData->created_at->format('Y-m-d H:i:s'),
-      '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
-    ]);
-    return $this->success('简历已提交成功，请等待管理员审核!');
+    return DB::transaction(function () use ($input) {
+      $checkData = InfoCheck::createInfo($input);
+      NotifyTemplate::sendAdmin(25, '运营管理员审核信息通知', [
+        'id' => $checkData->id,
+        'title' => $input['title'],
+        'contacts' => $input['contacts'].'/'.$input['phone'],
+        'description' => $input['description'],
+        'created_at' => $checkData->created_at->format('Y-m-d H:i:s'),
+        '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
+      ]);
+      return $this->success('简历已提交成功，请等待管理员审核!');
+    });
+
   }
 
   /**
@@ -176,14 +180,17 @@ class HrResumeController extends Controller
 
   /**
    * @param HrResumeRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
+   * @throws \Throwable
    */
   public function complaint(HrResumeRequest $request)
   {
     $id = $request->input('id');
     $hrResumeData = HrResume::findOrFail($id);
-    $infoComplaintData = $hrResumeData->modelComplaint($request->only(['complaint_type', 'complaint_content']));
-    return $this->setParams($infoComplaintData)->success('反馈成功');
+    return DB::transaction(function () use ($hrResumeData, $request) {
+      $infoComplaintData = $hrResumeData->modelComplaint($request->only(['complaint_type', 'complaint_content']));
+      return $this->setParams($infoComplaintData)->success('反馈成功');
+    });
   }
 
   /**

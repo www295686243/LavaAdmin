@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\Info\InfoDelivery;
 use App\Models\Notify\NotifyTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class InfoDeliveryController extends Controller
@@ -60,7 +61,8 @@ class InfoDeliveryController extends Controller
 
   /**
    * @param InfoDeliveryRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return \Illuminate\Http\JsonResponse|mixed
+   * @throws \Throwable
    */
   public function store(InfoDeliveryRequest $request)
   {
@@ -84,10 +86,10 @@ class InfoDeliveryController extends Controller
       return $this->error('信息状态错误');
     }
 
-    InfoDelivery::create($input);
-
-    if (Str::contains($input['receive_info_type'], 'HrJob')) {
-      NotifyTemplate::send(24, '投递后简历信息推送', $receiveInfo->user_id, [
+    return DB::transaction(function () use ($receiveInfo, $sendInfo, $input) {
+      $infoDeliveryData = InfoDelivery::create($input);
+      $notifyTemp = $infoDeliveryData->receive_info->getDeliveryNotify();
+      NotifyTemplate::send($notifyTemp['id'], $notifyTemp['title'], $receiveInfo->user_id, [
         'id' => $sendInfo->id,
         'source' => 'delivery',
         'title' => $sendInfo->title,
@@ -95,17 +97,8 @@ class InfoDeliveryController extends Controller
         'contacts' => $sendInfo->contacts,
         'created_at' => $sendInfo->created_at->format('Y-m-d H:i:s')
       ]);
-    } else if (Str::contains($input['receive_info_type'], 'HrResume')) {
-      NotifyTemplate::send(22, '投递后职位信息推送', $receiveInfo->user_id, [
-        'id' => $sendInfo->id,
-        'source' => 'delivery',
-        'title' => $sendInfo->title,
-        'city' => (new City())->getNames($sendInfo->city),
-        'contacts' => $sendInfo->contacts,
-        'created_at' => $sendInfo->created_at->format('Y-m-d H:i:s')
-      ]);
-    }
-    return $this->success('投递成功');
+      return $this->success('投递成功');
+    });
   }
 
   /**

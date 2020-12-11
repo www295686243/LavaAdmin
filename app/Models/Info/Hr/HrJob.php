@@ -70,6 +70,17 @@ class HrJob extends HrBase
   }
 
   /**
+   * @return array
+   */
+  public function getDeliveryNotify()
+  {
+    return [
+      'id' => 24,
+      'title' => '投递后简历信息推送'
+    ];
+  }
+
+  /**
    * @param UserOrder $userOrderData
    */
   public function payCallback(UserOrder $userOrderData)

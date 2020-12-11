@@ -9,6 +9,7 @@ use App\Models\Info\Hr\HrResume;
 use App\Models\Info\InfoCheck;
 use App\Models\Notify\NotifyTemplate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HrResumeController extends Controller
 {
@@ -25,22 +26,25 @@ class HrResumeController extends Controller
 
   /**
    * @param HrResumeRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
+   * @throws \Throwable
    */
   public function store(HrResumeRequest $request)
   {
     $input = $request->getAll();
     $input['_model'] = HrResume::class;
-    $checkData = InfoCheck::createInfo($input);
-    NotifyTemplate::sendAdmin(25, '运营管理员审核信息通知', [
-      'id' => $checkData->id,
-      'title' => $input['title'],
-      'contacts' => $input['contacts'].'/'.$input['phone'],
-      'description' => $input['description'],
-      'created_at' => $checkData->created_at->format('Y-m-d H:i:s'),
-      '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
-    ]);
-    return $this->success('简历已提交成功，请等待管理员审核!');
+    return DB::transaction(function () use ($input) {
+      $checkData = InfoCheck::createInfo($input);
+      NotifyTemplate::sendAdmin(25, '运营管理员审核信息通知', [
+        'id' => $checkData->id,
+        'title' => $input['title'],
+        'contacts' => $input['contacts'].'/'.$input['phone'],
+        'description' => $input['description'],
+        'created_at' => $checkData->created_at->format('Y-m-d H:i:s'),
+        '_model' => 'Info/Hr/HrJob,Info/Hr/HrResume'
+      ]);
+      return $this->success('简历已提交成功，请等待管理员审核!');
+    });
   }
 
   /**

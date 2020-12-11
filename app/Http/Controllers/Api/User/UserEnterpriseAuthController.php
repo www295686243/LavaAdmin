@@ -9,6 +9,7 @@ use App\Models\Image;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserEnterpriseAuth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserEnterpriseAuthController extends Controller
 {
@@ -30,18 +31,20 @@ class UserEnterpriseAuthController extends Controller
     $input['status'] = $checking;
     $input['user_id'] = User::getUserId();
 
-    $data = UserEnterpriseAuth::create($input);
-    (new Image())->updateImageableId($data->id);
+    return DB::transaction(function () use ($input) {
+      $data = UserEnterpriseAuth::create($input);
+      (new Image())->updateImageableId($data->id);
 
-    NotifyTemplate::sendAdmin(27, '运营管理员审核企业认证通知', [
-      'id' => $data->id,
-      'title' => '企业认证',
-      'contacts' => $data->company,
-      'description' => $data->intro,
-      'created_at' => $data->created_at->format('Y-m-d H:i:s')
-    ]);
+      NotifyTemplate::sendAdmin(27, '运营管理员审核企业认证通知', [
+        'id' => $data->id,
+        'title' => '企业认证',
+        'contacts' => $data->company,
+        'description' => $data->intro,
+        'created_at' => $data->created_at->format('Y-m-d H:i:s')
+      ]);
 
-    return $this->success('提交成功，请等待审核！');
+      return $this->success('提交成功，请等待审核！');
+    });
   }
 
   /**

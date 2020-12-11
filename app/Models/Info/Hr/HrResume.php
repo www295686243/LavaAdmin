@@ -67,6 +67,17 @@ class HrResume extends HrBase
   }
 
   /**
+   * @return array
+   */
+  public function getDeliveryNotify()
+  {
+    return [
+      'id' => 22,
+      'title' => '投递后职位信息推送'
+    ];
+  }
+
+  /**
    * @param UserOrder $userOrderData
    */
   public function payCallback(UserOrder $userOrderData)
