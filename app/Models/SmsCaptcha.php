@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Base\Base;
 use Illuminate\Support\Carbon;
 use Overtrue\EasySms\EasySms;
 

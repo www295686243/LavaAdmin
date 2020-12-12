@@ -3,7 +3,7 @@
 namespace App\Models\Info;
 
 use App\Jobs\InfoPushQueue;
-use App\Models\Base;
+use App\Models\Base\Base;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\Hr\HrResume;
 use App\Models\User\User;

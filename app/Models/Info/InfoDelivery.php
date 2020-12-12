@@ -2,7 +2,7 @@
 
 namespace App\Models\Info;
 
-use App\Models\Base;
+use App\Models\Base\Base;
 use App\Models\User\User;
 
 class InfoDelivery extends Base

@@ -2,7 +2,7 @@
 
 namespace App\Models\User;
 
-use App\Models\Base;
+use App\Models\Base\Base;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserControl extends Base

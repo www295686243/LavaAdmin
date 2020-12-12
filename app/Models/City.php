@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Base\Base;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;

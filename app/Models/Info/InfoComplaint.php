@@ -2,10 +2,7 @@
 
 namespace App\Models\Info;
 
-use App\Models\Base;
-use App\Models\Info\Hr\HrJob;
-use App\Models\Info\Hr\HrResume;
-use App\Models\Notify\NotifyTemplate;
+use App\Models\Base\Base;
 use App\Models\User\User;
 
 class InfoComplaint extends Base

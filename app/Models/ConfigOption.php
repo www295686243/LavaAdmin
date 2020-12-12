@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Base\Base;
+
 /**
  * App\Models\ConfigOption
  *

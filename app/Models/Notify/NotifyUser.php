@@ -2,7 +2,7 @@
 
 namespace App\Models\Notify;
 
-use App\Models\Base;
+use App\Models\Base\Base;
 use App\Models\User\User;
 
 class NotifyUser extends Base

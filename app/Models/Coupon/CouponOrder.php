@@ -2,7 +2,7 @@
 
 namespace App\Models\Coupon;
 
-use App\Models\Base;
+use App\Models\Base\Base;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\User;
 use App\Models\User\UserAuth;

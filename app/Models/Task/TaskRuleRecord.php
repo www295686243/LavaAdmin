@@ -2,7 +2,7 @@
 
 namespace App\Models\Task;
 
-use App\Models\Base;
+use App\Models\Base\Base;
 
 class TaskRuleRecord extends Base
 {

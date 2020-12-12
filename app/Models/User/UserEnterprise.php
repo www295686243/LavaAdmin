@@ -2,9 +2,8 @@
 
 namespace App\Models\User;
 
-use App\Models\Base;
+use App\Models\Base\Base;
 use App\Models\Info\Industry;
-use App\Models\Info\InfoCheck;
 use App\Models\Task\Traits\PerfectEnterpriseInfoTaskTraits;
 use App\Models\Traits\IndustryTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;

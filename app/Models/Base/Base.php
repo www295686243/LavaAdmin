@@ -167,8 +167,7 @@ class Base extends Model {
    */
   private static function getOptionItem($field, $value)
   {
-    $className = str_replace('App\\Models\\', '', static::class);
-    $className = str_replace('\\', '/', $className);
+    $className = class_basename(static::class);
     $configData = self::getOptions($className, $field);
     $configOptionData = $configData->options->where('value', $value)->first();
     return $configOptionData;
@@ -215,8 +214,7 @@ class Base extends Model {
    */
   public static function getOptionsValue2($field, $display_name)
   {
-    $className = str_replace('App\\Models\\', '', static::class);
-    $className = str_replace('\\', '/', $className);
+    $className = class_basename(static::class);
     $configData = self::getOptions($className, $field);
     $configOptionData = $configData->options->where('display_name', $display_name)->first();
     return $configOptionData->value;
@@ -228,8 +226,7 @@ class Base extends Model {
    */
   public static function getConfigValue($name)
   {
-    $className = str_replace('App\\Models\\', '', static::class);
-    $className = str_replace('\\', '/', $className);
+    $className = class_basename(static::class);
     $configData = self::getConfig($className, $name);
     return $configData->value;
   }

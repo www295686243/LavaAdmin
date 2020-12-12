@@ -2,8 +2,6 @@
 
 namespace App\Models\Api;
 
-use App\Models\Info\Hr\HrJob;
-
 /**
  * App\Models\Api\User
  *

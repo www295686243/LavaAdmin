@@ -3,7 +3,7 @@
 namespace App\Models\User;
 
 use App\Models\ApiLog;
-use App\Models\Base;
+use App\Models\Base\Base;
 use Illuminate\Support\Str;
 
 class UserOrder extends Base

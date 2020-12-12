@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Admin\User;
+use App\Models\Base\Base;
 
 /**
  * \App\Models\AdminLog

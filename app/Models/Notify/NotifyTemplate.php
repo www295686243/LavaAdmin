@@ -3,7 +3,7 @@
 namespace App\Models\Notify;
 
 use App\Jobs\NotifyQueue;
-use App\Models\Base;
+use App\Models\Base\Base;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;

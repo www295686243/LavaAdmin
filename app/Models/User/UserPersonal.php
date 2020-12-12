@@ -2,7 +2,7 @@
 
 namespace App\Models\User;
 
-use App\Models\Base;
+use App\Models\Base\Base;
 use App\Models\Info\Industry;
 use App\Models\Task\Traits\PerfectPersonalInfoTaskTraits;
 use App\Models\Traits\IndustryTrait;

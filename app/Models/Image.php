@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Base\Base;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 

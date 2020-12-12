@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Api\User;
+use App\Models\Base\Base;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
