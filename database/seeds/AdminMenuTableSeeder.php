@@ -51,7 +51,7 @@ class AdminMenuTableSeeder extends Seeder
               'display_name' => '信息审核',
               'route' => '/hr/job/info-check',
               'icon' => 'el-icon-s-claim',
-              'default_params' => ['_model' => 'Info/Hr/HrJob']
+              'default_params' => ['_model' => 'HrJob']
             ],
             [
               'display_name' => '信息列表',
@@ -62,19 +62,19 @@ class AdminMenuTableSeeder extends Seeder
               'display_name' => '信息提供',
               'route' => '/hr/job/info-provide',
               'icon' => 'el-icon-s-management',
-              'default_params' => ['_model' => 'Info/Hr/HrJob']
+              'default_params' => ['_model' => 'HrJob']
             ],
             [
               'display_name' => '信息投诉',
               'route' => '/hr/job/info-complaint',
               'icon' => 'el-icon-s-release',
-              'default_params' => ['_model' => 'Info/Hr/HrJob']
+              'default_params' => ['_model' => 'HrJob']
             ],
             [
               'display_name' => '信息投递',
               'route' => '/hr/job/info-delivery',
               'icon' => 'el-icon-share',
-              'default_params' => ['_model' => 'Info/Hr/HrJob']
+              'default_params' => ['_model' => 'HrJob']
             ]
           ]
         ],
@@ -87,7 +87,7 @@ class AdminMenuTableSeeder extends Seeder
               'display_name' => '信息审核',
               'route' => '/hr/resume/info-check',
               'icon' => 'el-icon-s-claim',
-              'default_params' => ['_model' => 'Info/Hr/HrResume']
+              'default_params' => ['_model' => 'HrResume']
             ],
             [
               'display_name' => '信息列表',
@@ -98,19 +98,19 @@ class AdminMenuTableSeeder extends Seeder
               'display_name' => '信息提供',
               'route' => '/hr/resume/info-provide',
               'icon' => 'el-icon-s-management',
-              'default_params' => ['_model' => 'Info/Hr/HrResume']
+              'default_params' => ['_model' => 'HrResume']
             ],
             [
               'display_name' => '信息投诉',
               'route' => '/hr/resume/info-complaint',
               'icon' => 'el-icon-s-release',
-              'default_params' => ['_model' => 'Info/Hr/HrResume']
+              'default_params' => ['_model' => 'HrResume']
             ],
             [
               'display_name' => '信息投递',
               'route' => '/hr/resume/info-delivery',
               'icon' => 'el-icon-share',
-              'default_params' => ['_model' => 'Info/Hr/HrResume']
+              'default_params' => ['_model' => 'HrResume']
             ]
           ]
         ]
@@ -187,12 +187,6 @@ class AdminMenuTableSeeder extends Seeder
               'display_name' => '会员角色',
               'icon' => 'el-icon-s-opportunity',
               'route' => '/user/member/role'
-            ],
-            [
-              'display_name' => '资料审核',
-              'icon' => 'el-icon-s-claim',
-              'route' => '/user/info-check',
-              'default_params' => ['_model' => 'User/UserPersonal,User/UserEnterprise']
             ],
             [
               'display_name' => '个人认证',

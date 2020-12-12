@@ -113,4 +113,16 @@ class HrResumeController extends Controller
       return $this->success('推送成功');
     });
   }
+
+  /**
+   * @param HrResumeRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getInfoViews(HrResumeRequest $request)
+  {
+    $id = $request->input('id');
+    $jobData = HrResume::findOrFail($id);
+    $data = $jobData->modelGetInfoViews();
+    return $this->setParams($data)->success();
+  }
 }

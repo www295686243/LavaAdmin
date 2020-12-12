@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\Hr\HrResume;
-use App\Models\News;
 use App\Services\ResourceService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Support\Str;
 
 class Controller extends BaseController
 {
@@ -102,10 +100,13 @@ class Controller extends BaseController
    */
   protected function getModelPath ($modelPath = '') {
     $innerModelPath = $modelPath ? $modelPath : request()->input('_model');
-    if (Str::contains($innerModelPath, 'App\Models')) {
-      return $innerModelPath;
+    $innerModelPath = class_basename($innerModelPath);
+    if ($innerModelPath === 'HrJob') {
+      return HrJob::class;
+    } else if ($innerModelPath === 'HrResume') {
+      return HrResume::class;
     } else {
-      return 'App\Models\\'.str_replace('/', '\\', $innerModelPath);
+      return $this->error('_model参数错误');
     }
   }
 }

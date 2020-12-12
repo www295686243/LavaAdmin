@@ -113,4 +113,16 @@ class HrJobController extends Controller
       return $this->success('推送成功');
     });
   }
+
+  /**
+   * @param HrJobRequest $request
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getInfoViews(HrJobRequest $request)
+  {
+    $id = $request->input('id');
+    $jobData = HrJob::findOrFail($id);
+    $data = $jobData->modelGetInfoViews();
+    return $this->setParams($data)->success();
+  }
 }

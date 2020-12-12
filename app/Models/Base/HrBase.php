@@ -23,6 +23,7 @@ use App\Models\Traits\IndustryTrait;
 use App\Models\Traits\PayContactsTrait;
 use App\Models\User\User;
 use App\Models\User\UserOrder;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 
@@ -383,5 +384,24 @@ class HrBase extends Base {
     return collect($data)->filter(function ($item) {
       return $item->id !== $this->id;
     })->values();
+  }
+
+  /**
+   * @return mixed
+   */
+  public function modelGetInfoViews()
+  {
+    $share_user_id = request()->input('share_user_id');
+    $is_new_user = request()->input('is_new_user');
+    return $this->info_view()
+      ->with('user:id,nickname')
+      ->when($share_user_id, function (Builder $query, $share_user_id) {
+        return $query->where('share_user_id', $share_user_id);
+      })
+      ->when($is_new_user, function (Builder $query, $is_new_user) {
+        return $query->where('is_new_user', $is_new_user);
+      })
+      ->orderByDesc('id')
+      ->pagination();
   }
 }

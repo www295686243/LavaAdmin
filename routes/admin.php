@@ -114,10 +114,13 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('info_check', InfoCheckController::class)->only(['index', 'show', 'update']);
   // hr
   Route::post('hr_job/transfer', [HrJobController::class, 'transfer']);
-  Route::post('hr_resume/transfer', [HrResumeController::class, 'transfer']);
   Route::post('hr_job/push', [HrJobController::class, 'push']);
-  Route::post('hr_resume/push', [HrResumeController::class, 'push']);
+  Route::get('hr_job/getInfoViews', [HrJobController::class, 'getInfoViews']);
   Route::apiResource('hr_job', HrJobController::class);
+
+  Route::post('hr_resume/transfer', [HrResumeController::class, 'transfer']);
+  Route::post('hr_resume/push', [HrResumeController::class, 'push']);
+  Route::get('hr_resume/getInfoViews', [HrResumeController::class, 'getInfoViews']);
   Route::apiResource('hr_resume', HrResumeController::class);
   // 行业
   Route::get('industry/getParentTree', [IndustryController::class, 'getParentTree']);
