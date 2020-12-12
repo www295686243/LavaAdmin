@@ -85,10 +85,24 @@ class Base extends Model {
       if (Str::contains($type, 'App\Models')) {
         return $type;
       } else {
-        return 'App\Models\\'.str_replace('/', '\\', $type);
+        return $this->getModelFullPath($type);
       }
     })->toArray();
     return $query->whereIn($typeField, $_models);
+  }
+
+  /**
+   * @param $path
+   * @return string
+   */
+  private function getModelFullPath ($path) {
+    if ($path === 'HrJob') {
+      return HrJob::class;
+    } else if ($path === 'HrResume') {
+      return HrResume::class;
+    } else {
+      $this->error('_model参数错误');
+    }
   }
 
   /**
@@ -289,7 +303,7 @@ class Base extends Model {
    * @return \Illuminate\Database\Eloquent\Builder
    */
   public function cacheGetAll () {
-    return Cache::tags(self::class)->rememberForever($this->getTable(), function () {
+    return Cache::tags(static::class)->rememberForever($this->getTable(), function () {
       return self::orderBy('id')->get();
     });
   }

@@ -34,7 +34,9 @@ class ConfigOption extends Base
     'config_id',
     'display_name',
     'color',
-    'sort'
+    'sort',
+    'value',
+    'name'
   ];
 
   protected $hidden = [
