@@ -3,12 +3,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\Coupon\CouponMarketController;
 use App\Http\Controllers\Api\Coupon\CouponOrderController;
+use App\Http\Controllers\Api\Info\InfoCheckController;
 use App\Http\Controllers\Api\Info\InfoDeliveryController;
 use App\Http\Controllers\Api\Info\InfoProvideController;
 use App\Http\Controllers\Api\Task\TaskRecordController;
 use App\Http\Controllers\Api\Info\HrJobController;
 use App\Http\Controllers\Api\Info\HrResumeController;
-use App\Http\Controllers\Api\User\Info\InfoCheckController;
 use App\Http\Controllers\Api\User\NotifyController;
 use App\Http\Controllers\Api\User\UserCashController;
 use App\Http\Controllers\Api\User\UserControlController;

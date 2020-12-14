@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\User\Info;
+namespace App\Http\Controllers\Api\Info;
 
 use App\Http\Controllers\Controller;
 use App\Models\Api\User;
