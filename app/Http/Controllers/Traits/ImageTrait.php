@@ -24,8 +24,8 @@ trait ImageTrait
   protected function _store(Request $request, $user_id)
   {
     $info_id = $request->input('info_id');
-    $type = $request->input('type');
-    $urlPath = $type.'/'.($info_id ?? 'temp');
+    $_model = $request->input('_model');
+    $urlPath = $_model.'/'.($info_id ?? 'temp');
     $file = $request->file('file');
     $file->isValid();
     $fileInfo = getimagesize($file);

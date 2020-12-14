@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\Hr\HrResume;
+use App\Models\User\UserEnterprise;
+use App\Models\User\UserEnterpriseAuth;
+use App\Models\User\UserPersonal;
+use App\Models\User\UserPersonalAuth;
 use App\Services\ResourceService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -105,6 +109,14 @@ class Controller extends BaseController
       return HrJob::class;
     } else if ($innerModelPath === 'HrResume') {
       return HrResume::class;
+    } else if ($innerModelPath === 'UserPersonal') {
+      return UserPersonal::class;
+    } else if ($innerModelPath === 'UserEnterprise') {
+      return UserEnterprise::class;
+    } else if ($innerModelPath === 'UserPersonalAuth') {
+      return UserPersonalAuth::class;
+    } else if ($innerModelPath === 'UserEnterpriseAuth') {
+      return UserEnterpriseAuth::class;
     } else {
       return $this->error('_model参数错误');
     }
