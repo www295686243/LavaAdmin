@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\IdToStrTrait;
+use Illuminate\Support\Facades\Cache;
 use Kalnoy\Nestedset\NodeTrait;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
@@ -72,7 +73,7 @@ class Permission extends \Spatie\Permission\Models\Permission
    */
   public static function getAllPermissionNames($guard)
   {
-    return Permission::where('guard_name', $guard)->pluck('name');
+    return (new Permission())->cacheGetAll()->where('guard_name', $guard)->pluck('name');
   }
 
   /**
@@ -82,5 +83,14 @@ class Permission extends \Spatie\Permission\Models\Permission
   public static function getAllPermissionTree($guard)
   {
     return self::where('guard_name', $guard)->get()->toTree();
+  }
+
+  /**
+   * @return \Illuminate\Support\Collection
+   */
+  public function cacheGetAll () {
+    return Cache::tags(static::class)->rememberForever($this->getTable(), function () {
+      return static::all();
+    });
   }
 }

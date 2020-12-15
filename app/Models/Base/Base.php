@@ -74,13 +74,14 @@ class Base extends Model {
   }
 
   /**
-   * @param \Illuminate\Database\Eloquent\Builder  $query
+   * @param \Illuminate\Database\Eloquent\Builder $query
    * @param $typeField
+   * @param string $model
    * @return \Illuminate\Database\Eloquent\Builder
    */
-  public function scopeSearchModel($query, $typeField)
+  public function scopeSearchModel($query, $typeField, $model = '')
   {
-    $_model = request()->input('_model');
+    $_model = $model ?: request()->input('_model');
     $_models = collect(array_filter(explode(',', $_model)))->map(function ($type) {
       if (Str::contains($type, 'App\Models')) {
         return $type;
@@ -88,7 +89,11 @@ class Base extends Model {
         return $this->getModelFullPath($type);
       }
     })->toArray();
-    return $query->whereIn($typeField, $_models);
+    if (count($_models) > 1) {
+      return $query->whereIn($typeField, $_models);
+    } else {
+      return $query->where($typeField, $_models);
+    }
   }
 
   /**
