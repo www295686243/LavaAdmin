@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\User\UserOrder;
-use Illuminate\Http\Request;
 
 class UserOrderController extends Controller
 {

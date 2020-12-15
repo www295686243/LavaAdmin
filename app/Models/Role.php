@@ -18,7 +18,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Kalnoy\Nestedset\Collection|\App\Models\Permission[] $permissions
  * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Api\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User\User[] $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Role newQuery()
@@ -45,7 +45,8 @@ class Role extends \Spatie\Permission\Models\Role
     'assign_menu',
     'assign_admin_interface',
     'assign_api_interface',
-    'guard_name'
+    'guard_name',
+    'platform'
   ];
 
   protected $hidden = [

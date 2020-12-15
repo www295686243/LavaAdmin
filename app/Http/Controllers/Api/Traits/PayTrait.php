@@ -8,13 +8,9 @@
 
 namespace App\Http\Controllers\Api\Traits;
 
-use App\Http\Requests\Api\WeChatRequest;
-use App\Models\Api\User;
-use App\Models\Base;
-use App\Models\User\UserCoupon;
+use App\Models\User\User;
 use App\Models\User\UserOrder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 trait PayTrait
 {

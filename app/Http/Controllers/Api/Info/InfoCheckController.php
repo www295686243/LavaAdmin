@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Info;
 
 use App\Http\Controllers\Controller;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Info\InfoCheck;
 
 class InfoCheckController extends Controller

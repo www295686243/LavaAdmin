@@ -19,7 +19,7 @@ class InterfacePermission
   {
     $guard = $request->route()->getPrefix();
     $permission = class_basename($request->route()->getActionName());
-    $userData = auth($guard)->user();
+    $userData = auth()->user();
     $permissionNames = Permission::getAllPermissionNames($guard);
     if (
       $userData &&

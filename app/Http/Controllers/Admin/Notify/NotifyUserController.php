@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin\Notify;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Notify\NotifyUserRequest;
-use App\Models\Admin\User;
+use App\Models\User\User;
 use App\Models\Notify\NotifyUser;
-use Illuminate\Http\Request;
 
 class NotifyUserController extends Controller
 {

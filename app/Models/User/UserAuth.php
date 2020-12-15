@@ -47,7 +47,7 @@ class UserAuth extends Base
 
   /**
    * @param $authInfo
-   * @return \App\Models\Api\User|\App\Models\Api\User[]|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
+   * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Model|mixed
    * @throws \Throwable
    */
   public function getUserData($authInfo)
@@ -68,7 +68,7 @@ class UserAuth extends Base
       }
     }
     if (!$authData) {
-      $userData = \App\Models\Api\User::createUser([
+      $userData = User::createUser([
         'nickname' => $authInfo['nickname']
       ]);
       $userData->auth()->create([
@@ -77,7 +77,7 @@ class UserAuth extends Base
       ]);
       $is_register = true;
     } else {
-      $userData = \App\Models\Api\User::findOrFail($authData->user_id);
+      $userData = User::findOrFail($authData->user_id);
       $is_register = false;
     }
     $headimgurl = isset($authInfo['headimgurl']) ? $authInfo['headimgurl'] : '';

@@ -8,7 +8,7 @@
 
 namespace App\Models\Task\Traits;
 
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Coupon\CouponTemplate;
 use App\Models\Info\Hr\HrResume;
 use App\Models\Notify\NotifyTemplate;

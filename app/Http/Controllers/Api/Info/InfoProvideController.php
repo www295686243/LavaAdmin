@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api\Info;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\InfoProvideRequest;
-use App\Models\Api\User;
-use App\Models\Info\Hr\HrJob;
+use App\Models\User\User;
 use App\Models\Info\InfoProvide;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class InfoProvideController extends Controller

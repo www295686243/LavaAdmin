@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\UserCouponRequest;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Coupon\CouponMarket;
-use App\Models\Info\Hr\HrJob;
-use App\Models\Info\Hr\HrResume;
 use App\Models\User\UserCoupon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;

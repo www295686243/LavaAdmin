@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserEnterpriseAuthRequest;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserEnterprise;
 use App\Models\User\UserEnterpriseAuth;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserEnterpriseAuthController extends Controller

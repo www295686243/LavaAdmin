@@ -3,8 +3,7 @@
 namespace App\Http\Controllers\Api\Task;
 
 use App\Http\Controllers\Controller;
-use App\Models\Api\User;
-use App\Models\Task\Task;
+use App\Models\User\User;
 use App\Models\Task\TaskRecord;
 use Illuminate\Database\Eloquent\Builder;
 

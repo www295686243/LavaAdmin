@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AuthRequest;
-use App\Models\Admin\User;
-use App\Models\Config;
+use App\Models\User\User;
 
 class AuthController extends Controller
 {

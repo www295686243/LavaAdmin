@@ -3,7 +3,6 @@
 namespace App\Models\User;
 
 use App\Models\AdminMenu;
-use App\Models\Info\Industry;
 use App\Models\Permission;
 use App\Models\Task\TaskRecord;
 use App\Models\Task\Traits\BindPhoneTaskTraits;
@@ -147,6 +146,8 @@ class User extends Authenticatable
     'invite_user_id' => 'string'
   ];
 
+  protected $guard_name = 'api';
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasOne
    */
@@ -234,6 +235,34 @@ class User extends Authenticatable
   }
 
   /**
+   * @return \Illuminate\Support\Collection
+   */
+  public function getMenuPermissions()
+  {
+    $query = AdminMenu::query();
+    if (!$this->hasRole('root')) {
+      $menu_ids = $this->roles->pluck('menu_permissions')->flatten()->unique();
+      $query->whereIn('id', $menu_ids);
+    }
+    return $query
+      ->orderBy('sort', 'asc')
+      ->orderBy('id', 'asc')
+      ->get();
+  }
+
+  /**
+   * @param \Illuminate\Database\Eloquent\Builder  $query
+   * @return \Illuminate\Database\Eloquent\Builder
+   */
+  public function scopeExceptRoot($query)
+  {
+    return $query->when(!User::getUserData()->hasRoot(), function ($query) {
+      $root_ids = self::role('root')->pluck('id');
+      return $query->whereNotIn('id', $root_ids);
+    });
+  }
+
+  /**
    * @param $username
    * @param $password
    * @param bool $isAdmin
@@ -259,19 +288,14 @@ class User extends Authenticatable
 
   /**
    * @param int $user_id
-   * @return User|\App\Models\Api\User|\App\Models\Admin\User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
+   * @return User|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
    */
   public static function getUserData($user_id = 0)
   {
     if ($user_id) {
       return static::where('id', $user_id)->firstOrFail();
     } else {
-      $_this = new static();
-      $guard_name = $_this->guard_name;
-      if (!$guard_name) {
-        $guard_name = $_this->getPrefix();
-      }
-      return auth($guard_name)->user();
+      return auth()->user();
     }
   }
 
@@ -280,12 +304,7 @@ class User extends Authenticatable
    */
   public static function getUserId()
   {
-    $_this = new static();
-    $guard_name = $_this->guard_name;
-    if (!$guard_name) {
-      $guard_name = $_this->getPrefix();
-    }
-    return auth($guard_name)->id();
+    return auth()->id();
   }
 
   /**

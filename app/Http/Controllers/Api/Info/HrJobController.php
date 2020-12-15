@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Info;
 use App\Http\Controllers\Api\Traits\PayTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\HrJobRequest;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Info\Hr\HrJob;
 use App\Models\Info\InfoCheck;
 use App\Models\Info\InfoView;

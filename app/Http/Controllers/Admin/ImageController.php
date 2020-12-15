@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\ImageTrait;
 use App\Http\Requests\Admin\ImageRequest;
-use App\Models\Admin\User;
+use App\Models\User\User;
 use App\Models\Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;

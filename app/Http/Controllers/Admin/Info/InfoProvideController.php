@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Info;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\InfoProvideRequest;
-use App\Models\Admin\User;
+use App\Models\User\User;
 use App\Models\Info\InfoProvide;
 use Illuminate\Support\Facades\DB;
 

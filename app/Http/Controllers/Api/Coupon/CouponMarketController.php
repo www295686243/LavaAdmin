@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Coupon;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Coupon\CouponMarketRequest;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Coupon\CouponMarket;
 use App\Models\User\UserCoupon;
 use Illuminate\Database\Eloquent\Builder;

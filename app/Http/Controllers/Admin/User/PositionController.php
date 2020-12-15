@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PositionRequest;
-use App\Models\Admin\User;
+use App\Models\User\User;
 use App\Models\AdminMenu;
 use App\Models\Permission;
 use App\Models\Role;

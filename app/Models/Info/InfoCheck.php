@@ -46,7 +46,7 @@ class InfoCheck extends Base
    */
   public static function createInfo($input)
   {
-    $input['user_id'] = \App\Models\Api\User::getUserId();
+    $input['user_id'] = User::getUserId();
     return InfoCheck::create([
       'info_checkable_type' => $input['_model'],
       'info_checkable_id' => $input['id'],

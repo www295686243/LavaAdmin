@@ -8,7 +8,7 @@
 
 namespace App\Models\Traits;
 
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\User\UserCoupon;
 use App\Models\User\UserOrder;
 

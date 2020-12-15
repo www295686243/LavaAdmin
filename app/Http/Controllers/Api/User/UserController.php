@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserRequest;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\SmsCaptcha;
 use App\Models\User\UserBill;
 use App\Models\User\UserEnterprise;

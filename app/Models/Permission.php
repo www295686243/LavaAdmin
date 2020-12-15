@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Traits\IdToStrTrait;
 use Illuminate\Support\Facades\Cache;
 use Kalnoy\Nestedset\NodeTrait;
-use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
  * \App\Models\Permission
@@ -27,7 +25,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Api\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User\User[] $users
  * @property-read int|null $users_count
  * @method static \Kalnoy\Nestedset\Collection|static[] all($columns = ['*'])
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Permission d()
@@ -59,6 +57,7 @@ class Permission extends \Spatie\Permission\Models\Permission
     'display_name',
     'sort',
     'guard_name',
+    'platform',
     'parent_id'
   ];
 

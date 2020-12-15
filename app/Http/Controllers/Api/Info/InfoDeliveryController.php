@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Api\Info;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Info\InfoDeliveryRequest;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\City;
 use App\Models\Info\InfoDelivery;
 use App\Models\Notify\NotifyTemplate;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class InfoDeliveryController extends Controller
 {

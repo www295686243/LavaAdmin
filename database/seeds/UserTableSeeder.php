@@ -9,14 +9,14 @@ class UserTableSeeder extends Seeder
    */
   public function run()
   {
-    $admin = \App\Models\Admin\User::createUser([
+    $admin = \App\Models\User\User::createUser([
       'username' => 'root',
       'nickname' => 'root',
       'password' => '111111',
       'is_admin' => 1
     ]);
     $admin->assignRole('root');
-    $admin2 = \App\Models\Admin\User::createUser([
+    $admin2 = \App\Models\User\User::createUser([
       'username' => 'root2',
       'nickname' => 'root2',
       'password' => '111111',
@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
     ]);
     $admin2->assignRole('Operations Manager');
 
-    $user = \App\Models\Api\User::createUser([
+    $user = \App\Models\User\User::createUser([
       'username' => 'wanxin',
       'nickname' => '招聘者',
       'password' => '111111',
@@ -35,7 +35,7 @@ class UserTableSeeder extends Seeder
       'industry' => [17, 18],
       'city' => 440104
     ], $user->id);
-    \App\Models\Api\User::createUser([
+    \App\Models\User\User::createUser([
       'username' => 'wanxin2',
       'nickname' => '求职者',
       'password' => '111111',

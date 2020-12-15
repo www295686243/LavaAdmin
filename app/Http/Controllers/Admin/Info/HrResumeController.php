@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Info;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Info\HrResumeRequest;
-use App\Models\Admin\User;
+use App\Models\User\User;
 use App\Models\Info\Hr\HrResume;
 use Illuminate\Support\Facades\DB;
 
@@ -89,7 +89,7 @@ class HrResumeController extends Controller
   {
     $id = $request->input('id');
     $transfer_user_id = $request->input('transfer_user_id');
-    $userData = \App\Models\Api\User::find($transfer_user_id);
+    $userData = \App\Models\User\User::find($transfer_user_id);
     if (!$userData) {
       return $this->error('该用户不存在');
     }

@@ -8,12 +8,10 @@
 
 namespace App\Models\Task\Traits;
 
-use App\Models\Api\User;
 use App\Models\Coupon\CouponTemplate;
 use App\Models\Info\InfoProvide;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\Task;
-use App\Models\Task\TaskRecord;
 use App\Models\Task\TaskRule;
 use Illuminate\Support\Str;
 

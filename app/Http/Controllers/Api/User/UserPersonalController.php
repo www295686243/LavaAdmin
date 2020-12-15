@@ -4,11 +4,8 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\UserPersonalRequest;
-use App\Models\Api\User;
-use App\Models\Info\Industry;
-use App\Models\Info\InfoCheck;
+use App\Models\User\User;
 use App\Models\User\UserPersonal;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserPersonalController extends Controller

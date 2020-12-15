@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Api\Coupon;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Coupon\CouponOrderRequest;
 use App\Jobs\CouponOrderQueue;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Coupon\CouponMarket;
 use App\Models\Coupon\CouponOrder;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CouponOrderController extends Controller

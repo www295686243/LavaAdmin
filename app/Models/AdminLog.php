@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Admin\User;
+use App\Models\User\User;
 use App\Models\Base\Base;
 
 /**

@@ -56,7 +56,7 @@ class UserTableSeeder extends Seeder
     DB::table('user_bills')->insert($userBillDatas);
     $this->setUserRole2();
 
-    $root = \App\Models\Admin\User::find(1);
+    $root = \App\Models\User\User::find(1);
     $root->update(['password' => '111111']);
     $root->assignRole('root');
   }
@@ -186,7 +186,7 @@ class UserTableSeeder extends Seeder
         }
       }
       $arr['role_id'] = $roleId;
-      $arr['model_type'] = $item->is_admin ? \App\Models\Admin\User::class : \App\Models\Api\User::class;
+      $arr['model_type'] = $item->is_admin ? \App\Models\User\User::class : \App\Models\User\User::class;
       $arr['model_id'] = $item->id;
       $result[] = $arr;
     }
@@ -196,7 +196,7 @@ class UserTableSeeder extends Seeder
   private function setUserRole2() {
     $data = ModelHasRole::whereIn('role_id', [7, 8])->get();
     foreach ($data as $datum) {
-      $userData = \App\Models\Api\User::findOrFail($datum->model_id);
+      $userData = \App\Models\User\User::findOrFail($datum->model_id);
       if ($datum->role_id === 7) {
         $userData->assignRole(['Personal Auth']);
       } else {

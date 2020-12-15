@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserPersonalAuthRequest;
-use App\Models\Api\User;
+use App\Models\User\User;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\User\UserPersonal;
 use App\Models\User\UserPersonalAuth;
