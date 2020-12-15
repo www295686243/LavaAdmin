@@ -16,6 +16,7 @@ class UserController extends Controller
   {
     $data = User::searchQuery()
       ->with('roles')
+      ->where('is_admin', 0)
       ->orderByDesc('id')
       ->pagination();
     return $this->setParams($data)->success();

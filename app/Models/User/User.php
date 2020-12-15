@@ -405,12 +405,12 @@ class User extends Authenticatable
   }
 
   /**
-   * @param $guard_name
+   * @param $platform
    * @return array
    */
-  private function getAssignInterface($guard_name)
+  private function getAssignInterface($platform)
   {
-    return $this->roles()->get()->pluck('assign_'.$guard_name.'_interface')->flatten()->unique()->toArray();
+    return $this->roles()->get()->pluck('assign_'.$platform.'_interface')->flatten()->unique()->toArray();
   }
 
   /**
@@ -426,16 +426,16 @@ class User extends Authenticatable
   }
 
   /**
-   * @param $guard_name
-   * @return mixed
+   * @param $platform
+   * @return \Kalnoy\Nestedset\Collection
    */
-  public function getAssignInterfaceTree($guard_name)
+  public function getAssignInterfaceTree($platform)
   {
     if ($this->hasRoot()) {
-      return Permission::getAllPermissionTree($guard_name);
+      return Permission::getAllPermissionTree($platform);
     } else {
-      return Permission::whereIn('name', $this->getAssignInterface($guard_name))
-        ->where('guard_name', $guard_name)
+      return Permission::whereIn('name', $this->getAssignInterface($platform))
+        ->where('platform', $platform)
         ->get()
         ->toTree();
     }
@@ -459,13 +459,13 @@ class User extends Authenticatable
 
   /**
    * @param $permissions
-   * @param $guard_name
+   * @param $platform
    * @return bool
    */
-  public function checkAssignInterface($permissions, $guard_name)
+  public function checkAssignInterface($permissions, $platform)
   {
     if (!$this->hasRoot()) {
-      $assignInterface = $this->getAssignInterface($guard_name);
+      $assignInterface = $this->getAssignInterface($platform);
       $result = collect($permissions)->every(function ($value) use ($assignInterface) {
         return in_array($value, $assignInterface);
       });

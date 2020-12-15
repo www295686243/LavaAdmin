@@ -35,12 +35,10 @@ class CreatePermissionTables extends Migration
 
     Schema::create($tableNames['roles'], function (Blueprint $table) {
       $table->bigIncrements('id');
-      $table->string('name')->comment('标识');
+      $table->string('name', 60)->comment('标识');
       $table->string('display_name', 30)->comment('名称');
       $table->json('menu_permissions')->comment('栏目权限')->nullable();
       $table->json('assign_menu')->comment('可分配的栏目权限')->nullable();
-      $table->json('assign_admin_interface')->comment('可分配的后端接口权限')->nullable();
-      $table->json('assign_api_interface')->comment('可分配的前端接口权限')->nullable();
       $table->string('guard_name')->nullable();
       $table->string('platform')->comment('admin=后台，client=C端，business=B端');
       $table->timestamps();

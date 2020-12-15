@@ -18,7 +18,7 @@ class PositionController extends Controller
    */
   public function index()
   {
-    $data = Role::where('guard_name', 'admin')
+    $data = Role::where('platform', 'admin')
       ->where('name', '!=', 'root')
       ->get();
     return $this->setParams($data)->success();
@@ -32,8 +32,7 @@ class PositionController extends Controller
   {
     $Position = new Role();
     $input = $request->only($Position->getFillable());
-    $input['name'] = Str::random(10);
-    $input['guard_name'] = 'admin';
+    $input['platform'] = 'admin';
     $Position->create($input);
     return $this->success();
   }
@@ -72,7 +71,7 @@ class PositionController extends Controller
       'menus' => AdminMenu::all()->toTree(),
       'menu_permissions' => $positionData->assign_menu ?? [],
       'interface' => Permission::getAllPermissionTree('admin'),
-      'interface_permissions' => $positionData->assign_admin_interface ?? []
+      'interface_permissions' => $positionData->modelGetAssignPermissions()
     ])->success();
   }
 
@@ -87,7 +86,15 @@ class PositionController extends Controller
     $permissions = $request->input('permissions', []);
     $positionData = Role::findOrFail($id);
     $positionData->assign_menu = $menus;
-    $positionData->assign_admin_interface = $permissions;
+
+    $positionData->assign_permissions()->where('platform', 'admin')->delete();
+    $permissionIds = collect($permissions)->map(function ($permissionId) {
+      return [
+        'permission_id' => $permissionId,
+        'platform' => 'admin'
+      ];
+    })->toArray();
+    $positionData->assign_permissions()->createMany($permissionIds);
     $positionData->save();
     return $this->success();
   }

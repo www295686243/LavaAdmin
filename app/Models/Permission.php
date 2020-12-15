@@ -76,12 +76,12 @@ class Permission extends \Spatie\Permission\Models\Permission
   }
 
   /**
-   * @param $guard
-   * @return mixed
+   * @param $platform
+   * @return \Kalnoy\Nestedset\Collection
    */
-  public static function getAllPermissionTree($guard)
+  public static function getAllPermissionTree($platform)
   {
-    return self::where('guard_name', $guard)->get()->toTree();
+    return self::where('platform', $platform)->get()->toTree();
   }
 
   /**

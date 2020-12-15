@@ -16,7 +16,7 @@ class RoleController extends Controller
    */
   public function index()
   {
-    $data = Role::where('guard_name', 'api')->get();
+    $data = Role::where('platform', 'client')->get();
     return $this->setParams($data)->success();
   }
 
@@ -28,8 +28,6 @@ class RoleController extends Controller
   {
     $Role = new Role();
     $input = $request->only($Role->getFillable());
-    $input['name'] = Str::random(10);
-    $input['guard_name'] = 'api';
     $Role->create($input);
     return $this->success();
   }
@@ -66,7 +64,7 @@ class RoleController extends Controller
     $roleData = Role::findOrFail($id);
     $userData = User::getUserData();
     return $this->setParams([
-      'interface' => $userData->getAssignInterfaceTree('api'),
+      'interface' => $userData->getAssignInterfaceTree('client'),
       'interface_permissions' => $roleData->getAllPermissions()->pluck('name')
     ])->success();
   }
@@ -80,7 +78,7 @@ class RoleController extends Controller
   {
     $permissions = $request->input('permissions', []);
     $userData = User::getUserData();
-    if (!$userData->checkAssignInterface($permissions, 'api')) {
+    if (!$userData->checkAssignInterface($permissions, 'client')) {
       return $this->setStatusCode(423)->error('权限错误');
     }
     $roleData = Role::findOrFail($id);
@@ -96,8 +94,8 @@ class RoleController extends Controller
   {
     $roleData = Role::findOrFail($id);
     return $this->setParams([
-      'interface' => Permission::getAllPermissionTree('api'),
-      'interface_permissions' => $roleData->assign_api_interface ?? []
+      'interface' => Permission::getAllPermissionTree('client'),
+      'interface_permissions' => $roleData->modelGetAssignPermissions()
     ])->success();
   }
 
@@ -110,8 +108,14 @@ class RoleController extends Controller
   {
     $permissions = $request->input('permissions', []);
     $roleData = Role::findOrFail($id);
-    $roleData->assign_api_interface = $permissions;
-    $roleData->save();
+    $roleData->assign_permissions()->where('platform', 'client')->delete();
+    $permissionIds = collect($permissions)->map(function ($permissionId) {
+      return [
+        'permission_id' => $permissionId,
+        'platform' => 'client'
+      ];
+    })->toArray();
+    $roleData->assign_permissions()->createMany($permissionIds);
     return $this->success();
   }
 }

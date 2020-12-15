@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
+use App\Models\User\UserAssignPermission;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
@@ -43,8 +44,6 @@ class Role extends \Spatie\Permission\Models\Role
     'display_name',
     'menu_permissions',
     'assign_menu',
-    'assign_admin_interface',
-    'assign_api_interface',
     'guard_name',
     'platform'
   ];
@@ -56,8 +55,22 @@ class Role extends \Spatie\Permission\Models\Role
 
   protected $casts = [
     'menu_permissions' => 'array',
-    'assign_menu' => 'array',
-    'assign_admin_interface' => 'array',
-    'assign_api_interface' => 'array'
+    'assign_menu' => 'array'
   ];
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\HasMany
+   */
+  public function assign_permissions()
+  {
+    return $this->hasMany(UserAssignPermission::class);
+  }
+
+  /**
+   * @return \Illuminate\Support\Collection
+   */
+  public function modelGetAssignPermissions()
+  {
+    return $this->assign_permissions()->pluck('permission_id');
+  }
 }
