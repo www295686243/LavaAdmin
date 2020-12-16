@@ -108,15 +108,15 @@ class System extends Base {
         'display_name' => '版本控制',
         'children' => [
           [
-            'name' => 'IndustryController@index',
+            'name' => 'VersionController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'IndustryController@show',
+            'name' => 'VersionController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'IndustryController@update',
+            'name' => 'VersionController@update',
             'display_name' => '更新',
           ]
         ]

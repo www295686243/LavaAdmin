@@ -25,5 +25,6 @@ class User extends Base {
   public function __construct()
   {
     $this->data = $this->setPlatform($this->data, 'client');
+    $this->data = $this->setGuardName($this->data, null);
   }
 }

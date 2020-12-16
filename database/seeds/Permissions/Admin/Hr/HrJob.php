@@ -20,15 +20,15 @@ class HrJob extends Base {
         'display_name' => '信息审核',
         'children' => [
           [
-            'name' => 'InfoCheckController@index',
+            'name' => 'HrJobInfoCheckController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'InfoCheckController@show',
+            'name' => 'HrJobInfoCheckController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'InfoCheckController@update',
+            'name' => 'HrJobInfoCheckController@update',
             'display_name' => '更新',
           ]
         ]
@@ -76,19 +76,19 @@ class HrJob extends Base {
         'display_name' => '信息提供',
         'children' => [
           [
-            'name' => 'InfoProvideController@index',
+            'name' => 'HrJobInfoProvideController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'InfoProvideController@store',
+            'name' => 'HrJobInfoProvideController@store',
             'display_name' => '添加',
           ],
           [
-            'name' => 'InfoProvideController@show',
+            'name' => 'HrJobInfoProvideController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'InfoProvideController@update',
+            'name' => 'HrJobInfoProvideController@update',
             'display_name' => '更新',
           ]
         ]
@@ -98,15 +98,15 @@ class HrJob extends Base {
         'display_name' => '信息投诉',
         'children' => [
           [
-            'name' => 'InfoComplaintController@index',
+            'name' => 'HrJobInfoComplaintController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'InfoComplaintController@show',
+            'name' => 'HrJobInfoComplaintController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'InfoComplaintController@update',
+            'name' => 'HrJobInfoComplaintController@update',
             'display_name' => '更新',
           ]
         ]
@@ -116,7 +116,7 @@ class HrJob extends Base {
         'display_name' => '信息投递',
         'children' => [
           [
-            'name' => 'InfoDeliveryController@index',
+            'name' => 'HrJobInfoDeliveryController@index',
             'display_name' => '列表',
           ]
         ]
@@ -127,6 +127,5 @@ class HrJob extends Base {
   public function __construct()
   {
     $this->data = $this->setPlatform($this->data, 'admin');
-    $this->data = $this->setGuardName($this->data, 'HrJob');
   }
 }

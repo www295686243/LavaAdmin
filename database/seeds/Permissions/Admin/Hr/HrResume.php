@@ -20,15 +20,15 @@ class HrResume extends Base {
         'display_name' => '信息审核',
         'children' => [
           [
-            'name' => 'InfoCheckController@index',
+            'name' => 'HrResumeInfoCheckController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'InfoCheckController@show',
+            'name' => 'HrResumeInfoCheckController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'InfoCheckController@update',
+            'name' => 'HrResumeInfoCheckController@update',
             'display_name' => '更新',
           ]
         ]
@@ -38,35 +38,35 @@ class HrResume extends Base {
         'display_name' => '信息列表',
         'children' => [
           [
-            'name' => 'HrJobController@index',
+            'name' => 'HrResumeController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'HrJobController@store',
+            'name' => 'HrResumeController@store',
             'display_name' => '添加',
           ],
           [
-            'name' => 'HrJobController@show',
+            'name' => 'HrResumeController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'HrJobController@update',
+            'name' => 'HrResumeController@update',
             'display_name' => '更新',
           ],
           [
-            'name' => 'HrJobController@destroy',
+            'name' => 'HrResumeController@destroy',
             'display_name' => '删除',
           ],
           [
-            'name' => 'HrJobController@transfer',
+            'name' => 'HrResumeController@transfer',
             'display_name' => '转让',
           ],
           [
-            'name' => 'HrJobController@push',
+            'name' => 'HrResumeController@push',
             'display_name' => '推送',
           ],
           [
-            'name' => 'HrJobController@getInfoViews',
+            'name' => 'HrResumeController@getInfoViews',
             'display_name' => '访问记录',
           ]
         ]
@@ -76,19 +76,19 @@ class HrResume extends Base {
         'display_name' => '信息提供',
         'children' => [
           [
-            'name' => 'InfoProvideController@index',
+            'name' => 'HrResumeInfoProvideController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'InfoProvideController@store',
+            'name' => 'HrResumeInfoProvideController@store',
             'display_name' => '添加',
           ],
           [
-            'name' => 'InfoProvideController@show',
+            'name' => 'HrResumeInfoProvideController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'InfoProvideController@update',
+            'name' => 'HrResumeInfoProvideController@update',
             'display_name' => '更新',
           ]
         ]
@@ -98,15 +98,15 @@ class HrResume extends Base {
         'display_name' => '信息投诉',
         'children' => [
           [
-            'name' => 'InfoComplaintController@index',
+            'name' => 'HrResumeInfoComplaintController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'InfoComplaintController@show',
+            'name' => 'HrResumeInfoComplaintController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'InfoComplaintController@update',
+            'name' => 'HrResumeInfoComplaintController@update',
             'display_name' => '更新',
           ]
         ]
@@ -116,7 +116,7 @@ class HrResume extends Base {
         'display_name' => '信息投递',
         'children' => [
           [
-            'name' => 'InfoDeliveryController@index',
+            'name' => 'HrResumeInfoDeliveryController@index',
             'display_name' => '列表',
           ]
         ]
@@ -127,6 +127,5 @@ class HrResume extends Base {
   public function __construct()
   {
     $this->data = $this->setPlatform($this->data, 'admin');
-    $this->data = $this->setGuardName($this->data, 'HrResume');
   }
 }

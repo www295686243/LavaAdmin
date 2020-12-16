@@ -20,15 +20,15 @@ class Financial extends Base {
         'display_name' => '提现申请',
         'children' => [
           [
-            'name' => 'UserCashController@index',
+            'name' => 'UserCashApplyController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'UserCashController@show',
+            'name' => 'UserCashApplyController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'UserCashController@update',
+            'name' => 'UserCashApplyController@update',
             'display_name' => '更新',
           ]
         ]
@@ -38,15 +38,15 @@ class Financial extends Base {
         'display_name' => '提现审批',
         'children' => [
           [
-            'name' => 'UserCashController@index',
+            'name' => 'UserCashApprovalController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'UserCashController@show',
+            'name' => 'UserCashApprovalController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'UserCashController@update',
+            'name' => 'UserCashApprovalController@update',
             'display_name' => '更新',
           ]
         ]
