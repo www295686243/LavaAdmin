@@ -73,6 +73,7 @@ class UserTableSeeder extends Seeder
       $arr['phone'] = $item->phone;
       $arr['head_url'] = $item->head_url;
       $arr['city'] = $item->city;
+      $arr['current_role'] = 'Personal Member';
       $arr['is_follow_official_account'] = $item->is_follow_official_account;
       $arr['follow_official_account_scene'] = $item->follow_official_account_scene;
       $arr['is_admin'] = $item->is_admin;
@@ -173,12 +174,12 @@ class UserTableSeeder extends Seeder
     $result = [];
     $arr = [];
     foreach ($data as $item) {
-      $roleId = 8;
+      $roleId = 9;
       if ($item->is_admin) {
         if (in_array($item->id, [136, 878, 5412, 10363, 12198])) {
-          $roleId = 6;
+          $roleId = 5;
         } else if (in_array($item->id, [6364, 11154])) {
-          $roleId = 4;
+          $roleId = 3;
         } else if ($item->id === 1) {
           $roleId = 1;
         } else if ($item->id === 2) {
@@ -201,6 +202,8 @@ class UserTableSeeder extends Seeder
         $userData->assignRole(['Personal Auth']);
       } else {
         $userData->assignRole(['Enterprise Member', 'Enterprise Auth']);
+        $userData->current_role = 'Enterprise Member';
+        $userData->save();
       }
     }
   }
