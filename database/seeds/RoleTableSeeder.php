@@ -63,37 +63,37 @@ class RoleTableSeeder extends Seeder
       [
         'name' => 'Personal Member',
         'display_name' => '个人会员',
-        'platform' => 'client'
+        'platform' => 'api'
       ],
       [
         'name' => 'Enterprise Member',
         'display_name' => '企业会员',
-        'platform' => 'client'
+        'platform' => 'api'
       ],
       [
         'name' => 'Personal Auth',
         'display_name' => '个人认证',
-        'platform' => 'client'
+        'platform' => 'api'
       ],
       [
         'name' => 'Enterprise Auth',
         'display_name' => '企业认证',
-        'platform' => 'client'
+        'platform' => 'api'
       ],
       [
         'name' => 'VIP1 Member',
         'display_name' => 'VIP1',
-        'platform' => 'client'
+        'platform' => 'api'
       ],
       [
         'name' => 'VIP2 Member',
         'display_name' => 'VIP2',
-        'platform' => 'client'
+        'platform' => 'api'
       ],
       [
         'name' => 'VIP3 Member',
         'display_name' => 'VIP3',
-        'platform' => 'client'
+        'platform' => 'api'
       ]
     ];
 

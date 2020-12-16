@@ -308,14 +308,6 @@ class User extends Authenticatable
   }
 
   /**
-   * @return string
-   */
-  public function getPrefix()
-  {
-    return Str::beforeLast(request()->route()->getPrefix(), '/');
-  }
-
-  /**
    * @return bool
    */
   public function hasRoot()

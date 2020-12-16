@@ -13,6 +13,7 @@ use App\Models\Info\Hr\HrJob;
 use App\Models\Info\Hr\HrResume;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
+use App\Models\User\User;
 use App\Services\SearchQueryService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
@@ -60,7 +61,7 @@ class Base extends Model {
   public function scopeListQuery($query)
   {
     return $query->when($this->checkMyself(), function ($query) {
-      return $query->where('user_id', auth($this->getPrefix())->id());
+      return $query->where('user_id', User::getUserId());
     })->searchQuery($query);
   }
 
@@ -136,7 +137,7 @@ class Base extends Model {
    */
   public static function findOrAuth($id)
   {
-    $userData = auth((new self())->getPrefix())->user();
+    $userData = User::getUserData();
     $data = static::findOrFail($id);
     $_this = new self();
     if ($_this->checkMyself() && $userData->id !== $data->user_id) {
@@ -152,7 +153,7 @@ class Base extends Model {
     /**
      * @var User $userData
      */
-    $userData = auth($this->getPrefix())->user();
+    $userData = User::getUserData();
     if (!$userData->hasRole('root')) {
       list($controllerName, $methodName) = explode('@', class_basename(request()->route()->getActionName()));
       if (in_array($methodName, ['index', 'show', 'update', 'destroy']) && $userData->can($controllerName.'@_myself')) {
@@ -267,14 +268,6 @@ class Base extends Model {
   public static function getStatusLabel($value)
   {
     return static::getOptionsLabel('status', $value);
-  }
-
-  /**
-   * @return string
-   */
-  public function getPrefix()
-  {
-    return Str::beforeLast(request()->route()->getPrefix(), '/');
   }
 
   /**

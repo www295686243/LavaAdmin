@@ -18,7 +18,7 @@ class PermissionTableSeeder extends Seeder
       (new \Database\Seeders\Permissions\Admin\User())->get(),
       (new \Database\Seeders\Permissions\Admin\Financial())->get(),
       (new \Database\Seeders\Permissions\Admin\Other())->get(),
-      (new \Database\Seeders\Permissions\Client\User())->get(),
+      (new \Database\Seeders\Permissions\Api\User())->get(),
     ];
     \App\Models\Permission::rebuildTree($data);
   }

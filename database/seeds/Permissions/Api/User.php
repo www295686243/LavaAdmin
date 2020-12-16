@@ -6,7 +6,7 @@
  * Time: 20:11
  */
 
-namespace Database\Seeders\Permissions\Client;
+namespace Database\Seeders\Permissions\Api;
 
 use Database\Seeders\Permissions\Base;
 
@@ -24,7 +24,7 @@ class User extends Base {
 
   public function __construct()
   {
-    $this->data = $this->setPlatform($this->data, 'client');
+    $this->data = $this->setPlatform($this->data, 'api');
     $this->data = $this->setGuardName($this->data, null);
   }
 }

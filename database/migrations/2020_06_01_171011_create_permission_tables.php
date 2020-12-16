@@ -23,7 +23,7 @@ class CreatePermissionTables extends Migration
       $table->string('name')->comment('标识');
       $table->string('display_name', 30)->comment('名称');
       $table->unsignedTinyInteger('sort')->comment('排序')->nullable();
-      $table->string('platform')->comment('admin=后台，client=C端，business=B端');
+      $table->string('platform')->comment('admin=后台，api=C端，business=B端');
       $table->string('guard_name')->nullable();
       $table->unsignedInteger('_lft')->default(0);
       $table->unsignedInteger('_rgt')->default(0);
@@ -40,7 +40,7 @@ class CreatePermissionTables extends Migration
       $table->json('menu_permissions')->comment('栏目权限')->nullable();
       $table->json('assign_menu')->comment('可分配的栏目权限')->nullable();
       $table->string('guard_name')->nullable();
-      $table->string('platform')->comment('admin=后台，client=C端，business=B端');
+      $table->string('platform')->comment('admin=后台，api=C端，business=B端');
       $table->unsignedInteger('_lft')->default(0);
       $table->unsignedInteger('_rgt')->default(0);
       $table->unsignedBigInteger('parent_id')->nullable();
