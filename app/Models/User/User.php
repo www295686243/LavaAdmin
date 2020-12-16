@@ -406,11 +406,15 @@ class User extends Authenticatable
 
   /**
    * @param $platform
-   * @return array
+   * @return mixed
    */
   private function getAssignInterface($platform)
   {
-    return $this->roles()->get()->pluck('assign_'.$platform.'_interface')->flatten()->unique()->toArray();
+    $roleIds = $this->roles()->pluck('id');
+    $permissionIds = UserAssignPermission::whereIn('role_id', $roleIds)
+      ->where('platform', $platform)
+      ->pluck('permission_id');
+    return Permission::whereIn('id', $permissionIds)->pluck('name')->toArray();
   }
 
   /**

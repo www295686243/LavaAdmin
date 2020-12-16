@@ -70,7 +70,7 @@ class AdminLog extends Base
     if ($user && $method !== 'GET') {
       self::create([
         'user_id' => $user->id,
-        'nickname' => $user->nickname,
+        'nickname' => optional($user)->nickname ?: optional($user)->username,
         'name' => class_basename(request()->route()->getActionName()),
         'method' => $method,
         'path' => request()->getPathInfo(),

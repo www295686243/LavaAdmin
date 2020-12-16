@@ -20,23 +20,23 @@ class System extends Base {
         'display_name' => '参数配置',
         'children' => [
           [
-            'name' => 'ConfigController@index',
+            'name' => 'ParamsConfigController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'ConfigController@store',
+            'name' => 'ParamsConfigController@store',
             'display_name' => '添加',
           ],
           [
-            'name' => 'ConfigController@show',
+            'name' => 'ParamsConfigController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'ConfigController@update',
+            'name' => 'ParamsConfigController@update',
             'display_name' => '更新',
           ],
           [
-            'name' => 'ConfigController@destroy',
+            'name' => 'ParamsConfigController@destroy',
             'display_name' => '删除',
           ]
         ]
@@ -46,23 +46,23 @@ class System extends Base {
         'display_name' => '选项配置',
         'children' => [
           [
-            'name' => 'ConfigController@index',
+            'name' => 'OptionsConfigController@index',
             'display_name' => '列表',
           ],
           [
-            'name' => 'ConfigController@store',
+            'name' => 'OptionsConfigController@store',
             'display_name' => '添加',
           ],
           [
-            'name' => 'ConfigController@show',
+            'name' => 'OptionsConfigController@show',
             'display_name' => '详情',
           ],
           [
-            'name' => 'ConfigController@update',
+            'name' => 'OptionsConfigController@update',
             'display_name' => '更新',
           ],
           [
-            'name' => 'ConfigController@destroy',
+            'name' => 'OptionsConfigController@destroy',
             'display_name' => '删除',
           ]
         ]

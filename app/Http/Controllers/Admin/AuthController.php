@@ -22,15 +22,6 @@ class AuthController extends Controller
   }
 
   /**
-   * 只为了登陆埋点
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function loginStat()
-  {
-    return $this->success('登陆成功');
-  }
-
-  /**
    * @return \Illuminate\Http\JsonResponse
    */
   public function getUserConfig()

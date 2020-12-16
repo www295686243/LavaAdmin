@@ -22,6 +22,8 @@ use App\Http\Controllers\Admin\Info\IndustryController;
 use App\Http\Controllers\Admin\Notify\NotifyController;
 use App\Http\Controllers\Admin\Notify\NotifyTemplateController;
 use App\Http\Controllers\Admin\Notify\NotifyUserController;
+use App\Http\Controllers\Admin\System\OptionsConfigController;
+use App\Http\Controllers\Admin\System\ParamsConfigController;
 use App\Http\Controllers\Admin\Task\TaskController;
 use App\Http\Controllers\Admin\Task\TaskRecordController;
 use App\Http\Controllers\Admin\Task\TaskRuleController;
@@ -54,12 +56,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('auth/login', [AuthController::class, 'login']);
-Route::post('auth/loginStat', [AuthController::class, 'loginStat']);
 Route::get('app/getAppConfig', [AppController::class, 'getAppConfig']);
 Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::get('auth/getUserConfig', [AuthController::class, 'getUserConfig']);
   // 系统配置
-  Route::apiResource('config', ConfigController::class);
+  Route::apiResource('params_config', ParamsConfigController::class);
+  Route::apiResource('options_config', OptionsConfigController::class);
   Route::apiResource('config_option', ConfigOptionController::class);
   // 后台日志
   Route::apiResource('admin_log', AdminLogController::class)->only(['index']);
