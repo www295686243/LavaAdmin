@@ -22,7 +22,7 @@ class UserTableSeeder extends Seeder
       'password' => '111111',
       'is_admin' => 1
     ]);
-    $admin2->assignRole('Operations Manager');
+    $admin2->assignRole(['Operations Manager', 'Technical Manager']);
 
     $user = \App\Models\User\User::createUser([
       'username' => 'wanxin',

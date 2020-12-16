@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\IdToStrTrait;
 use App\Models\Traits\ResourceTrait;
 use App\Models\User\UserAssignPermission;
+use Kalnoy\Nestedset\NodeTrait;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
 /**
@@ -37,7 +38,7 @@ use Kra8\Snowflake\HasSnowflakePrimary;
  */
 class Role extends \Spatie\Permission\Models\Role
 {
-  use ResourceTrait;
+  use ResourceTrait, NodeTrait;
 
   protected $fillable = [
     'name',

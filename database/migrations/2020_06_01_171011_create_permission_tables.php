@@ -41,7 +41,12 @@ class CreatePermissionTables extends Migration
       $table->json('assign_menu')->comment('可分配的栏目权限')->nullable();
       $table->string('guard_name')->nullable();
       $table->string('platform')->comment('admin=后台，client=C端，business=B端');
+      $table->unsignedInteger('_lft')->default(0);
+      $table->unsignedInteger('_rgt')->default(0);
+      $table->unsignedBigInteger('parent_id')->nullable();
       $table->timestamps();
+
+      $table->index(['_lft', '_rgt', 'parent_id']);
     });
 
     Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {

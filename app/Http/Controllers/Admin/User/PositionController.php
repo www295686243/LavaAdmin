@@ -18,9 +18,15 @@ class PositionController extends Controller
    */
   public function index()
   {
-    $data = Role::where('platform', 'admin')
-      ->where('name', '!=', 'root')
-      ->get();
+    $userData = User::getUserData();
+    if ($userData->hasRoot()) {
+      $roleData = Role::findOrFail(1);
+      $data = $roleData->descendants()->get()->toTree();
+    } else {
+      $data = $userData->roles()->get()->map(function ($roleData) {
+        return $roleData->descendants()->get()->toTree();
+      })->flatten()->toArray();
+    }
     return $this->setParams($data)->success();
   }
 

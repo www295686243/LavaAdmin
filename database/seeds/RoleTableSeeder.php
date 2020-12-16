@@ -15,39 +15,50 @@ class RoleTableSeeder extends Seeder
       [
         'name' => 'root',
         'display_name' => 'Root',
-        'platform' => 'admin'
-      ],
-      [
-        'name' => 'Operations Manager',
-        'display_name' => '运营经理',
-        'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
-        'platform' => 'admin'
-      ],
-      [
-        'name' => 'Technical Manager',
-        'display_name' => '技术经理',
-        'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
-        'platform' => 'admin'
-      ],
-      [
-        'name' => 'Customer service Specialist',
-        'display_name' => '客服专员',
-        'platform' => 'admin'
-      ],
-      [
-        'name' => 'Operation Specialist',
-        'display_name' => '运营专员',
-        'platform' => 'admin'
-      ],
-      [
-        'name' => 'Information Specialist',
-        'display_name' => '信息专员',
-        'platform' => 'admin'
-      ],
-      [
-        'name' => 'Finance Specialist',
-        'display_name' => '财务专员',
-        'platform' => 'admin'
+        'platform' => 'admin',
+        'children' => [
+          [
+            'name' => 'Operations Manager',
+            'display_name' => '运营经理',
+            'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
+            'platform' => 'admin',
+            'children' => [
+              [
+                'name' => 'Customer service Specialist',
+                'display_name' => '客服专员',
+                'platform' => 'admin'
+              ],
+              [
+                'name' => 'Operation Specialist',
+                'display_name' => '运营专员',
+                'platform' => 'admin'
+              ],
+              [
+                'name' => 'Information Specialist',
+                'display_name' => '信息专员',
+                'platform' => 'admin'
+              ],
+              [
+                'name' => 'Finance Specialist',
+                'display_name' => '财务专员',
+                'platform' => 'admin'
+              ]
+            ]
+          ],
+          [
+            'name' => 'Technical Manager',
+            'display_name' => '技术经理',
+            'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
+            'platform' => 'admin',
+            'children' => [
+              [
+                'name' => 'Technical Assistant',
+                'display_name' => '技术助理',
+                'platform' => 'admin'
+              ]
+            ]
+          ]
+        ]
       ],
       [
         'name' => 'Personal Member',
@@ -86,11 +97,6 @@ class RoleTableSeeder extends Seeder
       ]
     ];
 
-    foreach ($data as $datum) {
-      $role = \App\Models\Role::create($datum);
-      if ($role->display_name === '普通会员') {
-        $role->syncPermissions(\App\Models\Permission::where('platform', 'api')->pluck('name'));
-      }
-    }
+    \App\Models\Role::rebuildTree($data);
   }
 }
