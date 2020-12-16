@@ -32,8 +32,8 @@ class HrJobController extends Controller
     $input['user_id'] = User::getUserId();
     $input['admin_user_id'] = User::getUserId();
     return DB::transaction(function () use ($input) {
-      (new HrJob())->createOrUpdateData($input);
-      return $this->success();
+      $id = (new HrJob())->createOrUpdateData($input);
+      return $this->setParams(['id' => $id])->success();
     });
   }
 

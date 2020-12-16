@@ -32,8 +32,8 @@ class HrResumeController extends Controller
     $input['user_id'] = User::getUserId();
     $input['admin_user_id'] = User::getUserId();
     return DB::transaction(function () use ($input) {
-      (new HrResume())->createOrUpdateData($input);
-      return $this->success();
+      $id = (new HrResume())->createOrUpdateData($input);
+      return $this->setParams(['id' => $id])->success();
     });
   }
 
