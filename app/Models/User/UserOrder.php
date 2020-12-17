@@ -196,7 +196,8 @@ class UserOrder extends Base
    * @return string
    */
   private function getNotifyUrl () {
-    $snakeType = Str::of($this->user_orderable_type)->basename()->snake();
+    $className = class_basename($this->user_orderable_type);
+    $snakeType = Str::snake($className);
     \Log::info(env('APP_URL').'/api/'.$snakeType.'/pay_callback');
     return env('APP_URL').'/api/'.$snakeType.'/pay_callback';
   }
