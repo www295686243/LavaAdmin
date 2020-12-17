@@ -171,6 +171,9 @@ class UserOrder extends Base
    */
   public function modelGetPayConfig()
   {
+    if (env('APP_ENV') === 'dev') {
+      return [];
+    }
     $userAuthData = UserAuth::where('user_id', $this->user_id)->first();
     if (!$userAuthData || !$userAuthData->wx_openid) {
       throw new \Exception('openid不存在');
@@ -179,7 +182,8 @@ class UserOrder extends Base
     $order = $app->order->unify([
       'body' => '查看联系方式',
       'out_trade_no' => $this->id,
-      'total_fee' => $this->total_amount * 100,
+      'total_fee' => 1,
+//      'total_fee' => $this->total_amount * 100,
       'trade_type' => 'JSAPI',
       'openid' => $userAuthData->wx_openid,
       'notify_url' => $this->getNotifyUrl()
