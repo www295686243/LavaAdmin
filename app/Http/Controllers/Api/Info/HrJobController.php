@@ -91,11 +91,11 @@ class HrJobController extends Controller
 
   /**
    * @param HrJobRequest $request
-   * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
-  public function authShow(HrJobRequest $request, $id)
+  public function authShow(HrJobRequest $request)
   {
+    $id = $request->input('id');
     $check = $request->input('_check');
     if ($check) {
       $infoCheckData = InfoCheck::findOrAuth($id);

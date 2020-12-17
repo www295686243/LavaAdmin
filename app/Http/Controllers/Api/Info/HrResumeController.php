@@ -93,11 +93,11 @@ class HrResumeController extends Controller
 
   /**
    * @param HrResumeRequest $request
-   * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
-  public function authShow(HrResumeRequest $request, $id)
+  public function authShow(HrResumeRequest $request)
   {
+    $id = $request->input('id');
     $check = $request->input('_check');
     if ($check) {
       $infoCheckData = InfoCheck::findOrAuth($id);

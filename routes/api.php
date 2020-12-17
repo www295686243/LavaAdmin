@@ -80,7 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('hr_job/isComplaint', [HrJobController::class, 'isComplaint']);
   Route::post('hr_job/complaint', [HrJobController::class, 'complaint']);
   Route::get('hr_job/authIndex', [HrJobController::class, 'authIndex']);
-  Route::get('hr_job/authShow', [HrJobController::class, 'authIndex']);
+  Route::get('hr_job/authShow', [HrJobController::class, 'authShow']);
   Route::get('hr_job/getUsableCoupon', [HrJobController::class, 'getUsableCoupon']);
   Route::get('hr_job/checkIndex', [HrJobController::class, 'checkIndex']);
   Route::get('hr_job/recommendList', [HrJobController::class, 'recommendList']);
@@ -94,7 +94,7 @@ Route::middleware('auth:sanctum')->group(function () {
   Route::get('hr_resume/isComplaint', [HrResumeController::class, 'isComplaint']);
   Route::post('hr_resume/complaint', [HrResumeController::class, 'complaint']);
   Route::get('hr_resume/authIndex', [HrResumeController::class, 'authIndex']);
-  Route::get('hr_resume/authShow', [HrResumeController::class, 'authIndex']);
+  Route::get('hr_resume/authShow', [HrResumeController::class, 'authShow']);
   Route::get('hr_resume/getUsableCoupon', [HrResumeController::class, 'getUsableCoupon']);
   Route::get('hr_resume/checkIndex', [HrResumeController::class, 'checkIndex']);
   Route::get('hr_resume/recommendList', [HrResumeController::class, 'recommendList']);
