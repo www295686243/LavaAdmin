@@ -8,7 +8,6 @@
 
 namespace App\Models\Task\Traits;
 
-use App\Models\User\User;
 use App\Models\Coupon\CouponTemplate;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\Task;
@@ -27,7 +26,7 @@ trait InviteUserTaskTraits {
     if (!$taskRecordData) {
       $taskData = Task::findOrFail(8);
       $taskRecordData = TaskRecord::create([
-        'user_id' => User::getUserId(),
+        'user_id' => $this->invite_user_id,
         'task_id' => $taskData->id,
         'title' => $taskData->title,
         'task_type' => $taskData->task_type

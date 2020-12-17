@@ -8,7 +8,6 @@
 
 namespace App\Models\Task\Traits;
 
-use App\Models\User\User;
 use App\Models\Coupon\CouponTemplate;
 use App\Models\Info\Hr\HrResume;
 use App\Models\Notify\NotifyTemplate;
@@ -28,7 +27,7 @@ trait PersonalEveryDayLoginTaskTraits {
     if (!$taskRecordData) {
       $taskData = Task::findOrFail(6);
       $taskRecordData = TaskRecord::create([
-        'user_id' => User::getUserId(),
+        'user_id' => $this->id,
         'task_id' => $taskData->id,
         'title' => $taskData->title,
         'task_type' => $taskData->task_type

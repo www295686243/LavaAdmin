@@ -12,7 +12,6 @@ use App\Models\Coupon\CouponTemplate;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\Task;
 use App\Models\Task\TaskRule;
-use App\Models\Task\TaskRecord;
 
 trait ShareTaskTraits {
   private function getShareMainTask () {

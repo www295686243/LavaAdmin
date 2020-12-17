@@ -8,7 +8,6 @@
 
 namespace App\Models\Task\Traits;
 
-use App\Models\User\User;
 use App\Models\Coupon\CouponTemplate;
 use App\Models\Notify\NotifyTemplate;
 use App\Models\Task\Task;
@@ -19,13 +18,13 @@ trait BindPhoneTaskTraits {
   private function getBindPhoneMainTask()
   {
     $taskData = Task::findOrFail(3);
-    $taskRecordData = TaskRecord::where('user_id', User::getUserId())
+    $taskRecordData = TaskRecord::where('user_id', $this->id)
       ->where('task_id', $taskData->id)
       ->first();
     if ($taskRecordData && $taskRecordData->is_complete) return null;
     if (!$taskRecordData) {
       $taskRecordData = TaskRecord::create([
-        'user_id' => User::getUserId(),
+        'user_id' => $this->id,
         'task_id' => $taskData->id,
         'title' => $taskData->title,
         'task_type' => $taskData->task_type
