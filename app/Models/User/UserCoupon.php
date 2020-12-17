@@ -54,6 +54,9 @@ class UserCoupon extends Base
     $userCouponData = null;
     if ($user_coupon_id) {
       $userCouponData = self::findOrFail($user_coupon_id);
+      if ($userCouponData->coupon_status === UserCoupon::getCouponStatusValue(2, '已使用')) {
+        $this->error('优惠券状态错误!');
+      }
       $userCouponData->checkExpired();
       $userCouponData->coupon_status = UserCoupon::getCouponStatusValue(2, '已使用');
       $userCouponData->save();
@@ -64,7 +67,7 @@ class UserCoupon extends Base
   /**
    * @return bool
    */
-  private function checkExpired()
+  public function checkExpired()
   {
     $currentDate = date('Y-m-d H:i:s');
     if ($this->start_at > $currentDate) {
