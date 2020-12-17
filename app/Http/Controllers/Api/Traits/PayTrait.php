@@ -19,6 +19,7 @@ trait PayTrait
    */
   public function payCallback()
   {
+    \Log::info('进入支付回调');
     $app = app('wechat.payment');
     return $app->handlePaidNotify(function ($res, $fail) {
       $orderId = $res['out_trade_no'];
