@@ -98,9 +98,11 @@ class CouponOrderController extends Controller
    */
   public function payCallback()
   {
+    \Log::info(123);
     $app = app('wechat.payment');
     return $app->handlePaidNotify(function ($res, $fail) {
       $couponOrderId = $res['out_trade_no'];
+      \Log::info($couponOrderId);
       if ($res['return_code'] !== 'SUCCESS') {
         return $fail('通信失败');
       }
