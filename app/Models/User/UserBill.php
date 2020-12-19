@@ -8,7 +8,8 @@ class UserBill extends Base
 {
   protected $fillable = [
     'user_id',
-    'user_order_id',
+    'user_billable_type',
+    'user_billable_id',
     'total_amount',
     'cash_amount',
     'balance_amount',
@@ -21,6 +22,7 @@ class UserBill extends Base
     'cash_amount' => 'float',
     'balance_amount' => 'float',
     'coupon_amount' => 'float',
+    'user_billable_id' => 'string'
   ];
 
   /**
@@ -29,5 +31,13 @@ class UserBill extends Base
   public function user()
   {
     return $this->belongsTo(User::class);
+  }
+
+  /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+   */
+  public function user_billable()
+  {
+    return $this->morphTo();
   }
 }

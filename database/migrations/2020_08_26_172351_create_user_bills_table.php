@@ -16,7 +16,8 @@ class CreateUserBillsTable extends Migration
     Schema::create('user_bills', function (Blueprint $table) {
       $table->id();
       $table->unsignedBigInteger('user_id');
-      $table->unsignedBigInteger('user_order_id')->nullable();
+      $table->string('user_billable_type', 120)->nullable();
+      $table->unsignedBigInteger('user_billable_id')->nullable();
       $table->decimal('total_amount', 7,2 )->comment('总支付金额')->nullable();
       $table->decimal('cash_amount', 7, 2)->comment('现金金额')->nullable();
       $table->decimal('balance_amount', 7, 2)->comment('余额金额')->nullable();
@@ -25,7 +26,7 @@ class CreateUserBillsTable extends Migration
       $table->timestamps();
 
       $table->index('user_id');
-      $table->index('user_order_id');
+      $table->index('user_billable_id');
     });
   }
 

@@ -41,6 +41,14 @@ class CouponOrder extends Base
   }
 
   /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function user_bill()
+  {
+    return $this->morphMany(UserBill::class, 'user_billable');
+  }
+
+  /**
    * @param \Illuminate\Support\Collection $couponMarketList
    * @return CouponOrder|\Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
    */
@@ -127,11 +135,10 @@ class CouponOrder extends Base
    * @param $desc
    * @return UserBill|\Illuminate\Database\Eloquent\Model
    */
-  public function createUserBill($desc)
+  public function modelCreateUserBill($desc)
   {
-    return UserBill::create([
+    return $this->user_bill()->create([
       'user_id' => $this->user_id,
-      'user_order_id' => $this->id,
       'total_amount' => -$this->total_amount,
       'cash_amount' => -$this->total_amount,
       'desc' => $desc
@@ -141,7 +148,7 @@ class CouponOrder extends Base
   public function actionAfterPay()
   {
     // 购买人账单
-    $this->createUserBill('通用券购买');
+    $this->modelCreateUserBill('通用券购买');
     // 创建优惠券给购买人
     $couponOrderSubList = $this->coupon_order_sub()->with('user_coupon')->get();
     $couponSql = $couponOrderSubList->map(function ($couponOrderSubData) {

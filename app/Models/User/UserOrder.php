@@ -55,14 +55,21 @@ class UserOrder extends Base
   }
 
   /**
+   * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+   */
+  public function user_bill()
+  {
+    return $this->morphMany(UserBill::class, 'user_billable');
+  }
+
+  /**
    * @param $desc
    * @return UserBill|\Illuminate\Database\Eloquent\Model
    */
   public function createUserBill($desc)
   {
-    return UserBill::create([
+    return $this->user_bill()->create([
       'user_id' => $this->user_id,
-      'user_order_id' => $this->id,
       'total_amount' => -$this->total_amount,
       'cash_amount' => -$this->cash_amount,
       'balance_amount' => -$this->balance_amount,
