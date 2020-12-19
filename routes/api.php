@@ -125,3 +125,4 @@ Route::middleware('auth:sanctum')->group(function () {
 // 支付回调 为了在chart表中区别是支付哪些信息类型的
 Route::any('hr_job/pay_callback', [HrJobController::class, 'payCallback']);
 Route::any('hr_resume/pay_callback', [HrResumeController::class, 'payCallback']);
+Route::any('coupon_market_pay_callback', [CouponOrderController::class, 'payCallback']);
