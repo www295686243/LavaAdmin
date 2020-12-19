@@ -134,7 +134,7 @@ class CouponOrderController extends Controller
         return true;
       } catch (\Exception $e) {
         DB::rollBack();
-        \Log::error($e->getMessage());
+        \Log::error($e->getTraceAsString());
         return $fail($e->getMessage());
       }
     });

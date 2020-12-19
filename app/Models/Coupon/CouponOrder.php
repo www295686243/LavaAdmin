@@ -194,12 +194,12 @@ class CouponOrder extends Base
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s')
       ];
-      $sellUserData = UserWallet::where('user_id', $couponMarketData->sell_user_id)->first();
-      if ($sellUserData) {
-        $sellUserData->increment('money', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
-        $sellUserData->increment('total_earning', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
-        NotifyTemplate::send(37, '互助券出售成功通知', $sellUserData, [
-          'nickname' => $sellUserData->nickname,
+      $sellUserWalletData = UserWallet::where('user_id', $couponMarketData->sell_user_id)->first();
+      if ($sellUserWalletData) {
+        $sellUserWalletData->increment('money', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
+        $sellUserWalletData->increment('total_earning', $couponMarketData->amount - ($couponMarketData->amount * 0.1));
+        NotifyTemplate::send(37, '互助券出售成功通知', $couponMarketData->sell_user_id, [
+          'nickname' => optional($couponMarketData->sell_user)->nickname,
           'couponFullName' => $couponMarketData->user_coupon->amount.'元'.$couponMarketData->user_coupon->display_name,
           'couponName' => $couponMarketData->user_coupon->display_name,
           'amount' => $couponMarketData->amount.'元',
