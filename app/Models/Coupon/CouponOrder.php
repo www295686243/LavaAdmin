@@ -186,6 +186,8 @@ class CouponOrder extends Base
       $userBillSql[] = [
         'id' => app(Snowflake::class)->next(),
         'user_id' => $couponMarketData->sell_user_id,
+        'user_billable_type' => self::class,
+        'user_billable_id' => $this->id,
         'total_amount' => $couponMarketData->amount,
         'cash_amount' => $couponMarketData->amount,
         'desc' => $couponMarketData->user_coupon->amount.'元'.$couponMarketData->user_coupon->display_name.'出售',
@@ -195,6 +197,8 @@ class CouponOrder extends Base
       $userBillSql[] = [
         'id' => app(Snowflake::class)->next(),
         'user_id' => $couponMarketData->sell_user_id,
+        'user_billable_type' => self::class,
+        'user_billable_id' => $this->id,
         'total_amount' => -($couponMarketData->amount * 0.1),
         'cash_amount' => -($couponMarketData->amount * 0.1),
         'desc' => '手续费10%',
