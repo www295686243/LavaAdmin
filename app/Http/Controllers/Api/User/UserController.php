@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\UserRequest;
+use App\Models\Info\Hr\HrJob;
 use App\Models\User\User;
 use App\Models\SmsCaptcha;
 use App\Models\User\UserBill;
@@ -87,13 +88,14 @@ class UserController extends Controller
 
   /**
    * @param UserRequest $request
-   * @return \Illuminate\Http\JsonResponse
-   * @throws \Exception
+   * @return \Illuminate\Http\JsonResponse|mixed
+   * @throws \Throwable
    */
   public function bindPhone(UserRequest $request)
   {
     $phone = $request->input('phone');
     $code = $request->input('code');
+    $isForce = $request->input('is_force', 0);
 
     $userData = User::getUserData();
     $SmsCaptcha = new SmsCaptcha();
@@ -101,37 +103,65 @@ class UserController extends Controller
       return $this->error('您已经绑定过手机号了');
     }
     // 验证这个手机号是否绑定过
-    (new User())->checkIsBindPhone($phone);
-    // 验证短信验证码
-    $SmsCaptcha->checkSmsCaptcha($phone, $code, array_search('绑定手机号', $SmsCaptcha->TYPE));
-    $userData->phone = $phone;
-    if (!$userData->register_at) {
-      $userData->register_at = date('Y-m-d H:i:s');
+    if (!$isForce) {
+      (new User())->checkIsBindPhone($phone);
     }
-    $userData->save();
-    $userData->checkBindPhoneFinishTask();
-    return $this->success('绑定成功');
+    // 验证短信验证码
+    return DB::transaction(function () use ($SmsCaptcha, $phone, $code, $userData, $isForce) {
+      $SmsCaptcha->checkSmsCaptcha($phone, $code, array_search('绑定手机号', $SmsCaptcha->TYPE));
+      // 如果要强制绑定，则将之前绑的手机号账户phone字段为null
+      if ($isForce) {
+        $phoneUserData = User::where('phone', $phone)->first();
+        if ($phoneUserData) {
+          $phoneUserData->phone = null;
+          $phoneUserData->save();
+        }
+      }
+      $userData->phone = $phone;
+      if (!$userData->register_at) {
+        $userData->register_at = date('Y-m-d H:i:s');
+      }
+      $userData->save();
+      $userData->checkBindPhoneFinishTask();
+      // 如果招聘的联系方式与绑定的手机号一样 则将信息归属到他名下
+      HrJob::where('phone', $phone)->update(['user_id' => $userData->id]);
+      return $this->success('绑定成功');
+    });
   }
 
   /**
    * @param UserRequest $request
-   * @return \Illuminate\Http\JsonResponse
+   * @return mixed
+   * @throws \Throwable
    */
   public function updatePhone(UserRequest $request)
   {
     $phone = $request->input('phone');
     $code = $request->input('code');
+    $isForce = $request->input('is_force', 0);
     $userData = User::getUserData();
     $SmsCaptcha = new SmsCaptcha();
     // 判断是否验证过修改前的手机号
     $SmsCaptcha->isCheckedCurrentPhone($userData->phone);
-    // 验证这个手机号是否绑定过
-    (new User())->checkIsBindPhone($phone);
-    // 验证短信验证码
-    $SmsCaptcha->checkSmsCaptcha($phone, $code, array_search('更新手机号', $SmsCaptcha->TYPE));
-    $userData->phone = $phone;
-    $userData->save();
-    return $this->success('修改成功');
+    return DB::transaction(function () use ($SmsCaptcha, $phone, $code, $userData, $isForce) {
+      // 验证这个手机号是否绑定过
+      if (!$isForce) {
+        (new User())->checkIsBindPhone($phone);
+      }
+      // 验证短信验证码
+      $SmsCaptcha->checkSmsCaptcha($phone, $code, array_search('更新手机号', $SmsCaptcha->TYPE));
+      // 如果要强制绑定，则将之前绑的手机号账户phone字段为null
+      if ($isForce) {
+        $phoneUserData = User::where('phone', $phone)->first();
+        if ($phoneUserData) {
+          $phoneUserData->phone = null;
+          $phoneUserData->save();
+        }
+      }
+      $userData->phone = $phone;
+      $userData->save();
+      return $this->success('修改成功');
+    });
   }
 
   /**

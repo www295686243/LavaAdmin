@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\Base;
+use App\Models\User\User;
 use Illuminate\Support\Carbon;
 use Overtrue\EasySms\EasySms;
 
@@ -143,7 +144,7 @@ class SmsCaptcha extends Base
    */
   public function getSmsModel($phone, $typeName)
   {
-    $sms = $this->where('user_id', auth()->id())
+    $sms = $this->where('user_id', User::getUserId())
       ->where('phone', $phone)
       ->where('created_at', '>', $this->getValidTime())
       ->where('type_name', $typeName)

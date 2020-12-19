@@ -384,8 +384,9 @@ class User extends Authenticatable
   {
     $phoneUser = self::where('phone', $phone)->first();
     // 如果该手机号已绑定别的账户
-    if ($phoneUser && $phoneUser->id !== auth()->id()) {
-      $this->error('该手机号已被其它账户绑定');
+    if ($phoneUser && $phoneUser->id !== User::getUserId()) {
+      // 前端会根据force-bind 来弹出confirm 确认是否强制绑定
+      $this->setStatus('force-bind')->error('该手机号已经绑定其它微信，是否换绑为当前微信');
     }
   }
 
