@@ -171,7 +171,7 @@ class CouponOrder extends Base
     ]);
     // 更新优惠券表的状态
     $user_coupon_ids = $couponOrderSubList->pluck('user_coupon_id');
-    UserCoupon::whereIn('id', $user_coupon_ids)->update(['status' => UserCoupon::getCouponStatusValue(5, '已出售')]);
+    UserCoupon::whereIn('id', $user_coupon_ids)->update(['coupon_status' => UserCoupon::getCouponStatusValue(5, '已出售')]);
     // 给出售人记录账单并入账
     $couponMarketList = $CouponMarketQuery->get();
     $userBillSql = [];
