@@ -15,8 +15,8 @@ class CreateApiLogsTable extends Migration
   {
     Schema::create('api_logs', function (Blueprint $table) {
       $table->id();
-      $table->unsignedBigInteger('user_id');
-      $table->string('nickname', 30);
+      $table->unsignedBigInteger('user_id')->nullable();
+      $table->string('nickname', 30)->nullable();
       $table->string('name', 120)->nullable();
       $table->string('method', 10);
       $table->string('path', 60);

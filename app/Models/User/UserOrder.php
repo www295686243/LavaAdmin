@@ -198,7 +198,6 @@ class UserOrder extends Base
   private function getNotifyUrl () {
     $className = class_basename($this->user_orderable_type);
     $snakeType = Str::snake($className);
-    \Log::info(env('APP_URL').'/api/'.$snakeType.'/pay_callback');
     return env('APP_URL').'/api/'.$snakeType.'/pay_callback';
   }
 }

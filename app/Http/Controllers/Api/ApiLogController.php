@@ -18,13 +18,14 @@ class ApiLogController extends Controller
   public function store(ApiLogRequest $request)
   {
     $input = $request->input('stack', []);
-    $userData = User::getUserData();
+    $user_id = $request->input('user_id');
+    $nickname = $request->input('nickname');
     $ip = $request->getClientIp();
-    $logs = collect($input)->map(function ($item) use ($userData, $request, $ip) {
+    $logs = collect($input)->map(function ($item) use ($user_id, $nickname, $request, $ip) {
       $input = Arr::get($item, 'input');
       return [
-        'user_id' => $userData->id,
-        'nickname' => $userData->nickname,
+        'user_id' => $user_id,
+        'nickname' => $nickname,
         'method' => $item['method'],
         'path' => $item['path'],
         'ip' => $ip,

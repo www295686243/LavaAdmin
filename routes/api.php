@@ -37,9 +37,8 @@ Route::post('user/login', [UserController::class, 'login']);
 Route::get('wechat/getConfig', [WeChatController::class, 'getConfig']);
 Route::post('wechat/auth', [WeChatController::class, 'auth']);
 Route::post('wechat/login', [WeChatController::class, 'login']);
+Route::get('api_log', [ApiLogController::class, 'store']);
 Route::middleware('auth:sanctum')->group(function () {
-  Route::apiResource('api_log', ApiLogController::class)->only(['store']);
-
   Route::post('user/todayFirstLogin', [UserController::class, 'todayFirstLogin']);
   Route::get('user/getUserInfo', [UserController::class, 'getUserInfo']);
   Route::get('user/getBaseUserInfo', [UserController::class, 'getBaseUserInfo']);
