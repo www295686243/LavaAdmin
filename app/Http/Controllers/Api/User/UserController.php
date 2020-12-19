@@ -53,7 +53,17 @@ class UserController extends Controller
       $userData->checkPersonalEveryDayLoginFinishTask();
       $userData->checkEnterpriseEveryDayLoginFinishTask();
     }
-    return $this->setParams($userData)->success($message);
+    $userPersonalData = $userData->personal()->first();
+    $userPersonalData->industry;
+    $userEnterpriseData = $userData->enterprise()->first();
+    $userEnterpriseData->industry;
+
+    return $this->setParams([
+      'user_info' => $userData,
+      'user_personal' => $userPersonalData,
+      'user_enterprise' => $userEnterpriseData,
+      'user_control' => $userData->control()->first(),
+    ])->success($message);
   }
 
   /**
