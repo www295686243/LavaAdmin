@@ -17,26 +17,28 @@ class CouponTableSeeder extends Seeder
   public function run()
   {
     $userIds = User::all()->pluck('id');
-    $lists = Coupon::whereIn('user_id', $userIds)->where('status', 0)->where('end_time', '>', date('Y-m-d H:i:s'))->get();
-    $result = [];
-    $arr = [];
-    foreach ($lists as $item) {
-      $arr['id'] = $item->id;
-      $arr['coupon_template_id'] = $item->coupon_template_id;
-      $arr['user_id'] = $item->user_id;
-      $arr['display_name'] = $item->name;
-      $arr['desc'] = $item->desc;
-      $arr['amount'] = $item->amount;
-      $arr['coupon_status'] = $item->status + 1;
-      $arr['start_at'] = $item->start_at;
-      $arr['end_at'] = $item->end_at;
-      $arr['source'] = $item->source;
-      $arr['is_trade'] = $item->is_trade;
-      $arr['created_at'] = $item->created_at->format('Y-m-d H:i:s');
-      $arr['updated_at'] = $item->updated_at->format('Y-m-d H:i:s');
-      $result[] = $arr;
+    $lists = Coupon::whereIn('user_id', $userIds)->where('status', 0)->where('end_at', '>', date('Y-m-d H:i:s'))->get()->chunk(500);
+    foreach ($lists as $list) {
+      $result = [];
+      $arr = [];
+      foreach ($list as $item) {
+        $arr['id'] = $item->id;
+        $arr['coupon_template_id'] = $item->coupon_template_id;
+        $arr['user_id'] = $item->user_id;
+        $arr['display_name'] = $item->name;
+        $arr['desc'] = $item->desc;
+        $arr['amount'] = $item->amount;
+        $arr['coupon_status'] = $item->status + 1;
+        $arr['start_at'] = $item->start_at;
+        $arr['end_at'] = $item->end_at;
+        $arr['source'] = $item->source;
+        $arr['is_trade'] = $item->is_trade;
+        $arr['created_at'] = $item->created_at->format('Y-m-d H:i:s');
+        $arr['updated_at'] = $item->updated_at->format('Y-m-d H:i:s');
+        $result[] = $arr;
+      }
+      DB::table('user_coupons')->insert($result);
     }
-    DB::table('user_coupons')->insert($result);
 
     $lists = CouponMarket::where('status', 0)->get();
     $result = [];
