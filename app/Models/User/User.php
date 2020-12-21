@@ -148,6 +148,11 @@ class User extends Authenticatable
 
   protected $guard_name = 'api';
 
+  public function invite_user()
+  {
+    return $this->belongsTo(User::class, 'invite_user_id');
+  }
+
   /**
    * @return \Illuminate\Database\Eloquent\Relations\HasOne
    */

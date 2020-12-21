@@ -15,7 +15,7 @@ class UserController extends Controller
   public function index()
   {
     $data = User::searchQuery()
-      ->with('roles')
+      ->with('roles', 'invite_user:id,nickname')
       ->where('is_admin', 0)
       ->orderByDesc('id')
       ->pagination();
