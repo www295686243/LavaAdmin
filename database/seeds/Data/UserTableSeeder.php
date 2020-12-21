@@ -56,7 +56,11 @@ class UserTableSeeder extends Seeder
     DB::table('user_bills')->insert($userBillDatas);
     $this->setUserRole2();
 
-    \App\Models\User\User::where('is_admin', 1)->update(['password' => '111111']);
+    $adminUsers = \App\Models\User\User::where('is_admin', 1)->get();
+    foreach ($adminUsers as $adminUser) {
+      $adminUser->password = '111111';
+      $adminUser->save();
+    }
     $root = \App\Models\User\User::find(1);
     $root->assignRole('root');
   }
