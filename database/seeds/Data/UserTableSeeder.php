@@ -77,8 +77,8 @@ class UserTableSeeder extends Seeder
       $arr['is_follow_official_account'] = $item->is_follow_official_account;
       $arr['follow_official_account_scene'] = $item->follow_official_account_scene;
       $arr['is_admin'] = $item->is_admin;
-      $arr['register_at'] = $item->register_at ? $item->register_at->format('Y-m-d H:i:s') : null;
-      $arr['last_login_at'] = $item->last_login_at ? $item->last_login_at->format('Y-m-d H:i:s') : null;
+      $arr['register_at'] = $item->register_at;
+      $arr['last_login_at'] = $item->last_login_at;
       $arr['created_at'] = $item->created_at->format('Y-m-d H:i:s');
       $arr['updated_at'] = $item->updated_at->format('Y-m-d H:i:s');
       $result[] = $arr;
