@@ -17,7 +17,7 @@ class CouponTableSeeder extends Seeder
   public function run()
   {
     $userIds = User::all()->pluck('id');
-    $lists = Coupon::whereIn('user_id', $userIds)->get();
+    $lists = Coupon::whereIn('user_id', $userIds)->where('status', 0)->where('end_time', '>', date('Y-m-d H:i:s'))->get();
     $result = [];
     $arr = [];
     foreach ($lists as $item) {
