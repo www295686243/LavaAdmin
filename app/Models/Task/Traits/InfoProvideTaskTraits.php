@@ -46,6 +46,7 @@ trait InfoProvideTaskTraits {
   {
     if ($this->status !== InfoProvide::getStatusValue(1, '待审核')) {
       $taskRecordData = $this->task_record()->first();
+      if ($taskRecordData->is_complete) return null;
       $taskRecordData->is_complete = 1;
       $taskRecordData->task_complete_time = date('Y-m-d H:i:s');
       $taskRecordData->save();
