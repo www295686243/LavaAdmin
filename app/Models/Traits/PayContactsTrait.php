@@ -32,7 +32,8 @@ trait PayContactsTrait {
       'total_amount' => $total_amount,
       'cash_amount' => $cash_amount,
       'coupon_amount' => $coupon_amount,
-      'user_coupon_id' => $user_coupon_id
+      'user_coupon_id' => $user_coupon_id,
+      'pay_status' => UserOrder::getPayStatusValue(1, '待支付')
     ]);
 
     return $userOrderData;

@@ -245,7 +245,7 @@ class UserTableSeeder extends Seeder
     foreach ($data as $item) {
       $arr['user_id'] = $item->user_id;
       $arr['company'] = $item->company;
-      $arr['business_license'] = $item->position;
+      $arr['business_license'] = $item->business_license;
       $arr['city'] = $item->city;
       $arr['address'] = $item->address;
       $arr['intro'] = $item->intro;

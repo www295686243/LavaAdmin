@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
       \Database\Seeders\Data\TaskTableSeeder::class,
       \Database\Seeders\Data\InfoViewTableSeeder::class,
       \Database\Seeders\Data\OrderTableSeeder::class,
+      \Database\Seeders\Data\InfoProvideTableSeeder::class,
       \Database\Seeders\Data\IndustryTableSeeder::class,
     ]);
   }
