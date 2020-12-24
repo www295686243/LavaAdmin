@@ -45,10 +45,14 @@ class CouponMarketController extends Controller
     $coupon_template_id = $request->input('coupon_template_id');
     $sort = $request->input('sort', 0);
     $sortItem = $this->sortType[$sort];
+    $sell_user_id = $request->input('sell_user_id');
 
     $data = CouponMarket::with(['user_coupon:id,display_name,desc,amount', 'sell_user:id,nickname'])
       ->when($coupon_template_id, function (Builder $query, $coupon_template_id) {
         return $query->where('coupon_template_id', $coupon_template_id);
+      })
+      ->when($sell_user_id, function (Builder $query, $sell_user_id) {
+        return $query->where('sell_user_id', $sell_user_id);
       })
       ->where('status', CouponMarket::getStatusValue(1, '出售中'))
       ->orderBy($sortItem['field'], $sortItem['sort'])

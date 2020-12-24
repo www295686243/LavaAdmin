@@ -69,7 +69,7 @@ class Industry extends Base
   /**
    * [20, 21, 22] // 第三级id
    * @param array $industries
-   * @return array
+   * @return array [[父级下的所有根id], [子级下的所有根id], [根id]]
    */
   public static function getGather($industries = [])
   {

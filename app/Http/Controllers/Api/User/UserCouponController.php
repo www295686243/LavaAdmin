@@ -41,7 +41,8 @@ class UserCouponController extends Controller
    */
   public function recall(UserCouponRequest $request)
   {
-    $user_coupon_ids = $request->input('user_coupon_ids');
+    $coupon_market_ids = $request->input('coupon_market_ids');
+    $user_coupon_ids = CouponMarket::whereIn('id', $coupon_market_ids)->pluck('user_coupon_id');
     $userCouponQuery = UserCoupon::whereIn('id', $user_coupon_ids)
       ->where('user_id', User::getUserId())
       ->where('coupon_status', UserCoupon::getCouponStatusValue(4, '挂售中'));

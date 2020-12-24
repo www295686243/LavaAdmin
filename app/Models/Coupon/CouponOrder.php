@@ -140,7 +140,6 @@ class CouponOrder extends Base
     return $this->user_bill()->create([
       'user_id' => $this->user_id,
       'total_amount' => -$this->total_amount,
-      'cash_amount' => -$this->total_amount,
       'desc' => $desc
     ]);
   }

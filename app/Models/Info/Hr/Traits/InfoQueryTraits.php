@@ -49,7 +49,9 @@ trait InfoQueryTraits {
       ->map(function ($item) use ($industryGather, $cityGather, $order) {
         $item->filterPoint = 0;
         $item->filterPoint += $this->getIndustryPoint($industryGather, $item->industry->pluck('id')->toArray());
-        $item->filterPoint += $this->getCityPoint($cityGather, $item->city);
+        if ($item->filterPoint > 0) {
+          $item->filterPoint += $this->getCityPoint($cityGather, $item->city);
+        }
         $item->point = $item->filterPoint;
         if (intval($order) === 0) {
           $item->point = intval($item->filterPoint.strtotime($item->created_at));
@@ -69,7 +71,7 @@ trait InfoQueryTraits {
     $point = 0;
     foreach ($industryGather as $index => $item) {
       $result = collect($industryIds)->intersect($item);
-      $point += $result->count() * ($index + $index + 2);
+      $point += $result->count() * (pow($index, 6) + 2);
     }
     return $point;
   }
@@ -84,9 +86,9 @@ trait InfoQueryTraits {
     if (count($cityGather) === 0) return 0;
     $point = 0;
     foreach ($cityGather as $index => $item) {
-      if (count($item) === 1 && intval($item[0]) === intval($city)) {
-        $point += 4;
-      } else if (count($item) === 2 && $city > $item[0] && $city < $item[1]) {
+      if (count($item) === 1 && intval($item[0]) === intval($city)) { // 精准匹配
+        $point += 50;
+      } else if (count($item) === 2 && $city > $item[0] && $city < $item[1]) { // 相关匹配
         $point += $index + $index + 1;
       }
     }
