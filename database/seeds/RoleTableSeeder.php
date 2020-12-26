@@ -20,7 +20,6 @@ class RoleTableSeeder extends Seeder
           [
             'name' => 'Operations Manager',
             'display_name' => '运营经理',
-            'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
             'platform' => 'admin',
             'children' => [
               [
@@ -48,7 +47,6 @@ class RoleTableSeeder extends Seeder
           [
             'name' => 'Technical Manager',
             'display_name' => '技术经理',
-            'menu_permissions' => \App\Models\AdminMenu::pluck('id'),
             'platform' => 'admin',
             'children' => [
               [

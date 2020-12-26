@@ -399,20 +399,23 @@ class User extends Authenticatable
    * @return array
    */
   private function getAssignMenu () {
-    return $this->roles()->get()->pluck('assign_menu')->flatten()->unique()->toArray();
+    $menus = $this->roles()
+      ->get()
+      ->pluck('menu_permissions')
+      ->flatten()
+      ->unique()
+      ->toArray();
+    $parentMenus = AdminMenu::getParentNodes();
+    return array_merge($menus, $parentMenus);
   }
 
   /**
-   * @param $platform
-   * @return mixed
+   * @return array
    */
-  private function getAssignInterface($platform)
-  {
-    $roleIds = $this->roles()->pluck('id');
-    $permissionIds = UserAssignPermission::whereIn('role_id', $roleIds)
-      ->where('platform', $platform)
-      ->pluck('permission_id');
-    return Permission::whereIn('id', $permissionIds)->pluck('name')->toArray();
+  private function getAssignInterface () {
+    $userPermissions = $this->getAllPermissions()->pluck('name')->toArray();
+    $parentPermissions = Permission::hasChildren()->pluck('name')->toArray();
+    return array_merge($userPermissions, $parentPermissions);
   }
 
   /**
@@ -436,10 +439,7 @@ class User extends Authenticatable
     if ($this->hasRoot()) {
       return Permission::getAllPermissionTree($platform);
     } else {
-      return Permission::whereIn('name', $this->getAssignInterface($platform))
-        ->where('platform', $platform)
-        ->get()
-        ->toTree();
+      return Permission::whereIn('name', $this->getAssignInterface())->where('platform', $platform)->get()->toTree();
     }
   }
 
@@ -461,13 +461,12 @@ class User extends Authenticatable
 
   /**
    * @param $permissions
-   * @param $platform
    * @return bool
    */
-  public function checkAssignInterface($permissions, $platform)
+  public function checkAssignInterface($permissions)
   {
     if (!$this->hasRoot()) {
-      $assignInterface = $this->getAssignInterface($platform);
+      $assignInterface = $this->getAssignInterface();
       $result = collect($permissions)->every(function ($value) use ($assignInterface) {
         return in_array($value, $assignInterface);
       });

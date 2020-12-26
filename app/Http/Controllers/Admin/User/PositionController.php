@@ -70,49 +70,11 @@ class PositionController extends Controller
    * @param $id
    * @return \Illuminate\Http\JsonResponse
    */
-  public function getAssignPermissions($id)
-  {
-    $positionData = Role::findOrFail($id);
-    return $this->setParams([
-      'menus' => AdminMenu::all()->toTree(),
-      'menu_permissions' => $positionData->assign_menu ?? [],
-      'interface' => Permission::getAllPermissionTree('admin'),
-      'interface_permissions' => $positionData->modelGetAssignPermissions()
-    ])->success();
-  }
-
-  /**
-   * @param PositionRequest $request
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function updateAssignPermissions(PositionRequest $request, $id)
-  {
-    $menus = $request->input('menus', []);
-    $permissions = $request->input('permissions', []);
-    $positionData = Role::findOrFail($id);
-    $positionData->assign_menu = $menus;
-
-    $positionData->assign_permissions()->where('platform', 'admin')->delete();
-    $permissionIds = collect($permissions)->map(function ($permissionId) {
-      return [
-        'permission_id' => $permissionId,
-        'platform' => 'admin'
-      ];
-    })->toArray();
-    $positionData->assign_permissions()->createMany($permissionIds);
-    $positionData->save();
-    return $this->success();
-  }
-
-  /**
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   */
   public function getPermissions($id)
   {
     $positionData = Role::findOrFail($id);
     $userData = User::getUserData();
+    AdminMenu::getParentNodes();
     return $this->setParams([
       'menus' => $userData->getAssignMenuTree(),
       'menu_permissions' => $positionData->menu_permissions ?? [],
@@ -132,7 +94,7 @@ class PositionController extends Controller
     $menus = $request->input('menus', []);
     $permissions = $request->input('permissions', []);
     $userData = User::getUserData();
-    if (!$userData->checkAssignMenu($menus) || !$userData->checkAssignInterface($permissions, 'admin')) {
+    if (!$userData->checkAssignMenu($menus) || !$userData->checkAssignInterface($permissions)) {
       return $this->setStatusCode(423)->error('权限错误');
     }
     $positionData = Role::findOrFail($id);

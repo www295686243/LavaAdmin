@@ -44,7 +44,6 @@ class Role extends \Spatie\Permission\Models\Role
     'name',
     'display_name',
     'menu_permissions',
-    'assign_menu',
     'guard_name',
     'platform'
   ];
@@ -55,8 +54,7 @@ class Role extends \Spatie\Permission\Models\Role
   ];
 
   protected $casts = [
-    'menu_permissions' => 'array',
-    'assign_menu' => 'array'
+    'menu_permissions' => 'array'
   ];
 
   /**

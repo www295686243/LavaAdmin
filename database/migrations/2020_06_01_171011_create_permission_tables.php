@@ -38,7 +38,6 @@ class CreatePermissionTables extends Migration
       $table->string('name', 60)->comment('标识');
       $table->string('display_name', 30)->comment('名称');
       $table->json('menu_permissions')->comment('栏目权限')->nullable();
-      $table->json('assign_menu')->comment('可分配的栏目权限')->nullable();
       $table->string('guard_name')->nullable();
       $table->string('platform')->comment('admin=后台，api=C端，business=B端');
       $table->unsignedInteger('_lft')->default(0);

@@ -68,10 +68,6 @@ class User extends Base {
               [
                 'name' => 'PositionController@updatePermissions',
                 'display_name' => '权限管理',
-              ],
-              [
-                'name' => 'PositionController@updateAssignPermissions',
-                'display_name' => '权限分配',
               ]
             ]
           ]
@@ -138,10 +134,6 @@ class User extends Base {
               [
                 'name' => 'RoleController@updatePermissions',
                 'display_name' => '权限管理',
-              ],
-              [
-                'name' => 'RoleController@updateAssignPermissions',
-                'display_name' => '权限分配',
               ]
             ]
           ],

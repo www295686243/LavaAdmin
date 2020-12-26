@@ -79,44 +79,11 @@ class RoleController extends Controller
   {
     $permissions = $request->input('permissions', []);
     $userData = User::getUserData();
-    if (!$userData->checkAssignInterface($permissions, 'api')) {
+    if (!$userData->checkAssignInterface($permissions)) {
       return $this->setStatusCode(423)->error('权限错误');
     }
     $roleData = Role::findOrFail($id);
     $roleData->syncPermissions($permissions);
-    return $this->success();
-  }
-
-  /**
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function getAssignPermissions($id)
-  {
-    $roleData = Role::findOrFail($id);
-    return $this->setParams([
-      'interface' => Permission::getAllPermissionTree('api'),
-      'interface_permissions' => $roleData->modelGetAssignPermissions()
-    ])->success();
-  }
-
-  /**
-   * @param RoleRequest $request
-   * @param $id
-   * @return \Illuminate\Http\JsonResponse
-   */
-  public function updateAssignPermissions(RoleRequest $request, $id)
-  {
-    $permissions = $request->input('permissions', []);
-    $roleData = Role::findOrFail($id);
-    $roleData->assign_permissions()->where('platform', 'api')->delete();
-    $permissionIds = collect($permissions)->map(function ($permissionId) {
-      return [
-        'permission_id' => $permissionId,
-        'platform' => 'api'
-      ];
-    })->toArray();
-    $roleData->assign_permissions()->createMany($permissionIds);
     return $this->success();
   }
 }

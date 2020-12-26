@@ -75,4 +75,12 @@ class AdminMenu extends Base
   ];
 
   public static function bootHasSnowflakePrimary() {}
+
+  /**
+   * @return array
+   */
+  public static function getParentNodes()
+  {
+    return self::hasChildren()->pluck('id')->toArray();
+  }
 }

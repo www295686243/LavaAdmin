@@ -70,9 +70,7 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('api_log', ApiLogController::class)->only(['index', 'show']);
   // 职位
   Route::get('position/getPermissions/{id}', [PositionController::class, 'getPermissions']);
-  Route::get('position/getAssignPermissions/{id}', [PositionController::class, 'getAssignPermissions']);
   Route::post('position/updatePermissions/{id}', [PositionController::class, 'updatePermissions']);
-  Route::post('position/updateAssignPermissions/{id}', [PositionController::class, 'updateAssignPermissions']);
   Route::apiResource('position', PositionController::class)->except(['destroy']);
   // 员工
   Route::apiResource('employee', EmployeeController::class);
@@ -88,9 +86,7 @@ Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::apiResource('user_cash_approval', UserCashApprovalController::class)->only(['index', 'show', 'update']);
   // 角色
   Route::get('role/getPermissions/{id}', [RoleController::class, 'getPermissions']);
-  Route::get('role/getAssignPermissions/{id}', [RoleController::class, 'getAssignPermissions']);
   Route::post('role/updatePermissions/{id}', [RoleController::class, 'updatePermissions']);
-  Route::post('role/updateAssignPermissions/{id}', [RoleController::class, 'updateAssignPermissions']);
   Route::apiResource('role', RoleController::class)->except(['destroy']);
   // 图片
   Route::post('image/destroyMore', [ImageController::class, 'destroyMore']);

@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
       TaskTableSeeder::class,
       PermissionTableSeeder::class,
       RoleTableSeeder::class,
+      RoleHasPermissionsSeeder::class,
       UserTableSeeder::class,
       HrJobTableSeeder::class,
       HrResumeTableSeeder::class,
