@@ -86,6 +86,10 @@ class Operation extends Base {
           [
             'name' => 'TaskController@update',
             'display_name' => '更新',
+          ],
+          [
+            'name' => 'TaskRuleController@update',
+            'display_name' => '更新规则',
           ]
         ]
       ],
