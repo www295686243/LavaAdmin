@@ -59,6 +59,7 @@ Route::post('auth/login', [AuthController::class, 'login']);
 Route::get('app/getAppConfig', [AppController::class, 'getAppConfig']);
 Route::middleware(['auth:sanctum', 'interface.permission'])->group(function () {
   Route::get('auth/getUserConfig', [AuthController::class, 'getUserConfig']);
+  Route::get('app/getMenuInfoStat', [AppController::class, 'getMenuInfoStat']);
   // 系统配置
   Route::apiResource('params_config', ParamsConfigController::class);
   Route::apiResource('options_config', OptionsConfigController::class);

@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\AppRequest;
 use App\Models\Config;
 use App\Models\Coupon\CouponTemplate;
+use App\Models\Info\Hr\HrJob;
+use App\Models\Info\Hr\HrResume;
 use App\Models\Info\Industry;
+use App\Models\Info\InfoCheck;
+use App\Models\Info\InfoComplaint;
+use App\Models\Info\InfoProvide;
 use App\Models\Task\Task;
 
 class AppController extends Controller
@@ -46,5 +51,20 @@ class AppController extends Controller
         $element->unsetRelation('children');
       }
     }
+  }
+
+  /**
+   * @return \Illuminate\Http\JsonResponse
+   */
+  public function getMenuInfoStat()
+  {
+    return $this->setParams([
+      '/hr/job/info-check' => InfoCheck::where('info_checkable_type', HrJob::class)->where('status', InfoCheck::getStatusValue(1, '待审核'))->count(),
+      '/hr/job/info-provide' => InfoProvide::where('info_provideable_type', HrJob::class)->where('status', InfoCheck::getStatusValue(1, '待审核'))->count(),
+      '/hr/job/info-complaint' => InfoComplaint::where('info_complaintable_type', HrJob::class)->where('is_solve', 0)->count(),
+      '/hr/resume/info-check' => InfoCheck::where('info_checkable_type', HrResume::class)->where('status', InfoCheck::getStatusValue(1, '待审核'))->count(),
+      '/hr/resume/info-provide' => InfoProvide::where('info_provideable_type', HrResume::class)->where('status', InfoCheck::getStatusValue(1, '待审核'))->count(),
+      '/hr/resume/info-complaint' => InfoComplaint::where('info_complaintable_type', HrResume::class)->where('is_solve', 0)->count()
+    ])->success();
   }
 }
