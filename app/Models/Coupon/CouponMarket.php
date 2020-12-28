@@ -7,6 +7,46 @@ use App\Models\Notify\NotifyTemplate;
 use App\Models\User\User;
 use App\Models\User\UserCoupon;
 
+/**
+ * App\Models\Coupon\CouponMarket
+ *
+ * @property int|null|string $id
+ * @property int $sell_user_id 出售人
+ * @property int|null $buy_user_id 购买人
+ * @property string $user_coupon_id 优惠券id
+ * @property int $coupon_template_id 优惠券模板id
+ * @property float $amount 出售价格
+ * @property int $amount_sort 按金额排序
+ * @property int $status 出售状态0出售中1待支付2已出售3已下架4已撤回
+ * @property \datetime|null $end_at 过期时间
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read User|null $buy_user
+ * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @property-read User $sell_user
+ * @property-read UserCoupon $user_coupon
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereAmountSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereBuyUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereCouponTemplateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereEndAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereSellUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponMarket whereUserCouponId($value)
+ * @mixin \Eloquent
+ */
 class CouponMarket extends Base
 {
   protected $fillable = [

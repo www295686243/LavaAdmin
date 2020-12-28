@@ -4,9 +4,41 @@ namespace App\Models;
 
 use App\Models\Base\Base;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
+/**
+ * App\Models\City
+ *
+ * @property int|null|string $id
+ * @property int $deep
+ * @property string $display_name
+ * @property int|null $sort
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string $user_coupon_id
+ * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|City newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|City newQuery()
+ * @method static \Illuminate\Database\Query\Builder|City onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|City query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|City whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|City whereDeep($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|City whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|City whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|City whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|City whereSort($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|City whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|City withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|City withoutTrashed()
+ * @mixin \Eloquent
+ */
 class City extends Base
 {
   use SoftDeletes;

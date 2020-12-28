@@ -27,6 +27,46 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 
+/**
+ * App\Models\Base\HrBase
+ *
+ * @property-read User $admin_user
+ * @property-read int|null|string $id
+ * @property-read string $user_coupon_id
+ * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @property-read \Kalnoy\Nestedset\Collection|Industry[] $industry
+ * @property-read int|null $industry_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|InfoCheck[] $info_check
+ * @property-read int|null $info_check_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|InfoComplaint[] $info_complaint
+ * @property-read int|null $info_complaint_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|InfoPush[] $info_push
+ * @property-read int|null $info_push_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|InfoSub[] $info_sub
+ * @property-read int|null $info_sub_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|InfoView[] $info_view
+ * @property-read int|null $info_view_count
+ * @property-read User $provide_user
+ * @property-read \Illuminate\Database\Eloquent\Collection|TaskRecord[] $task_record
+ * @property-read int|null $task_record_count
+ * @property-read User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|UserOrder[] $user_order
+ * @property-read int|null $user_order_count
+ * @method static Builder|HrBase aiQuery($industries, $city, $order)
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static Builder|HrBase newModelQuery()
+ * @method static Builder|HrBase newQuery()
+ * @method static \Illuminate\Database\Query\Builder|HrBase onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static Builder|HrBase query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Query\Builder|HrBase withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|HrBase withoutTrashed()
+ * @mixin \Eloquent
+ */
 class HrBase extends Base {
   use SoftDeletes, IndustryTrait, InfoQueryTraits, ShareTaskTraits, PayContactsTrait;
 

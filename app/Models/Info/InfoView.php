@@ -8,6 +8,39 @@ use App\Models\Info\Hr\HrResume;
 use App\Models\User\User;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * App\Models\Info\InfoView
+ *
+ * @property int|null|string $id
+ * @property string $info_viewable_type
+ * @property string $info_viewable_id
+ * @property string|null $share_user_id 分享者
+ * @property string $user_id 访问者
+ * @property int $is_new_user 是否新用户
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $info_viewable
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereInfoViewableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereInfoViewableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereIsNewUser($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereShareUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoView whereUserId($value)
+ * @mixin \Eloquent
+ */
 class InfoView extends Base
 {
   protected $fillable = [

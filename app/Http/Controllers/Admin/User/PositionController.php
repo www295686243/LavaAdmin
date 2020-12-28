@@ -74,7 +74,6 @@ class PositionController extends Controller
   {
     $positionData = Role::findOrFail($id);
     $userData = User::getUserData();
-    AdminMenu::getParentNodes();
     return $this->setParams([
       'menus' => $userData->getAssignMenuTree(),
       'menu_permissions' => $positionData->menu_permissions ?? [],

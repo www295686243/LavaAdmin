@@ -6,6 +6,48 @@ use App\Models\Base\Base;
 use App\Models\User\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * App\Models\Info\InfoCheck
+ *
+ * @property int|null|string $id
+ * @property string $info_checkable_type
+ * @property string|null $info_checkable_id
+ * @property string $info_title 信息标题
+ * @property string $user_id 发布者
+ * @property array $contents 内容
+ * @property int $status 状态(0待审核，1已审核，2未通过)
+ * @property string|null $refuse_reason 拒绝原因
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $info_checkable
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck newQuery()
+ * @method static \Illuminate\Database\Query\Builder|InfoCheck onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereContents($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereInfoCheckableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereInfoCheckableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereInfoTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereRefuseReason($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoCheck whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|InfoCheck withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|InfoCheck withoutTrashed()
+ * @mixin \Eloquent
+ */
 class InfoCheck extends Base
 {
   use SoftDeletes;

@@ -6,11 +6,12 @@ use App\Models\User\User;
 use App\Models\Base\Base;
 
 /**
- * \App\Models\AdminLog
+ * App\Models\AdminLog
  *
- * @property int $id
- * @property int $user_id
+ * @property int|null|string $id
+ * @property string $user_id
  * @property string $nickname
+ * @property string $name
  * @property string $method
  * @property string $path
  * @property string $ip
@@ -20,27 +21,30 @@ use App\Models\Base\Base;
  * @property string|null $desc 描述
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereDesc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereInput($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereIp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereMethod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereNickname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog wherePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereUserId($value)
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereInput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AdminLog whereUserId($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
- * @property string $name
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\AdminLog whereName($value)
  */
 class AdminLog extends Base
 {

@@ -8,33 +8,37 @@ use Illuminate\Support\Carbon;
 use Overtrue\EasySms\EasySms;
 
 /**
- * \App\Models\SmsCaptcha
+ * App\Models\SmsCaptcha
  *
- * @property int $id
- * @property int $user_id
+ * @property int|null|string $id
+ * @property string $user_id
  * @property string $phone
  * @property int $code
  * @property string $type_name 验证码类型
  * @property int $status 状态(0未验证，1已验证)
  * @property int $result 发送结果(0未发送，1已发送, 2发送失败)
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereResult($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereTypeName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\SmsCaptcha whereUserId($value)
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereResult($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereTypeName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SmsCaptcha whereUserId($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class SmsCaptcha extends Base
 {

@@ -19,7 +19,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Kra8\Snowflake\HasSnowflakePrimary;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
@@ -27,71 +26,79 @@ use Spatie\Permission\Traits\HasRoles;
 /**
  * App\Models\User\User
  *
- * @property string $id
- * @property string|null $nickname 昵称
- * @property string|null $username 用户名
+ * @property int|null|string $id
+ * @property string|null $invite_user_id 邀请人
+ * @property string|null $nickname
+ * @property string|null $username
  * @property string|null $email
  * @property string|null $phone
+ * @property string|null $head_url
+ * @property int|null $city 当前所在地
+ * @property string|null $current_role 当前角色
+ * @property int $is_follow_official_account 是否关注公众号
+ * @property string|null $follow_official_account_scene 关注来源
  * @property string|null $email_verified_at
- * @property string $password
- * @property float $money 金额
+ * @property string|null $password
  * @property string|null $api_token
  * @property string|null $remember_token
  * @property int $is_admin 是否管理员
+ * @property string|null $last_login_at 最后登录时间
+ * @property string|null $register_at 注册时间
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
- * @property-read int|null $notifications_count
- * @property-read \Kalnoy\Nestedset\Collection|\App\Models\Permission[] $permissions
- * @property-read int|null $permissions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
- * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
- * @property-read int|null $tokens_count
- * @property-read \App\Models\User\UserWallet|null $wallet
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User pagination()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User permission($permissions)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User role($roles, $guard = null)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User searchQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereApiToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereEmailVerifiedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereIsAdmin($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereMoney($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereNickname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereUsername($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\User\User withoutTrashed()
- * @mixin \Eloquent
- * @property int|null $invite_user_id 邀请人
- * @property string|null $head_url
- * @property int|null $city 当前所在地
- * @property int $is_follow_official_account 是否关注公众号
- * @property string|null $follow_official_account_scene 关注来源
- * @property string|null $last_login_at 最后登录时间
  * @property-read \App\Models\User\UserAuth|null $auth
  * @property-read \App\Models\User\UserControl|null $control
  * @property-read \App\Models\User\UserEnterprise|null $enterprise
+ * @property-read string $user_coupon_id
  * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @property-read User|null $invite_user
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Kalnoy\Nestedset\Collection|Permission[] $permissions
+ * @property-read int|null $permissions_count
  * @property-read \App\Models\User\UserPersonal|null $personal
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereFollowOfficialAccountScene($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereHeadUrl($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereInviteUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereIsFollowOfficialAccount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User\User whereLastLoginAt($value)
+ * @property-read \Kalnoy\Nestedset\Collection|\App\Models\Role[] $roles
+ * @property-read int|null $roles_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|TaskRecord[] $task_record
+ * @property-read int|null $task_record_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read int|null $tokens_count
+ * @property-read \App\Models\User\UserWallet|null $wallet
+ * @method static \Illuminate\Database\Eloquent\Builder|User exceptRoot()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Query\Builder|User onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|User pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|User permission($permissions)
+ * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User role($roles, $guard = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|User searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereApiToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCurrentRole($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereFollowOfficialAccountScene($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereHeadUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereInviteUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsFollowOfficialAccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereLastLoginAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRegisterAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
+ * @method static \Illuminate\Database\Query\Builder|User withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|User withoutTrashed()
+ * @mixin \Eloquent
  */
 class User extends Authenticatable
 {
@@ -405,7 +412,7 @@ class User extends Authenticatable
       ->flatten()
       ->unique()
       ->toArray();
-    $parentMenus = AdminMenu::getParentNodes();
+    $parentMenus = AdminMenu::getParentNodes($menus);
     return array_merge($menus, $parentMenus);
   }
 
@@ -414,8 +421,12 @@ class User extends Authenticatable
    */
   private function getAssignInterface () {
     $userPermissions = $this->getAllPermissions()->pluck('name')->toArray();
-    $parentPermissions = Permission::hasChildren()->pluck('name')->toArray();
-    return array_merge($userPermissions, $parentPermissions);
+    $parentPermissions = Permission::hasChildren()->get();
+    $parentPermissionNames =  $parentPermissions->filter(function ($item) use ($userPermissions) {
+      $leafNames = $item->descendants()->pluck('name');
+      return collect($leafNames)->intersect($userPermissions)->count();
+    })->pluck('name')->toArray();
+    return array_merge($userPermissions, $parentPermissionNames);
   }
 
   /**

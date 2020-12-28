@@ -21,6 +21,23 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Kra8\Snowflake\HasSnowflakePrimary;
 
+/**
+ * App\Models\Base\Base
+ *
+ * @property-read int|null|string $id
+ * @property-read string $user_coupon_id
+ * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @mixin \Eloquent
+ */
 class Base extends Model {
   use ResourceTrait, IdToStrTrait, HasSnowflakePrimary;
 

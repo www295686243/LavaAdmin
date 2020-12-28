@@ -6,27 +6,32 @@ use App\Models\Base\Base;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * \App\Models\Version
+ * App\Models\Version
  *
- * @property int $id
+ * @property int|null|string $id
  * @property string $name
  * @property string $display_name
  * @property int $value
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereDisplayName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Version whereValue($value)
+ * @property-read string $user_coupon_id
+ * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Version newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Version newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|Version query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|Version whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Version whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Version whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Version whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Version whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Version whereValue($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
  */
 class Version extends Base
 {

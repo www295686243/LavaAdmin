@@ -11,6 +11,40 @@ use App\Models\User\UserEnterprise;
 use App\Models\User\UserPersonal;
 use Illuminate\Support\Str;
 
+/**
+ * App\Models\Info\InfoPush
+ *
+ * @property int|null|string $id
+ * @property string $info_pushable_type
+ * @property string|null $info_pushable_id
+ * @property array|mixed $industries 推送的3级行业集合
+ * @property array|mixed $cities 推送的3级城市集合
+ * @property string $user_id 推送人
+ * @property array|mixed $push_users 推送给了哪些人
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @property-read User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereCities($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereIndustries($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereInfoPushableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereInfoPushableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush wherePushUsers($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|InfoPush whereUserId($value)
+ * @mixin \Eloquent
+ */
 class InfoPush extends Base
 {
   protected $fillable = [

@@ -9,7 +9,6 @@
 namespace App\Models\Traits;
 
 use App\Services\ResourceService;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 trait ResourceTrait
 {

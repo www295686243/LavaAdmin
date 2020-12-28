@@ -9,41 +9,47 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 /**
- * \App\Models\ApiLog
+ * App\Models\ApiLog
  *
- * @property int $id
- * @property int $user_id
- * @property string $nickname
+ * @property int|null|string $id
+ * @property string $user_id
+ * @property string|null $nickname
+ * @property string|null $name
  * @property string $method
  * @property string $path
  * @property string $ip
  * @property array|null $input
+ * @property array|null $extra
  * @property string $status 结果状态
  * @property int $code 状态码
  * @property string|null $desc 描述
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base listQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base searchQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereDesc($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereInput($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereIp($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereMethod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereNickname($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog wherePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereUserId($value)
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereCode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereExtra($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereInput($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereIp($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereMethod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereNickname($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ApiLog whereUserId($value)
  * @mixin \Eloquent
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Base pagination()
- * @property string|null $name
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\ApiLog whereName($value)
  */
 class ApiLog extends Base
 {

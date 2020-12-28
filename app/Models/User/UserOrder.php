@@ -6,6 +6,53 @@ use App\Models\ApiLog;
 use App\Models\Base\Base;
 use Illuminate\Support\Str;
 
+/**
+ * App\Models\User\UserOrder
+ *
+ * @property int|null|string $id 主键/订单id
+ * @property string $user_id 支付者user_id
+ * @property string $user_orderable_type
+ * @property string $user_orderable_id
+ * @property float|null $total_amount 总支付金额
+ * @property float|null $cash_amount 现金金额
+ * @property float|null $balance_amount 余额金额
+ * @property float|null $coupon_amount 优惠券金额
+ * @property string $user_coupon_id 用户的优惠券id
+ * @property int $pay_status 状态(0未支付,1已支付,2支付失败)
+ * @property string|null $paid_at 支付时间
+ * @property string|null $source 支付来源
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $user_order_id
+ * @property-read \App\Models\User\User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User\UserBill[] $user_bill
+ * @property-read int|null $user_bill_count
+ * @property-read \App\Models\User\UserCoupon|null $user_coupon
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $user_orderable
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereBalanceAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereCashAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereCouponAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder wherePaidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder wherePayStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereTotalAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereUserCouponId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereUserOrderableId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserOrder whereUserOrderableType($value)
+ * @mixin \Eloquent
+ */
 class UserOrder extends Base
 {
   protected $fillable = [

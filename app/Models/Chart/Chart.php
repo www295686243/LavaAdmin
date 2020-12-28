@@ -13,6 +13,32 @@ use App\Models\Base\Base;
 use App\Models\Chart\Traits\MemberChartTrait;
 use App\Models\Chart\Traits\OrderChartTrait;
 
+/**
+ * App\Models\Chart\Chart
+ *
+ * @property int|null|string $id
+ * @property string $stat_date 统计日期
+ * @property array $stat_data 统计数据
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $user_coupon_id
+ * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart whereStatData($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart whereStatDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chart whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Chart extends Base {
   use MemberChartTrait, OrderChartTrait;
   protected $fillable = [

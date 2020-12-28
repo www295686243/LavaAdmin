@@ -12,6 +12,46 @@ use App\Models\User\UserWallet;
 use Illuminate\Support\Facades\DB;
 use Kra8\Snowflake\Snowflake;
 
+/**
+ * App\Models\Coupon\CouponOrder
+ *
+ * @property int|null|string $id
+ * @property string $user_id
+ * @property int $quantity 购买张数
+ * @property string $total_amount 支付总金额
+ * @property int $pay_status 状态(0未支付,1已支付,2已过期,3已放弃)
+ * @property int $payment 支付方式1微信支付2余额
+ * @property string|null $paid_at 支付时间
+ * @property string|null $remark 备注
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Coupon\CouponOrderSub[] $coupon_order_sub
+ * @property-read int|null $coupon_order_sub_count
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @property-read User $user
+ * @property-read \Illuminate\Database\Eloquent\Collection|UserBill[] $user_bill
+ * @property-read int|null $user_bill_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder wherePaidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder wherePayStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder wherePayment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder whereRemark($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder whereTotalAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|CouponOrder whereUserId($value)
+ * @mixin \Eloquent
+ */
 class CouponOrder extends Base
 {
   protected $fillable = [

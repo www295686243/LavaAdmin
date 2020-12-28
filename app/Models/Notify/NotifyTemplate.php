@@ -8,6 +8,57 @@ use App\Models\User\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Arr;
 
+/**
+ * App\Models\Notify\NotifyTemplate
+ *
+ * @property int|null|string $id
+ * @property string $template_id 微信模板id
+ * @property string $title 通知标题
+ * @property string $content 通知内容
+ * @property string $remark 通知备注
+ * @property string $host 域名,格式：https://m.yuancaowang.com
+ * @property string $url 跳转地址，格式：/xxx
+ * @property string|null $url_params 地址参数
+ * @property string|null $keyword_names 字段名称
+ * @property int $queue 优先级
+ * @property int $is_push_official_account 是否推送微信公众号
+ * @property int $is_push_message 是否推送站内信
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read string $user_coupon_id
+ * @property-read string $user_id
+ * @property-read string $user_order_id
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Notify\NotifyUser[] $notify_user
+ * @property-read int|null $notify_user_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate newQuery()
+ * @method static \Illuminate\Database\Query\Builder|NotifyTemplate onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereHost($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereIsPushMessage($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereIsPushOfficialAccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereKeywordNames($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereQueue($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereRemark($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereTemplateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|NotifyTemplate whereUrlParams($value)
+ * @method static \Illuminate\Database\Query\Builder|NotifyTemplate withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|NotifyTemplate withoutTrashed()
+ * @mixin \Eloquent
+ */
 class NotifyTemplate extends Base
 {
   use SoftDeletes;

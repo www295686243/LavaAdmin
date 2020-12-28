@@ -4,6 +4,49 @@ namespace App\Models\User;
 
 use App\Models\Base\Base;
 
+/**
+ * App\Models\User\UserCoupon
+ *
+ * @property int|null|string $id
+ * @property string $coupon_template_id 互助券模板id
+ * @property string $user_id 所属user_id
+ * @property string $display_name 券名
+ * @property string|null $desc 描述
+ * @property float $amount 金额
+ * @property int $coupon_status 状态(0未使用,1已使用,2已过期,3挂售中,4已出售)
+ * @property string|null $start_at 开始时间
+ * @property \datetime|null $end_at 过期时间
+ * @property string $source 来源
+ * @property int $is_trade 是否可交易
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read bool $active
+ * @property-read string $user_coupon_id
+ * @property-read string $user_order_id
+ * @property-read \App\Models\User\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Base listQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base pagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchModel($typeField, $model = '')
+ * @method static \Illuminate\Database\Eloquent\Builder|Base searchQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Base simplePagination()
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereCouponStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereCouponTemplateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereDesc($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereDisplayName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereEndAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereIsTrade($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereSource($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereStartAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserCoupon whereUserId($value)
+ * @mixin \Eloquent
+ */
 class UserCoupon extends Base
 {
   protected $fillable = [
