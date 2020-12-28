@@ -112,6 +112,7 @@ class HrJobController extends Controller
    * @param HrJobRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function update(HrJobRequest $request, $id)
   {
@@ -121,7 +122,18 @@ class HrJobController extends Controller
       InfoCheck::updateInfo($input, $id);
     } else {
       $input['_model'] = HrJob::class;
-      InfoCheck::createInfo($input);
+      $input['user_id'] = User::getUserId();
+      $hrJobData = HrJob::findOrFail($id);
+      if ($hrJobData->title === $input['title'] && $hrJobData->company_name === $input['company_name'] && $hrJobData->info_sub()->firstOrFail()->description === $input['description']) {
+        DB::transaction(function () use ($input) {
+          $infoCheckData = InfoCheck::createInfo($input);
+          (new HrJob())->checkInfoSuccess($input, $infoCheckData->info_checkable_id);
+          $infoCheckData->status = InfoCheck::getStatusValue(2, '已通过');
+          $infoCheckData->save();
+        });
+      } else {
+        InfoCheck::createInfo($input);
+      }
     }
     return $this->success('职位已提交成功，请等待管理员审核!');
   }

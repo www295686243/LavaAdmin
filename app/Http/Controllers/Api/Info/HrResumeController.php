@@ -114,6 +114,7 @@ class HrResumeController extends Controller
    * @param HrResumeRequest $request
    * @param $id
    * @return \Illuminate\Http\JsonResponse
+   * @throws \Throwable
    */
   public function update(HrResumeRequest $request, $id)
   {
@@ -123,7 +124,18 @@ class HrResumeController extends Controller
       InfoCheck::updateInfo($input, $id);
     } else {
       $input['_model'] = HrResume::class;
-      InfoCheck::createInfo($input);
+      $input['user_id'] = User::getUserId();
+      $hrJobData = HrResume::findOrFail($id);
+      if ($hrJobData->title === $input['title'] && $hrJobData->info_sub()->firstOrFail()->description === $input['description']) {
+        DB::transaction(function () use ($input) {
+          $infoCheckData = InfoCheck::createInfo($input);
+          (new HrResume())->checkInfoSuccess($input, $infoCheckData->info_checkable_id);
+          $infoCheckData->status = InfoCheck::getStatusValue(2, '已通过');
+          $infoCheckData->save();
+        });
+      } else {
+        InfoCheck::createInfo($input);
+      }
     }
     return $this->success('简历已提交成功，请等待管理员审核!');
   }
