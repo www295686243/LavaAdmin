@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Base\Base;
+use App\Models\User\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 
@@ -105,7 +106,7 @@ class Image extends Base
   public function updateImageableId($info_id)
   {
     $marking = request()->input('marking');
-    self::where('marking', $marking)->update(['imageable_id' => $info_id]);
+    self::where('user_id', User::getUserId())->where('marking', $marking)->update(['imageable_id' => $info_id]);
     $this->destroySurplus();
   }
 
@@ -115,7 +116,7 @@ class Image extends Base
    */
   private function destroySurplus()
   {
-    $query = self::where('imageable_id', 0)->orWhereNull('imageable_id');
+    $query = self::where('user_id', User::getUserId())->where('imageable_id', 0)->orWhereNull('imageable_id');
     return $this->delImages($query);
   }
 
